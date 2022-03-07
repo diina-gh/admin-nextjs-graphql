@@ -123,9 +123,19 @@
 
 // Don't delete this
 
+.gt-shadow1{
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+
+.gt-shadow2{
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+}
+
 .gt-sidebar{
   height: calc(100vh - 5.5rem);
+  @extend .gt-shadow2;
 }
+
 
 
 /** sm  **/

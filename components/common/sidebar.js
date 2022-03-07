@@ -22,7 +22,7 @@ export default function Sidebar() {
 
   return (
 
-    <aside className="gt-sidebar w-60 py-5 bg-white rounded-xl shadow" aria-label="Sidebar">
+    <aside className="gt-sidebar w-60 py-5 bg-white rounded-xl" aria-label="Sidebar">
 
         <div className="overflow-y-auto w-full h-full">
 
