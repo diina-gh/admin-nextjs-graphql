@@ -25,44 +25,44 @@ export default function Index() {
             
             <div className='app-body'>
 
-            <div className='w-full h-full'>
+                <div className='w-full'>
 
-                <Tab.Group >
+                    <Tab.Group >
 
-                    <Tab.List className="flex space-x-1 border-b border-gray-500 border-opacity-50">
+                        <Tab.List className="flex space-x-1 border-b border-gray-200 border-opacity-50 w-full">
 
-                            <Tab className={({ selected }) =>classNames('w-full py-2 text-base md:text-base leading-5 font-medium rounded-t-lg mb-minus1 tracking-normal','focus:outline-none focus:ring-0 ring-opacity-0', selected ? 'text-purple-800 bg-white shadow-sm' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-600 border-white ring-white')}>
-                                Catégories
-                            </Tab>
+                                <Tab className={({ selected }) =>classNames('w-full py-3 text-base leading-5 font-medium rounded-t-xl mb-minus1 tracking-normal','focus:outline-none focus:ring-0 ring-opacity-0', selected ? 'text-purple-800 bg-white shadow-sm' : 'text-gray-400 hover:bg-gray-100 hover:text-purple-600')}>
+                                    Catégories
+                                </Tab>
 
-                            <Tab className={({ selected }) =>classNames('w-full py-2 text-base md:text-base leading-5 font-medium rounded-t-lg mb-minus1 tracking-normal','focus:outline-none focus:ring-0 ring-opacity-0', selected ? 'text-purple-800 bg-white shadow-sm' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-600 border-white ring-white')}>
-                                Sous-Catégories
-                            </Tab>
+                                <Tab className={({ selected }) =>classNames('w-full py-3 text-base leading-5 font-medium rounded-t-xl mb-minus1 tracking-normal','focus:outline-none focus:ring-0 ring-opacity-0', selected ? 'text-purple-800 bg-white shadow-sm' : 'text-gray-400 hover:bg-gray-100 hover:text-purple-600')}>
+                                    Sous-Catégories
+                                </Tab>
 
-                        
-                    </Tab.List>
+                            
+                        </Tab.List>
 
-                    <Tab.Panels className='h-full'>
-                            <Tab.Panel key={1} className={classNames('','bg-white h-full focus:outline-none focus:ring-0 ring-opacity-0')}>
+                        <Tab.Panels className='app-subbody2'>
+                                <Tab.Panel key={1} className={classNames('','bg-white h-full focus:outline-none focus:ring-0 ring-opacity-0 rounded-b-xl ')}>
 
-                                <div className='w-full h-full'>
+                                    <div className='w-full h-full rounded-b-xl overflow-y-scroll'>
 
-                                </div>
+                                    </div>
 
-                            </Tab.Panel>
+                                </Tab.Panel>
 
-                            <Tab.Panel key={2} className={classNames('','bg-white h-full focus:outline-none focus:ring-0 ring-opacity-0')}>
+                                <Tab.Panel key={2} className={classNames('','bg-white h-full focus:outline-none focus:ring-0 ring-opacity-0 rounded-b-xl ')}>
 
-                                <div className='w-full h-full'>
+                                    <div className='w-full h-full rounded-b-xl overflow-y-scroll'>
 
-                                </div>
+                                    </div>
 
-                            </Tab.Panel>
-                    </Tab.Panels>
+                                </Tab.Panel>
+                        </Tab.Panels>
 
-                </Tab.Group>
+                    </Tab.Group>
 
-            </div>
+                </div>
 
             </div>
 
