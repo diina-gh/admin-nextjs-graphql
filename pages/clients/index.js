@@ -1,22 +1,21 @@
 import { useState } from 'react'
 import Link from 'next/link'
-import Header from '../components/common/header'
-import Sidebar from '../components/common/sidebar'
+import Header from '../../components/common/header'
+import Sidebar from '../../components/common/sidebar'
 import { motion } from "framer-motion";
-import HeadInfo from '../components/common/headinfo'
+import HeadInfo from '../../components/common/headinfo'
 
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
   }
 
-export default function Home() {
+export default function Index() {
 
   return (
     <div className="app-container h-screen bg-gray-200 bg-opacity-40">
 
-        <HeadInfo title= 'Dashboard' description='description here'/>
-
+        <HeadInfo title= 'Commandes' description='description here'/>
 
         <Header/>
 
