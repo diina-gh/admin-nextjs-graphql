@@ -136,10 +136,15 @@
   @extend .gt-shadow2;
 }
 
+.app-leftbar{
+  height: calc(100vh - 6.5rem);
+  @extend .gt-shadow2;
+}
+
 .app-body{
   width: calc(100vw - 19.4rem);
   height: calc(100vh - 6.5rem);
-  background-color: rgba(255, 0, 0, 0.089);
+  // background-color: rgba(255, 0, 0, 0.089);
 }
 
 

@@ -45,7 +45,7 @@ export default function Header(props) {
                 </div>
 
                 <div className='w-8 h-8 bg-gray-300 bg-opacity-60 text-gray-600 rounded-full flex flex-row justify-center'>
-                    
+                    <img className='w-full h-full rounded-full' src="https://raw.githubusercontent.com/diina-gh/owid-covid/main/background/bg3.webp" />
                 </div>
 
             </div>
