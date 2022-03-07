@@ -1,0 +1,198 @@
+@import url("/fonts/stylesheet.css");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .overflow-hidden {
+    -webkit-mask-image: -webkit-radial-gradient(white, black);
+  }
+}
+
+/* .gt-bg2 {
+  background-color: #1B1B1B;
+  background-image: url('../public/images/background/bg1.webp');
+  background-size: 12.5%;
+  background-repeat: no-repeat;
+  background-position: top 45px right 10px;
+} */
+
+.gt-bg3 {
+  background-color: #1B1B1B;
+  background-image: url('https://raw.githubusercontent.com/diina-gh/owid-covid/main/background/bg1.webp');
+  background-size: 115% !important;
+  background-repeat: no-repeat;
+  background-position: top -200px left -225px !important;
+}
+
+
+.gt-bg4 {
+  background-color: #1B1B1B;
+  background-image: url('https://raw.githubusercontent.com/diina-gh/owid-covid/main/background/bg1.webp');
+  background-size: 310% !important;
+  background-repeat: no-repeat;
+  background-position: top -360px left -300px !important;
+  /* background-attachment:fixed; */
+}
+
+/** sm  **/
+@media (min-width: 640px) {
+
+
+}
+
+/** md  **/
+@media (min-width: 768px) {
+
+  .gt-bg4 {
+    background-size: 100% !important;
+    background-position: top -450px left 0px !important;
+  }
+
+  .gt-bg3 {
+    background-size: 55% !important;
+    background-position: top -425px left -225px !important;
+  }
+
+ 
+
+}
+
+/** lg **/
+@media (min-width: 1024px) {
+
+  
+
+}
+
+/** xl **/
+@media (min-width: 1280px) {
+  
+}
+
+/** 2xl **/
+@media (min-width: 1536px) {
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* body {
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(180deg, #0055ff 0%, rgb(0, 153, 255) 100%);
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} */
+
+/* nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 300px;
+  z-index: 99999;
+}
+
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 300px;
+  background: #fff;
+}
+
+button {
+  outline: none;
+  border: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  cursor: pointer;
+  position: absolute;
+  top: 18px;
+  left: 28px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: transparent;
+}
+
+ul,
+li {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  padding: 25px;
+  position: absolute;
+  top: 100px;
+  width: 230px;
+}
+
+li {
+  list-style: none;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.icon-placeholder {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  flex: 40px 0;
+  margin-right: 20px;
+}
+
+.text-placeholder {
+  border-radius: 5px;
+  width: 200px;
+  height: 20px;
+  flex: 1;
+}
+
+.refresh {
+  padding: 10px;
+  position: absolute;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+  width: 20px;
+  height: 20px;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+} */
