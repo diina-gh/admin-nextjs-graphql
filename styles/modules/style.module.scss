@@ -131,9 +131,15 @@
   box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
 }
 
-.gt-sidebar{
-  height: calc(100vh - 5.5rem);
+.app-sidebar{
+  height: calc(100vh - 6.5rem);
   @extend .gt-shadow2;
+}
+
+.app-body{
+  width: calc(100vw - 19.4rem);
+  height: calc(100vh - 6.5rem);
+  background-color: rgba(255, 0, 0, 0.089);
 }
 
 

@@ -16,14 +16,15 @@ export default function Home() {
     <div className="app-container h-screen bg-gray-200 bg-opacity-40">
 
         <HeadInfo title= 'Dashboard' description='description here'/>
-
-
         <Header/>
 
-        <div className='w-full px-4 py-4 flex flex-row'>
+        <div className='w-full px-6 py-6 flex flex-row justify-between'>
 
-        <Sidebar />
+            <Sidebar />
+            
+            <div className='app-body overflow-y-auto'>
 
+            </div>
 
         </div>
 
