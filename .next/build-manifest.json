@@ -30,11 +30,6 @@
       "static/chunks/main.js",
       "static/chunks/pages/categories.js"
     ],
-    "/produits": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/produits.js"
-    ],
     "/zones_de_livraison": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",

@@ -22,7 +22,7 @@ export default function Home() {
 
         <div className='w-full px-4 py-4 flex flex-row'>
 
-               <Sidebar />
+        <Sidebar />
 
 
         </div>
