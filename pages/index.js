@@ -30,7 +30,7 @@ export default function Home() {
 
                         <div className='h-36 grid grid-cols-3 grid-flow-row gap-4'>
 
-                            <div className='h-full bg-blue-200 bg-opacity-60 rounded-xl gt-shadow2'>
+                            <div className='h-full bg-purple-200 bg-opacity-60 rounded-xl gt-shadow2'>
                             </div>
 
                             <div className='h-full bg-red-200 bg-opacity-60 rounded-xl gt-shadow2'>

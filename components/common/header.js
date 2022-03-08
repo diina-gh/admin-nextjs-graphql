@@ -24,7 +24,7 @@ export default function Header(props) {
                 </div>
 
                 <div className='self-center text-xl font-semibold ml-5'>
-                    Dashboard
+                    {/* Dashboard */}
                 </div>
 
             </div>
