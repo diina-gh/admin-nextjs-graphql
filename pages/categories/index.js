@@ -6,12 +6,17 @@ import Header from '../../components/common/header'
 import Sidebar from '../../components/common/sidebar'
 import HeadInfo from '../../components/common/headinfo'
 import Sort from '../../components/common/sort';
+import Filter from '../../components/common/filter';
 import FilterBoldIcon from '../../components/ui/icons/filterBoldIcon';
 import { SearchIcon } from '@heroicons/react/solid';
 import AddBoldIcon from '../../components/ui/icons/addBoldIcon';
 import DocBoldIcon from '../../components/ui/icons/docBoldIcon';
 import { Pagination } from "react-pagination-bar"
 import 'react-pagination-bar/dist/index.css'
+import ChevronLeftIcon from '../../components/ui/icons/chevronLeftIcon';
+import ChevronRightIcon from '../../components/ui/icons/chevronRightIcon';
+import DoubleChevronLeftIcon from '../../components/ui/icons/doubleChevronLeftIcon';
+import DoubleChevronRightIcon from '../../components/ui/icons/doubleChevronRightIcon';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -24,7 +29,7 @@ const [currentPage, setCurrentPage] = useState(1);
   const pageLimit = 3;
 
   return (
-    <div className="app-container h-screen bg-gray-200 bg-opacity-40">
+    <div className="app-container h-screen">
 
         <HeadInfo title= 'Dashboard' description='description here'/>
         <Header/>
@@ -41,11 +46,11 @@ const [currentPage, setCurrentPage] = useState(1);
 
                         <Tab.List className="flex space-x-1 border-b border-gray-200 border-opacity-50 w-full">
 
-                                <Tab className={({ selected }) =>classNames('w-full py-3 text-base leading-5 font-medium rounded-t-xl mb-minus1 tracking-normal','focus:outline-none focus:ring-0 ring-opacity-0', selected ? 'text-purple-800 bg-white shadow-sm' : 'text-gray-400 hover:bg-gray-100 hover:text-purple-600')}>
+                                <Tab className={({ selected }) =>classNames('w-full py-3 text-base leading-5 font-medium rounded-t-xl mb-minus1 tracking-normal','focus:outline-none focus:ring-0 ring-opacity-0', selected ? 'text-purple-800 bg-white shadow-sm' : 'text-gray-400 hover:text-purple-600')}>
                                     Catégories
                                 </Tab>
 
-                                <Tab className={({ selected }) =>classNames('w-full py-3 text-base leading-5 font-medium rounded-t-xl mb-minus1 tracking-normal','focus:outline-none focus:ring-0 ring-opacity-0', selected ? 'text-purple-800 bg-white shadow-sm' : 'text-gray-400 hover:bg-gray-100 hover:text-purple-600')}>
+                                <Tab className={({ selected }) =>classNames('w-full py-3 text-base leading-5 font-medium rounded-t-xl mb-minus1 tracking-normal','focus:outline-none focus:ring-0 ring-opacity-0', selected ? 'text-purple-800 bg-white shadow-sm' : 'text-gray-400 hover:text-purple-600')}>
                                     Sous-Catégories
                                 </Tab>
 
@@ -62,15 +67,9 @@ const [currentPage, setCurrentPage] = useState(1);
                                             <div className='flex flex-row'>
                                                 
                                                 <Sort />
+                                                <Filter />
 
-                                                <div className='ml-2 bg-pink-600 bg-opacity-90 h-8 shadow px-2 rounded-md flex flex-col justify-center'>
-                                                    <div className='flex flex-row text-sm font-medium text-gray-100 hover:text-white'>
-                                                        <div className='mr-2 self-center'>Filtrer</div>
-                                                        <FilterBoldIcon customClass="self-center w-3 h-3" />
-                                                    </div>
-                                                </div>
-
-                                                <div className='ml-2 h-8 px-2 self-center bg-gray-200 bg-opacity-80 shadow-inner rounded-full flex flex-row'>
+                                                <div className='ml-2 h-8 px-2 self-center bg-gray-100 bg-opacity-95 shadow-inner rounded-full flex flex-row'>
 
                                                     <div className='w-4 h-4 self-center'>
                                                         <SearchIcon className='w-full h-full text-gray-800' />
@@ -86,16 +85,16 @@ const [currentPage, setCurrentPage] = useState(1);
 
                                             <div className='flex flex-row'>
 
-                                                <div className='ml-2 bg-green-500 bg-opacity-90 h-8 shadow px-2 rounded-md flex flex-col justify-center'>
+                                                <div className='ml-2 bg-green-500 bg-opacity-90 shadow px-2 py-2 rounded-md flex flex-col justify-center btn-effect1'>
                                                     <div className='flex flex-row text-sm font-medium text-gray-100 hover:text-white'>
-                                                        <DocBoldIcon customClass="self-center w-3 h-3" />
+                                                        <DocBoldIcon customClass="self-center w-4 h-4" />
                                                         <div className='ml-2 self-center'>Exporter</div>
                                                     </div>
                                                 </div>
 
-                                                <div className='ml-2 bg-black bg-opacity-90 h-8 shadow px-3 rounded-md flex flex-col justify-center'>
+                                                <div className='ml-2 bg-purple-500 bg-opacity-90 shadow px-3 py-2 rounded-md flex flex-col justify-center btn-effect1'>
                                                     <div className='flex flex-row text-sm font-medium text-gray-100 hover:text-white'>
-                                                        <AddBoldIcon customClass="self-center w-3 h-3" />
+                                                        <AddBoldIcon customClass="self-center w-4 h-4" />
                                                         <div className='ml-2 self-center'>Ajouter</div>
                                                     </div>
                                                 </div>
@@ -104,15 +103,12 @@ const [currentPage, setCurrentPage] = useState(1);
 
                                         </div>
 
-                                        {/* <div className='bg-gray-200 w-full h-12 mt-4'>
-                                        </div> */}
-
                                         <div className="w-full flex flex-col overflow-x-auto mt-4">
                                             <div className="w-full overflow-x-auto">
                                                 <div className="align-middle inline-block min-w-full">
-                                                    <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                                                        <table className="min-w-full divide-y divide-gray-200">
-                                                            <thead className="bg-gray-100">
+                                                    <div className="shadow overflow-hidden app-table border-b border-gray-200 sm:rounded-lg">
+                                                        <table className="min-w-full divide-y divide-gray-200 ">
+                                                            <thead className="bg-gray-100 sticky top-0 ">
                                                                 <tr>
                                                                     <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
                                                                         Designation
@@ -130,8 +126,8 @@ const [currentPage, setCurrentPage] = useState(1);
                                                                 </tr>
                                                             </thead>
                                                             <tbody className="bg-white divide-y divide-gray-200">
-                                                                {people.map((person) => (
-                                                                    <tr key={person.email}>
+                                                                {people.map((person, i) => (
+                                                                    <tr key={person.email} className={(i%2==0) ? "" : "bg-gray-100 bg-opacity-50"}>
                                                                         <td className="px-6 py-3 whitespace-nowrap">
                                                                             <div className="flex items-center">
                                                                                 <div className="flex-shrink-0 h-10 w-10">
@@ -173,18 +169,11 @@ const [currentPage, setCurrentPage] = useState(1);
                                                 onPageСhange={(pageNumber) => setCurrentPage(pageNumber)} 
                                                 totalItems={people.length}  
                                                 pageNeighbours={2} 
-                                                startLabel={'<<'}
-                                                endLabel={'>>'}
-                                                nextLabel={'>'}
-                                                prevLabel={'<'}
-                                                customClassNames={{
-                                                    rpbItemClassName:'pg-btn',
-                                                    rpbItemClassNameActive:'pg-active-btn',
-                                                    // rpbGoItemClassName: 'custom-go-item',
-                                                    // rpbItemClassNameDisable: 'custom-item--disable', 
-                                                    // rpbProgressClassName: 'custom-progress-bar',
-                                                    // rpbRootClassName: 'custom-root',
-                                                }}
+                                                startLabel= {<DoubleChevronLeftIcon customClass="w-3 h-3"/>}
+                                                endLabel={<DoubleChevronRightIcon customClass="w-3 h-3"/>}
+                                                nextLabel={<ChevronRightIcon customClass="w-3 h-3"/>}
+                                                prevLabel={<ChevronLeftIcon customClass="w-3 h-3"/>}
+                                                customClassNames={{rpbItemClassName:'pg-btn', rpbItemClassNameActive:'pg-active-btn',}}
                                             />
                                         </div>
 

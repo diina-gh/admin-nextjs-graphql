@@ -1,5 +1,4 @@
 @import url("/fonts/stylesheet.css");
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -9,73 +8,6 @@
     -webkit-mask-image: -webkit-radial-gradient(white, black);
   }
 }
-
-/* .gt-bg2 {
-  background-color: #1B1B1B;
-  background-image: url('../public/images/background/bg1.webp');
-  background-size: 12.5%;
-  background-repeat: no-repeat;
-  background-position: top 45px right 10px;
-} */
-
-.gt-bg3 {
-  background-color: #1B1B1B;
-  background-image: url('https://raw.githubusercontent.com/diina-gh/owid-covid/main/background/bg1.webp');
-  background-size: 115% !important;
-  background-repeat: no-repeat;
-  background-position: top -200px left -225px !important;
-}
-
-
-.gt-bg4 {
-  background-color: #1B1B1B;
-  background-image: url('https://raw.githubusercontent.com/diina-gh/owid-covid/main/background/bg1.webp');
-  background-size: 310% !important;
-  background-repeat: no-repeat;
-  background-position: top -360px left -300px !important;
-  /* background-attachment:fixed; */
-}
-
-/** sm  **/
-@media (min-width: 640px) {
-
-
-}
-
-/** md  **/
-@media (min-width: 768px) {
-
-  .gt-bg4 {
-    background-size: 100% !important;
-    background-position: top -450px left 0px !important;
-  }
-
-  .gt-bg3 {
-    background-size: 55% !important;
-    background-position: top -425px left -225px !important;
-  }
-
- 
-
-}
-
-/** lg **/
-@media (min-width: 1024px) {
-
-  
-
-}
-
-/** xl **/
-@media (min-width: 1280px) {
-  
-}
-
-/** 2xl **/
-@media (min-width: 1536px) {
-  
-}
-
 
 
 

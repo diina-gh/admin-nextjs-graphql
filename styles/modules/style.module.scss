@@ -1,74 +1,45 @@
+//STYLES
 
-.gt-logo {
-	color: #222222;
-  transition: 0.75s ease !important;
-	text-shadow: 
-		-0.0075em 0.0075em 0 mix(#88618a62, #88618A, 94%),
-		0.005em 0.005em 0 mix(#88618a62, #88618A, 60%),
-		0.01em 0.01em 0 mix(#88618a62, #88618A, 62%), 
-		0.015em 0.015em mix(#88618a62, #88618A, 64%), 
-		0.02em 0.02em 0 mix(#88618a62, #88618A, 66%), 
-		0.025em 0.025em 0 mix(#88618a62, #88618A, 68%),
-		0.03em 0.03em 0 mix(#88618a62, #88618A, 70%),
-		0.035em 0.035em 0 mix(#f79e9e23, #88618A, 72%);
-    &:hover{
-        color: #3366ff;
-    }
+.app-container{
+  background-color: #faf5ef91;
 }
 
-.gt-present{
-  height: fit-content;
-  padding-bottom: 4rem;
-
+.app-sidebar{
+  min-height: fit-content !important;
+  max-height: calc(100vh - 6.5rem);
+  @extend .gt-shadow2;
 }
 
-.mb-minus1{
-  margin-bottom: -1px !important;
+.app-rightbar{
+  min-height: fit-content;
+  max-height: calc(100vh - 6.5rem);
+  @extend .gt-shadow2;
 }
 
-.btn-effect1{
-  transition: 0.5s ease;
-  &:active{
-    transform: scale(0.95);
-  }
+.app-body{
+  width: calc(100vw - 19.4rem);
+  height: calc(100vh - 6.5rem);
+  @extend .gt-shadow2;
 }
 
-.gt-btn-type1{
-  @extend .btn-effect1;
-  background: linear-gradient(85deg, #2563eb, #6b51b4, #6c27d7) !important;
-  position: relative !important;
-
-  &:hover{
-    background: linear-gradient(85deg, #6b51b4, #6c27d7, #2563eb) !important;
-  }
+.app-subbody2{
+  height: calc(100vh - 9.327rem);
 }
 
-.gt-text-gradient {
-  background: -webkit-linear-gradient(85deg,#2563eb, #6b51b4, #6c27d7) !important;
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
+.app-table{
+  max-height: calc(100vh - 18.5rem) !important;
+  overflow-y: auto !important;
 }
 
-.gt-bg-gradient{
-  background: -webkit-linear-gradient(85deg,#2563eb, #6b51b4, #6c27d7) !important;
+
+
+
+#pg-container {
+  margin: 1rem;
 }
 
-.gt-hover-text-gradient{
-  &:hover{
-    background: -webkit-linear-gradient(85deg, #2563eb, #6b51b4, #6c27d7) !important;
-    -webkit-background-clip: text !important;
-    -webkit-text-fill-color: transparent !important;
-  }
-}
-
-.gt-bg1{
-  background: linear-gradient(217deg, #e0dcdc18, rgba(255,0,0,0) 70.71%),
-            linear-gradient(127deg, #d5e3eb18, rgba(0,255,0,0) 70.71%),
-            linear-gradient(336deg, #eef0f118, rgba(0,0,255,0) 70.71%);
-}
-
-.gt-bg-type1{
-  background: linear-gradient(85deg, #2564eb23, #6b51b428, #6d27d727) !important;
+.pg-items {
+  margin-bottom: 1rem;
 }
 
 .gt-border1 {
@@ -83,129 +54,20 @@
   border-image: linear-gradient(85deg, #2564eb1e, #6b51b4, #6d27d769) 1 !important;
 }
 
-.p-image{
-  max-height: 5rem;
-  max-width: 95%;
-  img{
-    max-height: 5rem;
-    max-width: 100%;
-  }
-}
-
-.p-image2{
-  max-height: 12rem;
-  max-width: 95%;
-  img{
-    max-height: 12rem;
-    max-width: 100%;
-  }
-}
-
-
-.p-image3{
-  max-height: 2.5rem;
-  max-width: 95%;
-  img{
-    max-height: 2.5rem;
-    max-width: 100%;
-  }
-}
-
-.p-image4{
-  max-height: 3.5rem;
-  max-width: 95%;
-  img{
-    max-height: 3.5rem;
-    max-width: 100%;
-  }
-}
-
-
-// Don't delete this
-
-.gt-shadow1{
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-}
-
-.gt-shadow2{
-  box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
-}
-
-.app-sidebar{
-  height: calc(100vh - 6.5rem);
-  @extend .gt-shadow2;
-}
-
-.app-leftbar{
-  height: calc(100vh - 6.5rem);
-  @extend .gt-shadow2;
-}
-
-.app-body{
-  width: calc(100vw - 19.4rem);
-  height: calc(100vh - 6.5rem);
-  // background-color: rgba(255, 0, 0, 0.089);
-}
-
-.app-subbody2{
-  height: calc(100vh - 9.327rem);
-}
-
-
-#pg-container {
-  margin: 1rem;
-}
-
-.pg-items {
-  margin-bottom: 1rem;
-}
-
 
 
 /** sm  **/
 @media (min-width: 640px) {
 
-
 }
 
 /** md  **/
 @media (min-width: 768px) {
-
-  .casper1{
-    display: none;
-  }
-
-  .p-image{
-    max-height: 8rem;
-    img{
-      max-height: 8rem;
-    }
-  }
-
-  .p-image2{
-    max-height: 15rem;
-    img{
-      max-height: 15rem;
-    }
-  }
-  
-  
-  .p-image3{
-    max-height: 3.75rem;
-    img{
-      max-height: 3.75rem;
-    }
-  }
-
+ 
 }
 
 /** lg **/
 @media (min-width: 1024px) {
-
-  .ii-present{
-    height: calc(100vh - 6.50rem);
-    padding-bottom: 0px;
-  }
 
 }
 

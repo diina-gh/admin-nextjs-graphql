@@ -1,0 +1,22 @@
+.btn-effect1{
+    cursor: pointer;
+    transition: 0.5s ease;
+    &:hover{
+        opacity: 95%;
+    }
+    &:active{
+      transform: scale(0.965);
+      opacity: 99.55%;
+
+    }
+}
+  
+.btn-type1{
+    @extend .btn-effect1;
+    background: linear-gradient(85deg, #2563eb, #6b51b4, #6c27d7) !important;
+    position: relative !important;
+  
+    &:hover{
+      background: linear-gradient(85deg, #6b51b4, #6c27d7, #2563eb) !important;
+    }
+}

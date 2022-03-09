@@ -13,7 +13,7 @@ function classNames(...classes) {
 export default function Home() {
 
   return (
-    <div className="app-container h-screen bg-gray-200 bg-opacity-40">
+    <div className="app-container h-screen">
 
         <HeadInfo title= 'Dashboard' description='description here'/>
         <Header />
@@ -49,7 +49,7 @@ export default function Home() {
 
                     </div>
 
-                    <div className='app-leftbar bg-white rounded-xl'>
+                    <div className='app-rightbar bg-white rounded-xl'>
 
                     </div>
     

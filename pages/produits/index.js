@@ -13,7 +13,7 @@ function classNames(...classes) {
 export default function Index() {
 
   return (
-    <div className="app-container h-screen bg-gray-200 bg-opacity-40">
+    <div className="app-container h-screen">
 
         <HeadInfo title= 'Produits' description='description here'/>
 

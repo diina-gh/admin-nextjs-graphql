@@ -79,6 +79,23 @@ input[type=number] {
 }
 
 
+.editor-container {
+  height: 215.35px !important;
+}
+
+.ck-content{
+  height: 175px !important;
+  // background-color: rgba(255, 0, 0, 0.26) !important;
+  &:active{
+    border: none !important;
+    border-color: rgba(255, 255, 255, 0) !important;
+  }
+}
+
+
+// ck ck-content ck-editor__editable ck-rounded-corners ck-editor__editable_inline ck-blurred
+
+
 /** sm  **/
 @media (min-width: 640px) {
 

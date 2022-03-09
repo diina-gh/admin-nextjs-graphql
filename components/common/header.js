@@ -19,7 +19,7 @@ export default function Header(props) {
                     <div className='h-8 w-8 rounded-full mr-2 self-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500'>
                     </div>
 
-                    <div className='text-2xl gt-title font-bold self-center'>Untitled</div>
+                    <div className='text-2xl logo-text1 font-bold self-center'>Untitled</div>
 
                 </div>
 

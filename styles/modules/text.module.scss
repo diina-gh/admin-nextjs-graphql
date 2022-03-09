@@ -1,0 +1,31 @@
+
+.logo-text1 {
+	color: #222222;
+  transition: 0.75s ease !important;
+	text-shadow: 
+		-0.0075em 0.0075em 0 mix(#88618a62, #88618A, 94%),
+		0.005em 0.005em 0 mix(#88618a62, #88618A, 60%),
+		0.01em 0.01em 0 mix(#88618a62, #88618A, 62%), 
+		0.015em 0.015em mix(#88618a62, #88618A, 64%), 
+		0.02em 0.02em 0 mix(#88618a62, #88618A, 66%), 
+		0.025em 0.025em 0 mix(#88618a62, #88618A, 68%),
+		0.03em 0.03em 0 mix(#88618a62, #88618A, 70%),
+		0.035em 0.035em 0 mix(#f79e9e23, #88618A, 72%);
+    &:hover{
+        color: #3366ff;
+    }
+}
+
+.text-gradient {
+    background: -webkit-linear-gradient(85deg,#2563eb, #6b51b4, #6c27d7) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+  }
+  
+.text-gradient-hover{
+    &:hover{
+      background: -webkit-linear-gradient(85deg, #2563eb, #6b51b4, #6c27d7) !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+    }
+  }

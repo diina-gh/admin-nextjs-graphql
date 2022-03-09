@@ -1,5 +1,19 @@
-
 //background
+
+.gt-bg1{
+  background: linear-gradient(217deg, #e0dcdc18, rgba(255,0,0,0) 70.71%),
+            linear-gradient(127deg, #d5e3eb18, rgba(0,255,0,0) 70.71%),
+            linear-gradient(336deg, #eef0f118, rgba(0,0,255,0) 70.71%);
+}
+
+.gt-bg-type1{
+  background: linear-gradient(85deg, #2564eb23, #6b51b428, #6d27d727) !important;
+}
+
+
+.gt-bg-gradient{
+  background: -webkit-linear-gradient(85deg,#2563eb, #6b51b4, #6c27d7) !important;
+}
 
 
   /** sm  **/
