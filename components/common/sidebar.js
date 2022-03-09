@@ -94,7 +94,7 @@ export default function Sidebar() {
                 <Disclosure as="li" className="mt-2">
                     {({ open }) => (
                         <>
-                        <Disclosure.Button className={`${open || router.asPath === '/produits' || router.asPath === '/marques' || router.asPath === '/produits/form' || router.asPath === '/marques/form' ? 'text-purple-800 border-purple-500 bg-gradient-to-r from-purple-50 to-fuchsia-50 bg-opacity-5' : 'border-white text-gray-900'} w-full flex justify-between py-2 px-4 text-base font-medium border-l-2 hover:text-purple-800 hover:border-purple-500 hover:bg-gradient-to-r hover:from-purple-50 hover:to-fuchsia-50 hover:bg-opacity-5`} >
+                        <Disclosure.Button className={`${open || router.asPath.indexOf('/produits') != -1 || router.asPath.indexOf('/marques') != -1 || router.asPath.indexOf('/variants') != -1 ? 'text-purple-800 border-purple-500 bg-gradient-to-r from-purple-50 to-fuchsia-50 bg-opacity-5' : 'border-white text-gray-900'} w-full flex justify-between py-2 px-4 text-base font-medium border-l-2 hover:text-purple-800 hover:border-purple-500 hover:bg-gradient-to-r hover:from-purple-50 hover:to-fuchsia-50 hover:bg-opacity-5`} >
                             <a  className="flex items-center ">
                                 <LaptopBoldIcon customClass="w-4 h-4" />
                                 <span className="ml-3">Produits</span>
@@ -104,6 +104,9 @@ export default function Sidebar() {
                         <Disclosure.Panel className="my-2 text-sm font-medium ">
                             <Link  href='/produits' >
                                 <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '>Produits</div>
+                            </Link>
+                            <Link  href='/variants' >
+                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '>Variants</div>
                             </Link>
                             <Link  href='/marques' >
                                 <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '>Marques</div>

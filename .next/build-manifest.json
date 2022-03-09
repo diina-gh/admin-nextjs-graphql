@@ -25,10 +25,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/categories": [
+    "/produits": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/categories.js"
+      "static/chunks/pages/produits.js"
     ],
     "/produits/form": [
       "static/chunks/webpack.js",

@@ -24,7 +24,7 @@ export default function Home() {
             
             <div className='app-body'>
 
-                <div class="w-full h-full grid grid-cols-4 grid-flow-row gap-2">
+                <div className="w-full h-full grid grid-cols-4 grid-flow-row gap-2">
 
                     <div className='col-span-3 h-full overflow-y-auto pr-2'>
 
