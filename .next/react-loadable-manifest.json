@@ -1,6 +1,6 @@
 {
-  "categories\\form.js -> ../../components/common/editor": {
-    "id": "categories\\form.js -> ../../components/common/editor",
+  "produits\\form.js -> ../../components/common/editor": {
+    "id": "produits\\form.js -> ../../components/common/editor",
     "files": [
       "static/chunks/components_common_editor_js.js"
     ]

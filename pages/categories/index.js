@@ -7,7 +7,6 @@ import Sidebar from '../../components/common/sidebar'
 import HeadInfo from '../../components/common/headinfo'
 import Sort from '../../components/common/sort';
 import Filter from '../../components/common/filter';
-import FilterBoldIcon from '../../components/ui/icons/filterBoldIcon';
 import { SearchIcon } from '@heroicons/react/solid';
 import AddBoldIcon from '../../components/ui/icons/addBoldIcon';
 import DocBoldIcon from '../../components/ui/icons/docBoldIcon';
@@ -37,165 +36,172 @@ const [currentPage, setCurrentPage] = useState(1);
         <div className='w-full px-6 py-5 flex flex-row justify-between'>
 
             <Sidebar />
-            
-            <div className='app-body'>
 
-                <div className='w-full'>
+            <motion.div initial={{ opacity: 0.45, x: -150 }}  whileInView={{ opacity: 1, x: 0, transition: { duration: 0.60 }, }}>
+                <div className='app-body'>
 
-                    <Tab.Group >
+                    <div className='w-full'>
 
-                        <Tab.List className="flex space-x-1 border-b border-gray-200 border-opacity-50 w-full">
+                        <Tab.Group >
 
-                                <Tab className={({ selected }) =>classNames('w-full py-3 text-base leading-5 font-medium rounded-t-xl mb-minus1 tracking-normal','focus:outline-none focus:ring-0 ring-opacity-0', selected ? 'text-purple-800 bg-white shadow-sm' : 'text-gray-400 hover:text-purple-600')}>
-                                    Catégories
-                                </Tab>
+                            <Tab.List className="flex space-x-1 border-b border-gray-200 border-opacity-50 w-full">
 
-                                <Tab className={({ selected }) =>classNames('w-full py-3 text-base leading-5 font-medium rounded-t-xl mb-minus1 tracking-normal','focus:outline-none focus:ring-0 ring-opacity-0', selected ? 'text-purple-800 bg-white shadow-sm' : 'text-gray-400 hover:text-purple-600')}>
-                                    Sous-Catégories
-                                </Tab>
+                                    <Tab className={({ selected }) =>classNames('w-full flex flex-row justify-center py-3 text-[1.075rem] font-bold leading-5 rounded-t-xl mb-minus1 tracking-normal','focus:outline-none focus:ring-0 ring-opacity-0', selected ? 'text-purple-800 bg-white shadow-sm badge-active' : 'text-gray-400 text-opacity-80 hover:text-purple-600 badge-disabled')}>
+                                            <div className='mr-2 self-center'>Catégories</div>
+                                            <div className='px-2 py-[0.25px] rounded-xl tab-badge text-[10.35px] font-medium self-center'>12</div>
+                                    </Tab>
 
-                            
-                        </Tab.List>
+                                    <Tab className={({ selected }) =>classNames('w-full flex flex-row justify-center py-3 text-[1.075rem] font-bold leading-5 rounded-t-xl mb-minus1 tracking-normal','focus:outline-none focus:ring-0 ring-opacity-0', selected ? 'text-purple-800 bg-white shadow-sm badge-active' : 'text-gray-400 text-opacity-80 hover:text-purple-600 badge-disabled')}>
+                                            <div className='mr-2 self-center'>Sous-Catégories</div>
+                                            <div className='px-2 py-[0.25px] rounded-xl tab-badge text-[10.35px] font-medium self-center'>25</div>
+                                    </Tab>
 
-                        <Tab.Panels className='app-subbody2'>
-                                <Tab.Panel key={1} className={classNames('','bg-white h-full focus:outline-none focus:ring-0 ring-opacity-0 rounded-b-xl ')}>
+                                
+                            </Tab.List>
 
-                                    <div className='w-full h-full rounded-b-xl overflow-y-scroll p-4'>
+                            <Tab.Panels className='app-subbody2'>
+                                    <Tab.Panel key={1} className={classNames('','bg-white h-full focus:outline-none focus:ring-0 ring-opacity-0 rounded-b-xl ')}>
 
-                                        <div className='w-full flex flex-row justify-between mt-3'>
+                                        <div className='w-full h-full rounded-b-xl overflow-y-scroll p-4'>
 
-                                            <div className='flex flex-row'>
-                                                
-                                                <Sort />
-                                                <Filter />
+                                            <div className='w-full flex flex-row justify-between mt-3'>
 
-                                                <div className='ml-2 h-8 px-2 self-center bg-gray-100 bg-opacity-95 shadow-inner rounded-full flex flex-row'>
+                                                <div className='flex flex-row'>
+                                                    
+                                                    <Sort />
+                                                    <Filter />
 
-                                                    <div className='w-4 h-4 self-center'>
-                                                        <SearchIcon className='w-full h-full text-gray-800' />
+                                                    <div className='ml-2 h-8 px-2 self-center bg-gray-100 bg-opacity-95 shadow-inner rounded-full flex flex-row'>
+
+                                                        <div className='w-4 h-4 self-center'>
+                                                            <SearchIcon className='w-full h-full text-gray-800' />
+                                                        </div>
+
+                                                        <div className='w-72 h-full'>
+                                                            <input type="search"  className='w-full h-full focus:ring-0 text-sm border-0 bg-gray-200 bg-opacity-0' placeholder='Rechercher un nom ou une description ...' />
+                                                        </div>
+
+                                                    </div>
+                                                    
+                                                </div>
+
+                                                <div className='flex flex-row'>
+
+                                                    <div className='ml-2 bg-green-500 bg-opacity-90 shadow px-2 py-2 rounded-md flex flex-col justify-center btn-effect1'>
+                                                        <div className='flex flex-row text-sm font-medium text-gray-100 hover:text-white'>
+                                                            <DocBoldIcon customClass="self-center w-4 h-4" />
+                                                            <div className='ml-2 self-center'>Exporter</div>
+                                                        </div>
                                                     </div>
 
-                                                    <div className='w-72 h-full'>
-                                                        <input type="search"  className='w-full h-full focus:ring-0 text-sm border-0 bg-gray-200 bg-opacity-0' placeholder='Rechercher un nom ou une description ...' />
-                                                    </div>
+                                                    <Link href='categories/form' > 
+                                                        <div className='ml-2 bg-purple-500 bg-opacity-90 shadow px-3 py-2 rounded-md flex flex-col justify-center btn-effect1'>
+                                                            <div className='flex flex-row text-sm font-medium text-gray-100 hover:text-white'>
+                                                                <AddBoldIcon customClass="self-center w-4 h-4" />
+                                                                <div className='ml-2 self-center'>Ajouter</div>
+                                                            </div>
+                                                        </div>
+                                                    </Link>
 
                                                 </div>
-                                                
+
                                             </div>
 
-                                            <div className='flex flex-row'>
+                                            <div className="w-full flex flex-col overflow-x-auto mt-4">
+                                                <div className="w-full overflow-x-auto">
+                                                    <div className="align-middle inline-block min-w-full">
+                                                        <div className="shadow overflow-hidden app-table border-b border-gray-200 sm:rounded-lg">
+                                                            <table className="min-w-full divide-y divide-gray-200 ">
+                                                                <thead className="bg-gray-100 sticky top-0 ">
+                                                                    <tr>
+                                                                        <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                                                                            Designation
+                                                                        </th>
+                                                                        <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-600 uppercase tracking-wider" >
+                                                                            Description
+                                                                        </th>
+                                                                        <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-600 uppercase tracking-wider" >
+                                                                            Status
+                                                                        </th>
 
-                                                <div className='ml-2 bg-green-500 bg-opacity-90 shadow px-2 py-2 rounded-md flex flex-col justify-center btn-effect1'>
-                                                    <div className='flex flex-row text-sm font-medium text-gray-100 hover:text-white'>
-                                                        <DocBoldIcon customClass="self-center w-4 h-4" />
-                                                        <div className='ml-2 self-center'>Exporter</div>
-                                                    </div>
-                                                </div>
-
-                                                <div className='ml-2 bg-purple-500 bg-opacity-90 shadow px-3 py-2 rounded-md flex flex-col justify-center btn-effect1'>
-                                                    <div className='flex flex-row text-sm font-medium text-gray-100 hover:text-white'>
-                                                        <AddBoldIcon customClass="self-center w-4 h-4" />
-                                                        <div className='ml-2 self-center'>Ajouter</div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-
-                                        <div className="w-full flex flex-col overflow-x-auto mt-4">
-                                            <div className="w-full overflow-x-auto">
-                                                <div className="align-middle inline-block min-w-full">
-                                                    <div className="shadow overflow-hidden app-table border-b border-gray-200 sm:rounded-lg">
-                                                        <table className="min-w-full divide-y divide-gray-200 ">
-                                                            <thead className="bg-gray-100 sticky top-0 ">
-                                                                <tr>
-                                                                    <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
-                                                                        Designation
-                                                                    </th>
-                                                                    <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-600 uppercase tracking-wider" >
-                                                                        Description
-                                                                    </th>
-                                                                    <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-600 uppercase tracking-wider" >
-                                                                        Status
-                                                                    </th>
-      
-                                                                    <th scope="col" className="relative px-6 py-3">
-                                                                        <span className="sr-only">Edit</span>
-                                                                    </th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody className="bg-white divide-y divide-gray-200">
-                                                                {people.map((person, i) => (
-                                                                    <tr key={person.email} className={(i%2==0) ? "" : "bg-gray-100 bg-opacity-50"}>
-                                                                        <td className="px-6 py-3 whitespace-nowrap">
-                                                                            <div className="flex items-center">
-                                                                                <div className="flex-shrink-0 h-10 w-10">
-                                                                                    <img className="h-10 w-10 rounded-full" src={person.image} alt="" />
-                                                                                </div>
-                                                                                <div className="ml-4">
-                                                                                    <div className="text-sm font-medium text-gray-900">{person.name}</div>
-                                                                                    <div className="text-sm text-gray-500">{person.email}</div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </td>
-                                                                        <td className="px-6 py-3 whitespace-nowrap">
-                                                                            <div className="text-sm text-gray-900">{person.title}</div>
-                                                                            <div className="text-sm text-gray-500">{person.department}</div>
-                                                                        </td>
-                                                                        <td className="px-6 py-3 whitespace-nowrap">
-                                                                            <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                                                                Active
-                                                                            </span>
-                                                                        </td>
-                                                                        <td className="px-6 py-3 whitespace-nowrap text-right text-sm font-medium">
-                                                                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                                                                Edit
-                                                                            </a>
-                                                                        </td>
+                                                                        <th scope="col" className="relative px-6 py-3">
+                                                                            <span className="sr-only">Edit</span>
+                                                                        </th>
                                                                     </tr>
-                                                                ))}
-                                                            </tbody>
-                                                        </table>
+                                                                </thead>
+                                                                <tbody className="bg-white divide-y divide-gray-200">
+                                                                    {people.map((person, i) => (
+                                                                        <tr key={person.email} className={(i%2==0) ? "" : "bg-gray-100 bg-opacity-50"}>
+                                                                            <td className="px-6 py-3 whitespace-nowrap">
+                                                                                <div className="flex items-center">
+                                                                                    <div className="flex-shrink-0 h-10 w-10">
+                                                                                        <img className="h-10 w-10 rounded-full" src={person.image} alt="" />
+                                                                                    </div>
+                                                                                    <div className="ml-4">
+                                                                                        <div className="text-sm font-medium text-gray-900">{person.name}</div>
+                                                                                        <div className="text-sm text-gray-500">{person.email}</div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td className="px-6 py-3 whitespace-nowrap">
+                                                                                <div className="text-sm text-gray-900">{person.title}</div>
+                                                                                <div className="text-sm text-gray-500">{person.department}</div>
+                                                                            </td>
+                                                                            <td className="px-6 py-3 whitespace-nowrap">
+                                                                                <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                                                    Active
+                                                                                </span>
+                                                                            </td>
+                                                                            <td className="px-6 py-3 whitespace-nowrap text-right text-sm font-medium">
+                                                                                <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                                                                                    Edit
+                                                                                </a>
+                                                                            </td>
+                                                                        </tr>
+                                                                    ))}
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <div className='w-full flex flex-row justify-end mt-6'>
+                                                <Pagination 
+                                                    initialPage={currentPage} 
+                                                    itemsPerPage={pageLimit} 
+                                                    onPageСhange={(pageNumber) => setCurrentPage(pageNumber)} 
+                                                    totalItems={people.length}  
+                                                    pageNeighbours={2} 
+                                                    startLabel= {<DoubleChevronLeftIcon customClass="w-3 h-3"/>}
+                                                    endLabel={<DoubleChevronRightIcon customClass="w-3 h-3"/>}
+                                                    nextLabel={<ChevronRightIcon customClass="w-3 h-3"/>}
+                                                    prevLabel={<ChevronLeftIcon customClass="w-3 h-3"/>}
+                                                    customClassNames={{rpbItemClassName:'pg-btn', rpbItemClassNameActive:'pg-active-btn',}}
+                                                />
+                                            </div>
+
+
                                         </div>
 
-                                        <div className='w-full flex flex-row justify-end mt-6'>
-                                            <Pagination 
-                                                initialPage={currentPage} 
-                                                itemsPerPage={pageLimit} 
-                                                onPageСhange={(pageNumber) => setCurrentPage(pageNumber)} 
-                                                totalItems={people.length}  
-                                                pageNeighbours={2} 
-                                                startLabel= {<DoubleChevronLeftIcon customClass="w-3 h-3"/>}
-                                                endLabel={<DoubleChevronRightIcon customClass="w-3 h-3"/>}
-                                                nextLabel={<ChevronRightIcon customClass="w-3 h-3"/>}
-                                                prevLabel={<ChevronLeftIcon customClass="w-3 h-3"/>}
-                                                customClassNames={{rpbItemClassName:'pg-btn', rpbItemClassNameActive:'pg-active-btn',}}
-                                            />
+                                    </Tab.Panel>
+
+                                    <Tab.Panel key={2} className={classNames('','bg-white h-full focus:outline-none focus:ring-0 ring-opacity-0 rounded-b-xl ')}>
+
+                                        <div className='w-full h-full rounded-b-xl overflow-y-scroll'>
+                                            
                                         </div>
 
+                                    </Tab.Panel>
+                            </Tab.Panels>
 
-                                    </div>
+                        </Tab.Group>
 
-                                </Tab.Panel>
-
-                                <Tab.Panel key={2} className={classNames('','bg-white h-full focus:outline-none focus:ring-0 ring-opacity-0 rounded-b-xl ')}>
-
-                                    <div className='w-full h-full rounded-b-xl overflow-y-scroll'>
-                                        
-                                    </div>
-
-                                </Tab.Panel>
-                        </Tab.Panels>
-
-                    </Tab.Group>
+                    </div>
 
                 </div>
+            </motion.div>
 
-            </div>
 
         </div>
 

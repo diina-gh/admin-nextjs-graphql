@@ -22,7 +22,7 @@ export default function Sidebar() {
 
   return (
 
-    <aside className="app-sidebar w-60 py-4 bg-white rounded-xl" aria-label="Sidebar">
+    <aside className="app-sidebar w-60 py-4 bg-white rounded-xl z-10" aria-label="Sidebar">
 
         <div className="overflow-y-auto w-full h-full">
 
@@ -75,26 +75,48 @@ export default function Sidebar() {
 
                 <Link  href='/categories' >
                     <li>
-                        <a  className={`${(router.asPath === '/categories') ? 'text-purple-800 border-purple-500 bg-gradient-to-r from-purple-50 to-fuchsia-50 bg-opacity-5' : 'border-white text-gray-900'} flex items-center py-2 px-4 text-base font-medium border-l-2 hover:text-purple-800 hover:border-purple-500 hover:bg-gradient-to-r hover:from-purple-50 hover:to-fuchsia-50 hover:bg-opacity-5 cursor-pointer duration-700 ease-in-out `}>
+                        <a  className={`${(router.asPath === '/categories' || router.asPath === '/categories/form') ? 'text-purple-800 border-purple-500 bg-gradient-to-r from-purple-50 to-fuchsia-50 bg-opacity-5' : 'border-white text-gray-900'} flex items-center py-2 px-4 text-base font-medium border-l-2 hover:text-purple-800 hover:border-purple-500 hover:bg-gradient-to-r hover:from-purple-50 hover:to-fuchsia-50 hover:bg-opacity-5 cursor-pointer duration-700 ease-in-out `}>
                             <LetterBoldIcon customClass="w-4 h-4" />
                             <span className="ml-3">Catégories</span>
                         </a>
                     </li>
                 </Link>
 
-                <Link  href='/produits' >
+                {/* <Link  href='/produits' >
                     <li>
-                        <a  className={`${(router.asPath === '/produits') ? 'text-purple-800 border-purple-500 bg-gradient-to-r from-purple-50 to-fuchsia-50 bg-opacity-5' : 'border-white text-gray-900'} flex items-center py-2 px-4 text-base font-medium border-l-2 hover:text-purple-800 hover:border-purple-500 hover:bg-gradient-to-r hover:from-purple-50 hover:to-fuchsia-50 hover:bg-opacity-5 cursor-pointer duration-700 ease-in-out `}>
+                        <a  className={`${(router.asPath === '/produits' || router.asPath === '/produits/form') ? 'text-purple-800 border-purple-500 bg-gradient-to-r from-purple-50 to-fuchsia-50 bg-opacity-5' : 'border-white text-gray-900'} flex items-center py-2 px-4 text-base font-medium border-l-2 hover:text-purple-800 hover:border-purple-500 hover:bg-gradient-to-r hover:from-purple-50 hover:to-fuchsia-50 hover:bg-opacity-5 cursor-pointer duration-700 ease-in-out `}>
                             <LaptopBoldIcon customClass="w-4 h-4" />
                             <span className="ml-3">Produits</span>
                         </a>
                     </li>
-                </Link>
+                </Link> */}
 
                 <Disclosure as="li" className="mt-2">
                     {({ open }) => (
                         <>
-                        <Disclosure.Button className={`${open || router.asPath === '/zones_de_livraison' || router.asPath === '/modes_de_livraison' || router.asPath === '/livreurs' ? 'text-purple-800 border-purple-500 bg-gradient-to-r from-purple-50 to-fuchsia-50 bg-opacity-5' : 'border-white text-gray-900'} w-full flex justify-between py-2 px-4 text-base font-medium border-l-2 hover:text-purple-800 hover:border-purple-500 hover:bg-gradient-to-r hover:from-purple-50 hover:to-fuchsia-50 hover:bg-opacity-5`} >
+                        <Disclosure.Button className={`${open || router.asPath === '/produits' || router.asPath === '/marques' || router.asPath === '/produits/form' || router.asPath === '/marques/form' ? 'text-purple-800 border-purple-500 bg-gradient-to-r from-purple-50 to-fuchsia-50 bg-opacity-5' : 'border-white text-gray-900'} w-full flex justify-between py-2 px-4 text-base font-medium border-l-2 hover:text-purple-800 hover:border-purple-500 hover:bg-gradient-to-r hover:from-purple-50 hover:to-fuchsia-50 hover:bg-opacity-5`} >
+                            <a  className="flex items-center ">
+                                <LaptopBoldIcon customClass="w-4 h-4" />
+                                <span className="ml-3">Produits</span>
+                            </a>
+                            <ChevronDownIcon className={`${open  ? 'transform rotate-180' : ''} w-5 h-5 self-center`}/>
+                        </Disclosure.Button>
+                        <Disclosure.Panel className="my-2 text-sm font-medium ">
+                            <Link  href='/produits' >
+                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '>Produits</div>
+                            </Link>
+                            <Link  href='/marques' >
+                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '>Marques</div>
+                            </Link>
+                        </Disclosure.Panel>
+                        </>
+                    )}
+                </Disclosure>
+
+                <Disclosure as="li" className="mt-2">
+                    {({ open }) => (
+                        <>
+                        <Disclosure.Button className={`${open || router.asPath === '/zones_de_livraison' || router.asPath === '/modes_de_livraison' || router.asPath === '/livreurs' || router.asPath === '/livreurs/form' || router.asPath === '/modes_de_livraison/form' || router.asPath === '/zones_de_livraison/form' ? 'text-purple-800 border-purple-500 bg-gradient-to-r from-purple-50 to-fuchsia-50 bg-opacity-5' : 'border-white text-gray-900'} w-full flex justify-between py-2 px-4 text-base font-medium border-l-2 hover:text-purple-800 hover:border-purple-500 hover:bg-gradient-to-r hover:from-purple-50 hover:to-fuchsia-50 hover:bg-opacity-5`} >
                             <a  className="flex items-center ">
                                 <BoxBoldIcon customClass="w-4 h-4" />
                                 <span className="ml-3">Livraisons</span>
@@ -120,7 +142,7 @@ export default function Sidebar() {
 
                 <Link  href='/clients' >
                     <li>
-                        <a  className={`${(router.asPath === '/clients') ? 'text-purple-800 border-purple-500 bg-gradient-to-r from-purple-50 to-fuchsia-50 bg-opacity-5' : 'border-white text-gray-900'} flex items-center py-2 px-4 text-base font-medium border-l-2 hover:text-purple-800 hover:border-purple-500 hover:bg-gradient-to-r hover:from-purple-50 hover:to-fuchsia-50 hover:bg-opacity-5 cursor-pointer duration-700 ease-in-out `}>
+                        <a  className={`${(router.asPath === '/clients' || router.asPath === '/clients/form') ? 'text-purple-800 border-purple-500 bg-gradient-to-r from-purple-50 to-fuchsia-50 bg-opacity-5' : 'border-white text-gray-900'} flex items-center py-2 px-4 text-base font-medium border-l-2 hover:text-purple-800 hover:border-purple-500 hover:bg-gradient-to-r hover:from-purple-50 hover:to-fuchsia-50 hover:bg-opacity-5 cursor-pointer duration-700 ease-in-out `}>
                             <GroupBoldIcon  customClass="w-4 h-4" />
                             <span className="ml-3">Clients</span>
                         </a>
@@ -150,7 +172,7 @@ export default function Sidebar() {
                 <Disclosure as="li" className="mt-2">
                     {({ open }) => (
                         <>
-                        <Disclosure.Button className={`${open || router.asPath === '/utilisateurs' || router.asPath === '/roles' || router.asPath === '/permissions'  ? 'text-purple-800 border-purple-500 bg-gradient-to-r from-purple-50 to-fuchsia-50 bg-opacity-5' : 'border-white text-gray-900'} w-full flex justify-between py-2 px-4 text-base font-medium border-l-2 hover:text-purple-800 hover:border-purple-500 hover:bg-gradient-to-r hover:from-purple-50 hover:to-fuchsia-50 hover:bg-opacity-5`} >
+                        <Disclosure.Button className={`${open || router.asPath === '/utilisateurs' || router.asPath === '/roles' || router.asPath === '/permissions' || router.asPath === '/utilisateurs/form' || router.asPath === '/roles/form'  || router.asPath === '/permissions/form'  ? 'text-purple-800 border-purple-500 bg-gradient-to-r from-purple-50 to-fuchsia-50 bg-opacity-5' : 'border-white text-gray-900'} w-full flex justify-between py-2 px-4 text-base font-medium border-l-2 hover:text-purple-800 hover:border-purple-500 hover:bg-gradient-to-r hover:from-purple-50 hover:to-fuchsia-50 hover:bg-opacity-5`} >
                             <a  className="flex items-center ">
                                 <SettingsBoldIcon customClass="w-4 h-4" />
                                 <span className="ml-3">Paramètres</span>
