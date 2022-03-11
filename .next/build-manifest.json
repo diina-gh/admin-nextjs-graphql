@@ -25,15 +25,15 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/categories": [
+    "/newsletters": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/categories.js"
+      "static/chunks/pages/newsletters.js"
     ],
-    "/variants": [
+    "/zones_de_livraison": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/variants.js"
+      "static/chunks/pages/zones_de_livraison.js"
     ]
   },
   "ampFirstPages": []

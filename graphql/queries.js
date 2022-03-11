@@ -24,54 +24,6 @@ export const newsletterQuery = gql`
     }
 `
 
-export const countriesQuery = gql `
-    query($page: Int, $take: Int, $filter: String, $orderBy: CountryOrderByInput){
-        countries(page: $page, take: $take, filter: $filter, orderBy: $orderBy) {
-            id
-            isoNum
-            iso3
-            name
-            count
-        }
-    }
-`
-
-export const regionsQuery = gql `
-    query($page: Int, $take: Int, $filter: String, $orderBy: RegionOrderByInput){
-        regions(page: $page, take: $take, filter: $filter, orderBy: $orderBy) {
-            id
-            code
-            name
-            country {
-                id
-                iso3
-                isoNum
-                name
-            }
-            count
-        }
-    }
-`
-
-export const districtsQuery = gql`
-    query($page: Int, $take: Int, $filter: String, $orderBy: DistrictOrderByInput){
-        districts(page: $page, take: $take, filter: $filter, orderBy: $orderBy) {
-            id
-            name
-            shipping
-            region {
-                id
-                name
-                country {
-                    id
-                    name
-                }
-            } 
-            count
-        }
-    }
-`
-
 export const districtsOnUsersQuery = gql `
     query($page: Int, $take: Int, $filter: String, $orderBy: DistrictsOnUsersOrderByInput, $userId: Int){
         districtsOnUsers(page: $page, take: $take, filter: $filter, orderBy: $orderBy, userId: $userId) {
@@ -151,7 +103,7 @@ export const categoryQuery = gql `
 
 export const variantQuery = gql`
     query($id: Int){
-        variants(id: $id) {
+        variant(id: $id) {
             id
             title
             desc
@@ -187,7 +139,7 @@ export const variantsQuery = gql`
 
 export const optionQuery = gql `
     query($id: Int){
-        options(id: $id) {
+        option(id: $id) {
             id
             value
             colorCode
@@ -214,6 +166,102 @@ export const optionsQuery = gql `
                     title
                 }
             }
+        }
+    }
+`
+
+export const countriesQuery = gql`
+    query($page: Int, $take: Int, $filter: String, $orderBy: CountryOrderByInput){
+        countries(page: $page, take: $take, filter: $filter, orderBy: $orderBy) {
+            count
+            countries{
+                id
+                name
+                iso3
+                isoNum
+                createdat
+            }
+        }
+    }
+`
+
+export const countryQuery = gql`
+    query($id: Int){
+        country(id: $id) {
+            id
+            name
+            iso3
+            isoNum
+            createdat
+        }
+    }
+`
+
+export const regionsQuery = gql `
+    query($page: Int, $take: Int, $filter: String, $orderBy: RegionOrderByInput){
+        regions(page: $page, take: $take, filter: $filter, orderBy: $orderBy) {
+            count
+            regions {
+                id
+                name
+                createdat
+                code
+                country {
+                    id
+                    name
+                }
+            }
+        }
+    }
+`
+
+export const regionQuery = gql `
+    query($id: Int){
+        region(id: $id) {
+
+                id
+                name
+                createdat
+                code
+                country {
+                    id
+                    name
+                }
+        }
+    }
+`
+
+export const districtsQuery = gql`
+    query($page: Int, $take: Int, $filter: String, $orderBy: DistrictOrderByInput){
+        districts(page: $page, take: $take, filter: $filter, orderBy: $orderBy) {
+            count
+            countRegions
+            countCountries
+            districts {
+                id
+                name
+                region{
+                    id
+                    name
+                }
+                shipping
+                createdat
+            }
+        }
+    }
+`
+
+export const districtQuery = gql`
+    query($id: Int){
+        district(id: $id) {
+            id
+            name
+            region{
+                id
+                name
+            }
+            shipping
+            createdat
         }
     }
 `
