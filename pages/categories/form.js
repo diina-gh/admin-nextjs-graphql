@@ -58,7 +58,7 @@ export default function Index() {
 
                                 <div className='w-full grid grid-cols-5 grid-flow-row gap-6 mt-6'>
 
-                                <div className='col-span-2 bg-gray-200 bg-opacity-50 rounded-xl px-4 py-4 grid grid-cols-2 gap-3'>
+                                <div className='col-span-2 bg-gray-200 bg-opacity-60 rounded-xl px-4 py-4 grid grid-cols-2 gap-3'>
 
                                     <div className='col-span-2 bg-white bg-opacity-90 border border-gray-200 rounded-xl h-56 flex flex-col justify-center'>
                                         <div className="space-y-1 text-center">
@@ -99,7 +99,7 @@ export default function Index() {
 
                                 </div>
 
-                                <div className='col-span-3 bg-gray-200 bg-opacity-50 rounded-xl px-4 py-4'>
+                                <div className='col-span-3 bg-gray-200 bg-opacity-60 rounded-xl px-4 py-4'>
 
                                     <div className="w-full mb-4">
                                         <label htmlFor="name" className="block text-sm font-medium text-gray-900">Désignation</label>
