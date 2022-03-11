@@ -53,8 +53,7 @@ export default function Index() {
 
                                     <div className='text-lg font-semibold text-purple-600'>Nouveau produit</div>
 
-                                    <div>
-                                    </div>
+                                    <div></div>
 
                             </div>
 
@@ -64,9 +63,9 @@ export default function Index() {
 
                                 <div className='w-full grid grid-cols-5 grid-flow-row gap-5'>
 
-                                    <div className='col-span-2 grid grid-cols-3 gap-4'>
+                                    <div className='col-span-2 bg-gray-200 bg-opacity-60 rounded-xl px-4 py-4 grid grid-cols-3 gap-3'>
 
-                                        <div className='col-span-3 bg-gray-200 bg-opacity-80 border border-gray-200 rounded-xl h-64 flex flex-col justify-center'>
+                                        <div className='col-span-3 bg-white bg-opacity-90 border border-gray-200 rounded-xl h-[14.5rem] flex flex-col justify-center'>
                                             <div className="space-y-1 text-center">
                                                 <ImageHolder customClass="mx-auto h-14 w-12 text-gray-400" />
                                                 <div className="flex text-sm text-gray-600">
@@ -79,63 +78,60 @@ export default function Index() {
                                             </div>
                                         </div>
 
-                                        <div className='bg-gray-200 bg-opacity-80 border border-gray-200 rounded-xl h-32 flex flex-col justify-center'>
+                                        <div className='bg-white bg-opacity-90 border border-gray-200 rounded-xl h-28 flex flex-col justify-center'>
                                                 <div className="space-y-1 text-center">
-                                                    <ImageHolder customClass="mx-auto h-12 w-10 text-gray-400" />
+                                                    <ImageHolder customClass="mx-auto h-11 w-9 text-gray-400" />
                                                     <div className="flex text-sm text-gray-600">
                                                         <label htmlFor="file-upload" className="relative cursor-pointer rounded-md font-mediu hover:text-opacity-90">
                                                             <input type="file" id="image" name="image" className="sr-only" />
                                                         </label>
                                                     </div>
-                                                    <p className="text-[8.5px] text-gray-500 mb-2">PNG, JPG, GIF jusqu&apos;à 10MB</p>
+                                                    <p className="text-[8px] text-gray-500 mb-2">PNG, JPG, GIF jusqu&apos;à 10MB</p>
                                                 </div>
                                         </div>
 
-                                        <div className='bg-gray-200 bg-opacity-80 border border-gray-200 rounded-xl h-32 flex flex-col justify-center'>
+                                        <div className='bg-white bg-opacity-90 border border-gray-200 rounded-xl h-28 flex flex-col justify-center'>
                                             <div className="space-y-1 text-center">
-                                                <ImageHolder customClass="mx-auto h-12 w-10 text-gray-400" />
+                                                <ImageHolder customClass="mx-auto h-11 w-9 text-gray-400" />
                                                 <div className="flex text-sm text-gray-600">
                                                     <label htmlFor="file-upload" className="relative cursor-pointer rounded-md font-mediu hover:text-opacity-90">
                                                         <input type="file" id="image" name="image" className="sr-only" />
                                                     </label>
                                                 </div>
-                                                <p className="text-[8.5px] text-gray-500 mb-2">PNG, JPG, GIF jusqu&apos;à 10MB</p>
+                                                <p className="text-[8px] text-gray-500 mb-2">PNG, JPG, GIF jusqu&apos;à 10MB</p>
                                             </div>
                                         </div>
 
-                                        <div className='bg-gray-200 bg-opacity-80 border border-gray-200 rounded-xl h-32 flex flex-col justify-center'>
+                                        <div className='bg-white bg-opacity-90 border border-gray-200 rounded-xl h-28 flex flex-col justify-center'>
                                             <div className="space-y-1 text-center">
-                                                <ImageHolder customClass="mx-auto h-12 w-10 text-gray-400" />
+                                                <ImageHolder customClass="mx-auto h-11 w-9 text-gray-400" />
                                                 <div className="flex text-sm text-gray-600">
                                                     <label htmlFor="file-upload" className="relative cursor-pointer rounded-md font-mediu hover:text-opacity-90">
                                                         <input type="file" id="image" name="image" className="sr-only" />
                                                     </label>
                                                 </div>
-                                                <p className="text-[8.5px] text-gray-500 mb-2">PNG, JPG, GIF jusqu&apos;à 10MB</p>
+                                                <p className="text-[8px] text-gray-500 mb-2">PNG, JPG, GIF jusqu&apos;à 10MB</p>
                                             </div>
                                         </div>
 
 
                                     </div>
 
-                                    <div className='col-span-3'>
+                                    <div className='col-span-3 bg-gray-200 bg-opacity-60 rounded-xl px-4 py-4'>
 
-                                        <div className="w-full">
+                                        <div className="w-full mb-4">
                                             <label htmlFor="name" className="block text-sm font-medium text-gray-900">Désignation</label>
-                                            <input type="text" name="name" id="name" autoComplete="title" placeholder="Désignation" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 shadow-inner bg-gray-100 bg-opacity-10 rounded-md px-2"/>
+                                            <input type="text" name="name" id="name" autoComplete="title" placeholder="Désignation" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 shadow-inner bg-white bg-opacity-90 rounded-md px-2"/>
                                         </div>
 
-                                        <div className="mt-4 mb-4 ">
-                                            <label htmlFor="desc" className="block text-sm font-medium text-gray-900 mb-1">Description</label>
-                                            <div className="editor-container border border-gray-400 border-opacity-30 text-gray-900 text-sm font-medium"><Editor /></div>
-                                        </div>
+                                        <div className="w-full mb-4">
+                                            <label htmlFor="desc" className="block text-sm font-medium text-gray-900">Description</label>
+                                            <div className="mt-1">
+                                                <textarea id="desc" name="desc" rows={8}  className="mt-1 w-full shadow-sm text-sm border border-gray-400 shadow-inner bg-white bg-opacity-90 rounded-md px-2 py-2" placeholder="Donner une description" />
+                                            </div>
+                                         </div>
 
                                         <div className="flex flex-row w-full">
-
-                                            {/* <div className="w-1/2 mr-8 self-center">
-                                                <label htmlFor="order" className="block text-sm font-medium text-gray-900">Ordre</label>
-                                                <input type="number" name="order" id="order" autoComplete="order" placeholder="Ordre" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 shadow-inner bg-gray-100 bg-opacity-10 rounded-md px-2"/>
-                                            </div> */}
 
                                             <div className="self-center ml-[0.75]">
                                                 <label htmlFor="desc" className="block text-sm font-medium text-gray-900 mb-1">Visiblité</label>
@@ -143,14 +139,14 @@ export default function Index() {
                                                 <Switch
                                                     checked={enabled}
                                                     onChange={setEnabled}
-                                                    className={`${enabled ? 'bg-purple-600 bg-opacity-80 shadow-sm' : 'bg-purple-50 bg-opacity-50 shadow-inner'}
+                                                    className={`${enabled ? 'bg-purple-600 bg-opacity-80 shadow-sm' : 'bg-white bg-opacity-80 shadow-sm'}
                                                     relative inline-flex flex-shrink-0 h-[34px] w-[70px] border border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
                                                 >
                                                     <span className="sr-only">Use setting</span>
                                                     <span
                                                     aria-hidden="true"
                                                     className={`${enabled ? 'translate-x-9' : 'translate-x-0'}
-                                                        pointer-events-none inline-block h-[29.5px] w-[29.5px] rounded-full bg-white shadow-lg transform ring-0 transition ease-in-out duration-200 self-center`}
+                                                        pointer-events-none inline-block h-[29.5px] w-[29.5px] rounded-full bg-white shadow-lg transform ring-0 transition ease-in-out duration-200 border border-gray-200 border-opacity-80 self-center`}
                                                     />
                                                 </Switch>
                                             </div>
@@ -165,18 +161,17 @@ export default function Index() {
 
                                 <div className='text-base font-semibold text-purple-600 mb-3'>Produits associés et variants</div>
 
-                                <div className='w-full grid grid-cols-5 grid-flow-row gap-5 mb-4'>
+                                <div className='w-full grid grid-cols-7 grid-flow-row gap-4 mb-4'>
 
-                                    <div className='col-span-3 bg-gray-200 bg-opacity-80 rounded-xl px-5 py-5 h-84'>
-
-                                        <div className='mb-3 ml-0.5 flex flex-row'>
-                                             <div className='text-base font-medium text-purple-600 mr-2 self-center'>Produits associés</div>
-                                             <div className='px-2 py-[0.45px] text-[10.325px] font-medium bg-purple-500 bg-opacity-80 text-white rounded-xl self-center'>5</div>
+                                    <div className='col-span-3 bg-gray-200 bg-opacity-60 rounded-xl px-5 py-5 h-[27.5rem]'>
+                                        <div className="">
+                                            <label htmlFor="desc" className="text-base font-medium text-purple-600 ">Détails</label>
+                                            <div className="editor-container border border-gray-400 border-opacity-30 text-gray-900 text-sm font-medium details-editor mt-3"><Editor /></div>
                                         </div>
-
                                     </div>
 
-                                    <div className='col-span-2 bg-gray-200 bg-opacity-80 rounded-xl px-5 py-5'>
+
+                                    <div className='col-span-2 bg-gray-200 bg-opacity-60 rounded-xl px-5 py-5 h-fit'>
 
                                         <div className='mb-3 ml-0.5 flex flex-row'>
                                              <div className='text-base font-medium text-purple-600 mr-2 self-center'>Variants</div>
@@ -195,6 +190,16 @@ export default function Index() {
 
                                         <div className='mt-1 bg-black bg-opacity-80 shadow-lg h-10 px-5 rounded-md flex flex-col justify-center btn-effect1 self-center'>
                                             <div className='text-sm font-medium text-gray-100 hover:text-white self-center tracking-wide'>Ajouter un variant</div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div className='col-span-2 bg-gray-200 bg-opacity-60 rounded-xl px-5 py-5 h-72'>
+
+                                        <div className='mb-3 ml-0.5 flex flex-row'>
+                                            <div className='text-base font-medium text-purple-600 mr-2 self-center'>Produits associés</div>
+                                            <div className='px-2 py-[0.45px] text-[10.325px] font-medium bg-purple-500 bg-opacity-80 text-white rounded-xl self-center'>5</div>
                                         </div>
 
                                     </div>

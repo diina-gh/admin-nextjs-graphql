@@ -25,15 +25,15 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/produits": [
+    "/categories": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/produits.js"
+      "static/chunks/pages/categories.js"
     ],
-    "/produits/form": [
+    "/variants": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/produits/form.js"
+      "static/chunks/pages/variants.js"
     ]
   },
   "ampFirstPages": []

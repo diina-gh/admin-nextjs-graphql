@@ -83,6 +83,12 @@ input[type=number] {
   height: 215.35px !important;
 }
 
+.details-editor{
+  .ck-content{
+    height: 20rem !important;
+  }
+}
+
 .ck-content{
   height: 175px !important;
   // background-color: rgba(255, 0, 0, 0.26) !important;

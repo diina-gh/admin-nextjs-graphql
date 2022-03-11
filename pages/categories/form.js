@@ -38,29 +38,29 @@ export default function Index() {
 
                     <form className='w-full h-full'>
 
-                        <div className='w-full h-full px-5 pt-4'>
+                        <div className='w-full h-full pt-4'>
 
-                            <div className='flex flex-row justify-between'>
+                            <div className='flex flex-row justify-between px-5'>
 
-                            <Link href="./">
-                                <div className='text-purple-600 hover:text-opacity-80 cursor-pointer self-center'>
-                                        <ArrowLeftBoldIcon customClass="w-4" /> 
-                                </div>
-                            </Link>
-
+                                <Link href="./">
+                                    <div className='text-purple-600 hover:text-opacity-80 cursor-pointer self-center'>
+                                            <ArrowLeftBoldIcon customClass="w-4" /> 
+                                    </div>
+                                </Link>
 
                                 <div className='text-lg font-semibold text-purple-600'>Nouvelle Catégorie</div>
 
-                                <div>
-                                </div>
+                                <div></div>
 
                             </div>
 
-                            <div className='w-full grid grid-cols-5 grid-flow-row gap-6 mt-6'>
+                            <div className='app-form overflow-y-auto mt-3 px-5'>
 
-                                <div className='col-span-2 grid grid-cols-2 gap-3'>
+                                <div className='w-full grid grid-cols-5 grid-flow-row gap-6 mt-6'>
 
-                                    <div className='col-span-2 bg-gray-100 border border-gray-200 rounded-xl h-56 flex flex-col justify-center'>
+                                <div className='col-span-2 bg-gray-200 bg-opacity-50 rounded-xl px-4 py-4 grid grid-cols-2 gap-3'>
+
+                                    <div className='col-span-2 bg-white bg-opacity-90 border border-gray-200 rounded-xl h-56 flex flex-col justify-center'>
                                         <div className="space-y-1 text-center">
                                             <ImageHolder customClass="mx-auto h-14 w-12 text-gray-400" />
                                             <div className="flex text-sm text-gray-600">
@@ -73,7 +73,7 @@ export default function Index() {
                                         </div>
                                     </div>
 
-                                    <div className='bg-gray-100 border border-gray-200 rounded-xl h-40 flex flex-col justify-center'>
+                                    <div className='bg-white bg-opacity-90 border border-gray-200 rounded-xl h-40 flex flex-col justify-center'>
                                         <div className="space-y-1 text-center">
                                             <ImageHolder customClass="mx-auto h-12 w-10 text-gray-400" />
                                             <div className="flex text-sm text-gray-600">
@@ -85,7 +85,7 @@ export default function Index() {
                                         </div>
                                     </div>
 
-                                    <div className='bg-gray-100 border border-gray-200 rounded-xl h-40 flex flex-col justify-center'>
+                                    <div className='bg-white bg-opacity-90 border border-gray-200 rounded-xl rounded-xl h-40 flex flex-col justify-center'>
                                         <div className="space-y-1 text-center">
                                             <ImageHolder customClass="mx-auto h-12 w-10 text-gray-400" />
                                             <div className="flex text-sm text-gray-600">
@@ -99,40 +99,41 @@ export default function Index() {
 
                                 </div>
 
-                                <div className='col-span-3'>
+                                <div className='col-span-3 bg-gray-200 bg-opacity-50 rounded-xl px-4 py-4'>
 
-                                    <div className="w-full">
+                                    <div className="w-full mb-4">
                                         <label htmlFor="name" className="block text-sm font-medium text-gray-900">Désignation</label>
-                                        <input type="text" name="name" id="name" autoComplete="title" placeholder="Désignation" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 shadow-inner bg-gray-100 bg-opacity-10 rounded-md px-2"/>
+                                        <input type="text" name="name" id="name" autoComplete="title" placeholder="Désignation" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 shadow-inner bg-white bg-opacity-90 rounded-md px-2"/>
                                     </div>
 
-                                    <div className="mt-4 mb-4 ">
-                                        <label htmlFor="desc" className="block text-sm font-medium text-gray-900 mb-1">Description</label>
-                                        <div className="editor-container border border-gray-400 border-opacity-30 text-gray-900 text-sm font-medium"><Editor /></div>
+                                    <div className="w-full mb-3">
+                                        <label htmlFor="desc" className="block text-sm font-medium text-gray-900">Description</label>
+                                        <div className="mt-1">
+                                            <textarea id="desc" name="desc" rows={8}  className="mt-1 w-full shadow-sm text-sm border border-gray-400 shadow-inner bg-white bg-opacity-90 rounded-md px-2 py-2" placeholder="Donner une description" />
+                                        </div>
                                     </div>
 
                                     <div className="flex flex-row w-full">
 
                                         <div className="w-1/2 mr-8 self-center">
                                             <label htmlFor="order" className="block text-sm font-medium text-gray-900">Ordre</label>
-                                            <input type="number" name="order" id="order" autoComplete="order" placeholder="Ordre" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 shadow-inner bg-gray-100 bg-opacity-10 rounded-md px-2"/>
+                                            <input type="number" name="order" id="order" autoComplete="order" placeholder="Ordre" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 shadow-inner bg-white bg-opacity-90 rounded-md px-2"/>
                                         </div>
 
                                         <div className="self-center">
                                             <label htmlFor="desc" className="block text-sm font-medium text-gray-900 mb-1">Visiblité</label>
-
                                             <Switch
-                                                checked={enabled}
-                                                onChange={setEnabled}
-                                                className={`${enabled ? 'bg-purple-600 bg-opacity-80 shadow-sm' : 'bg-purple-50 bg-opacity-50 shadow-inner'}
-                                                relative inline-flex flex-shrink-0 h-[34px] w-[70px] border border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
-                                            >
-                                                <span className="sr-only">Use setting</span>
-                                                <span
-                                                aria-hidden="true"
-                                                className={`${enabled ? 'translate-x-9' : 'translate-x-0'}
-                                                    pointer-events-none inline-block h-[29.5px] w-[29.5px] rounded-full bg-white shadow-lg transform ring-0 transition ease-in-out duration-200 self-center`}
-                                                />
+                                                    checked={enabled}
+                                                    onChange={setEnabled}
+                                                    className={`${enabled ? 'bg-purple-600 bg-opacity-80 shadow-sm' : 'bg-white bg-opacity-80 shadow-sm'}
+                                                    relative inline-flex flex-shrink-0 h-[34px] w-[70px] border border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
+                                                >
+                                                    <span className="sr-only">Use setting</span>
+                                                    <span
+                                                    aria-hidden="true"
+                                                    className={`${enabled ? 'translate-x-9' : 'translate-x-0'}
+                                                        pointer-events-none inline-block h-[29.5px] w-[29.5px] rounded-full bg-white shadow-lg transform ring-0 transition ease-in-out duration-200 border border-gray-200 border-opacity-80 self-center`}
+                                                    />
                                             </Switch>
                                         </div>
 
@@ -142,7 +143,10 @@ export default function Index() {
 
                                 </div>
 
+                                </div>
+
                             </div>
+
 
                         </div>
 
