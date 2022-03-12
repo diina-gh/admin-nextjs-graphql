@@ -171,7 +171,7 @@ export default function Sidebar() {
                     <li>
                         <a  className={`${(router.asPath === '/newsletters') ? 'text-purple-800 border-purple-500 bg-gradient-to-r from-purple-50 to-fuchsia-50 bg-opacity-5' : 'border-white text-gray-900'} flex items-center py-2 px-4 text-base font-medium border-l-2 hover:text-purple-800 hover:border-purple-500 hover:bg-gradient-to-r hover:from-purple-50 hover:to-fuchsia-50 hover:bg-opacity-5 cursor-pointer duration-700 ease-in-out `}>
                             <CarnetBoldIcon  customClass="w-4 h-4" />
-                            <span className="ml-3">Carnet d'adresse</span>
+                            <span className="ml-3">Carnet d&#039;adresse</span>
                         </a>
                     </li>
                 </Link>
