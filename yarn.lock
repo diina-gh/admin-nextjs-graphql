@@ -1694,16 +1694,16 @@
     "merge2" "^1.4.1"
     "slash" "^3.0.0"
 
-"graphql-request@^4.0.0":
-  "integrity" "sha512-cdqQLCXlBGkaLdkLYRl4LtkwaZU6TfpE7/tnUQFl3wXfUPWN74Ov+Q61VuIh+AltS789YfGB6whghmCmeXLvTw=="
-  "resolved" "https://registry.npmjs.org/graphql-request/-/graphql-request-4.0.0.tgz"
-  "version" "4.0.0"
+"graphql-request@^4.1.0":
+  "integrity" "sha512-CBFcO6LP7cg+aBMc+x9C1dZEQsKTBZKR2J+HzuB0cR/6aaU4K4/tRXTQu8CDMp5195ZU+DTNKZZOSK1WRbTeAg=="
+  "resolved" "https://registry.npmjs.org/graphql-request/-/graphql-request-4.1.0.tgz"
+  "version" "4.1.0"
   dependencies:
     "cross-fetch" "^3.0.6"
     "extract-files" "^9.0.0"
     "form-data" "^3.0.0"
 
-"graphql@14 - 16":
+"graphql@^16.3.0", "graphql@14 - 16":
   "integrity" "sha512-xm+ANmA16BzCT5pLjuXySbQVFwH3oJctUVdy81w1sV0vBU0KgDdBGtxQOUd5zqOBk/JayAFeG8Dlmeq74rjm/A=="
   "resolved" "https://registry.npmjs.org/graphql/-/graphql-16.3.0.tgz"
   "version" "16.3.0"
