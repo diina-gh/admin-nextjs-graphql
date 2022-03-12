@@ -31,7 +31,7 @@ export default function Filter() {
         {({ open }) => (
           <>
 
-            <Popover.Button className={` ${open ? '' : 'text-opacity-90'} text-white group bg-pink-600 bg-opacity-90 px-3 py-2 rounded-md inline-flex justify-center text-sm font-medium hover:text-opacity-100 self-center btn-effect1`}>
+            <Popover.Button className={` ${open ? '' : 'text-opacity-90'} text-white group bg-pink-600 bg-opacity-90 px-3 py-2 rounded-md inline-flex justify-center text-sm font-medium hover:text-opacity-100 self-center btn-effect1 shadow shadow-pink-600/50`}>
                 <FilterBoldIcon customClass={`${open ? '' : 'text-opacity-80'} mr-2 h-4 w-4 text-white group-hover:text-opacity-90 transition ease-in-out duration-150 self-center`} />
                 <span>Filtrer</span>
             </Popover.Button>

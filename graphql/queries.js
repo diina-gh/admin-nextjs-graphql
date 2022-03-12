@@ -265,3 +265,57 @@ export const districtQuery = gql`
         }
     }
 `
+
+export const shippingMethodsQuery = gql`
+    query($page: Int, $take: Int, $filter: String, $orderBy: ShippingMethodOrderByInput){
+        shippingMethods(page: $page, take: $take, filter: $filter, orderBy: $orderBy) {
+            count
+            shippingMethods {
+                id
+                code
+                desc
+                name
+            }
+        }
+    }
+`
+
+export const shippingMethodQuery = gql`
+    query($id: Int){
+        shippingMethods(id: $id) {
+            id
+            code
+            desc
+            name
+        }
+    }
+`
+
+export const deliveryMans = gql`
+    query($page: Int, $take: Int, $filter: String, $orderBy: DeliveryManOrderByInput){
+        deliveryMans(page: $page, take: $take, filter: $filter, orderBy: $orderBy) {
+            count
+            deliveryMans {
+                id
+                civility
+                firstname
+                lastname
+                email
+                phonenumber
+            }
+        }
+    }
+`
+
+export const deliveryMan = gql`
+    query($id: Int){
+        deliveryMan(id: $id) {
+            id
+            civility
+            firstname
+            lastname
+            email
+            phonenumber
+        }
+    }
+`

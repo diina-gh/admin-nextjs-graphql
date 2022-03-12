@@ -22,7 +22,7 @@ export default function Home() {
 
             <Sidebar />
             
-            <div className='app-body'>
+            <div className='app-body0 bg-opacity-0'>
 
                 <div className="w-full h-full grid grid-cols-4 grid-flow-row gap-2">
 
@@ -30,21 +30,21 @@ export default function Home() {
 
                         <div className='h-36 grid grid-cols-3 grid-flow-row gap-4'>
 
-                            <div className='h-full bg-purple-200 bg-opacity-60 rounded-xl gt-shadow2'>
+                            <div className='h-full bg-purple-200 bg-opacity-70 rounded-xl shadow shadow-purple-200/50'>
                             </div>
 
-                            <div className='h-full bg-red-200 bg-opacity-60 rounded-xl gt-shadow2'>
+                            <div className='h-full bg-red-200 bg-opacity-70 rounded-xl shadow shadow-red-200/50'>
                             </div>
 
-                            <div className='h-full bg-amber-200 bg-opacity-60 rounded-xl gt-shadow2'>
+                            <div className='h-full bg-amber-200 bg-opacity-70 rounded-xl shadow shadow-amber-200/50'>
                             </div>
 
                         </div>
 
-                        <div className='w-full h-56 bg-white rounded-xl gt-shadow2 mt-4'>
+                        <div className='w-full h-56 bg-white rounded-xl shadow mt-4'>
                         </div>
 
-                        <div className='w-full h-56 bg-white rounded-xl gt-shadow2 mt-4'>
+                        <div className='w-full h-56 bg-white rounded-xl shadow mt-4'>
                         </div>
 
                     </div>

@@ -105,11 +105,14 @@ export default function Sidebar() {
                             <Link  href='/produits' >
                                 <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '>Produits</div>
                             </Link>
-                            <Link  href='/variants' >
-                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '>Variants</div>
+                            <Link  href='/stock' >
+                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '>Stockage</div>
                             </Link>
                             <Link  href='/marques' >
                                 <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '>Marques</div>
+                            </Link>
+                            <Link  href='/variants' >
+                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '>Variants</div>
                             </Link>
                         </Disclosure.Panel>
                         </>
@@ -127,11 +130,14 @@ export default function Sidebar() {
                             <ChevronDownIcon className={`${open  ? 'transform rotate-180' : ''} w-5 h-5 self-center`}/>
                         </Disclosure.Button>
                         <Disclosure.Panel className="my-2 text-sm font-medium ">
+                            <Link  href='/livraisons' >
+                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '>Livraisons</div>
+                            </Link>
                             <Link  href='/zones_de_livraison' >
                                 <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '>Zones de livraison</div>
                             </Link>
                             <Link  href='/modes_de_livraison' >
-                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '>Mode de livraison</div>
+                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '>Modes de livraison</div>
                             </Link>
                             <Link  href='/livreurs' >
                                 <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '>Livreurs</div>

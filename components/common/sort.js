@@ -30,7 +30,7 @@ export default function Filter() {
         {({ open }) => (
           <>
 
-            <Popover.Button className={` ${open ? '' : 'text-opacity-90'} text-white group bg-gray-600 bg-opacity-90 px-3 py-2 rounded-md inline-flex justify-center text-sm font-medium hover:text-opacity-100 self-center btn-effect1`}>
+            <Popover.Button className={` ${open ? '' : 'text-opacity-90'} text-white group bg-gray-600 bg-opacity-90 px-3 py-2 rounded-md inline-flex justify-center text-sm font-medium hover:text-opacity-100 self-center btn-effect1 shadow shadow-gray-600/50`}>
                 <span>Trier</span>
                 <ChevronDownIcon className={`${open ? '' : 'text-opacity-80'} ml-2 h-5 w-5 text-white group-hover:text-opacity-90 transition ease-in-out duration-150 self-center`} aria-hidden="true"/>
             </Popover.Button>
