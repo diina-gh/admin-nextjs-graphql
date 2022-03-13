@@ -23,3 +23,33 @@ export const deleteDeliveryMan = gql`
         }
     }
 `
+
+export const saveBrand = gql`
+    mutation($name: String, $desc: String, $order: Int, $imageId: Int){
+        saveBrand(name: $name, desc: $desc, order: $order, imageId: $imageId) {
+            id
+            name
+            desc
+            image {
+                id
+                imageref
+                url
+            }
+        }
+    }
+`
+
+export const deleteBrand = gql`
+    mutation($id: Int){
+        deleteBrand(id: $id) {
+            id
+            name
+            desc
+            image {
+                id
+                imageref
+                url
+            }
+        }
+    }
+`

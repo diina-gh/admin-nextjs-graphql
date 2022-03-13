@@ -291,7 +291,7 @@ export const shippingMethodQuery = gql`
     }
 `
 
-export const deliveryMans = gql`
+export const deliveryMansQuery = gql`
     query($page: Int, $take: Int, $filter: String, $orderBy: DeliveryManOrderByInput){
         deliveryMans(page: $page, take: $take, filter: $filter, orderBy: $orderBy) {
             count
@@ -307,7 +307,7 @@ export const deliveryMans = gql`
     }
 `
 
-export const deliveryMan = gql`
+export const deliveryManQueryQuery = gql`
     query($id: Int){
         deliveryMan(id: $id) {
             id
@@ -316,6 +316,185 @@ export const deliveryMan = gql`
             lastname
             email
             phonenumber
+        }
+    }
+`
+
+export const brandsQuery = gql`
+    query($page: Int, $take: Int, $filter: String, $orderBy: BrandOrderByInput){
+        brands(page: $page, take: $take, filter: $filter, orderBy: $orderBy) {
+            count
+            brands {
+                id
+                name
+                desc
+                order
+                image {
+                    url
+                    imageref
+                }
+            }
+        }
+    }
+`
+
+export const brandQuery = gql`
+    query($id: Int){
+        brand(id: $id) {
+            id
+            name
+            desc
+            order
+            image {
+                url
+                imageref
+            }
+        }
+    }
+`
+
+export const productsQuery = gql `
+    query($page: Int, $take: Int, $filter: String, $orderBy: ProductOrderByInput){
+        products(page: $page, take: $take, filter: $filter, orderBy: $orderBy) {
+            count
+            products {
+                id
+                name
+                short_desc
+                long_desc
+                activated
+                status
+                unit
+                unitweight
+                unitprice
+                ranking
+                order
+                likes
+                views
+                createdat
+                category {
+                    id
+                    name
+                }
+                images {
+                    id
+                    url
+                }
+                brand {
+                    id
+                    name
+                }
+                variants {
+                    variantId
+                    variant {
+                        id
+                        title
+                        desc
+                    }
+                }
+                options {
+                    optionId
+                    option {
+                        id
+                        value
+                    }
+                }
+                discount {
+                    id
+                    percent
+                }
+                inventory {
+                    id
+                    quantity
+                }
+            }
+        }
+    }
+`
+
+export const productQuery = gql `
+    query($id: Int){
+        product(id: $id) {
+            id
+            name
+            short_desc
+            long_desc
+            activated
+            status
+            unit
+            unitweight
+            unitprice
+            ranking
+            order
+            likes
+            views
+            createdat
+            category {
+                id
+                name
+            }
+            images {
+                id
+                url
+            }
+            brand {
+                id
+                name
+            }
+            variants {
+                variantId
+                variant {
+                    id
+                    title
+                    desc
+                }
+            }
+            options {
+                optionId
+                option {
+                    id
+                    value
+                }
+            }
+            discount {
+                id
+                percent
+            }
+            inventory {
+                id
+                quantity
+            }
+        }
+    }
+`
+
+export const inventoriesQuery = gql `
+    query($page: Int, $take: Int, $filter: String, $orderBy: InventoryOrderByInput){
+        inventories(page: $page, take: $take, filter: $filter, orderBy: $orderBy) {
+            count
+            inventories {
+                id
+                quantity
+                details
+                product {
+                    id
+                    name
+                }
+            }
+        }
+    }
+`
+
+export const inventoryQuery = gql `
+    query($id: Int){
+        inventory(id: $id) {
+            id
+            quantity
+            details
+            product {
+                id
+                name
+            }
         }
     }
 `

@@ -16,7 +16,7 @@ import ChevronLeftIcon from '../../components/ui/icons/chevronLeftIcon';
 import ChevronRightIcon from '../../components/ui/icons/chevronRightIcon';
 import DoubleChevronLeftIcon from '../../components/ui/icons/doubleChevronLeftIcon';
 import DoubleChevronRightIcon from '../../components/ui/icons/doubleChevronRightIcon';
-import { getProducts } from '../../hooks/product';
+import { getInventories } from '../../hooks/inventory';
 
 
 export default function Index() {
@@ -27,7 +27,7 @@ export default function Index() {
     const [direction, setDirection] = useState('asc')
     const [orderBy, setOrderBy] = useState({"id": direction})
 
-    var { items, isLoading, isError, mutate } = getProducts(page,take,filter, orderBy )
+    var { items, isLoading, isError, mutate } = getInventories(page,take,filter, orderBy )
 
     const refetch = (newPage, newFilter = null, newOrder = null ) =>{
         if(newPage){
@@ -65,8 +65,8 @@ export default function Index() {
 
                             <div className='w-full flex flex-row mt-2'>
 
-                                <div className='text-lg font-bold text-purple-600 mr-2 self-center'>Produits</div>
-                                <div className='px-2 py-1 rounded-xl bg-purple-600 bg-opacity-90 text-white text-xs font-medium self-center'>{items?.products?.count ? items?.products?.count: 0 }</div>
+                                <div className='text-lg font-bold text-purple-600 mr-2 self-center'>Stockage</div>
+                                <div className='px-2 py-1 rounded-xl bg-purple-600 bg-opacity-90 text-white text-xs font-medium self-center'>{items?.inventories?.count ? items?.inventories?.count: 0 }</div>
 
                             </div>
 
@@ -124,33 +124,21 @@ export default function Index() {
                                             </div>                                                  
                                         }
 
-                                        {(items && items.products && items?.page == null && items?.filter == null && items?.orderBy == null ) &&
+                                        {(items && items.inventories && items?.page == null && items?.filter == null && items?.orderBy == null ) &&
                                             <table className="min-w-full divide-y divide-gray-200 border-b border-gray-200">
                                                 <thead className="bg-gray-100 sticky top-0 ">
                                                     <tr>
                                                         <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
-                                                            Nom
+                                                            Produits
                                                         </th>
                                                         <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-600 uppercase tracking-wider" >
-                                                            Description
+                                                            Quantité
                                                         </th>
                                                         <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-600 uppercase tracking-wider" >
-                                                            Unité
+                                                            Détails
                                                         </th>
                                                         <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-600 uppercase tracking-wider" >
-                                                            Poids/Unité
-                                                        </th>
-                                                        <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-600 uppercase tracking-wider" >
-                                                            Prix/Unité
-                                                        </th>
-                                                        <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-600 uppercase tracking-wider" >
-                                                            Catégorie
-                                                        </th>
-                                                        <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-600 uppercase tracking-wider" >
-                                                            Marques
-                                                        </th>
-                                                        <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-600 uppercase tracking-wider" >
-                                                            Stock
+                                                            Status
                                                         </th>
                                                         <th scope="col" className="relative px-6 py-3">
                                                             <span className="sr-only">Edit</span>
@@ -159,7 +147,7 @@ export default function Index() {
                                                 </thead>
     
                                                 <tbody className="bg-white divide-y divide-gray-200">
-                                                    {items.products.products.map((item, i) => (
+                                                    {items.inventories.inventories.map((item, i) => (
                                                         <tr key={item.id} className={(i%2==0) ? "" : "bg-gray-100 bg-opacity-50"}>
                                                             
                                                             <td className="px-6 py-3 whitespace-nowrap">
@@ -168,33 +156,24 @@ export default function Index() {
                                                                         <img className="h-10 w-10 rounded-full" src="https://raw.githubusercontent.com/diina-gh/owid-covid/main/background/bg3.webp" alt="" />
                                                                     </div>
                                                                     <div className="ml-4">
-                                                                        <div className="text-sm font-medium text-gray-900">{item.name}</div>
+                                                                        <div className="text-sm font-medium text-gray-900">{item.product.name}</div>
                                                                     </div>
                                                                 </div>
                                                             </td>
                                                             <td className="px-6 py-3 whitespace-nowrap">
-                                                                <div className="text-sm text-gray-900">{item.short_desc}</div>
+                                                                <div className="text-sm text-gray-900">{item.quantity}</div>
                                                             </td>
+
                                                             <td className="px-6 py-3 whitespace-nowrap">
-                                                                <span className="px-2 inline-flex text-[10px] leading-5 font-semibold rounded-full bg-fuchsia-200 shadow shadow-fuchsia-200 text-fuchsia-900">
-                                                                    {item.unit}
+                                                                <div className="text-sm text-gray-900">{item.details}</div>
+                                                            </td>
+
+                                                            <td className="px-6 py-3 whitespace-nowrap">
+                                                                <span className="px-2 inline-flex text-[10px] leading-5 font-semibold rounded-full bg-red-200 shadow shadow-red-200 text-red-900">
+                                                                    Faible
                                                                 </span>
                                                             </td>
-                                                            <td className="px-6 py-3 whitespace-nowrap">
-                                                                <div className="text-sm text-gray-900">{item.unitweight}</div>
-                                                            </td>
-                                                            <td className="px-6 py-3 whitespace-nowrap">
-                                                                <div className="text-sm text-gray-900">{item.unitprice}</div>
-                                                            </td>
-                                                            <td className="px-6 py-3 whitespace-nowrap">
-                                                                <div className="text-sm text-gray-900">{item.category?.name}</div>
-                                                            </td>
-                                                            <td className="px-6 py-3 whitespace-nowrap">
-                                                                <div className="text-sm text-gray-900">{item.brand?.name}</div>
-                                                            </td>
-                                                            <td className="px-6 py-3 whitespace-nowrap">
-                                                                <div className="text-sm text-gray-900">{item.inventory?.quantity}</div>
-                                                            </td>
+                                            
                                                             <td className="px-6 py-3 whitespace-nowrap text-right text-sm font-medium">
                                                                 <a href="#" className="text-indigo-600 hover:text-indigo-900">
                                                                     Edit
@@ -217,7 +196,7 @@ export default function Index() {
                                     initialPage={page} 
                                     itemsPerPage={take} 
                                     onPageСhange={(pageNumber) => refetch(pageNumber)} 
-                                    totalItems={items?.products?.count}  
+                                    totalItems={items?.inventories?.count}  
                                     pageNeighbours={2} 
                                     startLabel= {<DoubleChevronLeftIcon customClass="w-3 h-3"/>}
                                     endLabel={<DoubleChevronRightIcon customClass="w-3 h-3"/>}
