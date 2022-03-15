@@ -17,7 +17,8 @@ import ChevronRightIcon from '../../components/ui/icons/chevronRightIcon';
 import DoubleChevronLeftIcon from '../../components/ui/icons/doubleChevronLeftIcon';
 import DoubleChevronRightIcon from '../../components/ui/icons/doubleChevronRightIcon';
 import { getBrands } from '../../hooks/brand';
-
+import firebase from "../../config/firebase"
+import { uid } from 'uid';
 
 export default function Index() {
 
@@ -100,7 +101,7 @@ export default function Index() {
                                         </div>
                                     </div>
 
-                                    <Link href='categories/form' > 
+                                    <Link href='marques/form' > 
                                         <div className='ml-2 bg-purple-500 bg-opacity-90 shadow shadow-purple-500/50 px-3 py-2 rounded-md flex flex-col justify-center btn-effect1'>
                                             <div className='flex flex-row text-sm font-medium text-gray-100 hover:text-white'>
                                                 <AddBoldIcon customClass="self-center w-4 h-4" />

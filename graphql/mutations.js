@@ -24,7 +24,7 @@ export const deleteDeliveryMan = gql`
     }
 `
 
-export const saveBrand = gql`
+export const saveBrandMutation = gql`
     mutation($name: String, $desc: String, $order: Int, $imageId: Int){
         saveBrand(name: $name, desc: $desc, order: $order, imageId: $imageId) {
             id
@@ -39,7 +39,7 @@ export const saveBrand = gql`
     }
 `
 
-export const deleteBrand = gql`
+export const deleteBrandMutation = gql`
     mutation($id: Int){
         deleteBrand(id: $id) {
             id

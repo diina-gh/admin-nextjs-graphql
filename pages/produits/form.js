@@ -7,6 +7,8 @@ import HeadInfo from '../../components/common/headinfo'
 import ArrowLeftBoldIcon from '../../components/ui/icons/arrowLeftBoldIcon';
 import { Switch } from '@headlessui/react'
 import ImageHolder from '../../components/ui/icons/imageHolder';
+import TrashIcon from '../../components/ui/icons/trashIcon';
+import { useInput } from '../../hooks/input-hook';
 import VariantType1 from '../../components/product/variantType1';
 import VariantType2 from '../../components/product/variantType2';
 import dynamic from 'next/dynamic'
@@ -23,6 +25,59 @@ function classNames(...classes) {
 export default function Index() {
 
   const [enabled, setEnabled] = useState(false)
+  const [image1, setImage1] = useState(null)
+  const [chosenImage1, setChosenImage1] = useState(null)
+  const [image2, setImage2] = useState(null)
+  const [chosenImage2, setChosenImage2] = useState(null)
+  const [image3, setImage3] = useState(null)
+  const [chosenImage3, setChosenImage3] = useState(null)
+  const [image4, setImage4] = useState(null)
+  const [chosenImage4, setChosenImage4] = useState(null)
+  const [imageref, setImageref] = useState('')
+  const [url, setUrl] = useState('')
+
+  let imageInput1, imageInput2, imageInput3, imageInput4; 
+
+  function handleImage (event, option){
+      if(event.target.files[0]){
+          if(option ==1){
+            setImage1(event.target.files[0])
+            setChosenImage1( URL.createObjectURL(event.target.files[0]))
+          }
+          else if(option == 2){
+            setImage2(event.target.files[0])
+            setChosenImage2( URL.createObjectURL(event.target.files[0]))
+          }
+          else if(option == 3){
+            setImage3(event.target.files[0])
+            setChosenImage3( URL.createObjectURL(event.target.files[0]))
+          }
+          else if(option == 4){
+            setImage4(event.target.files[0])
+            setChosenImage4( URL.createObjectURL(event.target.files[0]))
+          }
+      }
+  }
+
+  function resetImage(e, option) {
+      e.preventDefault();
+      if(option ==1){
+        setImage1('')
+        setChosenImage1(null)
+      }
+      else if(option == 2){
+        setImage2('')
+        setChosenImage2(null)
+      }
+      else if(option == 3){
+        setImage3('')
+        setChosenImage3(null)
+      }
+      else if(option == 4){
+        setImage4('')
+        setChosenImage4(null)
+      }
+  }
 
 
   return (
@@ -65,12 +120,22 @@ export default function Index() {
 
                                     <div className='col-span-2 bg-gray-200 bg-opacity-60 rounded-xl px-4 py-4 grid grid-cols-3 gap-3'>
 
-                                        <div className='col-span-3 bg-white bg-opacity-90 border border-gray-200 rounded-xl h-[14.5rem] flex flex-col justify-center'>
-                                            <div className="space-y-1 text-center">
+                                        <div className='relative col-span-3 bg-white bg-opacity-90 border border-gray-200 rounded-xl h-[14.5rem] flex flex-col justify-center'>
+                                            {chosenImage1 &&
+                                            <>
+                                                <div onClick={() => imageInput1.click()} className="w-full h-full absolute top-0 left-0">
+                                                    <img className="w-full h-full object-cover" src={chosenImage1} />
+                                                </div>
+                                                <div onClick={(e) => resetImage(e, 1)} className='z-20 bg-gray-400 bg-opacity-40 hover:bg-opacity-30 border border-gray-600 border-opacity-10 text-center w-7 h-7 rounded-full shadow-lg absolute bottom-2 right-2 flex flex-row justify-center btn-effect1'>
+                                                    <div className='self-center'><TrashIcon customClass="w-4 h-4 text-black" /></div>
+                                                </div>
+                                            </>
+                                            }
+                                            <div onClick={() => imageInput1.click()} className="space-y-1 text-center cursor-pointer">
                                                 <ImageHolder customClass="mx-auto h-14 w-12 text-gray-400" />
                                                 <div className="flex text-sm text-gray-600">
                                                     <label htmlFor="file-upload" className="relative cursor-pointer rounded-md font-mediu hover:text-opacity-90">
-                                                        <input type="file" id="image" name="image" className="sr-only" />
+                                                        <input type="file" ref={refParam => imageInput1 = refParam} onChange={(e) => handleImage(e,1)} name="image1" id="image1" className="sr-only" />
                                                     </label>
                                                     <p className="w-full text-center"> <span className="text-iired" >Uploader une image</span> ou le déposer ici</p>
                                                 </div>
@@ -78,36 +143,66 @@ export default function Index() {
                                             </div>
                                         </div>
 
-                                        <div className='bg-white bg-opacity-90 border border-gray-200 rounded-xl h-28 flex flex-col justify-center'>
-                                                <div className="space-y-1 text-center">
-                                                    <ImageHolder customClass="mx-auto h-11 w-9 text-gray-400" />
-                                                    <div className="flex text-sm text-gray-600">
-                                                        <label htmlFor="file-upload" className="relative cursor-pointer rounded-md font-mediu hover:text-opacity-90">
-                                                            <input type="file" id="image" name="image" className="sr-only" />
-                                                        </label>
-                                                    </div>
-                                                    <p className="text-[8px] text-gray-500 mb-2">PNG, JPG, GIF jusqu&apos;à 10MB</p>
+                                        <div className='relative bg-white bg-opacity-90 border border-gray-200 rounded-xl h-28 flex flex-col justify-center'>
+                                            {chosenImage2 &&
+                                            <>
+                                                <div onClick={() => imageInput2.click()} className="w-full h-full absolute top-0 left-0">
+                                                    <img className="w-full h-full object-cover" src={chosenImage2} />
                                                 </div>
-                                        </div>
-
-                                        <div className='bg-white bg-opacity-90 border border-gray-200 rounded-xl h-28 flex flex-col justify-center'>
-                                            <div className="space-y-1 text-center">
+                                                <div onClick={(e) => resetImage(e, 2)} className='z-20 bg-gray-400 bg-opacity-40 hover:bg-opacity-30 border border-gray-600 border-opacity-10 text-center w-5 h-5 rounded-full shadow-lg absolute bottom-1 right-1 flex flex-row justify-center btn-effect1'>
+                                                    <div className='self-center'><TrashIcon customClass="w-3 h-3 text-black" /></div>
+                                                </div>
+                                            </>
+                                            }
+                                            <div onClick={() => imageInput2.click()} className="space-y-1 text-center cursor-pointer">
                                                 <ImageHolder customClass="mx-auto h-11 w-9 text-gray-400" />
                                                 <div className="flex text-sm text-gray-600">
                                                     <label htmlFor="file-upload" className="relative cursor-pointer rounded-md font-mediu hover:text-opacity-90">
-                                                        <input type="file" id="image" name="image" className="sr-only" />
+                                                        <input type="file" ref={refParam => imageInput2 = refParam} onChange={(e) => handleImage(e,2)} name="image2" id="image2" className="sr-only" />
                                                     </label>
                                                 </div>
                                                 <p className="text-[8px] text-gray-500 mb-2">PNG, JPG, GIF jusqu&apos;à 10MB</p>
                                             </div>
                                         </div>
 
-                                        <div className='bg-white bg-opacity-90 border border-gray-200 rounded-xl h-28 flex flex-col justify-center'>
-                                            <div className="space-y-1 text-center">
+                                        <div className='relative bg-white bg-opacity-90 border border-gray-200 rounded-xl h-28 flex flex-col justify-center'>
+                                            {chosenImage3 &&
+                                            <>
+                                                <div onClick={() => imageInput3.click()} className="w-full h-full absolute top-0 left-0">
+                                                    <img className="w-full h-full object-cover" src={chosenImage3} />
+                                                </div>
+                                                <div onClick={(e) => resetImage(e, 3)} className='z-20 bg-gray-400 bg-opacity-40 hover:bg-opacity-30 border border-gray-600 border-opacity-10 text-center w-5 h-5 rounded-full shadow-lg absolute bottom-1 right-1 flex flex-row justify-center btn-effect1'>
+                                                    <div className='self-center'><TrashIcon customClass="w-3 h-3 text-black" /></div>
+                                                </div>
+                                            </>
+                                            }
+                                            <div onClick={() => imageInput3.click()} className="space-y-1 text-center cursor-pointer">
                                                 <ImageHolder customClass="mx-auto h-11 w-9 text-gray-400" />
                                                 <div className="flex text-sm text-gray-600">
                                                     <label htmlFor="file-upload" className="relative cursor-pointer rounded-md font-mediu hover:text-opacity-90">
-                                                        <input type="file" id="image" name="image" className="sr-only" />
+                                                        <input type="file" ref={refParam => imageInput3 = refParam} onChange={(e) => handleImage(e,3)} name="image3" id="image3" className="sr-only" />
+                                                    </label>
+                                                </div>
+                                                <p className="text-[8px] text-gray-500 mb-2">PNG, JPG, GIF jusqu&apos;à 10MB</p>
+                                            </div>
+                                        </div>
+
+                                        <div className='relative bg-white bg-opacity-90 border border-gray-200 rounded-xl h-28 flex flex-col justify-center'>
+                                            {chosenImage4 &&
+                                            <>
+                                                <div onClick={() => imageInput4.click()} className="w-full h-full absolute top-0 left-0">
+                                                    <img className="w-full h-full object-cover" src={chosenImage4} />
+                                                </div>
+                                                <div onClick={(e) => resetImage(e, 4)} className='z-20 bg-gray-400 bg-opacity-40 hover:bg-opacity-30 border border-gray-600 border-opacity-10 text-center w-5 h-5 rounded-full shadow-lg absolute bottom-1 right-1 flex flex-row justify-center btn-effect1'>
+                                                    <div className='self-center'><TrashIcon customClass="w-3 h-3 text-black" /></div>
+                                                </div>
+                                            </>
+                                            }
+                                            <div onClick={() => imageInput4.click()} className="space-y-1 text-center cursor-pointer">
+                                                <ImageHolder customClass="mx-auto h-11 w-9 text-gray-400" />
+                                                <div className="flex text-sm text-gray-600">
+                                                    <label htmlFor="file-upload" className="relative cursor-pointer rounded-md font-mediu hover:text-opacity-90">
+                                                        <input type="file" ref={refParam => imageInput4 = refParam} onChange={(e) => handleImage(e,4)} name="image4" id="image4" className="sr-only" />
                                                     </label>
                                                 </div>
                                                 <p className="text-[8px] text-gray-500 mb-2">PNG, JPG, GIF jusqu&apos;à 10MB</p>

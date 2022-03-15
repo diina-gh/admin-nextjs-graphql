@@ -42,6 +42,17 @@
 }
 
 
+.tr-menu{
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0);
+  &:hover{
+    background: linear-gradient(90deg, #c8c4d32a, #c8c4d37e, #c8c4d3) !important;
+  }
+}
+ 
+
+
+
 
 
 #pg-container {
