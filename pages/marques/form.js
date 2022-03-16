@@ -8,53 +8,63 @@ import ArrowLeftBoldIcon from '../../components/ui/icons/arrowLeftBoldIcon';
 import TrashIcon from '../../components/ui/icons/trashIcon';
 import { useInput } from '../../hooks/input-hook';
 import ImageHolder from '../../components/ui/icons/imageHolder';
-import storage from "../../config/firebase"
-
+import firebase from "../../config/firebase"
 import { uid } from 'uid';
+import { saveImage } from '../../hooks/image';
+import { saveBrand } from '../../hooks/brand';
+import { capitalize } from '../../libs/util';
 
 
 
-export default function Index() {
+ export default function Index ()  {
 
     const { value:name, bind:bindName, reset:resetName } = useInput('');
     const { value:desc, bind:bindDesc, reset:resetDesc } = useInput('');
     const { value:order, bind:bindOrder, reset:resetOrder } = useInput(null);
     const [image, setImage] = useState(null)
     const [chosenImage, setChosenImage] = useState(null)
-    const [imageref, setImageref] = useState('')
-    const [url, setUrl] = useState('')
+
     let imageInput ;
 
-    function handleImage (event){
-        if(event.target.files[0]){
-            setImage(event.target.files[0])
-            setChosenImage( URL.createObjectURL(event.target.files[0]))
-        }
+    function handleImage (e, option){
+        e.preventDefault(); 
+        if(e.target.files[0]) setImage(e.target.files[0]); setChosenImage( URL.createObjectURL(e.target.files[0]));
     }
 
-    function resetImage(e) {
-        e.preventDefault();
-        setImage('')
-        setChosenImage(null)
+    function resetImage (e, option){
+        e.preventDefault(); setImage(null); setChosenImage(null);
     }
 
-    const uploadImage=(e) => {
+
+    const uploadImage = (e) =>{
         e.preventDefault()
-        console.info(storage)
-        var imageref = image.name + uid(32)
-        const uploadTask = storage().ref(`images/${imageref}`).put(image);
+        var ref = "brand_" + uid(32)
+        const uploadTask = firebase.storage().ref(`images/${ref}`).put(image);
         uploadTask.on("state_changed",snapshot => {
             const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
             console.log("progress ..", progress);
           },error => {console.log(error);},
           () => {
-              storage().ref("images").child(imageref).getDownloadURL().then(url => {
-                console.log(url)
-                return {url, imageref}
+              firebase.storage().ref("images").child(ref).getDownloadURL().then(url => {
+                saveImageInfo(url, ref)
               });
           }
         );
       };
+
+    const saveImageInfo = async (url, ref) => {
+        var {imageInfo, imageLoading } = await saveImage(url, ref)
+        if(imageLoading) console.log("Image Loading ... ")
+        // if(imageError) console.log("An error have occured for the image ", isError)
+        if(imageInfo) console.log("The image ", imageInfo); saveItem(imageInfo?.id);
+    };
+
+    const saveItem = async (imageId) => {
+        var {item, isLoading } = await saveBrand(null, name, desc, order, imageId)
+        if(isLoading) console.log("Loading ... ")
+        // if(isError) console.log("An error have occured ", isError)
+        if(item) console.log("Success ", item)
+    };
 
 
   return (
@@ -100,7 +110,7 @@ export default function Index() {
                                             <div onClick={() => imageInput.click()} className="w-full h-full absolute top-0 left-0">
                                                 <img className="w-full h-full object-cover" src={chosenImage} />
                                             </div>
-                                            <div onClick={(e) => resetImage(e)} className='z-20 bg-gray-400 bg-opacity-40 hover:bg-opacity-30 border border-gray-600 border-opacity-10 text-center w-7 h-7 rounded-full shadow-lg absolute bottom-2 right-2 flex flex-row justify-center btn-effect1'>
+                                            <div onClick={(e) => resetImage(e, 'image')} className='z-20 bg-gray-400 bg-opacity-40 hover:bg-opacity-30 border border-gray-600 border-opacity-10 text-center w-7 h-7 rounded-full shadow-lg absolute bottom-2 right-2 flex flex-row justify-center btn-effect1'>
                                                 <div className='self-center'><TrashIcon customClass="w-4 h-4 text-black" /></div>
                                             </div>
                                           </>
@@ -109,7 +119,7 @@ export default function Index() {
                                             <ImageHolder customClass="mx-auto h-14 w-12 text-gray-400" />
                                             <div className="flex text-sm text-gray-600">
                                                 <label htmlFor="file-upload" className="relative cursor-pointer rounded-md font-mediu hover:text-opacity-90">
-                                                    <input type="file" ref={refParam => imageInput = refParam} onChange={handleImage} name="image" id="image" className="sr-only"/>
+                                                    <input type="file" ref={refParam => imageInput = refParam} onChange={(e) => handleImage(e, 'image')} name="image" id="image" className="sr-only"/>
                                                 </label>
                                                 <p className="w-full text-center"> <span className="text-iired" >Uploader une image</span> ou le déposer ici</p>
                                             </div>

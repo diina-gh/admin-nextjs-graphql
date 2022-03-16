@@ -14,6 +14,12 @@ export const truncate = (str, num) => {
     return str.slice(0, num) + "...";
 };
 
+export const filterInt = (value) => {
+    if (/^(-|\+)?(\d+|Infinity)$/.test(value))
+      return Number(value);
+    return NaN;
+}
+
 export function uploadImage(image){
     var imageref = image.name + uid(32)
     const uploadTask = firebase.storage().ref(`images/${imageref}`).put(image);
@@ -23,7 +29,8 @@ export function uploadImage(image){
       },error => {console.log(error);},
       () => {
           firebase.storage().ref("images").child(imageref).getDownloadURL().then(url => {
-            return {url, imageref}
+            let imageInfo = {url, imageref}
+            return imageInfo
           });
       }
     );

@@ -1,9 +1,11 @@
 import useSWR from 'swr'
-import request from 'graphql-request'
+import {GraphQLClient, request} from 'graphql-request'
 import { brandsQuery, brandQuery } from '../graphql/queries'
-import {saveBrandMutation, deleteBrandMutation} from "../graphql/mutations"
+import {saveBrandMutation, deleteBrandMutation, saveImageMutation} from "../graphql/mutations"
+import { filterInt } from '../libs/util'
 
-const endpoint = "https://trade-two.vercel.app/graphql "
+const endpoint = "https://trade-two.vercel.app/graphql"
+const graphQLClient = new GraphQLClient(endpoint, {headers: {authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY0NjI3NjgyMH0.ZP6ZUMKGFoYdWR28YV06Q4dUaY_HDDyJIjA2hqzwswQ',},})
 
 export function getBrands (page, take, filter, orderBy) {
 
@@ -33,17 +35,11 @@ export function getBrand (id) {
     }
 }
 
-export function saveBrand (id, name, desc, order, imageId) {
-
-    var variables = {"id": id, "name": name, "desc": desc, "order": order, "imageId": imageId}
-    var fetcher = query => request(endpoint, query, variables)
-    const { data, error } = useSWR(saveBrandMutation,fetcher);
-  
-    return {
-      item: data,
-      isLoading: !error && !data,
-      isError: error,
-    }
+export async function saveBrand (id, name, desc, order, imageId) {
+    var variables = {"id": id, "name": name, "desc": desc, "order": filterInt(order), "imageId": filterInt(imageId)}
+    const data = await graphQLClient.request(saveBrandMutation, variables)
+    console.log(JSON.stringify(data, undefined, 2))
+    return {item: data.saveBrand, isLoading: !data }
 }
 
 export function DeleteBrand (id) {
