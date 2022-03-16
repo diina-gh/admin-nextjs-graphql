@@ -22,21 +22,22 @@ export function getBrands (page, take, filter, orderBy) {
 }
 
 
-export function getBrand (id) {
+export async function getBrand (id) {
 
-    var variables = {"id": id}
-    var fetcher = query => request(endpoint, query, variables)
-    const { data, error } = useSWR(brandQuery,fetcher);
+    var variables = {"id": filterInt(id)}
+    const data = await graphQLClient.request(brandQuery, variables)
+    // var fetcher = query => request(endpoint, query, variables)
+    // const { data, error } = await useSWR(brandQuery,fetcher);
   
     return {
       item: data,
-      isLoading: !error && !data,
-      isError: error,
+      isLoading: !data,
+    //   isError: error,
     }
 }
 
 export async function saveBrand (id, name, desc, order, imageId) {
-    var variables = {"id": id, "name": name, "desc": desc, "order": filterInt(order), "imageId": filterInt(imageId)}
+    var variables = {"id": filterInt(id), "name": name, "desc": desc, "order": filterInt(order), "imageId": filterInt(imageId)}
     const data = await graphQLClient.request(saveBrandMutation, variables)
     console.log(JSON.stringify(data, undefined, 2))
     return {item: data.saveBrand, isLoading: !data }

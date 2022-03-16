@@ -15,6 +15,7 @@ export const truncate = (str, num) => {
 };
 
 export const filterInt = (value) => {
+    if(value == null) return null
     if (/^(-|\+)?(\d+|Infinity)$/.test(value))
       return Number(value);
     return NaN;

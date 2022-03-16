@@ -330,6 +330,7 @@ export const brandsQuery = gql`
                 desc
                 order
                 image {
+                    id
                     url
                     imageref
                 }
@@ -346,6 +347,7 @@ export const brandQuery = gql`
             desc
             order
             image {
+                id
                 url
                 imageref
             }

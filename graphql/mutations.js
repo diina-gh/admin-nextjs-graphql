@@ -1,8 +1,8 @@
 import { gql } from "graphql-request";
 
 export const saveDeliveryManMutation = gql`
-    mutation($firstname: String, $lastname: String, $email: String, $phonenumber: String, $civility: Civility){
-        saveDeliveryMan(firstname: $firstname, lastname: $lastname, email: $email, phonenumber: $phonenumber, civility: $civility) {
+    mutation($id: Int, $firstname: String, $lastname: String, $email: String, $phonenumber: String, $civility: Civility){
+        saveDeliveryMan(id: $id, firstname: $firstname, lastname: $lastname, email: $email, phonenumber: $phonenumber, civility: $civility) {
             id
             firstname
             lastname
@@ -25,8 +25,8 @@ export const deleteDeliveryManMutation = gql`
 `
 
 export const saveBrandMutation = gql`
-    mutation($name: String, $desc: String, $order: Int, $imageId: Int){
-        saveBrand(name: $name, desc: $desc, order: $order, imageId: $imageId) {
+    mutation($id: Int, $name: String, $desc: String, $order: Int, $imageId: Int){
+        saveBrand(id: $id, name: $name, desc: $desc, order: $order, imageId: $imageId) {
             id
             name
             desc
@@ -55,8 +55,8 @@ export const deleteBrandMutation = gql`
 `
 
 export const saveImageMutation = gql `
-    mutation($url: String, $imageref: String){
-        saveImage(url: $url, imageref: $imageref) {
+    mutation($id: Int, $url: String, $imageref: String){
+        saveImage(id:$id, url: $url, imageref: $imageref) {
             id
             url
             imageref
