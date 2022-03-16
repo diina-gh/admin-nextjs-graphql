@@ -66,7 +66,7 @@ export const saveImageMutation = gql `
 
 export const deleteImageMutation = gql `
     mutation($id: Int){
-        saveImage(id: $id) {
+        deleteImage(id: $id) {
             id
             url
             imageref

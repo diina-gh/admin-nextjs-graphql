@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import firebase from '../../config/firebase'
 import { motion } from "framer-motion";
 import { Tab } from '@headlessui/react'
 import Header from '../../components/common/header'
@@ -16,7 +17,11 @@ import ChevronLeftIcon from '../../components/ui/icons/chevronLeftIcon';
 import ChevronRightIcon from '../../components/ui/icons/chevronRightIcon';
 import DoubleChevronLeftIcon from '../../components/ui/icons/doubleChevronLeftIcon';
 import DoubleChevronRightIcon from '../../components/ui/icons/doubleChevronRightIcon';
-import { getBrands } from '../../hooks/brand';
+import EditBoldIcon from '../../components/ui/icons/editBoldIcon'
+import TrashBoldIcon from '../../components/ui/icons/trashBoldIcon'
+import { getBrands, deleteBrand } from '../../hooks/brand';
+import { deleteImage } from '../../hooks/image';
+
 
 
 export default function Index() {
@@ -47,6 +52,30 @@ export default function Index() {
     if (isError) console.log("The error here ", isError)
     if (isLoading) console.log("loading...")
     if(items) console.log("Informations => ", items)
+
+    async function deleteImageref (e, id, imageId, imageref) {
+        console.log("eeeee ", e)
+        e.preventDefault()
+        firebase.storage().ref(`images/${imageref}`).delete().then(() => {
+            console.log("File deleted successfuly");
+            deleteImageInfo(id, imageId);
+          }).catch((error) => {
+            console.log("Uh-oh, an error occurred: ", error);
+            if(error.code == 'storage/object-not-found') deleteImageInfo(id, imageId);
+        });
+    }
+    
+    async function deleteImageInfo (id, imageId) {
+        var {imageInfo, imageLoading } = await deleteImage(imageId)
+        if(imageLoading) console.log("Delete Image Loading ... ")
+        if(imageInfo) console.log("The image was deleted ", imageInfo); deleteItem(id);
+    }
+    
+    async function deleteItem (id){
+        var {item, isLoading } = await deleteBrand(id)
+        if(isLoading) console.log("Delete item Loading ... ")
+        if(item) console.log("The item was deleted ", item); refetch(page);
+    }
 
     return (
         <div className="app-container h-screen">
@@ -100,7 +129,7 @@ export default function Index() {
                                         </div>
                                     </div>
 
-                                    <Link href={{pathname: 'marques/form',query: { id: 10 },}} > 
+                                    <Link href={{pathname: 'marques/form'}} > 
                                         <div className='ml-2 bg-purple-500 bg-opacity-90 shadow shadow-purple-500/50 px-3 py-2 rounded-md flex flex-col justify-center btn-effect1'>
                                             <div className='flex flex-row text-sm font-medium text-gray-100 hover:text-white'>
                                                 <AddBoldIcon customClass="self-center w-4 h-4" />
@@ -149,8 +178,8 @@ export default function Index() {
                                                             
                                                             <td className="px-6 py-3 whitespace-nowrap">
                                                                 <div className="flex items-center">
-                                                                    <div className="flex-shrink-0 h-10 w-10">
-                                                                        <img className="h-10 w-10 rounded-full" src="https://raw.githubusercontent.com/diina-gh/owid-covid/main/background/bg3.webp" alt="" />
+                                                                    <div className="flex-shrink-0 w-9">
+                                                                        <img className="w-full" src={item.image?.url} alt="" />
                                                                     </div>
                                                                     <div className="ml-4">
                                                                         <div className="text-sm font-medium text-gray-900">{item.name}</div>
@@ -166,10 +195,21 @@ export default function Index() {
                                                                 </span>
                                                             </td>
                                             
-                                                            <td className="px-6 py-3 whitespace-nowrap text-right text-sm font-medium">
-                                                                <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                                                    Edit
-                                                                </a>
+                                                            <td className="px-2 py-3 whitespace-nowrap text-right flex flex-row justify-end">
+
+                                                                <div className="flex flex-row">
+                                                                    <Link  href={{pathname: 'marques/form', query: { id: item.id },}} >
+                                                                        <button className="w-7 h-7 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-300 mr-2">
+                                                                            <EditBoldIcon customClass="w-3 text-gray-600 text-opacity-90 self-center"/>
+                                                                        </button>
+                                                                    </Link>
+
+
+                                                                    <button  onClick={(e) => item.image == null ? deleteItem(item.id) : deleteImageref(e, item.id, item.image?.id, item.image?.imageref)} className="w-7 h-7 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-30">
+                                                                        <TrashBoldIcon customClass="w-3 text-red-600 text-opacity-90 self-center"/>
+                                                                    </button>
+                                                                </div>
+
                                                             </td>
 
                                                         </tr>

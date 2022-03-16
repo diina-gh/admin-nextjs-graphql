@@ -13,8 +13,7 @@ export async function saveImage (id, imageUrl, imageref) {
     return {imageInfo: data.saveImage, imageLoading: !data, }
 }
 
-export async function DeleteImage (id) {
-
+export async function deleteImage (id) {
     var variables = {"id": filterInt(id)}
     const data = await graphQLClient.request(deleteImageMutation, variables)
     return {imageInfo: data,isLoading: !data,}

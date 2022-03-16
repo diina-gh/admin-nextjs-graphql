@@ -9,7 +9,7 @@ import TrashIcon from '../../components/ui/icons/trashIcon';
 import ImageHolder from '../../components/ui/icons/imageHolder';
 import firebase from "../../config/firebase"
 import { uid } from 'uid';
-import { saveImage, DeleteImage } from '../../hooks/image';
+import { saveImage, deleteImage } from '../../hooks/image';
 import { saveBrand, getBrand} from '../../hooks/brand';
 import router from 'next/router'
 import { capitalize } from '../../libs/util';
@@ -58,30 +58,31 @@ class Index extends Component {
     }
 
     handleUpload = (e) => {
+
         e.preventDefault()
         const { id, image, chosenImage, imageref, imageId } = this.state
 
-        if(id){ 
+        if(!id){
+            this.uploadImage();
+        }
+        else if(imageref !=null){ 
             if(image == chosenImage){
                 this.saveItem(imageId)
             }
             else{
-                if(imageref !=null){
-                    firebase.storage().ref(`images/${imageref}`).delete().then(async() => {
-                        console.log("File deleted successfuly");
-                        this.uploadImage();
-                    }).catch((error) => {
-                        console.log("Uh-oh, an error occurred: ", error);
-                        if(error.code == 'storage/object-not-found') this.uploadImage();
-                    });
-                }
-            }
+                firebase.storage().ref(`images/${imageref}`).delete().then(async() => {
+                    console.log("File deleted successfuly");
+                    this.uploadImage();
+                }).catch((error) => {
+                    console.log("Uh-oh, an error occurred: ", error);
+                    if(error.code == 'storage/object-not-found') this.uploadImage();
+                });
+            }     
         }
         else{
             this.uploadImage();
         }
-
-      }
+    }
 
 
     uploadImage = () =>{
@@ -98,7 +99,7 @@ class Index extends Component {
               });
           }
         );
-      };
+    };
 
     saveImageInfo = async (url, ref) => {
         const {imageId} = this.state
@@ -146,7 +147,7 @@ class Index extends Component {
                                             </div>
                                         </Link>
         
-                                        <div className='text-lg font-semibold text-purple-600'>Nouvelle Marque</div>
+                                        <div className='text-lg font-semibold text-purple-600'>Formulaire Marque</div>
         
                                         <div></div>
         
@@ -170,14 +171,14 @@ class Index extends Component {
                                                 </>
                                                 }
                                                 <div onClick={() => this.imageInput.click()} className="space-y-1 text-center">
-                                                    <ImageHolder customClass="mx-auto h-14 w-12 text-gray-400" />
+                                                    {!chosenImage && <ImageHolder customClass="mx-auto h-14 w-12 text-gray-400" />}
                                                     <div className="flex text-sm text-gray-600">
                                                         <label htmlFor="file-upload" className="relative cursor-pointer rounded-md font-mediu hover:text-opacity-90">
                                                             <input type="file"  ref={refParam => this.imageInput = refParam} onChange={(e) => this.handleImage(e, 'image')} name="image" id="image" className="sr-only"/>
                                                         </label>
-                                                        <p className="w-full text-center"> <span className="text-iired" >Uploader une image</span> ou le déposer ici</p>
+                                                        {!chosenImage && <p className="w-full text-center"> <span className="text-iired" >Uploader une image</span> ou le déposer ici</p>}
                                                     </div>
-                                                    <p className="text-xs text-gray-500 mb-2">PNG, JPG, GIF jusqu&apos;à 10MB</p>
+                                                    {!chosenImage &&  <p className="text-xs text-gray-500 mb-2">PNG, JPG, GIF jusqu&apos;à 10MB</p>}
                                                 </div>
                                             </div>
         
