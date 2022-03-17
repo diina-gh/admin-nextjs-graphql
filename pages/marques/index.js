@@ -21,7 +21,8 @@ import EditBoldIcon from '../../components/ui/icons/editBoldIcon'
 import TrashBoldIcon from '../../components/ui/icons/trashBoldIcon'
 import { getBrands, deleteBrand } from '../../hooks/brand';
 import { deleteImage } from '../../hooks/image';
-
+import BlockUI from '../../components/common/blockui';
+import toast, { Toaster } from 'react-hot-toast';
 
 
 export default function Index() {
@@ -31,6 +32,8 @@ export default function Index() {
     const [filter, setFilter] = useState('')
     const [direction, setDirection] = useState('asc')
     const [orderBy, setOrderBy] = useState({"id": direction})
+    const [block, setBlock] = useState(false);
+
 
     var { items, isLoading, isError, mutate } = getBrands(page,take,filter, orderBy )
 
@@ -75,11 +78,15 @@ export default function Index() {
         var {item, isLoading } = await deleteBrand(id)
         if(isLoading) console.log("Delete item Loading ... ")
         if(item) console.log("The item was deleted ", item); refetch(page);
+        setBlock(false)
+        toast.success('Suppression réussie !');
+
     }
 
     return (
         <div className="app-container h-screen">
 
+            <Toaster position='top-right' />
             <HeadInfo title= 'Dashboard' description='description here'/>
             <Header/>
 
@@ -88,7 +95,9 @@ export default function Index() {
                 <Sidebar />
 
                 <motion.div initial={{ opacity: 0.45, x: -150 }}  whileInView={{ opacity: 1, x: 0, transition: { duration: 0.60 }, }}>
-                    <div className='app-body'>
+                    <div className='app-body relative'>
+
+                        <BlockUI blocking={block} />
 
                         <div className='w-full h-full bg-white rounded-xl overflow-y-scroll p-4'>
 
@@ -178,8 +187,8 @@ export default function Index() {
                                                             
                                                             <td className="px-6 py-3 whitespace-nowrap">
                                                                 <div className="flex items-center">
-                                                                    <div className="flex-shrink-0 w-9">
-                                                                        <img className="w-full" src={item.image?.url} alt="" />
+                                                                    <div className="flex-shrink-0 brand-image">
+                                                                        <img src={item.image?.url} alt={item.name} />
                                                                     </div>
                                                                     <div className="ml-4">
                                                                         <div className="text-sm font-medium text-gray-900">{item.name}</div>
@@ -205,7 +214,7 @@ export default function Index() {
                                                                     </Link>
 
 
-                                                                    <button  onClick={(e) => item.image == null ? deleteItem(item.id) : deleteImageref(e, item.id, item.image?.id, item.image?.imageref)} className="w-7 h-7 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-30">
+                                                                    <button  onClick={(e) => setBlock(true) && item.image == null ? deleteItem(item.id) : deleteImageref(e, item.id, item.image?.id, item.image?.imageref)} className="w-7 h-7 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-30">
                                                                         <TrashBoldIcon customClass="w-3 text-red-600 text-opacity-90 self-center"/>
                                                                     </button>
                                                                 </div>

@@ -52,9 +52,6 @@
  
 
 
-
-
-
 #pg-container {
   margin: 1rem;
 }
@@ -98,6 +95,14 @@
       background-color: #8e24aa !important;
       color: white !important;
     }
+  }
+}
+
+
+.brand-image{
+  img{
+    max-width: 2rem;
+    max-height: 2.5rem;
   }
 }
 

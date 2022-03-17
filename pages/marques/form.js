@@ -13,6 +13,8 @@ import { saveImage, deleteImage } from '../../hooks/image';
 import { saveBrand, getBrand} from '../../hooks/brand';
 import router from 'next/router'
 import { capitalize } from '../../libs/util';
+import BlockUI from '../../components/common/blockui';
+import toast, { Toaster } from 'react-hot-toast';
 
 export async function getServerSideProps(context) {
     return {
@@ -20,11 +22,14 @@ export async function getServerSideProps(context) {
     }
 }
 
+var toastOne ;
+
+
 class Index extends Component {
 
     constructor(props){
         super(props);
-        this.state = { id:null, name: '', desc: '', order:0, image: null, chosenImage:null, imageref:null, imageId: null};
+        this.state = { block: false, id:null, name: '', desc: '', order:0, image: null, chosenImage:null, imageref:null, imageId: null};
         this.handleImage = this.handleImage.bind(this)
         this.resetImage = this.resetImage.bind(this)
         this.uploadImage = this.uploadImage.bind(this)
@@ -61,6 +66,14 @@ class Index extends Component {
 
         e.preventDefault()
         const { id, image, chosenImage, imageref, imageId } = this.state
+
+        if(image == null){
+            toast.error('Veuillez ajouter une image !');
+            return null
+        }
+
+        this.setState({block: true})
+        toastOne = toast.loading('Veuillez patientez...');
 
         if(!id){
             this.uploadImage();
@@ -115,6 +128,9 @@ class Index extends Component {
         if(isLoading) console.log("Loading ... ")
         // if(isError) console.log("An error have occured ", isError)
         if(item) console.log("Success ", item)
+        this.setState({block: false})
+        toast.success('Mise à jour réussie', {id: toastOne,});
+        setTimeout(() => { router.push('./');}, 2200);
     };
 
     
@@ -124,7 +140,7 @@ class Index extends Component {
 
         return(
             <div className="app-container h-screen">
-
+                <Toaster position='top-right' />
                 <HeadInfo title= 'Dashboard' description='description here'/>
                 <Header/>
         
@@ -134,6 +150,8 @@ class Index extends Component {
         
                     <motion.div initial={{ opacity: 0.45, x: 150 }}  whileInView={{ opacity: 1, x: 0, transition: { duration: 0.60 }, }}>
                         <div className='app-body bg-white rounded-xl relative pb-16'>
+
+                            <BlockUI blocking={this.state.block} />
         
                             <form className='w-full h-full' onSubmit={(e) => this.handleUpload(e)}>
         

@@ -98,6 +98,15 @@ input[type=number] {
   }
 }
 
+.blockui-bg{
+  background: rgba(131, 95, 131, 0.25);
+  cursor: progress;
+}
+
+.custom-toast{
+  background: rgba(247, 174, 247, 0.897);
+}
+
 
 // ck ck-content ck-editor__editable ck-rounded-corners ck-editor__editable_inline ck-blurred
 
@@ -129,3 +138,4 @@ input[type=number] {
 @media (min-width: 1536px) {
   
 }
+
