@@ -1,7 +1,7 @@
 import useSWR from 'swr'
 import {GraphQLClient, request} from 'graphql-request'
 import { brandsQuery, brandQuery } from '../graphql/queries'
-import {saveBrandMutation, deleteBrandMutation, saveImageMutation} from "../graphql/mutations"
+import {saveBrandMutation, deleteBrandMutation} from "../graphql/mutations"
 import { filterInt } from '../libs/util'
 
 const endpoint = "https://trade-two.vercel.app/graphql"

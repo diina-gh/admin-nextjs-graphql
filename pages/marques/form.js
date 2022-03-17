@@ -169,7 +169,7 @@ class Index extends Component {
         this.setState({block: false})
         setTimeout(() => {
             router.push('./');
-        }, 2300);
+        }, 2250);
 
     };
 

@@ -1,13 +1,37 @@
 import { gql } from "graphql-request";
 
-export const saveDeliveryManMutation = gql`
-    mutation($id: Int, $firstname: String, $lastname: String, $email: String, $phonenumber: String, $civility: Civility){
-        saveDeliveryMan(id: $id, firstname: $firstname, lastname: $lastname, email: $email, phonenumber: $phonenumber, civility: $civility) {
-            id
-            firstname
-            lastname
-            email
-            phonenumber
+export const saveCountryMutation = gql `
+    mutation($id: Int, $iso3: String, $isoNum:String, $name:String){
+        saveCountry(id: $id, iso3: $iso3, isoNum: $isoNum, name: $name ){
+            __typename
+            ... on Country{
+                id
+                name
+                iso3
+                isoNum
+            }
+            ... on InputError{
+                message
+                input
+            }    
+        }
+    }
+`
+
+export const deleteCountryMutation = gql `
+    mutation($id: Int){
+        deleteCountry(id: $id ){
+            __typename
+            ... on Country{
+                id
+                name
+                iso3
+                isoNum
+            }
+            ... on InputError{
+                message
+                input
+            }    
         }
     }
 `
