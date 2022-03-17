@@ -25,15 +25,23 @@ export const deleteDeliveryManMutation = gql`
 `
 
 export const saveBrandMutation = gql`
-    mutation($id: Int, $name: String, $desc: String, $order: Int, $imageId: Int){
-        saveBrand(id: $id, name: $name, desc: $desc, order: $order, imageId: $imageId) {
-            id
-            name
-            desc
-            image {
+    mutation($id: Int, $name: String, $desc: String, $order: Int){
+        saveBrand(id: $id, name: $name, desc: $desc, order: $order){
+            __typename
+            ... on Brand{
                 id
-                imageref
-                url
+                name
+                desc
+                order
+                image {
+                    id
+                    url
+                    imageref
+                }
+            }
+            ... on InputError{
+                message
+                input
             }
         }
     }
@@ -41,35 +49,59 @@ export const saveBrandMutation = gql`
 
 export const deleteBrandMutation = gql`
     mutation($id: Int){
-        deleteBrand(id: $id) {
-            id
-            name
-            desc
-            image {
+        deleteBrand(id: $id){
+            __typename
+            ... on Brand{
                 id
-                imageref
-                url
+                name
+                desc
+                order
+                image {
+                    id
+                    url
+                    imageref
+                }
+            }
+            ... on InputError{
+                message
+                input
             }
         }
     }
 `
 
 export const saveImageMutation = gql `
-    mutation($id: Int, $url: String, $imageref: String){
-        saveImage(id:$id, url: $url, imageref: $imageref) {
-            id
-            url
-            imageref
-        }
+    mutation($id: Int, $url: String, $imageref:String, $default: Boolean, $productId: Int, $optionId: Int, $brandId: Int ){
+        saveImage(id: $id, url: $url, imageref: $imageref, default: $default, productId: $productId, optionId: $optionId, brandId: $brandId){
+            __typename
+            ... on Image{
+                id
+                url
+                imageref
+                default
+            }
+            ... on InputError{
+                message
+                input
+            }
+        } 
     }
 `
 
 export const deleteImageMutation = gql `
-    mutation($id: Int){
-        deleteImage(id: $id) {
-            id
-            url
-            imageref
-        }
+    mutation($id: Int ){
+        deleteImage(id: $id){
+            __typename
+            ... on Image{
+                id
+                url
+                imageref
+                default
+            }
+            ... on InputError{
+                message
+                input
+            }
+        } 
     }
 `

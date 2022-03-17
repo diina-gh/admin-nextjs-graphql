@@ -32,9 +32,10 @@ class Index extends Component {
         this.state = { block: false, id:null, name: '', desc: '', order:0, image: null, chosenImage:null, imageref:null, imageId: null};
         this.handleImage = this.handleImage.bind(this)
         this.resetImage = this.resetImage.bind(this)
+        this.checkInput = this.checkInput.bind(this)
+        this.saveItem = this.saveItem.bind(this)
         this.uploadImage = this.uploadImage.bind(this)
         this.saveImageInfo = this.saveImageInfo.bind(this)
-        this.saveItem = this.saveItem.bind(this)
     }
 
     async componentDidMount(){
@@ -62,45 +63,71 @@ class Index extends Component {
         this.setState({[option]: null, ['chosen' + capitalize(option)]: null })
     }
 
-    handleUpload = (e) => {
+    checkInput = (e) => {
 
         e.preventDefault()
-        const { id, image, chosenImage, imageref, imageId } = this.state
+        const {name, desc, order, image} = this.state
 
         if(image == null){
-            toast.error('Veuillez ajouter une image !');
+            toast.error("Veuillez ajouter une image.", {id: toastOne,});
+            this.setState({block: false})
             return null
         }
-
-        this.setState({block: true})
-        toastOne = toast.loading('Veuillez patientez...');
-
-        if(!id){
-            this.uploadImage();
+        else{
+            toast.loading("Veuillez patienter svp...", {id: toastOne,});
+            this.setState({block: true})
+            this.saveItem()
         }
-        else if(imageref !=null){ 
+
+    }
+
+    saveItem = async () => {
+
+        const {id, name, desc, order, image} = this.state
+
+        var {response } = await saveBrand(id, name, desc, order)
+
+        if(response?.saveBrand?.__typename == 'Brand'){
+            this.handleUpload(response?.saveBrand?.id)
+        }
+        else if(response?.saveBrand?.__typename == 'InputError'){
+            toast.error(response?.saveBrand?.message, {id: toastOne,});
+            this.setState({block: false})
+        }
+        else{
+            toast.error("Erreur inconnue. Veuillez vérifier votre connexion internet.", {id: toastOne,});
+        }
+    };
+
+    handleUpload = (itemId) => {
+
+        const { id, image, chosenImage, imageref, imageId } = this.state
+
+        if(imageref !=null){ 
             if(image == chosenImage){
-                this.saveItem(imageId)
+                toast.success("Mise à jour réussie !", {id: toastOne,});
+                this.setState({block: false})
+                return null
             }
             else{
                 firebase.storage().ref(`images/${imageref}`).delete().then(async() => {
                     console.log("File deleted successfuly");
-                    this.uploadImage();
+                    this.uploadImage(itemId);
                 }).catch((error) => {
                     console.log("Uh-oh, an error occurred: ", error);
-                    if(error.code == 'storage/object-not-found') this.uploadImage();
+                    if(error.code == 'storage/object-not-found') this.uploadImage(itemId);
                 });
             }     
         }
         else{
-            this.uploadImage();
+            this.uploadImage(itemId);
         }
-    }
+    };
 
 
-    uploadImage = () =>{
+    uploadImage = (itemId) =>{
         const {image} = this.state
-        var ref = "brand_" + uid(32)
+        var ref = "brand_" + itemId
         const uploadTask = firebase.storage().ref(`images/${ref}`).put(image);
         uploadTask.on("state_changed",snapshot => {
             const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
@@ -108,32 +135,35 @@ class Index extends Component {
           },error => {console.log(error);},
           () => {
               firebase.storage().ref("images").child(ref).getDownloadURL().then(url => {
-                this.saveImageInfo(url, ref)
+                this.saveImageInfo(url, ref, itemId)
               });
           }
         );
     };
 
-    saveImageInfo = async (url, ref) => {
+    saveImageInfo = async (url, ref, itemId) => {
+
         const {imageId} = this.state
-        var {imageInfo, imageLoading } = await saveImage(imageId, url, ref)
-        if(imageLoading) console.log("Image Loading ... ")
-        // if(imageError) console.log("An error have occured for the image ", isError)
-        if(imageInfo) console.log("The image ", imageInfo); this.saveItem(imageInfo?.id);
-    };
+        var {response } = await saveImage(imageId, url, ref, null, null, itemId)
 
-    saveItem = async (imageId) => {
-        const {id, name, desc, order} = this.state
-        var {item, isLoading } = await saveBrand(id, name, desc, order, imageId)
-        if(isLoading) console.log("Loading ... ")
-        // if(isError) console.log("An error have occured ", isError)
-        if(item) console.log("Success ", item)
+        if(response?.saveImage?.__typename == 'Image'){
+            toast.success("Mise à jour réussie !", {id: toastOne,});
+        }
+        else if(response?.saveImage?.__typename == 'InputError'){
+            console.log("ImageInfo mutattion ", response?.saveImage?.message)
+            toast.success("Une erreur s'est produite lors de l'ajout de l'image !", {id: toastOne,});
+        }
+        else{
+            toast.error("Erreur inconnue. Veuillez vérifier votre connexion internet.", {id: toastOne,});
+        }
+
         this.setState({block: false})
-        toast.success('Mise à jour réussie', {id: toastOne,});
+        toast.dismiss()
         setTimeout(() => { router.push('./');}, 2200);
+
     };
 
-    
+
     render() {
         const {chosenImage} = this.state
         var imageInput;
@@ -153,7 +183,7 @@ class Index extends Component {
 
                             <BlockUI blocking={this.state.block} />
         
-                            <form className='w-full h-full' onSubmit={(e) => this.handleUpload(e)}>
+                            <form className='w-full h-full' onSubmit={(e) => this.checkInput(e)}>
         
                                 <div className='w-full h-full pt-4'>
         

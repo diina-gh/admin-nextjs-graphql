@@ -20,15 +20,16 @@ export async function getBrand (id) {
     return {item: data, isLoading: !data,}
 }
 
-export async function saveBrand (id, name, desc, order, imageId) {
-    var variables = {"id": filterInt(id), "name": name, "desc": desc, "order": filterInt(order), "imageId": filterInt(imageId)}
+export async function saveBrand (id, name, desc, order) {
+    var variables = {"id": filterInt(id), "name": name, "desc": desc, "order": filterInt(order)}
     const data = await graphQLClient.request(saveBrandMutation, variables)
-    console.log(JSON.stringify(data, undefined, 2))
-    return {item: data.saveBrand, isLoading: !data }
+    console.info("The response : ", data )
+    return {response: data }
 }
 
 export async function deleteBrand (id) {
     var variables = {"id": filterInt(id)}
     const data = await graphQLClient.request(deleteBrandMutation, variables)
-    return {item: data,isLoading: !data,}
+    console.info("The response : ", data )
+    return {response: data }
 }
