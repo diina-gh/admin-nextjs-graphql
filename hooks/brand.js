@@ -24,12 +24,12 @@ export async function saveBrand (id, name, desc, order) {
     var variables = {"id": filterInt(id), "name": name, "desc": desc, "order": filterInt(order)}
     const data = await graphQLClient.request(saveBrandMutation, variables)
     console.info("The response : ", data )
-    return {response: data }
+    return {response: data.saveBrand }
 }
 
 export async function deleteBrand (id) {
     var variables = {"id": filterInt(id)}
     const data = await graphQLClient.request(deleteBrandMutation, variables)
     console.info("The response : ", data )
-    return {response: data }
+    return {response: data.deleteBrand }
 }

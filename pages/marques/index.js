@@ -57,8 +57,8 @@ export default function Index() {
     if(items) console.log("Informations => ", items)
 
     async function deleteImageref (e, id, imageId, imageref) {
-        console.log("eeeee ", e)
         e.preventDefault()
+        setBlock(true)
         firebase.storage().ref(`images/${imageref}`).delete().then(() => {
             console.log("File deleted successfuly");
             deleteImageInfo(id, imageId);
@@ -69,17 +69,36 @@ export default function Index() {
     }
     
     async function deleteImageInfo (id, imageId) {
-        var {imageInfo, imageLoading } = await deleteImage(imageId)
-        if(imageLoading) console.log("Delete Image Loading ... ")
-        if(imageInfo) console.log("The image was deleted ", imageInfo); deleteItem(id);
+        var {response } = await deleteImage(imageId)
+        if(response?.__typename == 'Image'){
+            console.log("Image info deleted ", response.imageref)
+            deleteItem(id);
+        } 
+        else if(response?.__typename == 'InputError'){
+            toast.error(response?.message + ' 😕');
+        }
+        else{
+            toast.error("Erreur inconnue. Veuillez contacter l'administrateur 😮");
+        }
     }
     
     async function deleteItem (id){
-        var {item, isLoading } = await deleteBrand(id)
-        if(isLoading) console.log("Delete item Loading ... ")
-        if(item) console.log("The item was deleted ", item); refetch(page);
-        setBlock(false)
-        toast.success('Suppression réussie !');
+        
+        if(!block) setBlock(true)
+        var {response } = await deleteBrand(id)
+        
+        if(response?.__typename == 'Brand'){
+            console.log("Item deleted ", response.name)
+            refetch(page);
+            setBlock(false)
+            toast.success('Suppression réussie 😊');
+        } 
+        else if(response?.__typename == 'InputError'){
+            toast.error(response?.message + ' 😕');
+        }
+        else{
+            toast.error("Erreur inconnue. Veuillez contacter l'administrateur 😮");
+        }
 
     }
 
@@ -188,7 +207,7 @@ export default function Index() {
                                                             <td className="px-6 py-3 whitespace-nowrap">
                                                                 <div className="flex items-center">
                                                                     <div className="flex-shrink-0 brand-image">
-                                                                        <img src={item.image?.url} alt={item.name} />
+                                                                        <img src={item.image?.url} />
                                                                     </div>
                                                                     <div className="ml-4">
                                                                         <div className="text-sm font-medium text-gray-900">{item.name}</div>
@@ -214,7 +233,7 @@ export default function Index() {
                                                                     </Link>
 
 
-                                                                    <button  onClick={(e) => setBlock(true) && item.image == null ? deleteItem(item.id) : deleteImageref(e, item.id, item.image?.id, item.image?.imageref)} className="w-7 h-7 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-30">
+                                                                    <button  onClick={(e) => item.image == null ? deleteItem(item.id) : deleteImageref(e, item.id, item.image?.id, item.image?.imageref)} className="w-7 h-7 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-30">
                                                                         <TrashBoldIcon customClass="w-3 text-red-600 text-opacity-90 self-center"/>
                                                                     </button>
                                                                 </div>

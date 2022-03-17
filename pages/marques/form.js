@@ -67,9 +67,17 @@ class Index extends Component {
 
         e.preventDefault()
         const {name, desc, order, image} = this.state
+        var errorMessage
 
-        if(image == null){
-            toast.error("Veuillez ajouter une image.", {id: toastOne,});
+        if(!navigator.onLine){
+            errorMessage = "Aucun accès à Internet 😪"
+        }
+        else if(image == null){
+            errorMessage = "Veuillez ajouter une image 😣"
+        }
+
+        if(errorMessage){
+            toast.error(errorMessage, {id: toastOne,});
             this.setState({block: false})
             return null
         }
@@ -87,11 +95,11 @@ class Index extends Component {
 
         var {response } = await saveBrand(id, name, desc, order)
 
-        if(response?.saveBrand?.__typename == 'Brand'){
-            this.handleUpload(response?.saveBrand?.id)
+        if(response?.__typename == 'Brand'){
+            this.handleUpload(response?.id)
         }
-        else if(response?.saveBrand?.__typename == 'InputError'){
-            toast.error(response?.saveBrand?.message, {id: toastOne,});
+        else if(response?.__typename == 'InputError'){
+            toast.error(response?.message, {id: toastOne,});
             this.setState({block: false})
         }
         else{
@@ -103,7 +111,7 @@ class Index extends Component {
 
         const { id, image, chosenImage, imageref, imageId } = this.state
 
-        if(imageref !=null){ 
+        if(imageref != null){ 
             if(image == chosenImage){
                 toast.success("Mise à jour réussie !", {id: toastOne,});
                 this.setState({block: false})
@@ -146,20 +154,22 @@ class Index extends Component {
         const {imageId} = this.state
         var {response } = await saveImage(imageId, url, ref, null, null, itemId)
 
-        if(response?.saveImage?.__typename == 'Image'){
-            toast.success("Mise à jour réussie !", {id: toastOne,});
+        if(response?.__typename == 'Image'){
+            toast.dismiss()
+            toast.success("Mise à jour réussie 😏", {id: toastOne,});
         }
-        else if(response?.saveImage?.__typename == 'InputError'){
-            console.log("ImageInfo mutattion ", response?.saveImage?.message)
-            toast.success("Une erreur s'est produite lors de l'ajout de l'image !", {id: toastOne,});
+        else if(response?.__typename == 'InputError'){
+            console.log("ImageInfo mutattion ", response?.message)
+            toast.error("Une erreur s'est produite lors de l'ajout de l'image !", {id: toastOne,});
         }
         else{
             toast.error("Erreur inconnue. Veuillez vérifier votre connexion internet.", {id: toastOne,});
         }
 
         this.setState({block: false})
-        toast.dismiss()
-        setTimeout(() => { router.push('./');}, 2200);
+        setTimeout(() => {
+            router.push('./');
+        }, 2300);
 
     };
 

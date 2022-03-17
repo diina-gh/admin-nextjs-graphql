@@ -10,12 +10,12 @@ export async function saveImage (id, imageUrl, imageref, productId = null, optio
     var variables = {id: filterInt(id) , "url": imageUrl, "imageref": imageref, "productId": filterInt(productId) , "optionId": filterInt(optionId) , "brandId": filterInt(brandId) }
     const data = await graphQLClient.request(saveImageMutation, variables)
     console.info("The response : ", data )
-    return {response: data }
+    return {response: data.saveImage }
 }
 
 export async function deleteImage (id) {
     var variables = {"id": filterInt(id)}
     const data = await graphQLClient.request(deleteImageMutation, variables)
     console.info("The response : ", data )
-    return {response: data }
+    return {response: data.saveImage }
 }
