@@ -17,7 +17,8 @@ export function getCountries (page, take, filter, orderBy) {
 export async function getCountry (id) {
     var variables = {"id": filterInt(id)}
     const data = await graphQLClient.request(countryQuery, variables)
-    return {item: data, isLoading: !data,}
+    console.info("The response : ", data )
+    return {response: data.country}
 }
 
 export async function saveCountry (id, name, iso3, isoNum) {

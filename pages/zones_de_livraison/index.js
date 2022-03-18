@@ -10,21 +10,26 @@ import Filter from '../../components/common/filter';
 import { SearchIcon } from '@heroicons/react/solid';
 import AddBoldIcon from '../../components/ui/icons/addBoldIcon';
 import DocBoldIcon from '../../components/ui/icons/docBoldIcon';
+import EditBoldIcon from '../../components/ui/icons/editBoldIcon'
+import TrashBoldIcon from '../../components/ui/icons/trashBoldIcon'
 import { Pagination } from "react-pagination-bar"
 import 'react-pagination-bar/dist/index.css'
 import ChevronLeftIcon from '../../components/ui/icons/chevronLeftIcon';
 import ChevronRightIcon from '../../components/ui/icons/chevronRightIcon';
 import DoubleChevronLeftIcon from '../../components/ui/icons/doubleChevronLeftIcon';
 import DoubleChevronRightIcon from '../../components/ui/icons/doubleChevronRightIcon';
-import {getCountries } from '../../hooks/country';
+import {getCountries, deleteCountry } from '../../hooks/country';
 import { getRegions } from '../../hooks/region';
 import { getDistricts } from '../../hooks/district';
+import BlockUI from '../../components/common/blockui';
+import toast, { Toaster } from 'react-hot-toast';
 
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
+var block = false
 
 
 export default function Index() {
@@ -62,6 +67,8 @@ export default function Index() {
   return (
     <div className="app-container h-screen">
 
+        <Toaster position='top-right' />
+
         <HeadInfo title= 'Dashboard' description='description here'/>
         <Header/>
 
@@ -70,7 +77,9 @@ export default function Index() {
             <Sidebar />
 
             <motion.div initial={{ opacity: 0.45, x: -150 }}  whileInView={{ opacity: 1, x: 0, transition: { duration: 0.60 }, }}>
-                <div className='app-body'>
+                <div className='app-body relative'>
+
+                    <BlockUI blocking={block} />
 
                     <div className='w-full'>
 
@@ -131,7 +140,7 @@ export default function Index() {
                                                         </div>
                                                     </div>
 
-                                                    <Link href='categories/form' > 
+                                                    <Link href='zones_de_livraison/zone_form' > 
                                                         <div className='ml-2 bg-purple-500 bg-opacity-90 shadow px-3 py-2 rounded-md flex flex-col justify-center btn-effect1'>
                                                             <div className='flex flex-row text-sm font-medium text-gray-100 hover:text-white'>
                                                                 <AddBoldIcon customClass="self-center w-4 h-4" />
@@ -286,6 +295,7 @@ function Regions () {
     if (isLoading) console.log("loading...")
     if(items) console.log("Informations => ", items)
 
+
     return (
         <div className='w-full h-full rounded-b-xl overflow-y-scroll p-4'>
 
@@ -319,7 +329,7 @@ function Regions () {
                         </div>
                     </div>
 
-                    <Link href='categories/form' > 
+                    <Link href='zones_de_livraison/region_form' > 
                         <div className='ml-2 bg-purple-500 bg-opacity-90 shadow px-3 py-2 rounded-md flex flex-col justify-center btn-effect1'>
                             <div className='flex flex-row text-sm font-medium text-gray-100 hover:text-white'>
                                 <AddBoldIcon customClass="self-center w-4 h-4" />
@@ -424,33 +434,64 @@ function Regions () {
 
 function Countries () {
 
-  const take = 6;
+    const take = 6;
 
-  const [page, setPage] = useState(1);
-  const [filter, setFilter] = useState('')
-  const [direction, setDirection] = useState('asc')
-  const [orderBy, setOrderBy] = useState({"id": direction})
+    const [page, setPage] = useState(1);
+    const [filter, setFilter] = useState('')
+    const [direction, setDirection] = useState('asc')
+    const [orderBy, setOrderBy] = useState({"id": direction})
 
-  var { items, isLoading, isError, mutate } = getCountries(page,take,filter, orderBy )
+    var { items, isLoading, isError, mutate } = getCountries(page,take,filter, orderBy )
 
-  const refetch = (newPage, newFilter = null, newOrder = null ) =>{
-      if(newPage){
-          setPage(newPage)
-          mutate({...items, page:newPage})
-      } 
-      if(newFilter){
-          setFilter(newFilter)
-          mutate({...items, filter:newFilter})
-      }
-      if(newOrder){
-          setOrderBy(newOrder)
-          mutate({...items, orderBy:newOrder})
-      }
-  }
+    const refetch = (newPage, newFilter = null, newOrder = null ) =>{
+        if(newPage){
+            setPage(newPage)
+            mutate({...items, page:newPage})
+        } 
+        if(newFilter){
+            setFilter(newFilter)
+            mutate({...items, filter:newFilter})
+        }
+        if(newOrder){
+            setOrderBy(newOrder)
+            mutate({...items, orderBy:newOrder})
+        }
+    }
 
-  if (isError) console.log("The error here ", isError)
-  if (isLoading) console.log("loading...")
-  if(items) console.log("Informations => ", items)
+    if (isError) console.log("The error here ", isError)
+    if (isLoading) console.log("loading...")
+    if(items) console.log("Informations => ", items)
+
+    async function deleteItem (e, id){
+            
+        e.preventDefault()
+
+        block = true
+
+        if(!navigator.onLine){
+            toast.error('Aucun accès à Internet 😪');
+            block = false
+            return null
+        }
+
+        var {response } = await deleteCountry(id)
+        
+        if(response?.__typename == 'Country'){
+            console.log("Item deleted ", response.name)
+            refetch(page);
+            toast.success('Suppression réussie 😊');
+        } 
+        else if(response?.__typename == 'InputError'){
+            toast.error(response?.message + ' 😕');
+        }
+        else{
+            toast.error("Erreur inconnue. Veuillez contacter l'administrateur 😮");
+        }
+
+        block = false
+
+    }
+
 
   return (
       <div className='w-full h-full rounded-b-xl overflow-y-scroll p-4'>
@@ -485,7 +526,7 @@ function Countries () {
                       </div>
                   </div>
 
-                  <Link href='categories/form' > 
+                  <Link href='zones_de_livraison/pays_form' > 
                       <div className='ml-2 bg-purple-500 bg-opacity-90 shadow px-3 py-2 rounded-md flex flex-col justify-center btn-effect1'>
                           <div className='flex flex-row text-sm font-medium text-gray-100 hover:text-white'>
                               <AddBoldIcon customClass="self-center w-4 h-4" />
@@ -550,11 +591,21 @@ function Countries () {
                                               <div className="text-sm text-gray-900">{item.isoNum}</div>
                                           </td>
                                           
-                                          <td className="px-6 py-3 whitespace-nowrap text-right text-sm font-medium">
-                                              <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                                  Edit
-                                              </a>
-                                          </td>
+                                          <td className="px-2 py-3 whitespace-nowrap text-right flex flex-row justify-end">
+
+                                            <div className="flex flex-row">
+                                                <Link  href={{pathname: 'zones_de_livraison/pays_form', query: { id: item.id },}} >
+                                                    <button className="w-7 h-7 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-300 mr-2">
+                                                        <EditBoldIcon customClass="w-3 text-gray-600 text-opacity-90 self-center"/>
+                                                    </button>
+                                                </Link>
+
+                                                <button  onClick={(e) => deleteItem(e, item.id)} className="w-7 h-7 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-30">
+                                                    <TrashBoldIcon customClass="w-3 text-red-600 text-opacity-90 self-center"/>
+                                                </button>
+                                            </div>
+
+                                            </td>
                                       </tr>
                                   ))}
                               </tbody>
@@ -568,23 +619,25 @@ function Countries () {
           </div>
 
           <div className='w-full flex flex-row justify-end mt-5'>
-              <Pagination 
-                  initialPage={page} 
-                  itemsPerPage={take} 
-                  onPageСhange={(pageNumber) => refetch(pageNumber)} 
-                  totalItems={items?.countries?.count}  
-                  pageNeighbours={2} 
-                  startLabel= {<DoubleChevronLeftIcon customClass="w-3 h-3"/>}
-                  endLabel={<DoubleChevronRightIcon customClass="w-3 h-3"/>}
-                  nextLabel={<ChevronRightIcon customClass="w-3 h-3"/>}
-                  prevLabel={<ChevronLeftIcon customClass="w-3 h-3"/>}
-                  customClassNames={{rpbItemClassName:'pg-btn', rpbItemClassNameActive:'pg-active-btn',}}
-              />
+              {items?.countries?.count &&
+                <Pagination 
+                initialPage={page} 
+                itemsPerPage={take} 
+                onPageСhange={(pageNumber) => refetch(pageNumber)} 
+                totalItems={items?.countries?.count}  
+                pageNeighbours={2} 
+                startLabel= {<DoubleChevronLeftIcon customClass="w-3 h-3"/>}
+                endLabel={<DoubleChevronRightIcon customClass="w-3 h-3"/>}
+                nextLabel={<ChevronRightIcon customClass="w-3 h-3"/>}
+                prevLabel={<ChevronLeftIcon customClass="w-3 h-3"/>}
+                customClassNames={{rpbItemClassName:'pg-btn', rpbItemClassNameActive:'pg-active-btn',}}
+                />
+              }
+
           </div>
 
 
       </div>
   )
 }
-
 

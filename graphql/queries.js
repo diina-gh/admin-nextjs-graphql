@@ -188,11 +188,17 @@ export const countriesQuery = gql`
 export const countryQuery = gql`
     query($id: Int){
         country(id: $id) {
-            id
-            name
-            iso3
-            isoNum
-            createdat
+            __typename
+            ... on Country{
+                id
+                name
+                iso3
+                isoNum
+            }
+            ... on InputError{
+                message
+                input
+            } 
         }
     }
 `
@@ -342,14 +348,21 @@ export const brandsQuery = gql`
 export const brandQuery = gql`
     query($id: Int){
         brand(id: $id) {
-            id
-            name
-            desc
-            order
-            image {
+            __typename
+            ... on Brand{
                 id
-                url
-                imageref
+                name
+                desc
+                order
+                image {
+                    id
+                    url
+                    imageref
+                }
+            }
+            ... on InputError{
+                message
+                input
             }
         }
     }

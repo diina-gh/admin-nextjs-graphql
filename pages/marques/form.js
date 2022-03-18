@@ -40,15 +40,19 @@ class Index extends Component {
 
     async componentDidMount(){
         var itemId = router.query.id
-        console.log("L'id de l'item est ", itemId)
         if(itemId !=null){
-            var {item, isLoading} = await getBrand(itemId)
-            console.log("Hhaha ", item)
-            if(item != null && item?.brand != null){
-                this.setState({ id: item.brand.id, name: item.brand.name, desc: item.brand.desc, order: item.brand.order, image:item.brand.image?.url, chosenImage:item.brand.image?.url, imageref:item.brand.image?.imageref, imageId: item.brand.image?.id })
+            this.setState({block: true})
+            var {response } = await getBrand(itemId)
+            if(response?.__typename == 'Brand'){
+                this.setState({ id: response.id, name: response.name, desc: response.desc, order: response.order, image:response.image?.url, chosenImage:response.image?.url, imageref:response.image?.imageref, imageId: response.image?.id, block: false })
             }
-            else if(item != null && item?.brand == null){
-                router.push('/');
+            else if(response?.__typename == 'InputError'){
+                toast.error(response.message);
+                router.push('./');
+            }
+            else{
+                toast.error("Erreur inconnue. Veuillez contacter l'administrateur.");
+                router.push('./');
             }
         }
     }

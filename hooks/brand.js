@@ -17,14 +17,15 @@ export function getBrands (page, take, filter, orderBy) {
 export async function getBrand (id) {
     var variables = {"id": filterInt(id)}
     const data = await graphQLClient.request(brandQuery, variables)
-    return {item: data, isLoading: !data,}
+    console.info("The response : ", data )
+    return {response: data.brand}
 }
 
 export async function saveBrand (id, name, desc, order) {
     var variables = {"id": filterInt(id), "name": name, "desc": desc, "order": filterInt(order)}
     const data = await graphQLClient.request(saveBrandMutation, variables)
     console.info("The response : ", data )
-    return {response: data.saveBrand }
+    return {response: data.saveBrand}
 }
 
 export async function deleteBrand (id) {
