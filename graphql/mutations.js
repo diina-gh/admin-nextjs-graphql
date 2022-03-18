@@ -36,14 +36,90 @@ export const deleteCountryMutation = gql `
     }
 `
 
-export const deleteDeliveryManMutation = gql`
+export const saveRegionMutation = gql `
+    mutation($id: Int, $name: String, $code: String, $countryId: Int){
+        saveRegion(id: $id, name: $name, code: $code, countryId: $countryId){
+            __typename
+            ... on Region{
+                id
+                name
+                code
+                countryId
+                country{
+                    id
+                    name
+                }
+            }
+            ... on InputError{
+                message
+                input
+            }
+        }
+    }
+`
+
+export const delelteRegionMutation = gql `
     mutation($id: Int){
-        DeleteDeliveryMan(id: $id) {
-            id
-            firstname
-            lastname
-            email
-            phonenumber
+        deleteRegion(id: $id){
+            __typename
+            ... on Region{
+                id
+                name
+                code
+                countryId
+                country{
+                    id
+                    name
+                }
+            }
+            ... on InputError{
+                message
+                input
+            }
+        }
+    }
+`
+
+export const saveDistrictMutation = gql `
+    mutation($id: Int, $name: String, $shipping: Float, $regionId: Int){
+        saveDistrict(id: $id, name: $name, shipping: $shipping, regionId: $regionId){
+            __typename
+            ... on District{
+                id
+                name
+                shipping
+                regionId
+                region {
+                    id
+                    name
+                }
+            }
+            ... on InputError{
+                message
+                input
+            }
+        }
+    }
+`
+
+export const deleteDistrictMutation = gql `
+    mutation($id: Int){
+        deleteDistrict(id: $id){
+            __typename
+            ... on District{
+                id
+                name
+                shipping
+                regionId
+                region {
+                    id
+                    name
+                }
+            }
+            ... on InputError{
+                message
+                input
+            }
         }
     }
 `

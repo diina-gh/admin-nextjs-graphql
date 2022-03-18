@@ -20,8 +20,8 @@ export async function getCountry (id) {
     return {item: data, isLoading: !data,}
 }
 
-export async function saveCountry (id, name, desc, order) {
-    var variables = {"id": filterInt(id), "name": name, "desc": desc, "order": filterInt(order)}
+export async function saveCountry (id, name, iso3, isoNum) {
+    var variables = {"id": filterInt(id), "name": name, "iso3": iso3, "isoNum": isoNum}
     const data = await graphQLClient.request(saveCountryMutation, variables)
     console.info("The response : ", data )
     return {response: data.saveCountry }
