@@ -14,6 +14,12 @@ export function getRegions (page, take, filter, orderBy) {
     return {items: data, isLoading: !error && !data, isError: error, mutate}
 }
 
+export async function allRegions(){
+    const data = await graphQLClient.request(regionsQuery)
+    console.info("The response : ", data )
+    return {response: data.regions}
+}
+
 export async function getRegion (id) {
     var variables = {"id": filterInt(id)}
     const data = await graphQLClient.request(regionQuery, variables)

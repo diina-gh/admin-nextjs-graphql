@@ -279,6 +279,7 @@ export const districtsQuery = gql`
 export const districtQuery = gql`
     query($id: Int){
         district(id: $id) {
+            __typename
             ... on District{
                 id
                 name

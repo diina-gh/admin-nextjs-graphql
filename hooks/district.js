@@ -17,7 +17,7 @@ export function getDistricts (page, take, filter, orderBy) {
 export async function getDistrict (id) {
     var variables = {"id": filterInt(id)}
     const data = await graphQLClient.request(districtQuery, variables)
-    console.info("The response : ", data )
+    console.info("The response xoxo : ", data )
     return {response: data.district}
 }
 

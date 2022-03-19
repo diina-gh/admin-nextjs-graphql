@@ -20,7 +20,7 @@ import DoubleChevronLeftIcon from '../../components/ui/icons/doubleChevronLeftIc
 import DoubleChevronRightIcon from '../../components/ui/icons/doubleChevronRightIcon';
 import {getCountries, deleteCountry } from '../../hooks/country';
 import { deleteRegion, getRegions } from '../../hooks/region';
-import { getDistricts } from '../../hooks/district';
+import { deleteDistrict, getDistricts } from '../../hooks/district';
 import BlockUI from '../../components/common/blockui';
 import toast, { Toaster } from 'react-hot-toast';
 
@@ -62,6 +62,34 @@ export default function Index() {
     if (isError) console.log("The error here ", isError)
     if (isLoading) console.log("loading...")
     if(items) console.log("Informations => ", items)
+
+    async function deleteItem (e, id){
+            
+        e.preventDefault()
+        setBlock(true)
+
+        if(!navigator.onLine){
+            toast.error('Aucun accès à Internet 😪');
+            setBlock(false)
+            return null
+        }
+
+        var {response } = await deleteDistrict(id)
+        
+        if(response?.__typename == 'District'){
+            console.log("Item deleted ", response.name)
+            refetch(page);
+            toast.success('Suppression réussie');
+        } 
+        else if(response?.__typename == 'InputError'){
+            toast.error(response?.message);
+        }
+        else{
+            toast.error("Erreur inconnue. Veuillez contacter l'administrateur");
+        }
+
+        setBlock(false)
+    }
 
   return (
     <div className="app-container h-screen">
@@ -199,13 +227,21 @@ export default function Index() {
                                                                             </td>
 
                                                                             <td className="px-6 py-3 whitespace-nowrap">
-                                                                                <div className="text-sm text-gray-900">{item.region.name} CFA</div>
+                                                                                <div className="text-sm text-gray-900">{item.region.name}</div>
                                                                             </td>
                                                                             
-                                                                            <td className="px-6 py-3 whitespace-nowrap text-right text-sm font-medium">
-                                                                                <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                                                                    Edit
-                                                                                </a>
+                                                                            <td className="px-2 py-3 whitespace-nowrap text-right flex flex-row justify-end">
+                                                                                <div className="flex flex-row">
+                                                                                    <Link  href={{pathname: 'zones_de_livraison/zone_form', query: { id: item.id },}} >
+                                                                                        <button className="w-7 h-7 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-300 mr-2">
+                                                                                            <EditBoldIcon customClass="w-3 text-gray-600 text-opacity-90 self-center"/>
+                                                                                        </button>
+                                                                                    </Link>
+
+                                                                                    <button  onClick={(e) => deleteItem(e, item.id)} className="w-7 h-7 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-30">
+                                                                                        <TrashBoldIcon customClass="w-3 text-red-600 text-opacity-90 self-center"/>
+                                                                                    </button>
+                                                                                </div>
                                                                             </td>
                                                                         </tr>
                                                                     ))}
