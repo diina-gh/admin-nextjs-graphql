@@ -105,7 +105,7 @@ export const variantQuery = gql`
     query($id: Int){
         variant(id: $id) {
             id
-            title
+            name
             desc
             createdat
             options {
@@ -124,7 +124,7 @@ export const variantsQuery = gql`
             countOpt
             variants {
                 id
-                title
+                name
                 desc
                 createdat
                 options {
@@ -133,8 +133,6 @@ export const variantsQuery = gql`
                     colorCode
                 }
             }
-            createdat
-            updatedat
         }
     }
 `
@@ -148,10 +146,8 @@ export const optionQuery = gql `
             variantId
             variant {
                 id
-                title
+                name
             }
-            createdat
-            updatedat
         }
     }
 `
@@ -167,10 +163,8 @@ export const optionsQuery = gql `
                 variantId
                 variant {
                     id
-                    title
+                    name
                 }
-                createdat
-                updatedat
             }
         }
     }
@@ -433,7 +427,7 @@ export const productsQuery = gql `
                     variantId
                     variant {
                         id
-                        title
+                        name
                         desc
                     }
                 }
@@ -490,7 +484,7 @@ export const productQuery = gql `
                 variantId
                 variant {
                     id
-                    title
+                    name
                     desc
                 }
             }

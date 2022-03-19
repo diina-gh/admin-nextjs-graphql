@@ -260,7 +260,7 @@ export default function Index() {
                                                     initialPage={page} 
                                                     itemsPerPage={take} 
                                                     onPageСhange={(pageNumber) => refetch(pageNumber)} 
-                                                    totalItems={items?.categories?.count}  
+                                                    totalItems={items?.districts?.count}  
                                                     pageNeighbours={2} 
                                                     startLabel= {<DoubleChevronLeftIcon customClass="w-3 h-3"/>}
                                                     endLabel={<DoubleChevronRightIcon customClass="w-3 h-3"/>}
@@ -699,7 +699,7 @@ function Countries () {
           </div>
 
           <div className='w-full flex flex-row justify-end mt-5'>
-              {items?.countries?.count &&
+              {items?.countries?.count != null &&
                 <Pagination 
                 initialPage={page} 
                 itemsPerPage={take} 

@@ -10,12 +10,7 @@ export function getVariants (page, take, filter, orderBy) {
     var fetcher = query => request(endpoint, query, variables)
     const { data, error, mutate } = useSWR(variantsQuery,fetcher);
   
-    return {
-        items: data,
-        isLoading: !error && !data,
-        isError: error,
-        mutate
-    }
+    return {items: data, isLoading: !error && !data, isError: error, mutate}
 }
 
 

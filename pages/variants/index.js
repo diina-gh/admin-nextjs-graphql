@@ -125,7 +125,7 @@ export default function Index() {
                                                         </div>
                                                     </div>
 
-                                                    <Link href='categories/form' > 
+                                                    <Link href='variants/form' > 
                                                         <div className='ml-2 bg-purple-500 bg-opacity-90 shadow px-3 py-2 rounded-md flex flex-col justify-center btn-effect1'>
                                                             <div className='flex flex-row text-sm font-medium text-gray-100 hover:text-white'>
                                                                 <AddBoldIcon customClass="self-center w-4 h-4" />
@@ -175,7 +175,7 @@ export default function Index() {
                                                                                 <div className="text-sm text-gray-900">{item.createdat}</div>
                                                                             </td>
                                                                             <td className="px-6 py-3 whitespace-nowrap">
-                                                                                <div className="text-sm text-gray-900">{item.title}</div>
+                                                                                <div className="text-sm text-gray-900">{item.name}</div>
                                                                             </td>
                                                                             <td className="px-6 py-3 whitespace-nowrap">
                                                                                 <div className="text-sm text-gray-900">{item.desc}</div>
@@ -303,14 +303,14 @@ function Options () {
                         </div>
                     </div>
 
-                    <Link href='categories/form' > 
+                    {/* <Link href='categories/form' > 
                         <div className='ml-2 bg-purple-500 bg-opacity-90 shadow px-3 py-2 rounded-md flex flex-col justify-center btn-effect1'>
                             <div className='flex flex-row text-sm font-medium text-gray-100 hover:text-white'>
                                 <AddBoldIcon customClass="self-center w-4 h-4" />
                                 <div className='ml-2 self-center'>Ajouter</div>
                             </div>
                         </div>
-                    </Link>
+                    </Link> */}
 
                 </div>
 
@@ -369,7 +369,7 @@ function Options () {
                                                 }
                                             </td>
                                             <td className="px-6 py-3 whitespace-nowrap">
-                                                <div className="text-sm text-gray-900">{item.variant?.title}</div>
+                                                <div className="text-sm text-gray-900">{item.variant?.name}</div>
                                             </td>
                                             
                                             <td className="px-6 py-3 whitespace-nowrap text-right text-sm font-medium">
