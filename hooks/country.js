@@ -7,11 +7,17 @@ import { filterInt } from '../libs/util'
 const endpoint = "https://trade-two.vercel.app/graphql"
 const graphQLClient = new GraphQLClient(endpoint, {headers: {authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY0NjI3NjgyMH0.ZP6ZUMKGFoYdWR28YV06Q4dUaY_HDDyJIjA2hqzwswQ',},})
 
-export function getCountries (page, take, filter, orderBy) {
+export function getCountries (page = null, take = null, filter= null, orderBy =null) {
     var variables = {"page": page, "take": take,"filter": filter, "orderBy": orderBy}
     var fetcher = query => request(endpoint, query, variables)
     const { data, error, mutate } = useSWR(countriesQuery,fetcher);
     return {items: data, isLoading: !error && !data, isError: error, mutate}
+}
+
+export async function allCountries(){
+    const data = await graphQLClient.request(countriesQuery)
+    console.info("The response : ", data )
+    return {response: data.countries}
 }
 
 export async function getCountry (id) {

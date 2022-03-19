@@ -17,7 +17,8 @@ export function getDistricts (page, take, filter, orderBy) {
 export async function getDistrict (id) {
     var variables = {"id": filterInt(id)}
     const data = await graphQLClient.request(districtQuery, variables)
-    return {item: data, isLoading: !data,}
+    console.info("The response : ", data )
+    return {response: data.district}
 }
 
 export async function saveDistrict (id, name, shipping, regionId) {

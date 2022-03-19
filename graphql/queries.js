@@ -133,6 +133,8 @@ export const variantsQuery = gql`
                     colorCode
                 }
             }
+            createdat
+            updatedat
         }
     }
 `
@@ -148,6 +150,8 @@ export const optionQuery = gql `
                 id
                 title
             }
+            createdat
+            updatedat
         }
     }
 `
@@ -165,6 +169,8 @@ export const optionsQuery = gql `
                     id
                     title
                 }
+                createdat
+                updatedat
             }
         }
     }
@@ -180,6 +186,7 @@ export const countriesQuery = gql`
                 iso3
                 isoNum
                 createdat
+                updatedat
             }
         }
     }
@@ -194,6 +201,8 @@ export const countryQuery = gql`
                 name
                 iso3
                 isoNum
+                createdat
+                updatedat
             }
             ... on InputError{
                 message
@@ -210,12 +219,13 @@ export const regionsQuery = gql `
             regions {
                 id
                 name
-                createdat
                 code
                 country {
                     id
                     name
                 }
+                createdat
+                updatedat
             }
         }
     }
@@ -224,15 +234,23 @@ export const regionsQuery = gql `
 export const regionQuery = gql `
     query($id: Int){
         region(id: $id) {
-
+            __typename
+            ... on Region{
                 id
                 name
-                createdat
                 code
-                country {
+                countryId
+                country{
                     id
                     name
                 }
+                createdat
+                updatedat
+            }
+            ... on InputError{
+                message
+                input
+            }
         }
     }
 `
@@ -252,6 +270,7 @@ export const districtsQuery = gql`
                 }
                 shipping
                 createdat
+                updatedat
             }
         }
     }
@@ -260,14 +279,22 @@ export const districtsQuery = gql`
 export const districtQuery = gql`
     query($id: Int){
         district(id: $id) {
-            id
-            name
-            region{
+            ... on District{
                 id
                 name
+                shipping
+                regionId
+                region {
+                    id
+                    name
+                }
+                createdat
+                updatedat
             }
-            shipping
-            createdat
+            ... on InputError{
+                message
+                input
+            }
         }
     }
 `
@@ -359,6 +386,8 @@ export const brandQuery = gql`
                     url
                     imageref
                 }
+                createdat
+                updatedat
             }
             ... on InputError{
                 message

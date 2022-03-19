@@ -21,6 +21,10 @@ export const filterInt = (value) => {
     return NaN;
 }
 
+export function classNames(...classes) {
+  return classes.filter(Boolean).join(' ')
+}
+
 export function uploadImage(image){
     var imageref = image.name + uid(32)
     const uploadTask = firebase.storage().ref(`images/${imageref}`).put(image);

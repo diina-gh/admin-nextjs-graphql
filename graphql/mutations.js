@@ -58,7 +58,7 @@ export const saveRegionMutation = gql `
     }
 `
 
-export const delelteRegionMutation = gql `
+export const deleteRegionMutation = gql `
     mutation($id: Int){
         deleteRegion(id: $id){
             __typename

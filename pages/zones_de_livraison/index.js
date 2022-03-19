@@ -19,7 +19,7 @@ import ChevronRightIcon from '../../components/ui/icons/chevronRightIcon';
 import DoubleChevronLeftIcon from '../../components/ui/icons/doubleChevronLeftIcon';
 import DoubleChevronRightIcon from '../../components/ui/icons/doubleChevronRightIcon';
 import {getCountries, deleteCountry } from '../../hooks/country';
-import { getRegions } from '../../hooks/region';
+import { deleteRegion, getRegions } from '../../hooks/region';
 import { getDistricts } from '../../hooks/district';
 import BlockUI from '../../components/common/blockui';
 import toast, { Toaster } from 'react-hot-toast';
@@ -28,8 +28,6 @@ import toast, { Toaster } from 'react-hot-toast';
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
-
-var block = false
 
 
 export default function Index() {
@@ -40,6 +38,7 @@ export default function Index() {
     const [filter, setFilter] = useState('')
     const [direction, setDirection] = useState('asc')
     const [orderBy, setOrderBy] = useState({"id": direction})
+    const [block, setBlock] = useState(false);
   
     const { items, isLoading, isError, mutate } = getDistricts(page,take,filter, orderBy )
 
@@ -273,6 +272,8 @@ function Regions () {
     const [filter, setFilter] = useState('')
     const [direction, setDirection] = useState('asc')
     const [orderBy, setOrderBy] = useState({"id": direction})
+    const [block, setBlock] = useState(false);
+
   
     var { items, isLoading, isError, mutate } = getRegions(page,take,filter, orderBy )
   
@@ -295,9 +296,40 @@ function Regions () {
     if (isLoading) console.log("loading...")
     if(items) console.log("Informations => ", items)
 
+    async function deleteItem (e, id){
+            
+        e.preventDefault()
+        setBlock(true)
+
+        if(!navigator.onLine){
+            toast.error('Aucun accès à Internet 😪');
+            setBlock(false)
+            return null
+        }
+
+        var {response } = await deleteRegion(id)
+        
+        if(response?.__typename == 'Region'){
+            console.log("Item deleted ", response.name)
+            refetch(page);
+            toast.success('Suppression réussie');
+        } 
+        else if(response?.__typename == 'InputError'){
+            toast.error(response?.message);
+        }
+        else{
+            toast.error("Erreur inconnue. Veuillez contacter l'administrateur");
+        }
+
+        setBlock(false)
+
+    }
+
 
     return (
         <div className='w-full h-full rounded-b-xl overflow-y-scroll p-4'>
+
+            <BlockUI blocking={block} />
 
             <div className='w-full flex flex-row justify-between mt-3'>
 
@@ -394,11 +426,21 @@ function Regions () {
                                                 <div className="text-sm text-gray-900">{item.country.name}</div>
                                             </td>
                                             
-                                            <td className="px-6 py-3 whitespace-nowrap text-right text-sm font-medium">
-                                                <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                                    Edit
-                                                </a>
+                                            <td className="px-2 py-3 whitespace-nowrap text-right flex flex-row justify-end">
+                                                <div className="flex flex-row">
+                                                    <Link  href={{pathname: 'zones_de_livraison/region_form', query: { id: item.id },}} >
+                                                        <button className="w-7 h-7 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-300 mr-2">
+                                                            <EditBoldIcon customClass="w-3 text-gray-600 text-opacity-90 self-center"/>
+                                                        </button>
+                                                    </Link>
+
+                                                    <button  onClick={(e) => deleteItem(e, item.id)} className="w-7 h-7 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-30">
+                                                        <TrashBoldIcon customClass="w-3 text-red-600 text-opacity-90 self-center"/>
+                                                    </button>
+                                                </div>
                                             </td>
+                                            
+
                                         </tr>
                                     ))}
                                 </tbody>
@@ -440,6 +482,7 @@ function Countries () {
     const [filter, setFilter] = useState('')
     const [direction, setDirection] = useState('asc')
     const [orderBy, setOrderBy] = useState({"id": direction})
+    const [block, setBlock] = useState(false);
 
     var { items, isLoading, isError, mutate } = getCountries(page,take,filter, orderBy )
 
@@ -465,12 +508,11 @@ function Countries () {
     async function deleteItem (e, id){
             
         e.preventDefault()
-
-        block = true
+        setBlock(true)
 
         if(!navigator.onLine){
             toast.error('Aucun accès à Internet 😪');
-            block = false
+            setBlock(false)
             return null
         }
 
@@ -488,13 +530,15 @@ function Countries () {
             toast.error("Erreur inconnue. Veuillez contacter l'administrateur 😮");
         }
 
-        block = false
+        setBlock(false)
 
     }
 
 
   return (
       <div className='w-full h-full rounded-b-xl overflow-y-scroll p-4'>
+
+        <BlockUI blocking={block} />
 
           <div className='w-full flex flex-row justify-between mt-3'>
 

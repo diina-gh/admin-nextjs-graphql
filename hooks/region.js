@@ -17,7 +17,8 @@ export function getRegions (page, take, filter, orderBy) {
 export async function getRegion (id) {
     var variables = {"id": filterInt(id)}
     const data = await graphQLClient.request(regionQuery, variables)
-    return {item: data, isLoading: !data,}
+    console.info("The response : ", data )
+    return {response: data.region}
 }
 
 export async function saveRegion (id, name, code, countryId) {

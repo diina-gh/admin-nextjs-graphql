@@ -59,7 +59,7 @@ class Index extends Component {
         var errorMessage
 
         if(!navigator.onLine){
-            errorMessage = "Aucun accès à Internet 😪"
+            errorMessage = "Aucun accès à Internet"
         }
 
         if(errorMessage){
@@ -83,7 +83,7 @@ class Index extends Component {
 
         if(response?.__typename == 'Country'){
             toast.dismiss()
-            toast.success("Mise à jour réussie 😏", {id: toastOne,});
+            toast.success("Mise à jour réussie", {id: toastOne,});
             this.setState({block: false})
             setTimeout(() => {router.push('./');}, 2250);
         }
