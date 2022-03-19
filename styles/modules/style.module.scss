@@ -106,10 +106,28 @@
   }
 }
 
+.modal-width{
+  background-color: rgba(131, 95, 131, 0.25);
+  width: 100vw !important;
+  height: 100vh !important;
+  .modal-content{
+    width: 90vw;
+  }
+}
 
 
 /** sm  **/
 @media (min-width: 640px) {
+
+  .modal-width{
+    width: 585px;
+  }
+
+  .modal-width{
+    .modal-content{
+      width: 585px;
+    }
+  }
 
 }
 

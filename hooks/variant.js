@@ -1,28 +1,42 @@
 import useSWR from 'swr'
-import request from 'graphql-request'
-import { variantQuery, variantsQuery } from '../graphql/queries'
+import {GraphQLClient, request} from 'graphql-request'
+import { variantsQuery, variantQuery } from '../graphql/queries'
+import {saveVariantMutation, deleteVariantMutation} from "../graphql/mutations"
+import { filterInt } from '../libs/util'
 
-const endpoint = "https://trade-two.vercel.app/graphql "
+const endpoint = "https://trade-two.vercel.app/graphql"
+const graphQLClient = new GraphQLClient(endpoint, {headers: {authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY0NjI3NjgyMH0.ZP6ZUMKGFoYdWR28YV06Q4dUaY_HDDyJIjA2hqzwswQ',},})
 
-export function getVariants (page, take, filter, orderBy) {
-
+export function getVariants (page = null, take = null, filter= null, orderBy =null) {
     var variables = {"page": page, "take": take,"filter": filter, "orderBy": orderBy}
     var fetcher = query => request(endpoint, query, variables)
     const { data, error, mutate } = useSWR(variantsQuery,fetcher);
-  
     return {items: data, isLoading: !error && !data, isError: error, mutate}
 }
 
+export async function allVariants(){
+    const data = await graphQLClient.request(variantsQuery)
+    console.info("The response : ", data )
+    return {response: data.variants}
+}
 
-export function getVariant (id) {
+export async function getVariant (id) {
+    var variables = {"id": filterInt(id)}
+    const data = await graphQLClient.request(variantQuery, variables)
+    console.info("The response : ", data )
+    return {response: data.variant}
+}
 
-    var variables = {"id": id}
-    var fetcher = query => request(endpoint, query, variables)
-    const { data, error } = useSWR(variantQuery,fetcher);
-  
-    return {
-      item: data,
-      isLoading: !error && !data,
-      isError: error,
-    }
+export async function saveVariant (id, name, iso3, isoNum) {
+    var variables = {"id": filterInt(id), "name": name, "desc": desc, "options": options}
+    const data = await graphQLClient.request(saveVariantMutation, variables)
+    console.info("The response : ", data )
+    return {response: data.saveVariant }
+}
+
+export async function deleteVariant (id) {
+    var variables = {"id": filterInt(id)}
+    const data = await graphQLClient.request(deleteVariantMutation, variables)
+    console.info("The response : ", data )
+    return {response: data.deleteVariant }
 }
