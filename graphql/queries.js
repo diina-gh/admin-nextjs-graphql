@@ -104,14 +104,20 @@ export const categoryQuery = gql `
 export const variantQuery = gql`
     query($id: Int){
         variant(id: $id) {
-            id
-            name
-            desc
-            createdat
-            options {
+            __typename
+            ... on Variant{
                 id
-                value
-                colorCode
+                name
+                desc
+                options {
+                    id
+                    value
+                    colorCode
+                }
+            }
+            ... on InputError{
+                message
+                input
             }
         }
     }

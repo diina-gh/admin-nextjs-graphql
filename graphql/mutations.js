@@ -205,3 +205,48 @@ export const deleteImageMutation = gql `
         } 
     }
 `
+
+export const saveVariantMutation = gql `
+    mutation($id: Int, $name: String, $desc: String, $options: [OptionInput]){
+        saveVariant(id: $id, name: $name, desc: $desc, options: $options){
+            __typename
+            ... on Variant{
+            id
+            name
+            desc
+            options {
+                id
+                value
+                colorCode
+            }
+            }
+            ... on InputError{
+            message
+            input
+            }
+        }
+    }
+`
+
+export const deleteVariantMutation = gql `
+    mutation($id: Int){
+        deleteVariant(id: $id){
+            __typename
+            ... on Variant{
+            id
+            name
+            desc
+            options {
+                id
+                value
+                colorCode
+            }
+            }
+            ... on InputError{
+            message
+            input
+            }
+        }
+    }
+`
+

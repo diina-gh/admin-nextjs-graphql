@@ -31,6 +31,7 @@ class Index extends Component {
         this.saveItem = this.saveItem.bind(this)
         this.closeModal = this.closeModal.bind(this)
         this.saveOption = this.saveOption.bind(this)
+        this.deleteOption = this.deleteOption.bind(this)
     }
 
     async componentDidMount(){
@@ -98,17 +99,20 @@ class Index extends Component {
             toast.error("Veuillez choisir une couleur");
         }
         else{
-            if(!id_res){
-                newOptions.push({'value': value_res, 'color': color_res })
-                this.setState({options: newOptions,})
-                toast.success("Option ajoutée !");
-                this.setState({opened: false,})
-            }
+            id_res != null ? newOptions.splice(id_res, 1, {'value': value_res, 'colorCode': color_res } ) : newOptions.push({'value': value_res, 'colorCode': color_res })
+            this.setState({options: newOptions,})
+            toast.success("Option mise à jour !");
+            this.setState({opened: false, id_res: null, value_res:'', color_res:''})
         }
     }
 
-    deleteOption = (e) => {
-
+    deleteOption = (e, index) => {
+        e.preventDefault()
+        const {options} = this.state
+        var newOptions = options
+        newOptions.splice(index, 1)
+        this.setState({options: newOptions});
+        toast.success("Option supprimée !");
     }
 
     saveItem = async () => {
@@ -236,8 +240,8 @@ class Index extends Component {
                                                                         </td>
                                                                         <td className="px-6 py-3 whitespace-nowrap">
                                                                             <div className='flex flex-row'>
-                                                                                {item.color != null && item.color != '' &&
-                                                                                    <div className="w-4 h-4 rounded-full border-2 border-gray-200 border-opacity-40 self-center mr-2" style={{backgroundColor: item.color}}></div>
+                                                                                {item.colorCode != null && item.colorCode != '' &&
+                                                                                    <div className="w-4 h-4 rounded-full border-2 border-gray-200 border-opacity-40 self-center mr-2" style={{backgroundColor: item.colorCode}}></div>
                                                                                 }
                                                                                 <div className="text-sm text-gray-900 self-center">{item.value}</div>
                                                                             </div>
@@ -250,7 +254,7 @@ class Index extends Component {
                                                                                     <EditBoldIcon customClass="w-[0.575rem] text-gray-600 text-opacity-90 self-center"/>
                                                                                 </button>
 
-                                                                                <button  onClick={(e) => deleteOption(e, i)} className="w-6 h-6 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-30">
+                                                                                <button  onClick={(e) => this.deleteOption(e, i)} className="w-6 h-6 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-30">
                                                                                     <TrashBoldIcon customClass="w-[0.575rem] text-red-600 text-opacity-90 self-center"/>
                                                                                 </button>
                                                                             </div>
@@ -314,14 +318,14 @@ class Index extends Component {
                             {/* <span className="inline-block h-screen align-middle" aria-hidden="true">&#8203;</span> */}
                             <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0 scale-95" enterTo="opacity-100 scale-100" leave="ease-in duration-200" leaveFrom="opacity-100 scale-100" leaveTo="opacity-0 scale-95">
                                 <div className="modal-width overflow-y-auto flex flex-row justify-center">
-                                    <div className='modal-content bg-white transition-all transform rounded-lg self-center my-8 mx-2'>
+                                    <div className='modal-content bg-white transition-all transform rounded-lg gt-shadow6 self-center my-8 mx-2'>
                                         <div className="w-full flex flex-row justify-center mt-2">
                                             <div className="w-full">
                                                 <form role="form" method="post" onSubmit={(e) => this.saveOption(e)}>
 
                                                 <div className="" >
 
-                                                    <div className="px-4 py-4 bg-white space-y-6 sm:p-6 z-10">
+                                                    <div className="px-3 py-4 bg-white space-y-6 sm:p-6 z-10">
 
                                                         <div className="w-full text-center text-base font-medium text-purple-500">Formulaire Option</div>
 
@@ -343,19 +347,18 @@ class Index extends Component {
                                                                 </div>
                                                             }
 
-
                                                         </div>
 
                                                     </div>
 
-                                                    <div className="px-4 py-3 bg-gray-50 sm:px-6 flex flex-row justify-end rounded-b-lg">
+                                                    <div className="px-3 py-2.5 bg-gray-50 sm:px-6 flex flex-row justify-end rounded-b-lg border-t border-gray-200 ">
 
-                                                        <div onClick={(e) => this.closeModal(e)} className='ml-2 bg-gray-500 bg-opacity-90 shadow-lg h-10 px-4 rounded-md flex flex-col justify-center btn-effect1 self-center mr-2'>
-                                                            <button type="reset" className='text-sm font-medium text-gray-100 hover:text-white self-center tracking-wide'>Annuler</button>
+                                                        <div onClick={(e) => this.closeModal(e)} className='bg-gray-500 bg-opacity-90 shadow-lg h-9 px-3 rounded-md flex flex-col justify-center btn-effect1 self-center mr-2'>
+                                                            <button type="reset" className='text-[0.8rem] font-medium text-gray-100 hover:text-white self-center tracking-wide'>Annuler</button>
                                                         </div>
                             
-                                                        <div className='ml-2 bg-purple-500 bg-opacity-90 shadow-lg h-10 px-5 rounded-md flex flex-col justify-center btn-effect1 self-center'>
-                                                            <button type="submit" className='text-sm font-medium text-gray-100 hover:text-white self-center tracking-wide'>Valider</button>
+                                                        <div className='ml-1.5 bg-purple-500 bg-opacity-90 shadow-lg h-9 px-4 rounded-md flex flex-col justify-center btn-effect1 self-center'>
+                                                            <button type="submit" className='text-[0.8rem] font-medium text-gray-100 hover:text-white self-center tracking-wide'>Valider</button>
                                                         </div>
 
                                                     </div>

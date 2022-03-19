@@ -27,8 +27,9 @@ export async function getVariant (id) {
     return {response: data.variant}
 }
 
-export async function saveVariant (id, name, iso3, isoNum) {
-    var variables = {"id": filterInt(id), "name": name, "desc": desc, "options": options}
+export async function saveVariant (id, name, desc, options) {
+    var newOptions = options.map((item) => ({value: item.value, colorCode: item.colorCode}));
+    var variables = {"id": filterInt(id), "name": name, "desc": desc, "options": newOptions}
     const data = await graphQLClient.request(saveVariantMutation, variables)
     console.info("The response : ", data )
     return {response: data.saveVariant }

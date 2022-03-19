@@ -10,6 +10,8 @@ import Filter from '../../components/common/filter';
 import { SearchIcon } from '@heroicons/react/solid';
 import AddBoldIcon from '../../components/ui/icons/addBoldIcon';
 import DocBoldIcon from '../../components/ui/icons/docBoldIcon';
+import EditBoldIcon from '../../components/ui/icons/editBoldIcon'
+import TrashBoldIcon from '../../components/ui/icons/trashBoldIcon'
 import { Pagination } from "react-pagination-bar"
 import 'react-pagination-bar/dist/index.css'
 import ChevronLeftIcon from '../../components/ui/icons/chevronLeftIcon';
@@ -57,6 +59,36 @@ export default function Index() {
     if (isError) console.log("The error here ", isError)
     if (isLoading) console.log("loading...")
     if(items) console.log("Informations => ", items)
+
+    async function deleteItem (e, id){
+            
+        e.preventDefault()
+        // setBlock(true)
+
+        // if(!navigator.onLine){
+        //     toast.error('Aucun accès à Internet 😪');
+        //     setBlock(false)
+        //     return null
+        // }
+
+        // var {response } = await deleteCountry(id)
+        
+        // if(response?.__typename == 'Country'){
+        //     console.log("Item deleted ", response.name)
+        //     refetch(page);
+        //     toast.success('Suppression réussie 😊');
+        // } 
+        // else if(response?.__typename == 'InputError'){
+        //     toast.error(response?.message + ' 😕');
+        // }
+        // else{
+        //     toast.error("Erreur inconnue. Veuillez contacter l'administrateur 😮");
+        // }
+
+        // setBlock(false)
+
+    }
+
 
   return (
     <div className="app-container h-screen">
@@ -154,7 +186,7 @@ export default function Index() {
                                                                 <thead className="bg-gray-100 sticky top-0 ">
                                                                     <tr>
                                                                         <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
-                                                                            Date
+                                                                            N#
                                                                         </th>
                                                                         <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-600 uppercase tracking-wider" >
                                                                             Désignation
@@ -172,7 +204,7 @@ export default function Index() {
                                                                     {items.variants.variants.map((item, i) => (
                                                                         <tr key={item.id} className={(i%2==0) ? "" : "bg-gray-100 bg-opacity-50"}>
                                                                             <td className="px-6 py-3 whitespace-nowrap">
-                                                                                <div className="text-sm text-gray-900">{item.createdat}</div>
+                                                                                <div className="text-sm text-gray-900">{page == 1 ? i+1 : (i+1) + (page*10)}</div>
                                                                             </td>
                                                                             <td className="px-6 py-3 whitespace-nowrap">
                                                                                 <div className="text-sm text-gray-900">{item.name}</div>
@@ -181,10 +213,20 @@ export default function Index() {
                                                                                 <div className="text-sm text-gray-900">{item.desc}</div>
                                                                             </td>
                                                                             
-                                                                            <td className="px-6 py-3 whitespace-nowrap text-right text-sm font-medium">
-                                                                                <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                                                                    Edit
-                                                                                </a>
+                                                                            <td className="px-2 py-3 whitespace-nowrap text-right flex flex-row justify-end">
+
+                                                                                <div className="flex flex-row">
+                                                                                    <Link  href={{pathname: 'variants/form', query: { id: item.id },}} >
+                                                                                        <button className="w-7 h-7 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-300 mr-2">
+                                                                                            <EditBoldIcon customClass="w-3 text-gray-600 text-opacity-90 self-center"/>
+                                                                                        </button>
+                                                                                    </Link>
+
+                                                                                    <button  onClick={(e) => deleteItem(e, item.id)} className="w-7 h-7 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-30">
+                                                                                        <TrashBoldIcon customClass="w-3 text-red-600 text-opacity-90 self-center"/>
+                                                                                    </button>
+                                                                                </div>
+
                                                                             </td>
                                                                         </tr>
                                                                     ))}
@@ -270,6 +312,35 @@ function Options () {
     if (isLoading) console.log("loading...")
     if(items) console.log("Informations => ", items)
 
+    async function deleteItem (e, id){
+            
+        e.preventDefault()
+        // setBlock(true)
+
+        // if(!navigator.onLine){
+        //     toast.error('Aucun accès à Internet 😪');
+        //     setBlock(false)
+        //     return null
+        // }
+
+        // var {response } = await deleteCountry(id)
+        
+        // if(response?.__typename == 'Country'){
+        //     console.log("Item deleted ", response.name)
+        //     refetch(page);
+        //     toast.success('Suppression réussie 😊');
+        // } 
+        // else if(response?.__typename == 'InputError'){
+        //     toast.error(response?.message + ' 😕');
+        // }
+        // else{
+        //     toast.error("Erreur inconnue. Veuillez contacter l'administrateur 😮");
+        // }
+
+        // setBlock(false)
+
+    }
+
     return (
         <div className='w-full h-full rounded-b-xl overflow-y-scroll p-4'>
 
@@ -352,7 +423,7 @@ function Options () {
                                     {items.options.options.map((item, i) => (
                                         <tr key={item.id} className={(i%2==0) ? "" : "bg-gray-100 bg-opacity-50"}>
                                             <td className="px-6 py-3 whitespace-nowrap">
-                                                <div className="text-sm text-gray-900">{(i+1)*(items.options.count/take)}</div>
+                                                <div className="text-sm text-gray-900">{page == 1 ? i+1 : (i+1) + (page*10)}</div>
                                             </td>
                                             <td className="px-6 py-3 whitespace-nowrap">
                                                 {!item.colorCode 
@@ -372,10 +443,20 @@ function Options () {
                                                 <div className="text-sm text-gray-900">{item.variant?.name}</div>
                                             </td>
                                             
-                                            <td className="px-6 py-3 whitespace-nowrap text-right text-sm font-medium">
-                                                <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                                    Edit
-                                                </a>
+                                            <td className="px-2 py-3 whitespace-nowrap text-right flex flex-row justify-end">
+
+                                                <div className="flex flex-row">
+                                                    <Link  href={{pathname: 'variants/form', query: { id: item.variantId },}} >
+                                                        <button className="w-7 h-7 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-300 mr-2">
+                                                            <EditBoldIcon customClass="w-3 text-gray-600 text-opacity-90 self-center"/>
+                                                        </button>
+                                                    </Link>
+
+                                                    <button  onClick={(e) => deleteItem(e, item.id)} className="w-7 h-7 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-30">
+                                                        <TrashBoldIcon customClass="w-3 text-red-600 text-opacity-90 self-center"/>
+                                                    </button>
+                                                </div>
+
                                             </td>
                                         </tr>
                                     ))}
