@@ -60,7 +60,14 @@ export const categoriesQuery = gql`
                 name
                 desc
                 createdat
+                activated
+                image {
+                    id
+                    url
+                    imageref
+                }
             }
+            
         }
     }
 `
@@ -76,9 +83,16 @@ export const subCategoriesQuery = gql`
                 desc
                 createdat
                 parentId
+                order
+                activated
                 parent {
                     id
                     name
+                }
+                image {
+                    id
+                    url
+                    imageref
                 }
             }
         }
@@ -88,14 +102,29 @@ export const subCategoriesQuery = gql`
 export const categoryQuery = gql `
     query($id: Int){
         category(id: $id) {
-            id
-            name
-            desc
-            parentId
-            count
-            parent {
+            __typename
+            ... on Category{
                 id
                 name
+                desc
+                long_desc
+                parentId
+                order
+                activated
+                image {
+                    id
+                    url
+                    imageref
+                }
+                parent {
+                    id
+                    name
+                }
+                
+            }
+            ... on InputError{
+                message
+                input
             }
         }
     }

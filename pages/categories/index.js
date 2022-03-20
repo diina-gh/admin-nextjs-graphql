@@ -16,11 +16,14 @@ import ChevronLeftIcon from '../../components/ui/icons/chevronLeftIcon';
 import ChevronRightIcon from '../../components/ui/icons/chevronRightIcon';
 import DoubleChevronLeftIcon from '../../components/ui/icons/doubleChevronLeftIcon';
 import DoubleChevronRightIcon from '../../components/ui/icons/doubleChevronRightIcon';
-import { getCategories, getSubCategories } from '../../hooks/category';
-
-import { Menu, Transition } from '@headlessui/react'
-import { ChevronDownIcon } from '@heroicons/react/solid'
-import MenuDotsVertical from '../../components/ui/icons/menuDotsVertical';
+import { getCategories, getSubCategories, deleteCategory } from '../../hooks/category';
+import EditBoldIcon from '../../components/ui/icons/editBoldIcon'
+import TrashBoldIcon from '../../components/ui/icons/trashBoldIcon'
+import { deleteImage } from '../../hooks/image';
+import BlockUI from '../../components/common/blockui';
+import toast, { Toaster } from 'react-hot-toast';
+import firebase from '../../config/firebase'
+import { capitalize } from '../../libs/util';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -35,6 +38,8 @@ export default function Index() {
     const [filter, setFilter] = useState('')
     const [direction, setDirection] = useState('asc')
     const [orderBy, setOrderBy] = useState({"id": direction})
+    const [block, setBlock] = useState(false);
+
   
     const { items, isLoading, isError, mutate } = getCategories(page,take,filter, orderBy )
 
@@ -59,9 +64,67 @@ export default function Index() {
     if (isLoading) console.log("loading...")
     if(items) console.log("Informations => ", items)
 
+    async function deleteItem (e, id, imageId, imageref){
+
+      e.preventDefault()
+      setBlock(true)
+      var {response } = await deleteCategory(id)
+      
+      if(response?.__typename == 'Category'){
+          console.log("Item deleted ", response.name)
+          if(imageId != null && imageref != null){
+            deleteImageref(imageId, imageref)
+          }
+          else{
+            refetch(page);
+            setBlock(false)
+            toast.success('Suppression réussie !');
+          } 
+      } 
+      else if(response?.__typename == 'InputError'){
+          toast.error(response?.message);
+          setBlock(false)
+      }
+      else{
+          toast.error("Erreur inconnue. Veuillez contacter l'administrateur !");
+          setBlock(false)
+      }
+
+  }
+
+
+    async function deleteImageref (imageId, imageref) {
+      firebase.storage().ref(`images/${imageref}`).delete().then(() => {
+          console.log("File deleted successfuly");
+          deleteImageInfo(imageId);
+        }).catch((error) => {
+          console.log("Uh-oh, an error occurred: ", error);
+          if(error.code == 'storage/object-not-found') deleteImageInfo(id, imageId);
+      });
+  }
+  
+  async function deleteImageInfo (imageId) {
+      var {response } = await deleteImage(imageId)
+      if(response?.__typename == 'Image'){
+          console.log("Image info deleted ", response.imageref)
+          refetch(page);
+          setBlock(false)
+          toast.success('Suppression réussie !');
+      } 
+      else if(response?.__typename == 'InputError'){
+          toast.error(response?.message);
+          setBlock(false)
+      }
+      else{
+          toast.error("Erreur inconnue. Veuillez contacter l'administrateur");
+          setBlock(false)
+      }
+  }
+  
+
   return (
     <div className="app-container h-screen">
-
+        <Toaster position='top-right' />
         <HeadInfo title= 'Dashboard' description='description here'/>
         <Header/>
 
@@ -70,7 +133,10 @@ export default function Index() {
             <Sidebar />
 
             <motion.div initial={{ opacity: 0.45, x: -150 }}  whileInView={{ opacity: 1, x: 0, transition: { duration: 0.60 }, }}>
-                <div className='app-body'>
+                <div className='app-body relative'>
+
+                  <BlockUI blocking={block} />
+
 
                     <div className='w-full'>
 
@@ -175,27 +241,46 @@ export default function Index() {
 
                                                                             <td className="px-6 py-3 whitespace-nowrap">
                                                                                 <div className="flex items-center">
-                                                                                    <div className="flex-shrink-0 h-10 w-10">
-                                                                                        <img className="h-10 w-10 rounded-full" src="https://raw.githubusercontent.com/diina-gh/owid-covid/main/background/bg3.webp" alt="" />
+                                                                                    <div className={`${item.activated ? 'border-2 border-purple-800' : 'border-2 border-gray-400'} flex-shrink-0 brand-image rounded-full border-opacity-80`} >
+                                                                                        <img className={`${item.activated ? 'opacity-100' : 'opacity-50'} rounded-full object-cover`} src={item?.image?.url} alt="" />
                                                                                     </div>
-                                                                                    <div className="ml-4">
-                                                                                        <div className="text-sm font-medium text-gray-900">{item.name}</div>
+                                                                                    <div className={`${item.activated ? 'opacity-100' : 'opacity-50'} ml-4`}>
+                                                                                        <div className="text-sm font-medium text-gray-900">{capitalize(item.name)}</div>
                                                                                     </div>
                                                                                 </div>
                                                                             </td>
                                                                             <td className="px-6 py-3 whitespace-nowrap">
-                                                                                <div className="text-sm text-gray-900">{item.desc}</div>
+                                                                                <div className={`${item.activated ? 'opacity-100' : 'opacity-50'} text-sm text-gray-900`} >{item.desc}</div>
                                                                             </td>
                                                                             <td className="px-6 py-3 whitespace-nowrap">
+                                                                              {item.activated == true ?
                                                                                 <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                                                                    Active
+                                                                                  Active
                                                                                 </span>
+                                                                              :
+                                                                                <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-200 text-gray-500">
+                                                                                  Inactive
+                                                                                </span>
+                                                                              }
+                                                                                
                                                                             </td>
-                                                                            <td className="text-right">
-                                                                                <div className="">
-                                                                                    <MenuDotsVertical customClass="w-[0.85rem] h-[0.85rem] text-gray-900 hover:text-purple-600" />
+
+                                                                            <td className="px-2 py-3 whitespace-nowrap text-right flex flex-row justify-end">
+
+                                                                                <div className="flex flex-row">
+                                                                                    <Link  href={{pathname: 'categories/form', query: { id: item.id },}} >
+                                                                                        <button className="w-7 h-7 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-300 mr-2">
+                                                                                            <EditBoldIcon customClass="w-3 text-gray-600 text-opacity-90 self-center"/>
+                                                                                        </button>
+                                                                                    </Link>
+
+                                                                                    <button  onClick={(e) => deleteItem(e, item.id, item.image?.id, item.image?.imageref) } className="w-7 h-7 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-30">
+                                                                                        <TrashBoldIcon customClass="w-3 text-red-600 text-opacity-90 self-center"/>
+                                                                                    </button>
                                                                                 </div>
+
                                                                             </td>
+                                                                            
                                                                         </tr>
                                                                     ))}
                                                                 </tbody>
@@ -258,6 +343,8 @@ function SubCategories () {
     const [filter, setFilter] = useState('')
     const [direction, setDirection] = useState('asc')
     const [orderBy, setOrderBy] = useState({"id": direction})
+    const [block, setBlock] = useState(false);
+
   
     var { items, isLoading, isError, mutate } = getSubCategories(page,take,filter, orderBy )
   
@@ -280,8 +367,68 @@ function SubCategories () {
     if (isLoading) console.log("loading...")
     if(items) console.log("Informations => ", items)
 
+    async function deleteItem (e, id, imageId, imageref){
+
+      e.preventDefault()
+      setBlock(true)
+      var {response } = await deleteCategory(id)
+      
+      if(response?.__typename == 'Category'){
+          console.log("Item deleted ", response.name)
+          if(imageId != null && imageref != null){
+            deleteImageref(imageId, imageref)
+          }
+          else{
+            refetch(page);
+            setBlock(false)
+            toast.success('Suppression réussie !');
+          } 
+      } 
+      else if(response?.__typename == 'InputError'){
+          toast.error(response?.message);
+          setBlock(false)
+      }
+      else{
+          toast.error("Erreur inconnue. Veuillez contacter l'administrateur !");
+          setBlock(false)
+      }
+
+  }
+
+
+    async function deleteImageref (imageId, imageref) {
+      firebase.storage().ref(`images/${imageref}`).delete().then(() => {
+          console.log("File deleted successfuly");
+          deleteImageInfo(imageId);
+        }).catch((error) => {
+          console.log("Uh-oh, an error occurred: ", error);
+          if(error.code == 'storage/object-not-found') deleteImageInfo(id, imageId);
+      });
+    }
+  
+    async function deleteImageInfo (imageId) {
+        var {response } = await deleteImage(imageId)
+        if(response?.__typename == 'Image'){
+            console.log("Image info deleted ", response.imageref)
+            refetch(page);
+            setBlock(false)
+            toast.success('Suppression réussie !');
+        } 
+        else if(response?.__typename == 'InputError'){
+            toast.error(response?.message);
+            setBlock(false)
+        }
+        else{
+            toast.error("Erreur inconnue. Veuillez contacter l'administrateur");
+            setBlock(false)
+        }
+    }
+
+
     return (
         <div className='w-full h-full rounded-b-xl overflow-y-scroll p-4'>
+
+            <BlockUI blocking={block} />
 
             <div className='w-full flex flex-row justify-between mt-3'>
 
@@ -313,7 +460,7 @@ function SubCategories () {
                         </div>
                     </div>
 
-                    <Link href='categories/form' > 
+                    <Link href={{pathname: 'categories/form', query: { type: 2 },}} > 
                         <div className='ml-2 bg-purple-500 bg-opacity-90 shadow px-3 py-2 rounded-md flex flex-col justify-center btn-effect1'>
                             <div className='flex flex-row text-sm font-medium text-gray-100 hover:text-white'>
                                 <AddBoldIcon customClass="self-center w-4 h-4" />
@@ -364,30 +511,49 @@ function SubCategories () {
                                         <tr key={item.id} className={(i%2==0) ? "" : "bg-gray-100 bg-opacity-50"}>
                                             <td className="px-6 py-3 whitespace-nowrap">
                                                 <div className="flex items-center">
-                                                    <div className="flex-shrink-0 h-10 w-10">
-                                                        <img className="h-10 w-10 rounded-full" src="https://raw.githubusercontent.com/diina-gh/owid-covid/main/background/bg3.webp" alt="" />
+                                                    <div className={`${item.activated ? 'border-2 border-purple-800' : 'border-2 border-gray-400'} flex-shrink-0 brand-image rounded-full border-opacity-80`} >
+                                                        <img className={`${item.activated ? 'opacity-100' : 'opacity-50'} rounded-full object-cover`} src={item?.image?.url} alt="" />
                                                     </div>
-                                                    <div className="ml-4">
-                                                        <div className="text-sm font-medium text-gray-900">{item.name}</div>
+                                                    <div className={`${item.activated ? 'opacity-100' : 'opacity-50'} ml-4`}>
+                                                        <div className="text-sm font-medium text-gray-900">{capitalize(item.name)}</div>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td className="px-6 py-3 whitespace-nowrap">
-                                                <div className="text-sm text-gray-900">{item.desc}</div>
+                                                <div className={`${item.activated ? 'opacity-100' : 'opacity-50'} text-sm text-gray-900`} >{item.desc}</div>
                                             </td>
                                             <td className="px-6 py-3 whitespace-nowrap">
-                                                <div className="text-sm text-gray-900">{item.parent?.name}</div>
+                                                <div className={`${item.activated ? 'opacity-100' : 'opacity-50'} text-sm text-gray-900 capitalize`} >{item.parent?.name}</div>
                                             </td>
                                             <td className="px-6 py-3 whitespace-nowrap">
-                                                <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                                    Active
-                                                </span>
+                                            {item.activated == true ?
+                                              <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                Active
+                                              </span>
+                                            :
+                                              <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-200 text-gray-500">
+                                                Inactive
+                                              </span>
+
+                                            }
                                             </td>
-                                            <td className="px-6 py-3 whitespace-nowrap text-right text-sm font-medium">
-                                                <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                                    Edit
-                                                </a>
+
+                                            <td className="px-2 py-3 whitespace-nowrap text-right flex flex-row justify-end">
+
+                                                <div className="flex flex-row">
+                                                    <Link  href={{pathname: 'categories/form', query: { id: item.id, type: 2 },}} >
+                                                        <button className="w-7 h-7 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-300 mr-2">
+                                                            <EditBoldIcon customClass="w-3 text-gray-600 text-opacity-90 self-center"/>
+                                                        </button>
+                                                    </Link>
+
+                                                    <button  onClick={(e) => deleteItem(e, item.id, item.image?.id, item.image?.imageref)} className="w-7 h-7 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-30">
+                                                        <TrashBoldIcon customClass="w-3 text-red-600 text-opacity-90 self-center"/>
+                                                    </button>
+                                                </div>
+
                                             </td>
+
                                         </tr>
                                     ))}
                                 </tbody>
@@ -422,225 +588,3 @@ function SubCategories () {
 
 
 
-function EditInactiveIcon(props) {
-    return (
-      <svg
-        {...props}
-        viewBox="0 0 20 20"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M4 13V16H7L16 7L13 4L4 13Z"
-          fill="#EDE9FE"
-          stroke="#A78BFA"
-          strokeWidth="2"
-        />
-      </svg>
-    )
-  }
-  
-  function EditActiveIcon(props) {
-    return (
-      <svg
-        {...props}
-        viewBox="0 0 20 20"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M4 13V16H7L16 7L13 4L4 13Z"
-          fill="#8B5CF6"
-          stroke="#C4B5FD"
-          strokeWidth="2"
-        />
-      </svg>
-    )
-  }
-  
-  function DuplicateInactiveIcon(props) {
-    return (
-      <svg
-        {...props}
-        viewBox="0 0 20 20"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M4 4H12V12H4V4Z"
-          fill="#EDE9FE"
-          stroke="#A78BFA"
-          strokeWidth="2"
-        />
-        <path
-          d="M8 8H16V16H8V8Z"
-          fill="#EDE9FE"
-          stroke="#A78BFA"
-          strokeWidth="2"
-        />
-      </svg>
-    )
-  }
-  
-  function DuplicateActiveIcon(props) {
-    return (
-      <svg
-        {...props}
-        viewBox="0 0 20 20"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M4 4H12V12H4V4Z"
-          fill="#8B5CF6"
-          stroke="#C4B5FD"
-          strokeWidth="2"
-        />
-        <path
-          d="M8 8H16V16H8V8Z"
-          fill="#8B5CF6"
-          stroke="#C4B5FD"
-          strokeWidth="2"
-        />
-      </svg>
-    )
-  }
-  
-  function ArchiveInactiveIcon(props) {
-    return (
-      <svg
-        {...props}
-        viewBox="0 0 20 20"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <rect
-          x="5"
-          y="8"
-          width="10"
-          height="8"
-          fill="#EDE9FE"
-          stroke="#A78BFA"
-          strokeWidth="2"
-        />
-        <rect
-          x="4"
-          y="4"
-          width="12"
-          height="4"
-          fill="#EDE9FE"
-          stroke="#A78BFA"
-          strokeWidth="2"
-        />
-        <path d="M8 12H12" stroke="#A78BFA" strokeWidth="2" />
-      </svg>
-    )
-  }
-  
-  function ArchiveActiveIcon(props) {
-    return (
-      <svg
-        {...props}
-        viewBox="0 0 20 20"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <rect
-          x="5"
-          y="8"
-          width="10"
-          height="8"
-          fill="#8B5CF6"
-          stroke="#C4B5FD"
-          strokeWidth="2"
-        />
-        <rect
-          x="4"
-          y="4"
-          width="12"
-          height="4"
-          fill="#8B5CF6"
-          stroke="#C4B5FD"
-          strokeWidth="2"
-        />
-        <path d="M8 12H12" stroke="#A78BFA" strokeWidth="2" />
-      </svg>
-    )
-  }
-  
-  function MoveInactiveIcon(props) {
-    return (
-      <svg
-        {...props}
-        viewBox="0 0 20 20"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path d="M10 4H16V10" stroke="#A78BFA" strokeWidth="2" />
-        <path d="M16 4L8 12" stroke="#A78BFA" strokeWidth="2" />
-        <path d="M8 6H4V16H14V12" stroke="#A78BFA" strokeWidth="2" />
-      </svg>
-    )
-  }
-  
-  function MoveActiveIcon(props) {
-    return (
-      <svg
-        {...props}
-        viewBox="0 0 20 20"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path d="M10 4H16V10" stroke="#C4B5FD" strokeWidth="2" />
-        <path d="M16 4L8 12" stroke="#C4B5FD" strokeWidth="2" />
-        <path d="M8 6H4V16H14V12" stroke="#C4B5FD" strokeWidth="2" />
-      </svg>
-    )
-  }
-  
-  function DeleteInactiveIcon(props) {
-    return (
-      <svg
-        {...props}
-        viewBox="0 0 20 20"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <rect
-          x="5"
-          y="6"
-          width="10"
-          height="10"
-          fill="#EDE9FE"
-          stroke="#A78BFA"
-          strokeWidth="2"
-        />
-        <path d="M3 6H17" stroke="#A78BFA" strokeWidth="2" />
-        <path d="M8 6V4H12V6" stroke="#A78BFA" strokeWidth="2" />
-      </svg>
-    )
-  }
-  
-  function DeleteActiveIcon(props) {
-    return (
-      <svg
-        {...props}
-        viewBox="0 0 20 20"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <rect
-          x="5"
-          y="6"
-          width="10"
-          height="10"
-          fill="#8B5CF6"
-          stroke="#C4B5FD"
-          strokeWidth="2"
-        />
-        <path d="M3 6H17" stroke="#C4B5FD" strokeWidth="2" />
-        <path d="M8 6V4H12V6" stroke="#C4B5FD" strokeWidth="2" />
-      </svg>
-    )
-  }
-  

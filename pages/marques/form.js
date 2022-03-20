@@ -8,7 +8,6 @@ import ArrowLeftBoldIcon from '../../components/ui/icons/arrowLeftBoldIcon';
 import TrashIcon from '../../components/ui/icons/trashIcon';
 import ImageHolder from '../../components/ui/icons/imageHolder';
 import firebase from "../../config/firebase"
-import { uid } from 'uid';
 import { saveImage, deleteImage } from '../../hooks/image';
 import { saveBrand, getBrand} from '../../hooks/brand';
 import router from 'next/router'
@@ -74,10 +73,10 @@ class Index extends Component {
         var errorMessage
 
         if(!navigator.onLine){
-            errorMessage = "Aucun accès à Internet 😪"
+            errorMessage = "Aucun accès à Internet"
         }
         else if(image == null){
-            errorMessage = "Veuillez ajouter une image 😣"
+            errorMessage = "Veuillez ajouter une image"
         }
 
         if(errorMessage){

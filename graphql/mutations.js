@@ -171,8 +171,8 @@ export const deleteBrandMutation = gql`
 `
 
 export const saveImageMutation = gql `
-    mutation($id: Int, $url: String, $imageref:String, $default: Boolean, $productId: Int, $optionId: Int, $brandId: Int ){
-        saveImage(id: $id, url: $url, imageref: $imageref, default: $default, productId: $productId, optionId: $optionId, brandId: $brandId){
+    mutation($id: Int, $url: String, $imageref:String, $default: Boolean, $productId: Int, $optionId: Int, $brandId: Int, $categoryId: Int ){
+        saveImage(id: $id, url: $url, imageref: $imageref, default: $default, productId: $productId, optionId: $optionId, brandId: $brandId, categoryId: $categoryId){
             __typename
             ... on Image{
                 id
@@ -211,18 +211,18 @@ export const saveVariantMutation = gql `
         saveVariant(id: $id, name: $name, desc: $desc, options: $options){
             __typename
             ... on Variant{
-            id
-            name
-            desc
-            options {
                 id
-                value
-                colorCode
-            }
+                name
+                desc
+                options {
+                    id
+                    value
+                    colorCode
+                }
             }
             ... on InputError{
-            message
-            input
+                message
+                input
             }
         }
     }
@@ -250,3 +250,52 @@ export const deleteVariantMutation = gql `
     }
 `
 
+export const saveCategoryMutation = gql `
+    mutation($id: Int, $name: String, $desc: String, $order: Int, $activated: Boolean, $parentId: Int){
+        saveCategory(id: $id, name: $name, desc: $desc, order: $order, activated: $activated, parentId: $parentId){
+            __typename
+            ... on Category{
+                id
+                name
+                desc
+                long_desc
+                parentId
+                order
+                activated
+                parent {
+                    id
+                    name
+                }
+            }
+            ... on InputError{
+                message
+                input
+            }
+        }
+    }
+`
+
+export const deleteCategoryMutation = gql `
+    mutation($id: Int){
+        deleteCategory(id: $id){
+            __typename
+            ... on Category{
+                id
+                name
+                desc
+                long_desc
+                parentId
+                order
+                activated
+                parent {
+                    id
+                    name
+                }
+            }
+            ... on InputError{
+                message
+                input
+            }
+        }
+    }
+`

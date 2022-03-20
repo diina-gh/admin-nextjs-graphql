@@ -23,6 +23,7 @@ import { getBrands, deleteBrand } from '../../hooks/brand';
 import { deleteImage } from '../../hooks/image';
 import BlockUI from '../../components/common/blockui';
 import toast, { Toaster } from 'react-hot-toast';
+import { classNames } from '../../libs/util';
 
 
 export default function Index() {
@@ -75,15 +76,15 @@ export default function Index() {
             deleteItem(id);
         } 
         else if(response?.__typename == 'InputError'){
-            toast.error(response?.message + ' 😕');
+            toast.error(response?.message);
         }
         else{
-            toast.error("Erreur inconnue. Veuillez contacter l'administrateur 😮");
+            toast.error("Erreur inconnue. Veuillez contacter l'administrateur");
         }
     }
     
     async function deleteItem (id){
-        
+
         if(!block) setBlock(true)
         var {response } = await deleteBrand(id)
         
@@ -91,13 +92,13 @@ export default function Index() {
             console.log("Item deleted ", response.name)
             refetch(page);
             setBlock(false)
-            toast.success('Suppression réussie 😊');
+            toast.success('Suppression réussie !');
         } 
         else if(response?.__typename == 'InputError'){
-            toast.error(response?.message + ' 😕');
+            toast.error(response?.message);
         }
         else{
-            toast.error("Erreur inconnue. Veuillez contacter l'administrateur 😮");
+            toast.error("Erreur inconnue. Veuillez contacter l'administrateur !");
         }
 
     }
@@ -206,8 +207,8 @@ export default function Index() {
                                                             
                                                             <td className="px-6 py-3 whitespace-nowrap">
                                                                 <div className="flex items-center">
-                                                                    <div className="flex-shrink-0 brand-image">
-                                                                        <img src={item.image?.url} />
+                                                                    <div className="flex-shrink-0 brand-image rounded-full border-2 border-purple-800 border-opacity-80">
+                                                                        <img className="rounded-full object-cover" src={item?.image?.url} alt="" />
                                                                     </div>
                                                                     <div className="ml-4">
                                                                         <div className="text-sm font-medium text-gray-900">{item.name}</div>
