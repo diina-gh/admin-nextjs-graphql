@@ -547,7 +547,7 @@ function Countries () {
         setBlock(true)
 
         if(!navigator.onLine){
-            toast.error('Aucun accès à Internet 😪');
+            toast.error('Aucun accès à Internet');
             setBlock(false)
             return null
         }
@@ -557,13 +557,13 @@ function Countries () {
         if(response?.__typename == 'Country'){
             console.log("Item deleted ", response.name)
             refetch(page);
-            toast.success('Suppression réussie 😊');
+            toast.success('Suppression réussie');
         } 
         else if(response?.__typename == 'InputError'){
-            toast.error(response?.message + ' 😕');
+            toast.error(response?.message );
         }
         else{
-            toast.error("Erreur inconnue. Veuillez contacter l'administrateur 😮");
+            toast.error("Erreur inconnue. Veuillez contacter l'administrateur");
         }
 
         setBlock(false)

@@ -10,14 +10,17 @@ import Filter from '../../components/common/filter';
 import { SearchIcon } from '@heroicons/react/solid';
 import AddBoldIcon from '../../components/ui/icons/addBoldIcon';
 import DocBoldIcon from '../../components/ui/icons/docBoldIcon';
+import EditBoldIcon from '../../components/ui/icons/editBoldIcon'
+import TrashBoldIcon from '../../components/ui/icons/trashBoldIcon'
 import { Pagination } from "react-pagination-bar"
 import 'react-pagination-bar/dist/index.css'
 import ChevronLeftIcon from '../../components/ui/icons/chevronLeftIcon';
 import ChevronRightIcon from '../../components/ui/icons/chevronRightIcon';
 import DoubleChevronLeftIcon from '../../components/ui/icons/doubleChevronLeftIcon';
 import DoubleChevronRightIcon from '../../components/ui/icons/doubleChevronRightIcon';
-import { getShippingMethods } from '../../hooks/shippingMethod';
-
+import { deleteShippingMethod, getShippingMethods } from '../../hooks/shippingMethod';
+import BlockUI from '../../components/common/blockui';
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function Index() {
 
@@ -26,6 +29,7 @@ export default function Index() {
     const [filter, setFilter] = useState('')
     const [direction, setDirection] = useState('asc')
     const [orderBy, setOrderBy] = useState({"id": direction})
+    const [block, setBlock] = useState(false);
 
     var { items, isLoading, isError, mutate } = getShippingMethods(page,take,filter, orderBy )
 
@@ -48,9 +52,39 @@ export default function Index() {
     if (isLoading) console.log("loading...")
     if(items) console.log("Informations => ", items)
 
+    async function deleteItem (e, id){
+            
+        e.preventDefault()
+        setBlock(true)
+
+        if(!navigator.onLine){
+            toast.error('Aucun accès à Internet !');
+            setBlock(false)
+            return null
+        }
+
+        var {response } = await deleteShippingMethod(id)
+        
+        if(response?.__typename == 'ShippingMethod'){
+            console.log("Item deleted ", response.name)
+            refetch(page);
+            toast.success('Suppression réussie !');
+        } 
+        else if(response?.__typename == 'InputError'){
+            toast.error(response?.message );
+        }
+        else{
+            toast.error("Erreur inconnue. Veuillez contacter l'administrateur ");
+        }
+
+        setBlock(false)
+
+    }
+
     return (
         <div className="app-container h-screen">
 
+            <Toaster position='top-right' />
             <HeadInfo title= 'Dashboard' description='description here'/>
             <Header/>
 
@@ -59,7 +93,9 @@ export default function Index() {
                 <Sidebar />
 
                 <motion.div initial={{ opacity: 0.45, x: -150 }}  whileInView={{ opacity: 1, x: 0, transition: { duration: 0.60 }, }}>
-                    <div className='app-body'>
+                    <div className='app-body relative'>
+
+                        <BlockUI blocking={block} />
 
                         <div className='w-full h-full bg-white rounded-xl overflow-y-scroll p-4'>
 
@@ -99,6 +135,15 @@ export default function Index() {
                                             <div className='ml-2 self-center'>Exporter</div>
                                         </div>
                                     </div>
+
+                                    <Link href='modes_de_livraison/form' > 
+                                        <div className='ml-2 bg-purple-500 bg-opacity-90 shadow px-3 py-2 rounded-md flex flex-col justify-center btn-effect1'>
+                                            <div className='flex flex-row text-sm font-medium text-gray-100 hover:text-white'>
+                                                <AddBoldIcon customClass="self-center w-4 h-4" />
+                                                <div className='ml-2 self-center'>Ajouter</div>
+                                            </div>
+                                        </div>
+                                    </Link>
 
                                 </div>
 
@@ -146,7 +191,7 @@ export default function Index() {
                                                         <tr key={item.id} className={(i%2==0) ? "" : "bg-gray-100 bg-opacity-50"}>
                                                             
                                                             <td className="px-6 py-3 whitespace-nowrap">
-                                                                <div className="text-sm text-gray-900">{item.id}</div>
+                                                                <div className="text-sm text-gray-900">{page == 1 ? i+1 : (i+1) + (page*10)}</div>
                                                             </td>
 
                                                             <td className="px-6 py-3 whitespace-nowrap">
@@ -161,10 +206,20 @@ export default function Index() {
                                                                 <div className="text-sm text-gray-900">{item.desc}</div>
                                                             </td>
                                             
-                                                            <td className="px-6 py-3 whitespace-nowrap text-right text-sm font-medium">
-                                                                <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                                                    Edit
-                                                                </a>
+                                                            <td className="px-2 py-3 whitespace-nowrap text-right flex flex-row justify-end">
+
+                                                                <div className="flex flex-row">
+                                                                    <Link  href={{pathname: 'modes_de_livraison/form', query: { id: item.id},}} >
+                                                                        <button className="w-7 h-7 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-300 mr-2">
+                                                                            <EditBoldIcon customClass="w-3 text-gray-600 text-opacity-90 self-center"/>
+                                                                        </button>
+                                                                    </Link>
+
+                                                                    <button onClick={(e) => deleteItem(e, item.id)} className="w-7 h-7 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-30">
+                                                                        <TrashBoldIcon customClass="w-3 text-red-600 text-opacity-90 self-center"/>
+                                                                    </button>
+                                                                </div>
+
                                                             </td>
 
                                                         </tr>

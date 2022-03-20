@@ -299,3 +299,81 @@ export const deleteCategoryMutation = gql `
         }
     }
 `
+
+export const saveShippingMethodMutation = gql `
+    mutation($id: Int, $name: String, $code: String, $desc: String){
+        saveShippingMethod(id: $id, name: $name, code: $code, desc: $desc){
+            __typename
+            ... on ShippingMethod{
+                id
+                name
+                code
+                desc
+            }
+            ... on InputError{
+                message
+                input
+            }
+        }
+    }
+`
+
+export const deleteShippingMethodMutation = gql `
+    mutation($id: Int){
+        deleteShippingMethod(id: $id){
+            __typename
+            ... on ShippingMethod{
+                id
+                name
+                code
+                desc
+            }
+            ... on InputError{
+                message
+                input
+            }
+        }
+    }
+`
+
+export const saveDeliveryManMutation = gql `
+    mutation($id: Int, $firstname: String, $lastname: String, $email: String, $phonenumber: String, $civility: Civility){
+        saveDeliveryMan(id: $id, firstname: $firstname, lastname: $lastname, email: $email, phonenumber: $phonenumber, civility: $civility){
+            __typename
+            ... on DeliveryMan{
+                id
+                civility
+                firstname
+                lastname
+                email
+                phonenumber
+
+            }
+            ... on InputError{
+                message
+                input
+            }
+        }
+    }
+`
+
+export const deleteDeliveryManMutation = gql `
+    mutation($id: Int){
+        deleteDeliveryMan(id: $id){
+            __typename
+            ... on DeliveryMan{
+                id
+                civility
+                firstname
+                lastname
+                email
+                phonenumber
+
+            }
+            ... on InputError{
+                message
+                input
+            }
+        }
+    }
+`

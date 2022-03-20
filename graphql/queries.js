@@ -345,11 +345,18 @@ export const shippingMethodsQuery = gql`
 
 export const shippingMethodQuery = gql`
     query($id: Int){
-        shippingMethods(id: $id) {
-            id
-            code
-            desc
-            name
+        shippingMethod(id: $id) {
+            __typename
+            ... on ShippingMethod{
+                id
+                name
+                code
+                desc
+            }
+            ... on InputError{
+                message
+                input
+            }
         }
     }
 `
@@ -370,15 +377,23 @@ export const deliveryMansQuery = gql`
     }
 `
 
-export const deliveryManQueryQuery = gql`
+export const deliveryManQuery = gql`
     query($id: Int){
         deliveryMan(id: $id) {
-            id
-            civility
-            firstname
-            lastname
-            email
-            phonenumber
+            __typename
+            ... on DeliveryMan{
+                id
+                civility
+                firstname
+                lastname
+                email
+                phonenumber
+
+            }
+            ... on InputError{
+                message
+                input
+            }
         }
     }
 `
