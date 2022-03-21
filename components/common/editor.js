@@ -30,7 +30,7 @@ function Editor() {
         }}
 
         config={{         
-            toolbar: ['heading', '|', 'bold', 'italic', 'blockQuote', 'link', 'numberedList', 'bulletedList', 'insertTable', 'mergeTableCells', '|', 'undo', 'redo'],
+            toolbar: ['heading', '|', 'bold', 'italic', 'blockQuote', 'link', 'numberedList', 'bulletedList', 'insertTable', 'mergeTableCells', 'tableColumn', 'tableRow', '|', 'undo', 'redo'],
             placeholder: "Donnez une description ..."
           }}  
 

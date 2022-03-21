@@ -241,9 +241,11 @@ export default function Index() {
 
                                                                             <td className="px-6 py-3 whitespace-nowrap">
                                                                                 <div className="flex items-center">
-                                                                                    <div className={`${item.activated ? 'border-2 border-purple-800' : 'border-2 border-gray-400'} flex-shrink-0 brand-image rounded-full border-opacity-80`} >
-                                                                                        <img className={`${item.activated ? 'opacity-100' : 'opacity-50'} rounded-full object-cover`} src={item?.image?.url} alt="" />
+                                                                                  <div className={`${item.activated ? 'bg-gradient-to-r from-pink-400 via-violet-500 to-purple-600 hover:scale-110' : 'bg-gray-400'} flex-shrink-0 item-image rounded-full border-opacity-80`} >
+                                                                                    <div className='image-layer-2 bg-white rounded-full'>
+                                                                                      <img className={`${item.activated ? 'opacity-100' : 'opacity-50'} rounded-full object-cover`} src={item?.image?.url} alt="" />
                                                                                     </div>
+                                                                                  </div>
                                                                                     <div className={`${item.activated ? 'opacity-100' : 'opacity-50'} ml-4`}>
                                                                                         <div className="text-sm font-medium text-gray-900">{capitalize(item.name)}</div>
                                                                                     </div>
@@ -511,8 +513,10 @@ function SubCategories () {
                                         <tr key={item.id} className={(i%2==0) ? "" : "bg-gray-100 bg-opacity-50"}>
                                             <td className="px-6 py-3 whitespace-nowrap">
                                                 <div className="flex items-center">
-                                                    <div className={`${item.activated ? 'border-2 border-purple-800' : 'border-2 border-gray-400'} flex-shrink-0 brand-image rounded-full border-opacity-80`} >
+                                                    <div className={`${item.activated ? 'bg-gradient-to-r from-pink-400 via-violet-500 to-purple-600' : 'bg-gray-400'} flex-shrink-0 item-image rounded-full border-opacity-80`} >
+                                                      <div className='image-layer-2 bg-white rounded-full'>
                                                         <img className={`${item.activated ? 'opacity-100' : 'opacity-50'} rounded-full object-cover`} src={item?.image?.url} alt="" />
+                                                      </div>
                                                     </div>
                                                     <div className={`${item.activated ? 'opacity-100' : 'opacity-50'} ml-4`}>
                                                         <div className="text-sm font-medium text-gray-900">{capitalize(item.name)}</div>
