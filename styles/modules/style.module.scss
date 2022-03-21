@@ -117,7 +117,21 @@
       height: 100%;
     }
   }
+}
 
+.item-image-2{
+  transition: 0.5s ease-in-out;
+  padding: 0.065rem;
+  cursor: pointer;
+  .image-layer-2{
+    width: 100%;
+    height: 100%;
+    padding: 1px;
+    img{
+      width: 100%;
+      height: 100%;
+    }
+  }
 }
 
 .modal-width{

@@ -147,8 +147,8 @@ export default function Index() {
                                     <div className='relative col-span-3 bg-white bg-opacity-90 border border-gray-300 border-opacity-80 rounded-xl h-[17.1rem] flex flex-col justify-center'>
                                         {chosenImage1 &&
                                         <>
-                                            <div onClick={() => imageInput1.click()} className="w-full h-full absolute top-0 left-0">
-                                                <img className="w-full h-full object-cover" src={chosenImage1} />
+                                            <div onClick={() => imageInput1.click()} className="w-full h-full rounded-xl absolute top-0 left-0   item-image-2 bg-gray-100">
+                                                <div className='image-layer-2'><img className="object-cover rounded-xl" src={chosenImage1} /></div>
                                             </div>
                                             <div onClick={(e) => resetImage(e, 1)} className='z-20 bg-gray-400 bg-opacity-40 hover:bg-opacity-30 border border-gray-600 border-opacity-10 text-center w-7 h-7 rounded-full shadow-lg absolute bottom-2 right-2 flex flex-row justify-center btn-effect1'>
                                                 <div className='self-center'><TrashIcon customClass="w-4 h-4 text-black" /></div>
@@ -172,8 +172,8 @@ export default function Index() {
                                         <div className='relative bg-white bg-opacity-90 border border-gray-300 border-opacity-80 rounded-xl h-32 flex flex-col justify-center'>
                                             {chosenImage2 &&
                                             <>
-                                                <div onClick={() => imageInput2.click()} className="w-full h-full absolute top-0 left-0">
-                                                    <img className="w-full h-full object-cover" src={chosenImage2} />
+                                                <div onClick={() => imageInput2.click()} className="w-full h-full rounded-xl absolute top-0 left-0   item-image-2 bg-gray-100">
+                                                    <div className='image-layer-2'><img className="object-cover rounded-xl" src={chosenImage2} /></div>
                                                 </div>
                                                 <div onClick={(e) => resetImage(e, 2)} className='z-20 bg-gray-400 bg-opacity-40 hover:bg-opacity-30 border border-gray-600 border-opacity-10 text-center w-5 h-5 rounded-full shadow-lg absolute bottom-1 right-1 flex flex-row justify-center btn-effect1'>
                                                     <div className='self-center'><TrashIcon customClass="w-3 h-3 text-black" /></div>
@@ -194,8 +194,8 @@ export default function Index() {
                                         <div className='relative bg-white bg-opacity-90 border border-gray-300 border-opacity-80 rounded-xl h-32 flex flex-col justify-center'>
                                             {chosenImage3 &&
                                             <>
-                                                <div onClick={() => imageInput3.click()} className="w-full h-full absolute top-0 left-0">
-                                                    <img className="w-full h-full object-cover" src={chosenImage3} />
+                                                <div onClick={() => imageInput3.click()} className="w-full h-full rounded-xl absolute top-0 left-0   item-image-2 bg-gray-100">
+                                                    <div className='image-layer-2'><img className="object-cover rounded-xl" src={chosenImage3} /></div>
                                                 </div>
                                                 <div onClick={(e) => resetImage(e, 3)} className='z-20 bg-gray-400 bg-opacity-40 hover:bg-opacity-30 border border-gray-600 border-opacity-10 text-center w-5 h-5 rounded-full shadow-lg absolute bottom-1 right-1 flex flex-row justify-center btn-effect1'>
                                                     <div className='self-center'><TrashIcon customClass="w-3 h-3 text-black" /></div>
@@ -216,8 +216,8 @@ export default function Index() {
                                         <div className='relative bg-white bg-opacity-90 border border-gray-300 border-opacity-80 rounded-xl h-32 flex flex-col justify-center'>
                                             {chosenImage4 &&
                                             <>
-                                                <div onClick={() => imageInput4.click()} className="w-full h-full absolute top-0 left-0">
-                                                    <img className="w-full h-full object-cover" src={chosenImage4} />
+                                                <div onClick={() => imageInput4.click()} className="w-full h-full rounded-xl absolute top-0 left-0   item-image-2 bg-gray-100">
+                                                    <div className='image-layer-2'><img className="object-cover rounded-xl" src={chosenImage4} /></div>
                                                 </div>
                                                 <div onClick={(e) => resetImage(e, 4)} className='z-20 bg-gray-400 bg-opacity-40 hover:bg-opacity-30 border border-gray-600 border-opacity-10 text-center w-5 h-5 rounded-full shadow-lg absolute bottom-1 right-1 flex flex-row justify-center btn-effect1'>
                                                     <div className='self-center'><TrashIcon customClass="w-3 h-3 text-black" /></div>
@@ -238,8 +238,8 @@ export default function Index() {
                                         <div className='relative bg-white bg-opacity-90 border border-gray-300 border-opacity-80 rounded-xl h-32 flex flex-col justify-center'>
                                             {chosenImage5 &&
                                             <>
-                                                <div onClick={() => imageInput5.click()} className="w-full h-full absolute top-0 left-0">
-                                                    <img className="w-full h-full object-cover" src={chosenImage5} />
+                                                <div onClick={() => imageInput5.click()} className="w-full h-full rounded-xl absolute top-0 left-0 item-image-2 bg-gray-100">
+                                                    <div className='image-layer-2'><img className="object-cover rounded-xl" src={chosenImage5} /></div>
                                                 </div>
                                                 <div onClick={(e) => resetImage(e, 5)} className='z-20 bg-gray-400 bg-opacity-40 hover:bg-opacity-30 border border-gray-600 border-opacity-10 text-center w-5 h-5 rounded-full shadow-lg absolute bottom-1 right-1 flex flex-row justify-center btn-effect1'>
                                                     <div className='self-center'><TrashIcon customClass="w-3 h-3 text-black" /></div>
