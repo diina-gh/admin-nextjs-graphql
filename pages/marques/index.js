@@ -207,8 +207,10 @@ export default function Index() {
                                                             
                                                             <td className="px-6 py-3 whitespace-nowrap">
                                                                 <div className="flex items-center">
-                                                                    <div className="flex-shrink-0 brand-image rounded-full border-2 border-purple-800 border-opacity-80">
-                                                                        <img className="rounded-full object-cover" src={item?.image?.url} alt="" />
+                                                                    <div className='hover:scale-110 flex-shrink-0 item-image border-opacity-80' >
+                                                                        <div className='image-layer-2 bg-white rounded-full'>
+                                                                            <img className='opacity-100 rounded-full object-cover' src={item?.image?.url} alt="" />
+                                                                        </div>
                                                                     </div>
                                                                     <div className="ml-4">
                                                                         <div className="text-sm font-medium text-gray-900">{item.name}</div>

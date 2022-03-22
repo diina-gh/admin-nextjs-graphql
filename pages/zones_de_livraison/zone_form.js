@@ -166,12 +166,12 @@ class Index extends Component {
         
                                             <div className="w-full mb-5">
                                                 <label htmlFor="name" className="block text-sm font-medium text-gray-900">Nom <span className='font-bold text-purple-600'>*</span> </label>
-                                                <input type="text" value={this.state.name} onChange={(e) => this.setState({name:e.target.value }) } name="name" id="name" autoComplete="title" placeholder="Désignation" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 shadow-inner bg-white bg-opacity-90 rounded-md px-2" required/>
+                                                <input type="text" value={this.state.name} onChange={(e) => this.setState({name:e.target.value }) } name="name" id="name" autoComplete="title" placeholder="Désignation" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2" required/>
                                             </div>
         
                                             <div className="w-full mb-5">
                                                 <label htmlFor="name" className="block text-sm font-medium text-gray-900">Prix de livraison <span className='font-bold text-purple-600'>*</span> </label>
-                                                <input type="number" value={this.state.shipping} onChange={(e) => this.setState({shipping:e.target.value }) } name="name" id="name" autoComplete="title" placeholder="Désignation" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 shadow-inner bg-white bg-opacity-90 rounded-md px-2" required/>
+                                                <input type="number" value={this.state.shipping} onChange={(e) => this.setState({shipping:e.target.value }) } name="name" id="name" autoComplete="title" placeholder="Désignation" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2" required/>
                                                 <p className="mt-2 text-xs text-gray-600">ⓘ Concerne seulement les commandes à livrer dans cette zone.</p>
                                             </div>
 

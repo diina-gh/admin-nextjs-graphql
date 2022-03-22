@@ -154,18 +154,18 @@ class Index extends Component {
         
                                             <div className="w-full mb-5">
                                                 <label htmlFor="name" className="block text-sm font-medium text-gray-900">Nom <span className='font-bold text-purple-600'>*</span> </label>
-                                                <input type="text" value={this.state.name} onChange={(e) => this.setState({name:e.target.value }) } name="name" id="name" autoComplete="title" placeholder="Désignation" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 shadow-inner bg-white bg-opacity-90 rounded-md px-2" required/>
+                                                <input type="text" value={this.state.name} onChange={(e) => this.setState({name:e.target.value }) } name="name" id="name" autoComplete="title" placeholder="Désignation" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2" required/>
                                             </div>
         
                                             <div className="w-full mb-5">
                                                 <label htmlFor="name" className="block text-sm font-medium text-gray-900">iso3 <span className='font-bold text-purple-600'>*</span> </label>
-                                                <input type="text" value={this.state.iso3} onChange={(e) => this.setState({iso3:e.target.value }) } name="name" id="name" autoComplete="title" placeholder="Désignation" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 shadow-inner bg-white bg-opacity-90 rounded-md px-2" required/>
+                                                <input type="text" value={this.state.iso3} onChange={(e) => this.setState({iso3:e.target.value }) } name="name" id="name" autoComplete="title" placeholder="Désignation" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2" required/>
                                                 <p className="mt-2 text-xs text-gray-600">ⓘ Le code iso3 d&#39;un pays doit comporter 3 charactères.</p>
                                             </div>
         
                                             <div className="w-full mb-4">
                                                 <label htmlFor="name" className="block text-sm font-medium text-gray-900">isoNum <span className='font-bold text-purple-600'>*</span> </label>
-                                                <input type="text" value={this.state.isoNum} onChange={(e) => this.setState({isoNum:e.target.value }) } name="name" id="name" autoComplete="title" placeholder="Désignation" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 shadow-inner bg-white bg-opacity-90 rounded-md px-2" required/>
+                                                <input type="text" value={this.state.isoNum} onChange={(e) => this.setState({isoNum:e.target.value }) } name="name" id="name" autoComplete="title" placeholder="Désignation" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2" required/>
                                                 <p className="mt-2 text-xs text-gray-600">ⓘ Le code iso numérique doit comporter au maximum 3 charactères.</p>
                                             </div>
         

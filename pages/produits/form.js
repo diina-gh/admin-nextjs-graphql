@@ -400,27 +400,27 @@ class Index extends Component {
         
                                             <div className="w-full mb-4">
                                                 <label htmlFor="name" className="block text-sm font-medium text-gray-900">Désignation <span className='font-bold text-purple-600'>*</span></label>
-                                                <input type="text" value={this.state.name} onChange={(e) => this.setState({name:e.target.value }) } name="name" id="name" autoComplete="name" placeholder="Désignation" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 shadow-inner bg-white bg-opacity-90 rounded-md px-2"/>
+                                                <input type="text" value={this.state.name} onChange={(e) => this.setState({name:e.target.value }) } name="name" id="name" autoComplete="name" placeholder="Désignation" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2"/>
                                             </div>
         
                                             <div className="w-full mb-4">
                                                 <label htmlFor="name" className="block text-sm font-medium text-gray-900">Unité <span className='font-bold text-purple-600'>*</span></label>
-                                                <input type="text" value={this.state.unit} onChange={(e) => this.setState({unit:e.target.value }) } name="unit" id="unit" autoComplete="unit" placeholder="unité" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 shadow-inner bg-white bg-opacity-90 rounded-md px-2"/>
+                                                <input type="text" value={this.state.unit} onChange={(e) => this.setState({unit:e.target.value }) } name="unit" id="unit" autoComplete="unit" placeholder="unité" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2"/>
                                             </div>
         
                                             <div className="w-full mb-4">
                                                 <label htmlFor="name" className="block text-sm font-medium text-gray-900">Prix par unité <span className='font-bold text-purple-600'>*</span></label>
-                                                <input type="nomber" value={this.state.unitPrice} onChange={(e) => this.setState({unitPrice:e.target.value }) }  name="unitPrice" id="unitPrice" autoComplete="unitPrice" placeholder="prix par unité" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 shadow-inner bg-white bg-opacity-90 rounded-md px-2"/>
+                                                <input type="nomber" value={this.state.unitPrice} onChange={(e) => this.setState({unitPrice:e.target.value }) }  name="unitPrice" id="unitPrice" autoComplete="unitPrice" placeholder="prix par unité" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2"/>
                                             </div>
         
                                             <div className="w-full mb-4">
                                                 <label htmlFor="name" className="block text-sm font-medium text-gray-900">Poids par unité</label>
-                                                <input type="number" value={this.state.unitWeight} onChange={(e) => this.setState({unitWeight:e.target.value }) }  name="unitWeight" id="unitWeight" autoComplete="weight" placeholder="poids par unité" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 shadow-inner bg-white bg-opacity-90 rounded-md px-2"/>
+                                                <input type="number" value={this.state.unitWeight} onChange={(e) => this.setState({unitWeight:e.target.value }) }  name="unitWeight" id="unitWeight" autoComplete="weight" placeholder="poids par unité" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2"/>
                                             </div>
         
                                             <div className="w-full mb-4">
                                                 <label htmlFor="name" className="block text-sm font-medium text-gray-900">Ordre</label>
-                                                <input type="text" value={this.state.order} onChange={(e) => this.setState({order:e.target.value }) }  name="order" id="order" autoComplete="order" placeholder="Ordre" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 shadow-inner bg-white bg-opacity-90 rounded-md px-2"/>
+                                                <input type="text" value={this.state.order} onChange={(e) => this.setState({order:e.target.value }) }  name="order" id="order" autoComplete="order" placeholder="Ordre" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2"/>
                                             </div>
         
                                             <div className="flex flex-row -mt-4">
@@ -644,8 +644,13 @@ class Index extends Component {
                                                                                 <ChevronDownIcon className={`${ open ? 'transform rotate-180' : ''} w-5 h-5 text-purple-500`}/>
                                                                             </Disclosure.Button>
                                                                             <Disclosure.Panel className="mt-2 px-4 pt-4 pb-2 text-sm text-gray-500 bg-white bg-opacity-80">
-                                                                                If you're unhappy with your purchase for any reason, email us
-                                                                                within 90 days and we'll refund you in full, no questions asked.
+                                                                                <div className='w-full flex flex-row'>
+                                                                                    <div className="w-[1.75rem] h-[1.75rem] rounded-full border-2 border-gray-200 border-opacity-40 self-center mr-2" style={{backgroundColor: 'red'}}></div>
+                                                                                    <div className="w-[1.75rem] h-[1.75rem] rounded-full border-2 border-gray-200 border-opacity-40 self-center mr-2" style={{backgroundColor: 'blue', opacity: '50%'}}></div>
+                                                                                    <div className="w-[1.75rem] h-[1.75rem] rounded-full border-2 border-gray-200 border-opacity-40 self-center mr-2" style={{backgroundColor: 'green'}}></div>
+                                                                                    <div className="w-[1.75rem] h-[1.75rem] rounded-full border-2 border-gray-200 border-opacity-40 self-center mr-2" style={{backgroundColor: 'yellow'}}></div>
+
+                                                                                </div>
                                                                             </Disclosure.Panel>
                                                                         </>
                                                                     )}

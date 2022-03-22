@@ -265,13 +265,13 @@ class Index extends Component {
         
                                             <div className="w-full mb-4">
                                                 <label htmlFor="name" className="block text-sm font-medium text-gray-900">Désignation</label>
-                                                <input type="text" value={this.state.name} onChange={(e) => this.setState({name:e.target.value }) }  name="name" id="name" autoComplete="title" placeholder="Désignation" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 shadow-inner bg-white bg-opacity-90 rounded-md px-2"/>
+                                                <input type="text" value={this.state.name} onChange={(e) => this.setState({name:e.target.value }) }  name="name" id="name" autoComplete="title" placeholder="Désignation" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2"/>
                                             </div>
         
                                             <div className="w-full mb-3">
                                                 <label htmlFor="desc" className="block text-sm font-medium text-gray-900">Description</label>
                                                 <div className="mt-1">
-                                                    <textarea value={this.state.desc} onChange={(e) => this.setState({desc:e.target.value }) }  id="desc" name="desc" rows={7}  className="mt-1 w-full shadow-sm text-sm border border-gray-400 shadow-inner bg-white bg-opacity-90 rounded-md px-2 py-3" placeholder="Donner une description" />
+                                                    <textarea value={this.state.desc} onChange={(e) => this.setState({desc:e.target.value }) }  id="desc" name="desc" rows={7}  className="mt-1 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2 py-3" placeholder="Donner une description" />
                                                 </div>
                                             </div>
 
@@ -331,7 +331,7 @@ class Index extends Component {
         
                                                 <div className="w-1/2 mr-8 self-center">
                                                     <label htmlFor="order" className="block text-sm font-medium text-gray-900">Ordre</label>
-                                                    <input type="number" value={this.state.order} onChange={(e) => this.setState({order:e.target.value }) }  name="order" id="order" autoComplete="order" placeholder="Ordre" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 shadow-inner bg-white bg-opacity-90 rounded-md px-2"/>
+                                                    <input type="number" value={this.state.order} onChange={(e) => this.setState({order:e.target.value }) }  name="order" id="order" autoComplete="order" placeholder="Ordre" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2"/>
                                                 </div>
         
                                                 <div className="self-center">

@@ -162,22 +162,22 @@ class Index extends Component {
 
                                             <div className="w-full mb-5">
                                                 <label htmlFor="lastname" className="block text-sm font-medium text-gray-900">Nom <span className='font-bold text-purple-600'>*</span> </label>
-                                                <input type="text" value={this.state.lastname} onChange={(e) => this.setState({lastname:e.target.value }) } name="lastname" id="lastname" autoComplete="lastname" placeholder="Prénom" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 shadow-inner bg-white bg-opacity-90 rounded-md px-2" required/>
+                                                <input type="text" value={this.state.lastname} onChange={(e) => this.setState({lastname:e.target.value }) } name="lastname" id="lastname" autoComplete="lastname" placeholder="Prénom" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2" required/>
                                             </div>
         
                                             <div className="w-full mb-4">
                                                 <label htmlFor="firstname" className="block text-sm font-medium text-gray-900">Prénom <span className='font-bold text-purple-600'>*</span> </label>
-                                                <input type="text" value={this.state.firstname} onChange={(e) => this.setState({firstname:e.target.value }) } name="firstname" id="firstname" autoComplete="firstname" placeholder="Nom" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 shadow-inner bg-white bg-opacity-90 rounded-md px-2" required/>
+                                                <input type="text" value={this.state.firstname} onChange={(e) => this.setState({firstname:e.target.value }) } name="firstname" id="firstname" autoComplete="firstname" placeholder="Nom" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2" required/>
                                             </div>
         
                                             <div className="w-full mb-4">
                                                 <label htmlFor="email" className="block text-sm font-medium text-gray-900">Adresse email <span className='font-bold text-purple-600'>*</span> </label>
-                                                <input type="text" value={this.state.email} onChange={(e) => this.setState({email:e.target.value }) } name="email" id="email" autoComplete="email" placeholder="Adresse email" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 shadow-inner bg-white bg-opacity-90 rounded-md px-2" required/>
+                                                <input type="text" value={this.state.email} onChange={(e) => this.setState({email:e.target.value }) } name="email" id="email" autoComplete="email" placeholder="Adresse email" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2" required/>
                                             </div>
 
                                             <div className="w-full mb-4">
                                                 <label htmlFor="email" className="block text-sm font-medium text-gray-900">Numéro de téléphone <span className='font-bold text-purple-600'>*</span> </label>
-                                                <input type="text" value={this.state.phonenumber} onChange={(e) => this.setState({phonenumber:e.target.value }) } name="phonenumber" id="phonenumber" autoComplete="phonenumber" placeholder="Numéro de téléphone" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 shadow-inner bg-white bg-opacity-90 rounded-md px-2" required/>
+                                                <input type="text" value={this.state.phonenumber} onChange={(e) => this.setState({phonenumber:e.target.value }) } name="phonenumber" id="phonenumber" autoComplete="phonenumber" placeholder="Numéro de téléphone" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2" required/>
                                             </div>
         
                                         </div>
