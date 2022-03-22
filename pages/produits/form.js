@@ -52,7 +52,7 @@ class Index extends Component {
 
         super(props);
 
-        this.state = { block: false, id:null, name: '', desc: '', activated: false, unit: '', unitWeight: 0.0, unitPrice: 0.0, order : 0, gender: genders[0], modal1: false, modal2:false,
+        this.state = { block: false, id:null, name: '', desc: '', activated: false, unit: '', unitWeight: 0.0, unitPrice: 0.0, order : 0, gender: genders[0], modal1: false, modal2:false, checkedAll: false,
                        category: null, categories: [], brand: null, brands:[], variant_res: null, variants: [], chosenVariants: [], options:[], chosenOptions:[], products: [], chosenProducts:[],
                        image1:null, chosenImage1:null, imageref1: null, imageId1: null,
                        image2:null, chosenImage2:null, imageref2: null, imageId2: null,
@@ -73,6 +73,8 @@ class Index extends Component {
         this.resetImage = this.resetImage.bind(this)
         this.openModal = this.openModal.bind(this)
         this.closeModal = this.closeModal.bind(this)
+        this.handleOption = this.handleOption.bind(this)
+        this.saveVariant = this.saveVariant.bind(this)
     }
 
     async componentDidMount(){
@@ -144,6 +146,53 @@ class Index extends Component {
     openModal = (e, option) => {
         e.preventDefault();
         this.setState({ [option]: true});
+    }
+
+    handleOption = (e, i, checkAll = false, j = null) => {
+
+        e.preventDefault();
+
+        const {variant_res, chosenVariants} = this.state
+        var new_variant = j != null ? chosenVariants[j] : variant_res
+
+        if(checkAll){
+            var results = new_variant.options.filter(opt => opt?.selected == true);
+            for(var k=0; k< new_variant.options.length; k++){
+                new_variant.options[k].selected = (results.length != new_variant.options.length) 
+            }
+        }
+        else{
+            new_variant.options[i].selected = !new_variant.options[i].selected
+        }
+
+        var results = new_variant.options.filter(opt => opt?.selected == true);
+        this.setState({variant_res: new_variant, checkedAll: (results.length == new_variant.options.length)})
+    }
+
+    saveVariant = (e, i = null) => {
+
+        e.preventDefault();
+        const {variant_res, chosenVariants} = this.state
+
+        if(variant_res == null){
+            toast.error('Veuillez choisir un variant')
+            return null
+        }
+
+        const results = variant_res.options.filter(opt => opt.selected == true);
+        if(results.length == 0){
+            toast.error('Veuillez sélectionner des options')
+            return null
+        } 
+
+        var new_variants = chosenVariants
+
+        if(i == null){
+            new_variants.push(variant_res)
+            this.setState({chosenVariants: new_variants, modal1: false, variant_res: null})
+            toast.success('Variant ajouté !')
+        }
+  
     }
 
 
@@ -262,7 +311,7 @@ class Index extends Component {
         const 
             { 
                 activated, gender, category, categories, brand, brands,chosenVariants, variant_res, variants, chosenOptions, 
-                options, chosenProducts, chosenImage1, chosenImage2, chosenImage3, chosenImage4, chosenImage5
+                options, chosenProducts, chosenImage1, chosenImage2, chosenImage3, chosenImage4, chosenImage5, checkedAll
             } 
         = this.state
 
@@ -271,6 +320,7 @@ class Index extends Component {
         return(
             <div className="app-container h-screen">
 
+                <Toaster position='top-right' />
                 <HeadInfo title= 'Dashboard' description='description here'/>
                 <Header/>
         
@@ -280,6 +330,8 @@ class Index extends Component {
         
                     <motion.div initial={{ opacity: 0.45, x: 150 }}  whileInView={{ opacity: 1, x: 0, transition: { duration: 0.60 }, }}>
                         <div className='app-body bg-white rounded-xl relative pb-16'>
+
+                            <BlockUI blocking={this.state.block} />
         
                             <form className='w-full h-full'>
         
@@ -665,9 +717,9 @@ class Index extends Component {
                                                     <div className='px-2 py-[0.45px] text-[10.325px] font-medium bg-purple-500 bg-opacity-80 text-white rounded-xl self-center'>{chosenVariants?.length}</div>
                                                 </div>
         
-                                                <div className='w-full h-52 overflow-y-auto px-5'>
+                                                <div className='w-full h-[14.5rem] overflow-y-auto px-5'>
         
-                                                    {chosenVariants?.length != 0 ?
+                                                    {chosenVariants.length == 0 ?
         
                                                         <div className='w-full h-full flex flex-row justify-center '>
                                                             <div className='h-24 self-center'>
@@ -678,39 +730,69 @@ class Index extends Component {
 
                                                         <div className="w-full">
                                                             <div className="w-full">
-                                                                <Disclosure as="div" className="mb-3">
-                                                                    {({ open }) => (
-                                                                        <>
-                                                                            <Disclosure.Button className="flex justify-between w-full px-4 py-3 text-sm font-medium text-left text-purple-900 bg-white bg-opacity-90 rounded-lg hover:bg-purple-50 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
-                                                                                <span>Couleurs</span>
-                                                                                <ChevronDownIcon className={`${ open ? 'transform rotate-180' : ''} w-5 h-5 text-purple-500`}/>
-                                                                            </Disclosure.Button>
-                                                                            <Disclosure.Panel className="mt-2 px-4 pt-4 pb-2 text-sm text-gray-500 bg-white bg-opacity-80">
-                                                                                <div className='w-full flex flex-row'>
-                                                                                    <div className="w-[1.75rem] h-[1.75rem] rounded-full border-2 border-gray-200 border-opacity-40 self-center mr-2" style={{backgroundColor: 'red'}}></div>
-                                                                                    <div className="w-[1.75rem] h-[1.75rem] rounded-full border-2 border-gray-200 border-opacity-40 self-center mr-2" style={{backgroundColor: 'blue', opacity: '50%'}}></div>
-                                                                                    <div className="w-[1.75rem] h-[1.75rem] rounded-full border-2 border-gray-200 border-opacity-40 self-center mr-2" style={{backgroundColor: 'green'}}></div>
-                                                                                    <div className="w-[1.75rem] h-[1.75rem] rounded-full border-2 border-gray-200 border-opacity-40 self-center mr-2" style={{backgroundColor: 'yellow'}}></div>
+                                                                {chosenVariants.map((item, i) => (
+                                                                    <Disclosure as="div" key={item.id} className="mb-3">
+                                                                        {({ open }) => (
+                                                                            <>
+                                                                                <Disclosure.Button className="flex justify-between w-full px-4 py-3 text-sm font-medium text-left text-purple-900 bg-white bg-opacity-90 rounded-lg hover:bg-purple-50 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
+                                                                                    <span>{capitalize(item.name)}</span>
+                                                                                    <ChevronDownIcon className={`${ open ? 'transform rotate-180' : ''} w-5 h-5 text-purple-500`}/>
+                                                                                </Disclosure.Button>
 
-                                                                                </div>
-                                                                            </Disclosure.Panel>
-                                                                        </>
-                                                                    )}
-                                                                </Disclosure>
-                                                                <Disclosure as="div" className="">
-                                                                    {({ open }) => (
-                                                                        <>
-                                                                           <Disclosure.Button className="flex justify-between w-full px-4 py-3 text-sm font-medium text-left text-purple-900 bg-white bg-opacity-90 rounded-lg hover:bg-purple-50 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
-                                                                                <span>Tailles</span>
-                                                                                <ChevronDownIcon className={`${ open ? 'transform rotate-180' : ''} w-5 h-5 text-purple-500`}/>
-                                                                            </Disclosure.Button>
-                                                                            <Disclosure.Panel className="mt-2 px-4 pt-4 pb-2 text-sm text-gray-500 bg-white bg-opacity-80">
-                                                                                If you're unhappy with your purchase for any reason, email us
-                                                                                within 90 days and we'll refund you in full, no questions asked.
-                                                                            </Disclosure.Panel>
-                                                                        </>
-                                                                    )}
-                                                                </Disclosure>
+                                                                                <Disclosure.Panel className="mt-2 px-4 pt-4 pb-2 text-sm text-gray-500 bg-white bg-opacity-80">
+                                                                                    <div className=''>
+                                                                                        <table className="min-w-full divide-y divide-gray-200 ">
+                                                                                            <thead className="bg-gray-100 sticky top-0 ">
+                                                                                                <tr>
+                                                                                                    <th scope="col" className="px-6 py-2 text-left text-[0.72rem] font-medium text-gray-600 uppercase tracking-wider">
+                                                                                                        N#
+                                                                                                    </th>
+                                                                                                    
+                                                                                                    <th scope="col" className="px-6 py-2 text-left text-[0.72rem] font-medium text-gray-600 uppercase tracking-wider" >
+                                                                                                        Valeur
+                                                                                                    </th>
+
+                                                                                                    <th scope="col" className="relative px-2 py-3 flex flex-row justify-end">
+                                                                                                        <div class="form-check">
+                                                                                                            <input type="checkbox" checked={checkedAll} onFocus={(e) =>  this.handleOption(e, null, true, i)} value="" className="form-check-input rounded-md appearance-none h-4 w-4 border border-purple-300 rounded-sm bg-white checked:bg-purple-600 checked:border-purple-600 text-purple-500 focus:outline-none focus:border-0 focus:ring-2 focus:ring-purple-500 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"  />
+                                                                                                        </div>
+                                                                                                    </th>
+                                                                                                </tr>
+                                                                                            </thead>
+                                                                                            <tbody className="bg-white divide-y divide-gray-200">
+                                                                                                {item.options.map((item2, i2) => (
+                                                                                                    <tr key={item2.id} className={(i2%2==0) ? "" : "bg-gray-100 bg-opacity-50"}>
+                                                                                                        <td className="px-6 py-3 whitespace-nowrap">
+                                                                                                            <div className="text-[0.8rem] text-gray-900">{i2+1}</div>
+                                                                                                        </td>
+                                                                                                        <td className="px-6 py-3 whitespace-nowrap">
+                                                                                                            <div className='flex flex-row'>
+                                                                                                                {item2.colorCode != null && item2.colorCode != '' &&
+                                                                                                                    <div className="w-3.5 h-3.5 rounded-full border-2 border-gray-200 border-opacity-40 self-center mr-2" style={{backgroundColor: item2.colorCode}}></div>
+                                                                                                                }
+                                                                                                                <div className="text-[0.8rem] text-gray-900 self-center">{item2.value}</div>
+                                                                                                            </div>
+                                                                                                        </td>
+                                                                                                        
+                                                                                                        <td className="px-2 py-3 whitespace-nowrap text-right flex flex-row justify-end">
+
+                                                                                                            <div class="form-check">
+                                                                                                                <input type="checkbox" onFocus={(e) =>  this.handleOption(e, i2, false, i)} checked={item2.selected} value="" className="form-check-input rounded-md appearance-none h-4 w-4 border border-purple-300 rounded-sm bg-white checked:bg-purple-600 checked:border-purple-600 text-purple-500 focus:outline-none focus:border-0 focus:ring-2 focus:ring-purple-500 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"  />
+                                                                                                            </div>
+
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                ))}
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                </Disclosure.Panel>
+                                                                            </>
+                                                                        )}
+                                                                    </Disclosure>
+                                                                ))}
+                                                                
+                                                                
                                                             </div>
                                                         </div>
 
@@ -732,7 +814,7 @@ class Index extends Component {
                                                     <div className='px-2 py-[0.45px] text-[10.325px] font-medium bg-purple-500 bg-opacity-80 text-white rounded-xl self-center'>{chosenProducts?.length}</div>
                                                 </div>
         
-                                                <div className='w-full h-52 overflow-y-auto px-5'>
+                                                <div className='w-full h-[14.5rem] overflow-y-auto px-5'>
         
                                                     {chosenProducts?.length != 0 ?
         
@@ -885,7 +967,7 @@ class Index extends Component {
                                     <div className='modal-content bg-white transition-all transform rounded-lg gt-shadow6 self-center my-8 mx-2'>
                                         <div className="w-full flex flex-row justify-center mt-2">
                                             <div className="w-full">
-                                                <form role="form" method="post" onSubmit={(e) => this.saveOption(e)}>
+                                                <form role="form" method="post" onSubmit={(e) => this.saveVariant(e)}>
 
                                                 <div className="" >
 
@@ -969,7 +1051,7 @@ class Index extends Component {
 
                                                                                         <th scope="col" className="relative px-2 py-3 flex flex-row justify-end">
                                                                                             <div class="form-check mr-1">
-                                                                                                <input type="checkbox" value="" className="form-check-input appearance-none h-4 w-4 border border-purple-300 rounded-sm bg-white checked:bg-purple-600 checked:border-purple-600 text-purple-500 focus:outline-none focus:border-0 focus:ring-2 focus:ring-purple-500 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"  />
+                                                                                                <input type="checkbox" checked={checkedAll} onFocus={(e) =>  this.handleOption(e, null, true)} value="" className="form-check-input rounded-md appearance-none h-4 w-4 border border-purple-300 rounded-sm bg-white checked:bg-purple-600 checked:border-purple-600 text-purple-500 focus:outline-none focus:border-0 focus:ring-2 focus:ring-purple-500 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"  />
                                                                                             </div>
                                                                                         </th>
                                                                                     </tr>
@@ -992,7 +1074,7 @@ class Index extends Component {
                                                                                             <td className="px-2 py-3 whitespace-nowrap text-right flex flex-row justify-end">
 
                                                                                                 <div class="form-check mr-1">
-                                                                                                    <input type="checkbox" value="" className="form-check-input appearance-none h-4 w-4 border border-purple-300 rounded-sm bg-white checked:bg-purple-600 checked:border-purple-600 text-purple-500 focus:outline-none focus:border-0 focus:ring-2 focus:ring-purple-500 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"  />
+                                                                                                    <input type="checkbox" checked={item.selected} onFocus={(e) =>  this.handleOption(e, i)} value="" className="form-check-input rounded-md appearance-none h-4 w-4 border border-purple-300 rounded-sm bg-white checked:bg-purple-600 checked:border-purple-600 text-purple-500 focus:outline-none focus:border-0 focus:ring-2 focus:ring-purple-500 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"  />
                                                                                                 </div>
 
                                                                                             </td>
