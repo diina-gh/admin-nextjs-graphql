@@ -746,7 +746,7 @@ class Index extends Component {
                                                                         {({ open }) => (
                                                                             <>
                                                                                 <Disclosure.Button className="relative flex justify-between w-full px-4 py-3 text-sm font-medium text-left text-purple-900 bg-white bg-opacity-90 rounded-lg hover:bg-purple-50 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
-                                                                                    <div onClick={(e) => this.deleteVariant(e, i)} className='absolute -top-1.5 -left-1.5 w-4 h-4 bg-purple-400 hover:bg-purple-600 rounded-full flex flex-row justify-center border-[0.025rem] border-gray-100 border-opacity-60'>
+                                                                                    <div onClick={(e) => this.deleteVariant(e, i)} className='absolute -top-1.5 -left-1.5 w-4 h-4 bg-red-400 hover:bg-red-500 rounded-full flex flex-row justify-center border-[0.025rem] border-gray-100 border-opacity-60'>
                                                                                         <CrossIcon customClass="w-1.5 h-1.5 text-white self-center" />
                                                                                     </div>
                                                                                     <span>{capitalize(item.name)}</span>
