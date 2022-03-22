@@ -14,6 +14,12 @@ export function getBrands (page, take, filter, orderBy) {
     return {items: data, isLoading: !error && !data, isError: error, mutate}
 }
 
+export async function allBrands(){
+    const data = await graphQLClient.request(brandsQuery)
+    console.info("The response : ", data )
+    return {response: data.brands}
+}
+
 export async function getBrand (id) {
     var variables = {"id": filterInt(id)}
     const data = await graphQLClient.request(brandQuery, variables)

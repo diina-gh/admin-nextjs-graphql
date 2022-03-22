@@ -133,7 +133,7 @@ export default function Index() {
             <Sidebar />
 
             <motion.div initial={{ opacity: 0.45, x: -150 }}  whileInView={{ opacity: 1, x: 0, transition: { duration: 0.60 }, }}>
-                <div className='app-body relative'>
+                <div className='app-body relative rounded-xl'>
 
                   <BlockUI blocking={block} />
 

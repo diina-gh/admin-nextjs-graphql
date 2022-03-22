@@ -12,7 +12,7 @@ import {allCategories } from '../../hooks/category';
 import router from 'next/router'
 import BlockUI from '../../components/common/blockui';
 import toast, { Toaster } from 'react-hot-toast';
-import { Listbox, Transition } from '@headlessui/react'
+import { Listbox, Dialog, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 import { classNames } from '../../libs/util';
 import ImageHolder from '../../components/ui/icons/imageHolder';
@@ -25,6 +25,9 @@ import EditBoldIcon from '../../components/ui/icons/editBoldIcon'
 import TrashBoldIcon from '../../components/ui/icons/trashBoldIcon'
 import { Disclosure } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
+import { allVariants } from '../../hooks/variant';
+import { allBrands } from '../../hooks/brand';
+import { allProducts } from '../../hooks/product';
 
 
 var Editor = dynamic(() => import("../../components/common/editor"), {
@@ -49,8 +52,8 @@ class Index extends Component {
 
         super(props);
 
-        this.state = { block: false, id:null, name: '', desc: '', activated: false, unit: '', unitWeight: 0.0, unitPrice: 0.0, order : 0, gender: genders[0],
-                       category: null, categories: [], brand: null, brands:[], variants: [], chosenVariants: [], options:[], chosenOptions:[], chosenProducts:[],
+        this.state = { block: false, id:null, name: '', desc: '', activated: false, unit: '', unitWeight: 0.0, unitPrice: 0.0, order : 0, gender: genders[0], modal1: false, modal2:false,
+                       category: null, categories: [], brand: null, brands:[], variant_res: null, variants: [], chosenVariants: [], options:[], chosenOptions:[], products: [], chosenProducts:[],
                        image1:null, chosenImage1:null, imageref1: null, imageId1: null,
                        image2:null, chosenImage2:null, imageref2: null, imageId2: null,
                        image3:null, chosenImage3:null, imageref3: null, imageId3: null,
@@ -60,11 +63,16 @@ class Index extends Component {
 
         this.checkInput = this.checkInput.bind(this)
         this.saveItem = this.saveItem.bind(this)
-        this.getParents = this.getParents.bind(this)
+        this.getBrands = this.getBrands.bind(this)
+        this.getCategories = this.getCategories.bind(this)
+        this.getVariants = this.getVariants.bind(this)
+        this.getProducts = this.getProducts.bind(this)
+        this.saveImageInfo = this.saveImageInfo.bind(this)
+        this.uploadImage = this.uploadImage.bind(this)
         this.handleImage = this.handleImage.bind(this)
         this.resetImage = this.resetImage.bind(this)
-        this.uploadImage = this.uploadImage.bind(this)
-        this.saveImageInfo = this.saveImageInfo.bind(this)
+        this.openModal = this.openModal.bind(this)
+        this.closeModal = this.closeModal.bind(this)
     }
 
     async componentDidMount(){
@@ -84,7 +92,38 @@ class Index extends Component {
                 router.push('./');
             }
         }
-        // this.getParents()
+        this.getCategories()
+        this.getBrands()
+        this.getVariants()
+        this.getProducts()
+    }
+
+    getCategories = async() => {
+        var {response} = await allCategories()
+        if(response){
+            this.setState({categories: response.categories})
+        }
+    }
+
+    getBrands = async() => {
+        var {response} = await allBrands()
+        if(response){
+            this.setState({brands: response.brands})
+        }
+    }
+
+    getVariants = async() => {
+        var {response} = await allVariants()
+        if(response){
+            this.setState({variants: response.variants})
+        }
+    }
+
+    getProducts = async() => {
+        var {response} = await allProducts()
+        if(response){
+            this.setState({products: response.products})
+        }
     }
 
     handleImage = (e, option) => {
@@ -97,13 +136,16 @@ class Index extends Component {
         this.setState({[option]: null, ['chosen' + capitalize(option)]: null })
     }
 
-    getParents = async() => {
-        var {response} = await allCategories()
-        if(response){
-            console.lo
-            this.setState({parents: response.categories})
-        }
+    closeModal = (e, option) => {
+        e.preventDefault();
+        this.setState({ [option]: false });
     }
+
+    openModal = (e, option) => {
+        e.preventDefault();
+        this.setState({ [option]: true});
+    }
+
 
     checkInput = (e) => {
 
@@ -219,7 +261,7 @@ class Index extends Component {
 
         const 
             { 
-                activated, gender, category, categories, brand, brands,chosenVariants, variants, chosenOptions, 
+                activated, gender, category, categories, brand, brands,chosenVariants, variant_res, variants, chosenOptions, 
                 options, chosenProducts, chosenImage1, chosenImage2, chosenImage3, chosenImage4, chosenImage5
             } 
         = this.state
@@ -676,7 +718,7 @@ class Index extends Component {
         
                                                 </div>
         
-                                                <div className='mt-3 bg-black bg-opacity-80 shadow-lg h-10 px-5 rounded-md flex flex-col justify-center btn-effect1 self-center mx-5'>
+                                                <div onClick={(e) => this.openModal(e, 'modal1')} className='mt-3 bg-black bg-opacity-80 shadow-lg h-10 px-5 rounded-md flex flex-col justify-center btn-effect1 self-center mx-5'>
                                                     <div className='text-sm font-medium text-gray-100 hover:text-white self-center tracking-wide'>Ajouter un variant</div>
                                                 </div>
                                                 
@@ -829,6 +871,169 @@ class Index extends Component {
                     
         
                 </div>
+
+                <Transition appear show={this.state.modal1} as={Fragment}>
+                    <Dialog as="div" className="fixed inset-0 z-50 overflow-y-auto" onClose={(e) => this.setState({modal1: false})}>
+                        <div className="">
+                            <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="ease-in duration-200" leaveFrom="opacity-100" leaveTo="opacity-0">
+                                <Dialog.Overlay className="fixed inset-0" />
+                            </Transition.Child>
+
+                            {/* <span className="inline-block h-screen align-middle" aria-hidden="true">&#8203;</span> */}
+                            <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0 scale-95" enterTo="opacity-100 scale-100" leave="ease-in duration-200" leaveFrom="opacity-100 scale-100" leaveTo="opacity-0 scale-95">
+                                <div className="modal-width-2 overflow-y-auto flex flex-row justify-center">
+                                    <div className='modal-content bg-white transition-all transform rounded-lg gt-shadow6 self-center my-8 mx-2'>
+                                        <div className="w-full flex flex-row justify-center mt-2">
+                                            <div className="w-full">
+                                                <form role="form" method="post" onSubmit={(e) => this.saveOption(e)}>
+
+                                                <div className="" >
+
+                                                    <div className="px-3 py-2 w-full text-center text-lg font-medium text-purple-500">Variants et options</div>
+
+                                                    <div className="bg-white space-y-6 sm:p-6 h-[26.025rem] overflow-y-auto z-10">
+
+
+                                                        <div className="w-full mt-3">
+
+                                                            <div className=''>
+                                                                <Listbox value={variant_res} onChange={(e) => this.setState({variant_res: e})}>
+                                                                    {({ open }) => (
+                                                                        <>
+                                                                        <Listbox.Label className="block text-[0.915rem] font-medium text-gray-900">Choisir un variant </Listbox.Label>
+                                                                            <div className="mt-1 relative">
+                                                                                <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 sm:text-sm">
+                                                                                    <span className="flex items-center">
+                                                                                        <span className="ml-3 block truncate">{variant_res ? variant_res.name : 'Choisir un variant'}</span>
+                                                                                    </span>
+                                                                                    <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                                                                                        <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                                                                                    </span>
+                                                                                </Listbox.Button>
+                    
+                                                                                <Transition show={open} as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
+                                                                                    <Listbox.Options className="absolute sticky mt-1 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
+                                                                                        {variants.map((item) => (
+                                                                                        <Listbox.Option key={item.id} className={({ active }) => classNames(active ? 'text-white bg-purple-600' : 'text-gray-900','cursor-pointer select-none relative py-2 pl-3 pr-9')} value={item}>
+                                                                                            {({ variant_res, active }) => (
+                                                                                            <>
+                                                                                                <div className="flex items-center">
+                                                                                                    <span className={classNames(variant_res ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}>
+                                                                                                        {item.name}
+                                                                                                    </span>
+                                                                                                </div>
+                    
+                                                                                                {variant_res || active &&
+                                                                                                    <span className={classNames(active ? 'text-white' : 'text-indigo-600','absolute inset-y-0 right-0 flex items-center pr-4')}>
+                                                                                                        <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                                                                                    </span>
+                                                                                                }
+                    
+                                                                                            </>
+                                                                                            )}
+                                                                                        </Listbox.Option>
+                                                                                        ))}
+                                                                                    </Listbox.Options>
+                                                                                </Transition>
+                                                                            </div>
+                                                                        </>
+                                                                    )}
+                                                                </Listbox>
+                                                            </div>
+
+                                                            <div className='mt-5'>
+
+                                                                <div className='mb-3 text-[0.915rem] font-medium text-gray-900'>Sélectionner des options</div>
+
+                                                                <div className='w-full h-52 overflow-y-auto'>
+
+                                                                    {variant_res == null ?
+
+                                                                        <div className='w-full h-full flex flex-row justify-center '>
+                                                                            <div className='h-24 self-center'>
+                                                                                <img src="../empty_svg.svg" className='h-full opacity-90' />
+                                                                            </div>
+                                                                        </div>
+                                                                        :
+                                                                        <div>
+                                                                            <table className="min-w-full divide-y divide-gray-200 ">
+                                                                                <thead className="bg-gray-100 sticky top-0 ">
+                                                                                    <tr>
+                                                                                        <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                                                                                            N#
+                                                                                        </th>
+                                                                                        
+                                                                                        <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-600 uppercase tracking-wider" >
+                                                                                            Valeur
+                                                                                        </th>
+
+                                                                                        <th scope="col" className="relative px-2 py-3 flex flex-row justify-end">
+                                                                                            <div class="form-check mr-1">
+                                                                                                <input type="checkbox" value="" className="form-check-input appearance-none h-4 w-4 border border-purple-300 rounded-sm bg-white checked:bg-purple-600 checked:border-purple-600 text-purple-500 focus:outline-none focus:border-0 focus:ring-2 focus:ring-purple-500 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"  />
+                                                                                            </div>
+                                                                                        </th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody className="bg-white divide-y divide-gray-200">
+                                                                                    {variant_res.options.map((item, i) => (
+                                                                                        <tr key={item.id} className={(i%2==0) ? "" : "bg-gray-100 bg-opacity-50"}>
+                                                                                            <td className="px-6 py-3 whitespace-nowrap">
+                                                                                                <div className="text-sm text-gray-900">{i+1}</div>
+                                                                                            </td>
+                                                                                            <td className="px-6 py-3 whitespace-nowrap">
+                                                                                                <div className='flex flex-row'>
+                                                                                                    {item.colorCode != null && item.colorCode != '' &&
+                                                                                                        <div className="w-4 h-4 rounded-full border-2 border-gray-200 border-opacity-40 self-center mr-2" style={{backgroundColor: item.colorCode}}></div>
+                                                                                                    }
+                                                                                                    <div className="text-sm text-gray-900 self-center">{item.value}</div>
+                                                                                                </div>
+                                                                                            </td>
+                                                                                            
+                                                                                            <td className="px-2 py-3 whitespace-nowrap text-right flex flex-row justify-end">
+
+                                                                                                <div class="form-check mr-1">
+                                                                                                    <input type="checkbox" value="" className="form-check-input appearance-none h-4 w-4 border border-purple-300 rounded-sm bg-white checked:bg-purple-600 checked:border-purple-600 text-purple-500 focus:outline-none focus:border-0 focus:ring-2 focus:ring-purple-500 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"  />
+                                                                                                </div>
+
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    ))}
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+
+                                                                    }
+
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div className="px-3 py-2.5 bg-gray-50 sm:px-6 flex flex-row justify-end rounded-b-lg border-t border-gray-200 ">
+
+                                                        <div onClick={(e) => this.closeModal(e, 'modal1')} className='bg-gray-500 bg-opacity-90 shadow-lg h-9 px-3 rounded-md flex flex-col justify-center btn-effect1 self-center mr-2'>
+                                                            <button type="reset" className='text-[0.8rem] font-medium text-gray-100 hover:text-white self-center tracking-wide'>Annuler</button>
+                                                        </div>
+                            
+                                                        <div className='ml-1.5 bg-purple-500 bg-opacity-90 shadow-lg h-9 px-4 rounded-md flex flex-col justify-center btn-effect1 self-center'>
+                                                            <button type="submit" className='text-[0.8rem] font-medium text-gray-100 hover:text-white self-center tracking-wide'>Valider</button>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </Transition.Child>
+                        </div>
+                    </Dialog>
+                </Transition>
         
             </div>
         )
