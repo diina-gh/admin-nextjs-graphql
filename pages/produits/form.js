@@ -23,6 +23,7 @@ import { Switch } from '@headlessui/react'
 import dynamic from 'next/dynamic'
 import EditBoldIcon from '../../components/ui/icons/editBoldIcon'
 import TrashBoldIcon from '../../components/ui/icons/trashBoldIcon'
+import CrossIcon from '../../components/ui/icons/crossIcon';
 import { Disclosure } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 import { allVariants } from '../../hooks/variant';
@@ -75,6 +76,7 @@ class Index extends Component {
         this.closeModal = this.closeModal.bind(this)
         this.handleOption = this.handleOption.bind(this)
         this.saveVariant = this.saveVariant.bind(this)
+        this.deleteVariant = this.deleteVariant.bind(this)
     }
 
     async componentDidMount(){
@@ -193,6 +195,15 @@ class Index extends Component {
             toast.success('Variant ajouté !')
         }
   
+    }
+
+    deleteVariant = (e, index) => {
+        e.preventDefault()
+        const {chosenVariants} = this.state
+        var new_variants = chosenVariants
+        new_variants.splice(index, 1)
+        this.setState({chosenVariants: new_variants});
+        toast.success("Variant supprimé !");
     }
 
 
@@ -729,12 +740,15 @@ class Index extends Component {
                                                         :
 
                                                         <div className="w-full">
-                                                            <div className="w-full">
+                                                            <div className="w-full mt-2">
                                                                 {chosenVariants.map((item, i) => (
                                                                     <Disclosure as="div" key={item.id} className="mb-3">
                                                                         {({ open }) => (
                                                                             <>
-                                                                                <Disclosure.Button className="flex justify-between w-full px-4 py-3 text-sm font-medium text-left text-purple-900 bg-white bg-opacity-90 rounded-lg hover:bg-purple-50 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
+                                                                                <Disclosure.Button className="relative flex justify-between w-full px-4 py-3 text-sm font-medium text-left text-purple-900 bg-white bg-opacity-90 rounded-lg hover:bg-purple-50 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
+                                                                                    <div onClick={(e) => this.deleteVariant(e, i)} className='absolute -top-1.5 -left-1.5 w-4 h-4 bg-purple-400 hover:bg-purple-600 rounded-full flex flex-row justify-center border-[0.025rem] border-gray-100 border-opacity-60'>
+                                                                                        <CrossIcon customClass="w-1.5 h-1.5 text-white self-center" />
+                                                                                    </div>
                                                                                     <span>{capitalize(item.name)}</span>
                                                                                     <ChevronDownIcon className={`${ open ? 'transform rotate-180' : ''} w-5 h-5 text-purple-500`}/>
                                                                                 </Disclosure.Button>
