@@ -767,7 +767,7 @@ class Index extends Component {
                                                                                                     </th>
 
                                                                                                     <th scope="col" className="relative px-2 py-3 flex flex-row justify-end">
-                                                                                                        <div class="form-check">
+                                                                                                        <div className="form-check">
                                                                                                             <input type="checkbox" checked={checkedAll} onFocus={(e) =>  this.handleOption(e, null, true, i)} value="" className="form-check-input rounded-md appearance-none h-4 w-4 border border-purple-300 rounded-sm bg-white checked:bg-purple-600 checked:border-purple-600 text-purple-500 focus:outline-none focus:border-0 focus:ring-2 focus:ring-purple-500 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"  />
                                                                                                         </div>
                                                                                                     </th>
@@ -790,7 +790,7 @@ class Index extends Component {
                                                                                                         
                                                                                                         <td className="px-2 py-3 whitespace-nowrap text-right flex flex-row justify-end">
 
-                                                                                                            <div class="form-check">
+                                                                                                            <div className="form-check">
                                                                                                                 <input type="checkbox" onFocus={(e) =>  this.handleOption(e, i2, false, i)} checked={item2.selected} value="" className="form-check-input rounded-md appearance-none h-4 w-4 border border-purple-300 rounded-sm bg-white checked:bg-purple-600 checked:border-purple-600 text-purple-500 focus:outline-none focus:border-0 focus:ring-2 focus:ring-purple-500 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"  />
                                                                                                             </div>
 
@@ -1064,7 +1064,7 @@ class Index extends Component {
                                                                                         </th>
 
                                                                                         <th scope="col" className="relative px-2 py-3 flex flex-row justify-end">
-                                                                                            <div class="form-check mr-1">
+                                                                                            <div className="form-check mr-1">
                                                                                                 <input type="checkbox" checked={checkedAll} onFocus={(e) =>  this.handleOption(e, null, true)} value="" className="form-check-input rounded-md appearance-none h-4 w-4 border border-purple-300 rounded-sm bg-white checked:bg-purple-600 checked:border-purple-600 text-purple-500 focus:outline-none focus:border-0 focus:ring-2 focus:ring-purple-500 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"  />
                                                                                             </div>
                                                                                         </th>
@@ -1087,7 +1087,7 @@ class Index extends Component {
                                                                                             
                                                                                             <td className="px-2 py-3 whitespace-nowrap text-right flex flex-row justify-end">
 
-                                                                                                <div class="form-check mr-1">
+                                                                                                <div className="form-check mr-1">
                                                                                                     <input type="checkbox" checked={item.selected} onFocus={(e) =>  this.handleOption(e, i)} value="" className="form-check-input rounded-md appearance-none h-4 w-4 border border-purple-300 rounded-sm bg-white checked:bg-purple-600 checked:border-purple-600 text-purple-500 focus:outline-none focus:border-0 focus:ring-2 focus:ring-purple-500 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"  />
                                                                                                 </div>
 
