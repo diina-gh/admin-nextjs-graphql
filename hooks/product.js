@@ -2,6 +2,7 @@ import useSWR from 'swr'
 import {GraphQLClient, request} from 'graphql-request'
 import { filterInt } from '../libs/util'
 import { productsQuery, productQuery } from '../graphql/queries'
+import { saveProductMutation, deleteProductMutation } from '../graphql/mutations'
 
 const endpoint = "https://trade-two.vercel.app/graphql "
 const graphQLClient = new GraphQLClient(endpoint, {headers: {authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY0NjI3NjgyMH0.ZP6ZUMKGFoYdWR28YV06Q4dUaY_HDDyJIjA2hqzwswQ',},})
@@ -25,4 +26,18 @@ export async function getProduct (id) {
     const data = await graphQLClient.request(productQuery, variables)
     console.info("The response : ", data )
     return {response: data.product}
+}
+
+export async function saveProduct (id, name, desc, activated, unit, unitweight, unitprice, order, categoryId, brandId, variants, options, gender) {
+    var variables = {"id": filterInt(id), "name": name, "desc": desc, "activated": activated, "unit": unit, "unitweight": filterInt(unitweight), "unitprice": filterInt(unitprice), "order": filterInt(order), "categoryId": filterInt(categoryId), "brandId": filterInt(brandId), "variants": variants, "options": options, "gender": gender }
+    const data = await graphQLClient.request(saveProductMutation, variables)
+    console.info("The response : ", data )
+    return {response: data.saveProduct }
+}
+
+export async function deleteProduct (id) {
+    var variables = {"id": filterInt(id)}
+    const data = await graphQLClient.request(deleteProductMutation, variables)
+    console.info("The response : ", data )
+    return {response: data.deleteProduct }
 }

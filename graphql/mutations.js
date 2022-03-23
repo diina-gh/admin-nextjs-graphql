@@ -377,3 +377,95 @@ export const deleteDeliveryManMutation = gql `
         }
     }
 `
+
+export const saveProductMutation = gql `
+    mutation($id: Int, $name: String, $desc: String, $activated: Boolean, $unit: String, $unitweight: Float, $unitprice: Float, $order: Int, $categoryId: Int, $brandId: Int, $variants: [Int], $options: [Int], $gender: Gender){
+        saveProduct(id: $id, name: $name, desc: $desc, activated: $activated, unit: $unit, unitweight: $unitweight, unitprice: $unitprice, order: $order, categoryId: $categoryId, brandId: $brandId, variants: $variants, options: $options, gender: $gender){
+            __typename
+            ... on Product{
+                id
+                name
+                desc
+                activated
+                unit
+                unitprice
+                unitweight
+                order
+                categoryId
+                brandId
+                gender
+                variants {
+                    variantId
+                    variant {
+                        id
+                        name
+                        desc
+                    }
+                }
+                options {
+                    optionId
+                    option {
+                        id
+                        value
+                        colorCode
+                    }
+                }
+                images {
+                    id
+                    url
+                    imageref
+                }
+            }
+            ... on InputError{
+                message
+                input
+            }
+    }
+  }
+`
+
+export const deleteProductMutation = gql `
+    mutation($id: Int){
+        deleteProduct(id: $id){
+            __typename
+            ... on Product{
+                id
+                name
+                desc
+                activated
+                unit
+                unitprice
+                unitweight
+                order
+                categoryId
+                brandId
+                gender
+                variants {
+                    variantId
+                    variant {
+                        id
+                        name
+                        desc
+                    }
+                }
+                options {
+                    optionId
+                    option {
+                        id
+                        value
+                        colorCode
+                    }
+                }
+                images {
+                    id
+                    url
+                    imageref
+                }
+            }
+            ... on InputError{
+                message
+                input
+            }
+    }
+  }
+`

@@ -134,7 +134,7 @@
   }
 }
 
-.modal-width{
+.modal-width, .modal-width-2, .modal-width-3{
   background-color: rgba(131, 95, 131, 0.25);
   width: 100vw !important;
   height: 100vh !important;
@@ -143,15 +143,19 @@
   }
 }
 
-.modal-width-2{
-  background-color: rgba(131, 95, 131, 0.25);
-  width: 100vw !important;
-  height: 100vh !important;
-  .modal-content{
-    width: 90vw;
+
+.product-image-2{
+  height: 100%;
+  width: 4.15rem;
+  .image-layer-2{
+    max-height: 2.5rem;
+    max-width: 2.25rem;
+    img{
+      max-height: 2.5rem;
+      max-width: 2.25rem;
+    }
   }
 }
-
 
 
 /** sm  **/
@@ -165,7 +169,13 @@
 
   .modal-width-2{
     .modal-content{
-      width: 650px;
+      width: 625px;
+    }
+  }
+
+  .modal-width-2{
+    .modal-content{
+      width: 625px;
     }
   }
 
@@ -173,11 +183,35 @@
 
 /** md  **/
 @media (min-width: 768px) {
+
+  .modal-width-2{
+    .modal-content{
+      width: 655px;
+    }
+  }
+
+  .modal-width-3{
+    .modal-content{
+      width: 725px;
+    }
+  }
  
 }
 
 /** lg **/
 @media (min-width: 1024px) {
+
+  .modal-width-2{
+    .modal-content{
+      width: 675px;
+    }
+  }
+
+  .modal-width-3{
+    .modal-content{
+      width: 875px;
+    }
+  }
 
 }
 

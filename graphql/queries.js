@@ -449,8 +449,8 @@ export const productsQuery = gql `
             products {
                 id
                 name
-                short_desc
-                long_desc
+                desc
+                details
                 activated
                 status
                 unit
@@ -506,8 +506,8 @@ export const productQuery = gql `
         product(id: $id) {
             id
             name
-            short_desc
-            long_desc
+            desc
+            details
             activated
             status
             unit

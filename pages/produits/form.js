@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Header from '../../components/common/header'
 import Sidebar from '../../components/common/sidebar'
 import HeadInfo from '../../components/common/headinfo'
+import Product from '../../components/product/product';
 import ArrowLeftBoldIcon from '../../components/ui/icons/arrowLeftBoldIcon';
 import InfoBoldIcon from '../../components/ui/icons/infoBoldIcon';
 import { saveImage, deleteImage } from '../../hooks/image';
@@ -29,13 +30,65 @@ import { ChevronDownIcon } from '@heroicons/react/solid'
 import { allVariants } from '../../hooks/variant';
 import { allBrands } from '../../hooks/brand';
 import { allProducts } from '../../hooks/product';
-
+import { Pagination } from "react-pagination-bar"
+import 'react-pagination-bar/dist/index.css'
+import ChevronLeftIcon from '../../components/ui/icons/chevronLeftIcon';
+import ChevronRightIcon from '../../components/ui/icons/chevronRightIcon';
+import DoubleChevronLeftIcon from '../../components/ui/icons/doubleChevronLeftIcon';
+import DoubleChevronRightIcon from '../../components/ui/icons/doubleChevronRightIcon';
 
 var Editor = dynamic(() => import("../../components/common/editor"), {
   ssr: false
 })
 
 var genders = ['UNISEX', 'MASCULIN', 'FEMININ']
+
+const products = [
+
+    {
+        id: 1,
+        name: 'Macbook Pro',
+        category: 'Oridnateurs',
+        price: '780 000 CFA',
+        image: "../images/product/product1.png",
+    },
+    {
+        id: 2,
+        name: 'Ipad Air',
+        category: 'Tablette',
+        price: '575 000 CFA',
+        image: "../images/product/product4.png",
+    },
+    {
+        id: 3,
+        name: 'Iphone 13 Pro',
+        category: 'Phone',
+        price: '880 000 CFA',
+        image: "../images/product/product3.png",
+    },
+    {
+        id: 4,
+        name: 'Smart Watch',
+        category: 'Smart Watch',
+        price: '450 000 CFA',
+        image: "../images/product/product5.png",
+    },
+    {
+        id: 5,
+        name: 'Homepod mini',
+        category: 'Acessories',
+        price: '265 000 CFA',
+        image: "../images/product/product6.png",
+    },
+    // {
+    //     id: 6,
+    //     name: 'Airpod Pro',
+    //     category: 'Acessories',
+    //     price: '140 000 CFA',
+    //     image: "../images/product/product7.png",
+    // }
+
+]
 
 
 export async function getServerSideProps(context) {
@@ -738,7 +791,6 @@ class Index extends Component {
                                                             </div>
                                                         </div>
                                                         :
-
                                                         <div className="w-full">
                                                             <div className="w-full mt-2">
                                                                 {chosenVariants.map((item, i) => (
@@ -932,7 +984,7 @@ class Index extends Component {
         
                                                 </div>
         
-                                                <div className='mt-3 bg-black bg-opacity-80 shadow-lg h-10 px-5 rounded-md flex flex-col justify-center btn-effect1 self-center mx-5'>
+                                                <div onClick={(e) => this.openModal(e,'modal2')} className='mt-3 bg-black bg-opacity-80 shadow-lg h-10 px-5 rounded-md flex flex-col justify-center btn-effect1 self-center mx-5'>
                                                     <div className='text-sm font-medium text-gray-100 hover:text-white self-center tracking-wide'>Ajouter un produit</div>
                                                 </div>
                                                 
@@ -1130,6 +1182,121 @@ class Index extends Component {
                         </div>
                     </Dialog>
                 </Transition>
+
+
+                <Transition appear show={this.state.modal2} as={Fragment}>
+                    <Dialog as="div" className="fixed inset-0 z-50 overflow-y-auto" onClose={(e) => this.setState({modal2: false})}>
+                        <div className="">
+
+                            <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="ease-in duration-200" leaveFrom="opacity-100" leaveTo="opacity-0">
+                                <Dialog.Overlay className="fixed inset-0" />
+                            </Transition.Child>
+
+                            {/* <span className="inline-block h-screen align-middle" aria-hidden="true">&#8203;</span> */}
+                            <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0 scale-95" enterTo="opacity-100 scale-100" leave="ease-in duration-200" leaveFrom="opacity-100 scale-100" leaveTo="opacity-0 scale-95">
+                                <div className="modal-width-3 overflow-y-auto flex flex-row justify-center">
+                                    <div className='modal-content bg-white transition-all transform rounded-lg gt-shadow6 self-center my-8 mx-2'>
+                                        <div className="w-full flex flex-row justify-center mt-2">
+                                            <div className="w-full">
+                                                <form role="form" method="post" onSubmit={(e) => this.saveVariant(e)}>
+
+                                                <div className="" >
+
+                                                    <div className="px-3 mt-1 mb-1 w-full text-center text-lg font-medium text-purple-500">Produits associés</div>
+
+                                                    <div className="bg-white px-6 py-3">
+
+
+                                                        <div className="w-full">
+
+                                                            <div className='w-full h-10'>
+                                                                <input type="search" className='w-full h-full px-4 focus:ring-0 text-sm border-0 bg-gray-200 bg-opacity-80 rounded-full' placeholder='Rechercher un nom, une description ou une catégorie ...' />
+                                                            </div>
+
+                                                            <div className='mt-5 w-full '>
+
+                                                                <div className='mb-3 text-[0.915rem] font-medium text-gray-900'>Sélectionner des produits</div>
+
+                                                                <div className='w-full h-[12.5rem] overflow-y-auto'>
+
+                                                                    <div className="grid grid-cols-5 gap-5">
+
+                                                                        {products.map((item, i) => (
+                                                                            <div key={i}>
+                                                                                <Product product={item} />
+                                                                            </div>
+                                                                        ))}
+
+                                                                    </div>
+
+                                                                </div>
+
+                                                                <div className='w-full flex flex-row justify-end mt-5'>
+                                                                    <Pagination
+                                                                        initialPage={1} 
+                                                                        itemsPerPage={5} 
+                                                                        onPageСhange={(pageNumber) => console.log(pageNumber)} 
+                                                                        totalItems={50}  
+                                                                        pageNeighbours={2} 
+                                                                        startLabel= {<DoubleChevronLeftIcon customClass="w-3 h-3"/>}
+                                                                        endLabel={<DoubleChevronRightIcon customClass="w-3 h-3"/>}
+                                                                        nextLabel={<ChevronRightIcon customClass="w-3 h-3"/>}
+                                                                        prevLabel={<ChevronLeftIcon customClass="w-3 h-3"/>}
+                                                                        customClassNames={{rpbItemClassName:'pg-btn', rpbItemClassNameActive:'pg-active-btn',}}
+                                                                    />
+                                                                </div>
+
+                                                            </div>
+
+                                                            <div className='mt-6 w-full h-[5.5rem] border-2 border-purple-500 rounded-xl shadow-inner'>
+
+                                                                <div className='w-full h-full px-3 py-3 flex flex-row'>
+                                                                    {products.map((item, i) => (
+                                                                        <motion.div key={i} initial={{ opacity: 0, x: 300 + Math.random() * 15 }} whileInView={{ opacity: 1, x: 0, transition: { type: 'spring', stiffness: 195, damping: 20 }, }}>
+                                                                            <div className='relative h-full'>
+                                                                                <div className="product-image-2 h-full bg-gray-200 bg-opacity-90 rounded-xl mr-4 flex flex-row justify-center">
+                                                                                    <div className='image-layer-2 max-h-[2.5rem] self-center'>
+                                                                                        <img src={item.image} />
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div className='absolute -top-1.5 -left-1.5 w-4 h-4 bg-red-500 hover:bg-red-600 rounded-full flex flex-row justify-center shadow-sm'>
+                                                                                    <CrossIcon customClass="w-1.5 h-1.5 text-white self-center" />
+                                                                                </div>
+                                                                            </div>
+                                                                        </motion.div>
+                                                                    ))}
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div className="px-3 py-2.5 bg-gray-50 sm:px-6 flex flex-row justify-end rounded-b-lg border-t border-gray-200 ">
+
+                                                        <div onClick={(e) => this.closeModal(e, 'modal1')} className='bg-gray-500 bg-opacity-90 shadow-lg h-9 px-3 rounded-md flex flex-col justify-center btn-effect1 self-center mr-2'>
+                                                            <button type="reset" className='text-[0.8rem] font-medium text-gray-100 hover:text-white self-center tracking-wide'>Annuler</button>
+                                                        </div>
+                            
+                                                        <div className='ml-1.5 bg-purple-500 bg-opacity-90 shadow-lg h-9 px-4 rounded-md flex flex-col justify-center btn-effect1 self-center'>
+                                                            <button type="submit" className='text-[0.8rem] font-medium text-gray-100 hover:text-white self-center tracking-wide'>Valider</button>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </Transition.Child>
+                        </div>
+                    </Dialog>
+                </Transition>
+        
         
             </div>
         )
