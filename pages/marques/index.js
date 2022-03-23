@@ -207,8 +207,8 @@ export default function Index() {
                                                             
                                                             <td className="px-6 py-3 whitespace-nowrap">
                                                                 <div className="flex items-center">
-                                                                    <div className='hover:scale-110 flex-shrink-0 item-image border-opacity-80' >
-                                                                        <div className='image-layer-2 bg-white rounded-full'>
+                                                                    <div className='hover:scale-110 flex-shrink-0 item-image-0 bg-opacity-0 border-opacity-80' >
+                                                                        <div className='image-layer-2 bg-white bg-opacity-0'>
                                                                             <img className='opacity-100 rounded-full object-cover' src={item?.image?.url} alt="" />
                                                                         </div>
                                                                     </div>

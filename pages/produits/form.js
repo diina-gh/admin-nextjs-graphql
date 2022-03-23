@@ -1248,21 +1248,22 @@ class Index extends Component {
 
                                                             </div>
 
-                                                            <div className='mt-6 w-full h-[5.5rem] border-2 border-purple-500 rounded-xl shadow-inner'>
+                                                            <div className='mt-6 w-full h-[5.25rem] border-2 border-gray-500 border-opacity-90 rounded-xl shadow-inner flex flex-col justify-center'>
 
-                                                                <div className='w-full h-full px-3 py-3 flex flex-row'>
+                                                                <div className='w-full px-3 self-center flex flex-row'>
                                                                     {products.map((item, i) => (
                                                                         <motion.div key={i} initial={{ opacity: 0, x: 300 + Math.random() * 15 }} whileInView={{ opacity: 1, x: 0, transition: { type: 'spring', stiffness: 195, damping: 20 }, }}>
                                                                             <div className='relative h-full'>
-                                                                                <div className="product-image-2 h-full bg-gray-200 bg-opacity-90 rounded-xl mr-4 flex flex-row justify-center">
-                                                                                    <div className='image-layer-2 max-h-[2.5rem] self-center'>
-                                                                                        <img src={item.image} />
+                                                                                <div className='item-image-1 bg-gradient-to-r from-violet-600 to-purple-600 hover:scale-110 rounded-full border-opacity-80 self-center mr-4' >
+                                                                                    <div className='image-layer-2 rounded-full'>
+                                                                                        <div className='image-layer-3'><img src={item?.image}  /></div>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div className='absolute -top-1.5 -left-1.5 w-4 h-4 bg-red-500 hover:bg-red-600 rounded-full flex flex-row justify-center shadow-sm'>
+                                                                                <div className='absolute -top-0.5 -left-0.5 w-4 h-4 bg-red-500 hover:bg-red-600 rounded-full flex flex-row justify-center shadow-sm'>
                                                                                     <CrossIcon customClass="w-1.5 h-1.5 text-white self-center" />
                                                                                 </div>
                                                                             </div>
+                                                                            
                                                                         </motion.div>
                                                                     ))}
                                                                 </div>
