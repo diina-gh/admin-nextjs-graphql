@@ -9,6 +9,7 @@ import ArrowLeftBoldIcon from '../../components/ui/icons/arrowLeftBoldIcon';
 import InfoBoldIcon from '../../components/ui/icons/infoBoldIcon';
 import { saveImage, deleteImage } from '../../hooks/image';
 import { saveCategory, getCategory} from '../../hooks/category';
+import { saveProduct, getProduct } from '../../hooks/product';
 import {allCategories } from '../../hooks/category';
 import router from 'next/router'
 import BlockUI from '../../components/common/blockui';
@@ -41,7 +42,7 @@ var Editor = dynamic(() => import("../../components/common/editor"), {
   ssr: false
 })
 
-var genders = ['UNISEX', 'MASCULIN', 'FEMININ']
+var genders = ['UNISEX', 'HOMME', 'FEMME']
 
 const products = [
 
@@ -130,6 +131,7 @@ class Index extends Component {
         this.handleOption = this.handleOption.bind(this)
         this.saveVariant = this.saveVariant.bind(this)
         this.deleteVariant = this.deleteVariant.bind(this)
+        this.onDescChange = this.onDescChange.bind(this)
     }
 
     async componentDidMount(){
@@ -203,6 +205,11 @@ class Index extends Component {
         this.setState({ [option]: true});
     }
 
+    onDescChange = (data) =>{
+        this.setState({desc:data})
+        console.log("New word ", this.state.desc)
+    }
+
     handleOption = (e, i, checkAll = false, j = null) => {
 
         e.preventDefault();
@@ -263,7 +270,8 @@ class Index extends Component {
     checkInput = (e) => {
 
         e.preventDefault()
-        const {name, desc, parentId} = this.state
+
+        const {chosenVariants} = this.state
         var errorMessage
 
         if(!navigator.onLine){
@@ -285,12 +293,24 @@ class Index extends Component {
 
     saveItem = async () => {
 
-        const { id, name, desc, activated, unit, unitWeight, unitPrice, order, gender,category, brand, chosenVariants, chosenOptions} = this.state
+        const { id, name, desc, activated, unit, unitWeight, unitPrice, order, gender,category, brand, chosenVariants} = this.state
+        
+        var optionIds = []
 
-        var {response } = await saveCategory(id, name, desc, order, activated, unit, unitWeight, unitPrice, order, gender, category?.id, brand?.id, chosenVariants, chosenOptions )
+        for(var i=0; i< chosenVariants.length; i++){
+            for(var j=0; j< chosenVariants[i].options.length; j++){
+                if(chosenVariants[i].options[j].selected == true) optionIds.push(parseInt(chosenVariants[i].options[j].id))
+            }
+        }
 
-        if(response?.__typename == 'Category'){
-            this.handleUpload(response?.id)
+        const variantIds = chosenVariants.map(item => parseInt(item.id));
+
+
+        const {response } = await saveProduct(id, name, desc, activated, unit, unitWeight, unitPrice, order, category?.id, brand?.id, variantIds, optionIds, gender)
+
+        if(response?.__typename == 'Product'){
+            toast.success("Victory !")
+            // this.handleUpload(response?.id)
         }
         else if(response?.__typename == 'InputError'){
             toast.dismiss()
@@ -374,7 +394,7 @@ class Index extends Component {
 
         const 
             { 
-                activated, gender, category, categories, brand, brands,chosenVariants, variant_res, variants, chosenOptions, 
+                desc, activated, gender, category, categories, brand, brands,chosenVariants, variant_res, variants, chosenOptions, 
                 options, chosenProducts, chosenImage1, chosenImage2, chosenImage3, chosenImage4, chosenImage5, checkedAll
             } 
         = this.state
@@ -397,7 +417,7 @@ class Index extends Component {
 
                             <BlockUI blocking={this.state.block} />
         
-                            <form className='w-full h-full'>
+                            <form className='w-full h-full' onSubmit={(e) => this.checkInput(e)}>
         
                                 <div className='w-full h-full pt-4'>
         
@@ -600,7 +620,7 @@ class Index extends Component {
         
                                                 <div className="col-span-2 mb-4">
                                                     <label htmlFor="desc" className="block text-sm font-medium text-gray-900">Description <span className='font-bold text-purple-600'>*</span></label>
-                                                    <div className="editor-container border border-gray-400 border-opacity-30 text-gray-900 text-sm font-medium details-editor mt-1"><Editor /></div>
+                                                    <div className="editor-container border border-gray-400 border-opacity-30 text-gray-900 text-sm font-medium details-editor mt-1"><Editor desc={desc} onDescChange={this.onDescChange}  /></div>
         
                                                 </div>
         
