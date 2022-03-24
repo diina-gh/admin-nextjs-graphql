@@ -173,7 +173,9 @@ export default function Index() {
                                                                 </div>
                                                             </td>
                                                             <td className="px-6 py-3 whitespace-nowrap">
-                                                                <div className="text-sm text-gray-900">{item.short_desc}</div>
+                                                                <div className="text-sm text-gray-900">
+                                                                    <div dangerouslySetInnerHTML={{__html: item.desc}}></div>
+                                                                </div>
                                                             </td>
                                                             <td className="px-6 py-3 whitespace-nowrap">
                                                                 <span className="px-2 inline-flex text-[10px] leading-5 font-semibold rounded-full bg-fuchsia-200 shadow shadow-fuchsia-200 text-fuchsia-900">

@@ -8,8 +8,7 @@ import Product from '../../components/product/product';
 import ArrowLeftBoldIcon from '../../components/ui/icons/arrowLeftBoldIcon';
 import InfoBoldIcon from '../../components/ui/icons/infoBoldIcon';
 import { saveImage, deleteImage } from '../../hooks/image';
-import { saveCategory, getCategory} from '../../hooks/category';
-import { saveProduct, getProduct } from '../../hooks/product';
+import { saveProduct, getProduct, allProducts } from '../../hooks/product';
 import {allCategories } from '../../hooks/category';
 import router from 'next/router'
 import BlockUI from '../../components/common/blockui';
@@ -30,7 +29,6 @@ import { Disclosure } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 import { allVariants } from '../../hooks/variant';
 import { allBrands } from '../../hooks/brand';
-import { allProducts } from '../../hooks/product';
 import { Pagination } from "react-pagination-bar"
 import 'react-pagination-bar/dist/index.css'
 import ChevronLeftIcon from '../../components/ui/icons/chevronLeftIcon';
@@ -113,7 +111,8 @@ class Index extends Component {
                        image2:null, chosenImage2:null, imageref2: null, imageId2: null,
                        image3:null, chosenImage3:null, imageref3: null, imageId3: null,
                        image4:null, chosenImage1:null, imageref4: null, imageId4: null,
-                       image5:null, chosenImage5:null, imageref5: null, imageId5: null
+                       image5:null, chosenImage5:null, imageref5: null, imageId5: null,
+                       page: 1, take: 5, filter:'', orderBy: {"id": 'asc'},
                     };
 
         this.checkInput = this.checkInput.bind(this)
@@ -132,15 +131,33 @@ class Index extends Component {
         this.saveVariant = this.saveVariant.bind(this)
         this.deleteVariant = this.deleteVariant.bind(this)
         this.onDescChange = this.onDescChange.bind(this)
+        this.refetch = this.refetch.bind(this)
     }
 
     async componentDidMount(){
         var itemId = router.query.id
         if(itemId !=null){
             this.setState({block: true})
-            var {response} = await getCategory(itemId)
-            if(response?.__typename == 'Category'){
-                this.setState({ id: response.id, name: response.name, desc: response.desc, order: response.order, activated: response.activated, parent: response.parent, image:response.image?.url, chosenImage:response.image?.url, imageref:response.image?.imageref, imageId: response.image?.id, block:false })
+            var {response} = await getProduct(itemId)
+            if(response?.__typename == 'Product'){
+                this.setState(
+                    { id: response.id, name: response.name, desc: response.desc, activated: response.activated, unit: response.unit, unitWeight: response.unitWeight, unitPrice: response.unitPrice, order: response.order , 
+                      gender: response.gender, category: response.category, brand: response.brand, chosenVariants: response.variants, chosenOptions: response.options, chosenProducts: response.related, 
+                    }
+                );
+                if(response.images != null && response.images.length > 0){
+                    for(let i=1; i< response.images.length; i++){
+                        this.setState(
+                            {
+                                ['image' + i]: response.images[i].url,
+                                ['chosenImage' + i]: response.images[i].url,
+                                ['imageref' + i]: response.images[i].imageref,
+                                ['imageId' + i]: response.images[i].id,
+                            }
+                        );
+                    }
+                }
+                this.setState({block: false})
             }
             else if(response?.__typename == 'InputError'){
                 toast.error(response.message);
@@ -179,10 +196,18 @@ class Index extends Component {
     }
 
     getProducts = async() => {
-        var {response} = await allProducts()
+        const{page, take, filter, orderBy} = this.state
+        var {response} = await allProducts(page, take, filter, orderBy)
         if(response){
             this.setState({products: response.products})
         }
+    }
+
+    refetch = async (newPage, newFilter = null, newOrder = null ) =>{
+        if(newPage) this.setState({page: newPage}) 
+        if(newFilter) this.setState({filter: newFilter})
+        if(newOrder) this.setState({filter: newOrder})
+        this.getProducts()
     }
 
     handleImage = (e, option) => {
@@ -305,12 +330,10 @@ class Index extends Component {
 
         const variantIds = chosenVariants.map(item => parseInt(item.id));
 
-
         const {response } = await saveProduct(id, name, desc, activated, unit, unitWeight, unitPrice, order, category?.id, brand?.id, variantIds, optionIds, gender)
 
         if(response?.__typename == 'Product'){
-            toast.success("Victory !")
-            // this.handleUpload(response?.id)
+            this.handleUpload(response?.id)
         }
         else if(response?.__typename == 'InputError'){
             toast.dismiss()
@@ -325,34 +348,46 @@ class Index extends Component {
 
     handleUpload = (itemId) => {
 
-        const { id, image, chosenImage, imageref, imageId } = this.state
+        const { image1, chosenImage1, imageref1, imageId1, image2, chosenImage2, imageref2, imageId2,
+                image3, chosenImage3, imageref3, imageId3, image4, chosenImage4, imageref4, imageId4, 
+                image5, chosenImage5, imageref5, imageId5 } = this.state
 
-        if(imageref != null){ 
-            if(image == chosenImage){
-                toast.success("Mise à jour réussie !", {id: toastOne,});
-                this.setState({block: false})
-                return null
+        for (let i=1; i<=5; i++){
+           
+            if( ['imageref' + i] != null){ 
+                if( ['image' + i] == ['chosenImage' + i]){
+                    // toast.success("Mise à jour réussie !", {id: toastOne,});
+                    // this.setState({block: false})
+                    continue
+                }
+                else{
+                    firebase.storage().ref(`images/${['imageref' + i]}`).delete().then(async() => {
+                        console.log("File deleted successfuly");
+                        this.uploadImage(itemId);
+                    }).catch((error) => {
+                        console.log("Uh-oh, an error occurred: ", error);
+                        if(error.code == 'storage/object-not-found') this.uploadImage(itemId);
+                    });
+                }     
             }
             else{
-                firebase.storage().ref(`images/${imageref}`).delete().then(async() => {
-                    console.log("File deleted successfuly");
-                    this.uploadImage(itemId);
-                }).catch((error) => {
-                    console.log("Uh-oh, an error occurred: ", error);
-                    if(error.code == 'storage/object-not-found') this.uploadImage(itemId);
-                });
-            }     
+                this.uploadImage(itemId);
+            }
+
         }
-        else{
-            this.uploadImage(itemId);
-        }
+
+        toast.dismiss()
+        this.setState({block: false})
+        toast.success("Mise à jour terminée !", {id: toastOne,});
+        setTimeout(() => {router.push('./');}, 2250);
+
     };
 
 
-    uploadImage = (itemId) =>{
-        const {image} = this.state
-        var ref = "category_" + itemId
-        const uploadTask = firebase.storage().ref(`images/${ref}`).put(image);
+    uploadImage = (itemId, i) =>{
+        const {image1, image2, image3, image4, image5} = this.state
+        var ref = "product_" + i + itemId
+        const uploadTask = firebase.storage().ref(`images/${ref}`).put(['image' + i]);
         uploadTask.on("state_changed",snapshot => {
             const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
             console.log("progress ..", progress);
@@ -366,28 +401,16 @@ class Index extends Component {
     };
 
     saveImageInfo = async (url, ref, itemId) => {
+        const {imageId1, imageId2, imageId3, imageId4, imageId5} = this.state
+        var {response } = await saveImage(['imageId' + i], url, ref, itemId)
 
-        const {imageId} = this.state
-        var {response } = await saveImage(imageId, url, ref, null, null, null, itemId)
-
-        if(response?.__typename == 'Image'){
-            toast.dismiss()
-            toast.success("Mise à jour réussie !", {id: toastOne,});
-        }
-        else if(response?.__typename == 'InputError'){
+        if(response?.__typename == 'InputError'){
             console.log("ImageInfo mutation ", response?.message)
-            toast.error("Une erreur s'est produite lors de l'ajout de l'image !", {id: toastOne,});
+            toast.error("Une erreur s'est produite lors de l'ajout de l'image " + i, {id: toastOne,});
         }
         else{
             toast.error("Erreur inconnue. Veuillez vérifier votre connexion internet.", {id: toastOne,});
         }
-
-        this.setState({block: false})
-        setTimeout(() => {
-            toast.dismiss()
-            router.push('./');
-        }, 2250);
-
     };
 
     render() {
