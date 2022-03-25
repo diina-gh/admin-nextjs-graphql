@@ -5,7 +5,8 @@ import Header from '../../components/common/header'
 import Sidebar from '../../components/common/sidebar'
 import HeadInfo from '../../components/common/headinfo'
 import ArrowLeftBoldIcon from '../../components/ui/icons/arrowLeftBoldIcon';
-import { saveBrand, getBrand} from '../../hooks/brand';
+import { saveRole, getRole} from '../../hooks/role';
+import { allPermissions } from '../../hooks/permission';
 import router from 'next/router'
 import BlockUI from '../../components/common/blockui';
 import toast, { Toaster } from 'react-hot-toast';
@@ -31,15 +32,21 @@ class Index extends Component {
         this.saveItem = this.saveItem.bind(this)
         this.openModal = this.openModal.bind(this)
         this.closeModal = this.closeModal.bind(this)
+        this.getPermissions = this.getPermissions.bind(this)
     }
 
     async componentDidMount(){
         var itemId = router.query.id
         if(itemId !=null){
             this.setState({block: true})
-            var {response } = await getBrand(itemId)
-            if(response?.__typename == 'Brand'){
-                this.setState({ id: response.id, name: response.name, desc: response.desc, order: response.order, image:response.image?.url, chosenImage:response.image?.url, imageref:response.image?.imageref, imageId: response.image?.id, block: false })
+            var {response } = await getRole(itemId)
+            if(response?.__typename == 'Role'){
+                this.setState({ id: response.id, name: response.name, desc: response.desc })
+                var new_permissions = []
+                for(let i=0; i< response.permissions.length; i++){
+                    new_permissions.push(response.permissions[i].permission)
+                }
+                this.setState({chosenPermissions: new_permissions, block: false})
             }
             else if(response?.__typename == 'InputError'){
                 toast.error(response.message);
@@ -49,6 +56,14 @@ class Index extends Component {
                 toast.error("Erreur inconnue. Veuillez contacter l'administrateur.");
                 router.push('./');
             }
+        }
+        this.getPermissions()
+    }
+
+    getPermissions = async() =>{
+        var {response} = await allPermissions()
+        if(response){
+            this.setState({permissions: response.permissions})
         }
     }
 
@@ -118,9 +133,6 @@ class Index extends Component {
         if(!navigator.onLine){
             errorMessage = "Aucun accès à Internet"
         }
-        else if(image == null){
-            errorMessage = "Veuillez ajouter une image"
-        }
 
         if(errorMessage){
             toast.error(errorMessage, {id: toastOne,});
@@ -149,10 +161,12 @@ class Index extends Component {
             setTimeout(() => {router.push('./');}, 2200);
         }
         else if(response?.__typename == 'InputError'){
+            toast.dismiss()
             toast.error(response?.message, {id: toastOne,});
             this.setState({block: false})
         }
         else{
+            toast.dismiss()
             toast.error("Erreur inconnue. Veuillez vérifier votre connexion internet.", {id: toastOne,});
         }
     };
@@ -207,7 +221,7 @@ class Index extends Component {
                                                 <div className="w-full">
                                                     <label htmlFor="desc" className="block text-sm font-medium text-gray-900">Description <span className='font-bold text-purple-600'>*</span></label>
                                                     <div className="mt-1">
-                                                        <textarea value={this.state.desc} onChange={(e) => this.setState({desc:e.target.desc })} name="desc" id="desc" rows={10}  className="mt-1 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2 py-2" placeholder="Donner une description" required/>
+                                                        <textarea value={this.state.desc} onChange={(e) => this.setState({desc:e.target.value })} name="desc" id="desc" rows={10}  className="mt-1 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2 py-2" placeholder="Donner une description" required/>
                                                     </div>
                                                 </div>
             

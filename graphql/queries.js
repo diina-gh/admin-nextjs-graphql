@@ -617,3 +617,48 @@ export const permissionQuery = gql `
         }
     }
 `
+
+export const rolesQuery = gql`
+    query($filter: String, $page: Int, $take: Int, $orderBy: RoleOrderByInput){
+        roles(filter: $filter, page: $page, take: $take, orderBy: $orderBy) {
+            count
+            roles {
+                id
+                name
+                desc
+                permissions {
+                    permissionId
+                    permission{
+                        id
+                        name
+                    }
+                }
+            }
+        }
+    }
+`
+
+export const roleQuery = gql`
+    query($id: Int){
+        role(id: $id) {
+            __typename
+            ...on Role{
+                id
+                name
+                desc
+                permissions {
+                    permissionId
+                    permission {
+                        id
+                        name
+                        desc
+                    }
+                }
+            }
+            ...on InputError{
+                message
+                input
+            }
+        }
+    }
+`

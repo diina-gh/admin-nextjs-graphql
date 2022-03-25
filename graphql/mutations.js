@@ -503,3 +503,38 @@ export const deletePermissionMutation = gql`
         }
     }
 `
+
+export const saveRoleMutation = gql `
+    mutation($id: Int, $name: String, $desc: String, $permissions: [Int]){
+        saveRole(id: $id, name: $name, desc: $desc, permissions: $permissions){
+            __typename
+            ...on Role{
+                id
+                name
+                desc
+            }
+            ...on InputError{
+                message
+                input
+            }
+        }
+    }
+`
+
+export const deleteRoleMutation = gql `
+    mutation($id: Int){
+        deleteRole(id: $id){
+            __typename
+            ...on Role{
+                id
+                name
+                desc
+                
+            }
+            ...on InputError{
+                message
+                input
+            }
+        }
+    }
+`

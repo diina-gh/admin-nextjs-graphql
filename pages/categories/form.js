@@ -79,7 +79,6 @@ class Index extends Component {
     getParents = async() => {
         var {response} = await allCategories()
         if(response){
-            console.lo
             this.setState({parents: response.categories})
         }
     }
