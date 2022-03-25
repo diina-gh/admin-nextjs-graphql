@@ -28,8 +28,8 @@ export async function getProduct(id) {
     return {response: data.product}
 }
 
-export async function saveProduct(id, name, desc, activated, unit, unitweight, unitprice, order, categoryId, brandId, variants, options, gender) {
-    var variables = {"id": filterInt(id), "name": name, "desc": desc, "activated": activated, "unit": unit, "unitweight": filterInt(unitweight), "unitprice": filterInt(unitprice), "order": filterInt(order), "categoryId": filterInt(categoryId), "brandId": filterInt(brandId), "variants": variants, "options": options, "gender": gender }
+export async function saveProduct(id, name, desc, activated, unit, unitweight, unitprice, order, categoryId, brandId, variants, options, gender, relatives) {
+    var variables = {"id": filterInt(id), "name": name, "desc": desc, "activated": activated, "unit": unit, "unitweight": filterInt(unitweight), "unitprice": filterInt(unitprice), "order": filterInt(order), "categoryId": filterInt(categoryId), "brandId": filterInt(brandId), "variants": variants, "options": options, "gender": gender, "relatives": relatives }
     const data = await graphQLClient.request(saveProductMutation, variables)
     console.info("The response : ", data )
     return {response: data.saveProduct }

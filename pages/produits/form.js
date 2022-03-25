@@ -330,7 +330,7 @@ class Index extends Component {
 
         const variantIds = chosenVariants.map(item => parseInt(item.id));
 
-        const {response } = await saveProduct(id, name, desc, activated, unit, unitWeight, unitPrice, order, category?.id, brand?.id, variantIds, optionIds, gender)
+        const {response } = await saveProduct(id, name, desc, activated, unit, unitWeight, unitPrice, order, category?.id, brand?.id, variantIds, optionIds, gender, [])
 
         if(response?.__typename == 'Product'){
             this.handleUpload(response?.id)
@@ -346,7 +346,7 @@ class Index extends Component {
 
     };
 
-    handleUpload = (itemId) => {
+    handleUpload = async (itemId) => {
 
         const { image1, chosenImage1, imageref1, imageId1, image2, chosenImage2, imageref2, imageId2,
                 image3, chosenImage3, imageref3, imageId3, image4, chosenImage4, imageref4, imageId4, 
@@ -354,24 +354,25 @@ class Index extends Component {
 
         for (let i=1; i<=5; i++){
            
-            if( ['imageref' + i] != null){ 
+            // if( ['imageref' + i] != null){ 
+            if( 1 == 2){ 
                 if( ['image' + i] == ['chosenImage' + i]){
                     // toast.success("Mise à jour réussie !", {id: toastOne,});
                     // this.setState({block: false})
                     continue
                 }
                 else{
-                    firebase.storage().ref(`images/${['imageref' + i]}`).delete().then(async() => {
+                    await firebase.storage().ref(`images/${['imageref' + i]}`).delete().then(async() => {
                         console.log("File deleted successfuly");
-                        this.uploadImage(itemId);
+                        this.uploadImage(itemId, i);
                     }).catch((error) => {
                         console.log("Uh-oh, an error occurred: ", error);
-                        if(error.code == 'storage/object-not-found') this.uploadImage(itemId);
+                        if(error.code == 'storage/object-not-found') this.uploadImage(itemId, i);
                     });
                 }     
             }
             else{
-                this.uploadImage(itemId);
+                await this.uploadImage(itemId, i);
             }
 
         }
@@ -379,12 +380,38 @@ class Index extends Component {
         toast.dismiss()
         this.setState({block: false})
         toast.success("Mise à jour terminée !", {id: toastOne,});
-        setTimeout(() => {router.push('./');}, 2250);
+        // setTimeout(() => {router.push('./');}, 2250);
 
     };
 
+    uploadImage = async (itemId, i) =>{
 
-    uploadImage = (itemId, i) =>{
+        const {image1, image2, image3, image4, image5} = this.state
+        var ref = "product_" + i + itemId
+
+        var storage = firebase.storage().ref(`images/${ref}`);
+        var upload = storage.put(['image' + i]);
+
+        upload.on("state_changed",
+          function progress(snapshot) {
+            var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log("progress ..", percentage);
+          },
+
+          function error(err) { console.log("error uploading file ", err);},
+
+          async function complete() {
+            await firebase.storage().ref("images").child(ref).getDownloadURL().then(url => {
+                this.saveImageInfo(url, ref, itemId, i)
+            });
+          }
+
+        );
+
+    }
+
+
+    uploadImage0 = async (itemId, i) =>{
         const {image1, image2, image3, image4, image5} = this.state
         var ref = "product_" + i + itemId
         const uploadTask = firebase.storage().ref(`images/${ref}`).put(['image' + i]);
@@ -392,15 +419,15 @@ class Index extends Component {
             const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
             console.log("progress ..", progress);
           },error => {console.log(error);},
-          () => {
-              firebase.storage().ref("images").child(ref).getDownloadURL().then(url => {
-                this.saveImageInfo(url, ref, itemId)
+          async () => {
+              await firebase.storage().ref("images").child(ref).getDownloadURL().then(url => {
+                this.saveImageInfo(url, ref, itemId, i)
               });
           }
         );
     };
 
-    saveImageInfo = async (url, ref, itemId) => {
+    saveImageInfo = async (url, ref, itemId, i) => {
         const {imageId1, imageId2, imageId3, imageId4, imageId5} = this.state
         var {response } = await saveImage(['imageId' + i], url, ref, itemId)
 

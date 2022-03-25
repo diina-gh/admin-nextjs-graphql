@@ -16,10 +16,7 @@ import ChevronLeftIcon from '../../components/ui/icons/chevronLeftIcon';
 import ChevronRightIcon from '../../components/ui/icons/chevronRightIcon';
 import DoubleChevronLeftIcon from '../../components/ui/icons/doubleChevronLeftIcon';
 import DoubleChevronRightIcon from '../../components/ui/icons/doubleChevronRightIcon';
-
-function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
-}
+import { classNames } from '../../libs/util';
 
 
 export default function Index() {
@@ -79,12 +76,14 @@ const [currentPage, setCurrentPage] = useState(1);
                                     </div>
                                 </div>
 
-                                <div className='ml-2 bg-purple-500 bg-opacity-90 shadow px-3 py-2 rounded-md flex flex-col justify-center btn-effect1'>
-                                    <div className='flex flex-row text-sm font-medium text-gray-100 hover:text-white'>
-                                        <AddBoldIcon customClass="self-center w-4 h-4" />
-                                        <div className='ml-2 self-center'>Ajouter</div>
+                                <Link href='commandes/form' > 
+                                    <div className='ml-2 bg-purple-500 bg-opacity-90 shadow shadow-purple-500/50 px-3 py-2 rounded-md flex flex-col justify-center btn-effect1'>
+                                        <div className='flex flex-row text-sm font-medium text-gray-100 hover:text-white'>
+                                            <AddBoldIcon customClass="self-center w-4 h-4" />
+                                            <div className='ml-2 self-center'>Ajouter</div>
+                                        </div>
                                     </div>
-                                </div>
+                                </Link> 
 
                             </div>
 

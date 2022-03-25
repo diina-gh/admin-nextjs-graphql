@@ -15,6 +15,11 @@ function Editor({onDescChange, desc}) {
     return (
       <CKEditor
         editor={ClassicEditor}
+        onChange={(event, editor) => {  // do something when editor's content changed
+          const data = editor.getData();
+          onDescChange(data)
+          console.log({ event, editor, data });
+        }}
         config={{         
             toolbar: ['heading', '|', 'bold', 'italic', 'blockQuote', 'link', 'numberedList', 'bulletedList', 'insertTable', 'mergeTableCells', 'tableColumn', 'tableRow', '|', 'undo', 'redo'],
             placeholder: "Donnez une description ...",

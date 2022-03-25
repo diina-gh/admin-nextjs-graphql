@@ -49,13 +49,13 @@ export default function Sidebar() {
                         </Disclosure.Button>
                         <Disclosure.Panel className="my-2 text-sm font-medium ">
                             <Link  href='/' >
-                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '>● Exemple 1</div>
+                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '> Exemple 1</div>
                             </Link>
                             <Link  href='/' >
-                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '>● Exemple 2</div>
+                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '> Exemple 2</div>
                             </Link>
                             <Link  href='/' >
-                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '>● Exemple 3</div>
+                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '> Exemple 3</div>
                             </Link>
                         </Disclosure.Panel>
                         </>
@@ -103,16 +103,16 @@ export default function Sidebar() {
                         </Disclosure.Button>
                         <Disclosure.Panel className="my-2 text-sm font-medium ">
                             <Link  href='/produits' >
-                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '>● Produits</div>
+                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '> Produits</div>
                             </Link>
                             <Link  href='/stock' >
-                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '>● Stockage</div>
+                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '> Stockage</div>
                             </Link>
                             <Link  href='/marques' >
-                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '>● Marques</div>
+                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '> Marques</div>
                             </Link>
                             <Link  href='/variants' >
-                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '>● Variants</div>
+                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '> Variants</div>
                             </Link>
                         </Disclosure.Panel>
                         </>
@@ -131,16 +131,16 @@ export default function Sidebar() {
                         </Disclosure.Button>
                         <Disclosure.Panel className="my-2 text-sm font-medium ">
                             <Link  href='/livraisons' >
-                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '>● Livraisons</div>
+                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '> Livraisons</div>
                             </Link>
                             <Link  href='/zones_de_livraison' >
-                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '>● Zones de livraison</div>
+                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '> Zones de livraison</div>
                             </Link>
                             <Link  href='/modes_de_livraison' >
-                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '>● Modes de livraison</div>
+                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '> Modes de livraison</div>
                             </Link>
                             <Link  href='/livreurs' >
-                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '>● Livreurs</div>
+                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '> Livreurs</div>
                             </Link>
                         </Disclosure.Panel>
                         </>
@@ -190,13 +190,13 @@ export default function Sidebar() {
                         </Disclosure.Button>
                         <Disclosure.Panel className="my-2 text-sm font-medium ">
                             <Link  href='/utilisateurs' >
-                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '>● Utilisateurs</div>
+                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '> Utilisateurs</div>
                             </Link>
                             <Link  href='/roles' >
-                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '>● Roles</div>
+                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '> Roles</div>
                             </Link>
                             <Link  href='/permissions' >
-                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '>● Permissions</div>
+                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '> Permissions</div>
                             </Link>
                         </Disclosure.Panel>
                         </>

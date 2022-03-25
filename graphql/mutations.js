@@ -379,8 +379,8 @@ export const deleteDeliveryManMutation = gql `
 `
 
 export const saveProductMutation = gql `
-    mutation($id: Int, $name: String, $desc: String, $activated: Boolean, $unit: String, $unitweight: Float, $unitprice: Float, $order: Int, $categoryId: Int, $brandId: Int, $variants: [Int], $options: [Int], $gender: Gender){
-        saveProduct(id: $id, name: $name, desc: $desc, activated: $activated, unit: $unit, unitweight: $unitweight, unitprice: $unitprice, order: $order, categoryId: $categoryId, brandId: $brandId, variants: $variants, options: $options, gender: $gender){
+    mutation($id: Int, $name: String, $desc: String, $activated: Boolean, $unit: String, $unitweight: Float, $unitprice: Float, $order: Int, $categoryId: Int, $brandId: Int, $variants: [Int], $options: [Int], $gender: Gender, $relatives: [Int]){
+        saveProduct(id: $id, name: $name, desc: $desc, activated: $activated, unit: $unit, unitweight: $unitweight, unitprice: $unitprice, order: $order, categoryId: $categoryId, brandId: $brandId, variants: $variants, options: $options, gender: $gender, relatives: $relatives){
             __typename
             ... on Product{
                 id
