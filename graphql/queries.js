@@ -662,3 +662,63 @@ export const roleQuery = gql`
         }
     }
 `
+
+export const usersQuery = gql `
+    query($filter: String, $page: Int, $take: Int, $orderBy: UserOrderByInput){
+        users(filter: $filter, page: $page, take: $take, orderBy: $orderBy) {
+            count
+            users {
+                id
+                firstname
+                lastname
+                email
+                phonenumber
+                image {
+                    id
+                    url
+                    imageref
+                }
+                roles {
+                    roleId
+                    role{
+                        id
+                        name
+                        desc
+                    }
+                }
+            }
+        }
+    }
+`
+
+export const userQuery = gql `
+    query($id: Int){
+        user(id: $id){
+            __typename
+            ...on User{
+                id
+                firstname
+                lastname
+                email
+                phonenumber
+                image {
+                    id
+                    url
+                    imageref
+                }
+                roles {
+                    roleId
+                    role{
+                        id
+                        name
+                        desc
+                    }
+                }
+            }
+            ...on InputError{
+                message
+                input
+            }
+        }
+    }
+`

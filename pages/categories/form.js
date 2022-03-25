@@ -6,7 +6,7 @@ import Sidebar from '../../components/common/sidebar'
 import HeadInfo from '../../components/common/headinfo'
 import ArrowLeftBoldIcon from '../../components/ui/icons/arrowLeftBoldIcon';
 import InfoBoldIcon from '../../components/ui/icons/infoBoldIcon';
-import { saveImage, deleteImage } from '../../hooks/image';
+import { saveImage } from '../../hooks/image';
 import { saveCategory, getCategory} from '../../hooks/category';
 import {allCategories } from '../../hooks/category';
 import router from 'next/router'

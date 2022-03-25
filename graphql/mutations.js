@@ -171,8 +171,8 @@ export const deleteBrandMutation = gql`
 `
 
 export const saveImageMutation = gql `
-    mutation($id: Int, $url: String, $imageref:String, $default: Boolean, $productId: Int, $optionId: Int, $brandId: Int, $categoryId: Int ){
-        saveImage(id: $id, url: $url, imageref: $imageref, default: $default, productId: $productId, optionId: $optionId, brandId: $brandId, categoryId: $categoryId){
+    mutation($id: Int, $url: String, $imageref:String, $default: Boolean, $productId: Int, $optionId: Int, $brandId: Int, $categoryId: Int, $userId: Int ){
+        saveImage(id: $id, url: $url, imageref: $imageref, default: $default, productId: $productId, optionId: $optionId, brandId: $brandId, categoryId: $categoryId, userId: $userId){
             __typename
             ... on Image{
                 id
@@ -532,6 +532,50 @@ export const deleteRoleMutation = gql `
                 
             }
             ...on InputError{
+                message
+                input
+            }
+        }
+    }
+`
+
+export const saveUserMutation = gql `
+    mutation($id: Int, $firstname: String, $lastname: String, $email: String, $phonenumber: String, $roles: [Int], $password: String, $repassword: String){
+        saveUser(id: $id, firstname: $firstname, lastname: $lastname, email: $email, phonenumber: $phonenumber, roles: $roles, password: $password, repassword: $repassword){
+            __typename
+            ...on AuthPayload{
+            token
+            user {
+                id
+                email
+                firstname
+                lastname
+                phonenumber
+                roles {
+                    roleId
+                    role{
+                        id
+                        name
+                    }
+                }
+            }
+            }
+            ... on InputError{
+                message
+                input
+            }
+        }
+    }
+`
+
+export const deleteUserMutation = gql `
+    mutation($id:Int){
+        deleteUser(id: $id){
+            __typename
+            ...on User{
+                id
+            }
+            ... on InputError{
                 message
                 input
             }
