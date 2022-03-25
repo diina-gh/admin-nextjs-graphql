@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { motion } from "framer-motion";
-import { Tab } from '@headlessui/react'
 import Header from '../../components/common/header'
 import Sidebar from '../../components/common/sidebar'
 import HeadInfo from '../../components/common/headinfo'
@@ -18,7 +17,7 @@ import ChevronLeftIcon from '../../components/ui/icons/chevronLeftIcon';
 import ChevronRightIcon from '../../components/ui/icons/chevronRightIcon';
 import DoubleChevronLeftIcon from '../../components/ui/icons/doubleChevronLeftIcon';
 import DoubleChevronRightIcon from '../../components/ui/icons/doubleChevronRightIcon';
-import { getDeliveryMans, deleteDeliveryMan } from '../../hooks/deliveryMan';
+import { getPermissions, deletePermission } from '../../hooks/permission';
 import BlockUI from '../../components/common/blockui';
 import toast, { Toaster } from 'react-hot-toast';
 
@@ -32,7 +31,7 @@ export default function Index() {
     const [orderBy, setOrderBy] = useState({"id": direction})
     const [block, setBlock] = useState(false);
 
-    var { items, isLoading, isError, mutate } = getDeliveryMans(page,take,filter, orderBy )
+    var { items, isLoading, isError, mutate } = getPermissions(page,take,filter, orderBy )
 
     const refetch = (newPage, newFilter = null, newOrder = null ) =>{
         if(newPage){
@@ -64,9 +63,9 @@ export default function Index() {
             return null
         }
 
-        var {response } = await deleteDeliveryMan(id)
+        var {response } = await deletePermission(id)
         
-        if(response?.__typename == 'DeliveryMan'){
+        if(response?.__typename == 'Permission'){
             console.log("Item deleted ", response.firstname)
             refetch(page);
             toast.success('Suppression réussie !');
@@ -103,8 +102,8 @@ export default function Index() {
 
                             <div className='w-full flex flex-row mt-2'>
 
-                                <div className='text-lg font-bold text-purple-600 mr-2 self-center'>Livreurs</div>
-                                <div className='px-2 py-1 rounded-xl bg-purple-600 bg-opacity-90 text-white text-xs font-medium self-center'>{items?.deliveryMans?.count ? items?.deliveryMans?.count: 0 }</div>
+                                <div className='text-lg font-bold text-purple-600 mr-2 self-center'>Permissions</div>
+                                <div className='px-2 py-1 rounded-xl bg-purple-600 bg-opacity-90 text-white text-xs font-medium self-center'>{items?.permissions?.count ? items?.permissions?.count: 0 }</div>
 
                             </div>
 
@@ -138,7 +137,7 @@ export default function Index() {
                                         </div>
                                     </div>
 
-                                    <Link href='livreurs/form' > 
+                                    <Link href='permissions/form' > 
                                         <div className='ml-2 bg-purple-500 bg-opacity-90 shadow shadow-purple-500/50 px-3 py-2 rounded-md flex flex-col justify-center btn-effect1'>
                                             <div className='flex flex-row text-sm font-medium text-gray-100 hover:text-white'>
                                                 <AddBoldIcon customClass="self-center w-4 h-4" />
@@ -162,31 +161,19 @@ export default function Index() {
                                             </div>                                                  
                                         }
 
-                                        {(items && items.deliveryMans && items?.page == null && items?.filter == null && items?.orderBy == null ) &&
+                                        {(items && items.permissions && items?.page == null && items?.filter == null && items?.orderBy == null ) &&
                                             <table className="min-w-full divide-y divide-gray-200 border-b border-gray-200">
-                                                <thead className="bg-gray-100 sticky top-0 ">
+                                                <thead className="th-bg-1 sticky top-0 ">
                                                     <tr>
-                                                        <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                                                        <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
                                                             N#
                                                         </th>
-                                                        <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-600 uppercase tracking-wider" >
-                                                            Civilité
+                                                        <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider" >
+                                                            Désignation
                                                         </th>
 
-                                                        <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-600 uppercase tracking-wider" >
-                                                            Prénom
-                                                        </th>
-
-                                                        <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-600 uppercase tracking-wider" >
-                                                            Nom
-                                                        </th>
-
-                                                        <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-600 uppercase tracking-wider" >
-                                                            EMAIL
-                                                        </th>
-
-                                                        <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-600 uppercase tracking-wider" >
-                                                            TELEPHONE
+                                                        <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider" >
+                                                            Description
                                                         </th>
   
                                                         <th scope="col" className="relative px-6 py-3">
@@ -197,37 +184,25 @@ export default function Index() {
                                                 </thead>
     
                                                 <tbody className="bg-white divide-y divide-gray-200">
-                                                    {items.deliveryMans.deliveryMans.map((item, i) => (
+                                                    {items.permissions.permissions.map((item, i) => (
                                                         <tr key={item.id} className={(i%2==0) ? "" : "bg-gray-100 bg-opacity-50"}>
                                                             
                                                             <td className="px-6 py-3 whitespace-nowrap">
-                                                                <div className="text-sm text-gray-900">{item.id}</div>
+                                                                <div className="text-sm text-gray-900">{page == 1 ? i+1 : (i+1) + (page*10)}</div>
                                                             </td>
 
                                                             <td className="px-6 py-3 whitespace-nowrap">
-                                                                <div className="text-sm text-gray-900">{item.civility}</div>
+                                                                <div className="text-sm text-gray-900">{item.name}</div>
                                                             </td>
 
                                                             <td className="px-6 py-3 whitespace-nowrap">
-                                                                <div className="text-sm text-gray-900">{item.firstname}</div>
-                                                            </td>
-
-                                                            <td className="px-6 py-3 whitespace-nowrap">
-                                                                <div className="text-sm text-gray-900">{item.lastname}</div>
-                                                            </td>
-
-                                                            <td className="px-6 py-3 whitespace-nowrap">
-                                                                <div className="text-sm text-gray-900">{item.email}</div>
-                                                            </td>
-                                                            
-                                                            <td className="px-6 py-3 whitespace-nowrap">
-                                                                <div className="text-sm text-gray-900">{item.phonenumber}</div>
+                                                                <div className="text-sm text-gray-900">{item.desc}</div>
                                                             </td>
                                             
                                                             <td className="px-2 py-3 whitespace-nowrap text-right flex flex-row justify-end">
 
                                                                 <div className="flex flex-row">
-                                                                    <Link  href={{pathname: 'livreurs/form', query: { id: item.id},}} >
+                                                                    <Link  href={{pathname: 'permissions/form', query: { id: item.id},}} >
                                                                         <button className="w-7 h-7 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-300 mr-2">
                                                                             <EditBoldIcon customClass="w-3 text-gray-600 text-opacity-90 self-center"/>
                                                                         </button>
@@ -256,7 +231,7 @@ export default function Index() {
                                     initialPage={page} 
                                     itemsPerPage={take} 
                                     onPageСhange={(pageNumber) => refetch(pageNumber)} 
-                                    totalItems={items?.deliveryMans?.count}  
+                                    totalItems={items?.permissions?.count}  
                                     pageNeighbours={2} 
                                     startLabel= {<DoubleChevronLeftIcon customClass="w-3 h-3"/>}
                                     endLabel={<DoubleChevronRightIcon customClass="w-3 h-3"/>}

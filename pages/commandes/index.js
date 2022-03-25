@@ -94,15 +94,15 @@ const [currentPage, setCurrentPage] = useState(1);
                                 <div className="align-middle inline-block min-w-full">
                                     <div className="shadow overflow-hidden app-table border-b border-gray-200 sm:rounded-lg">
                                         <table className="min-w-full divide-y divide-gray-200 ">
-                                            <thead className="bg-gray-100 sticky top-0 ">
+                                            <thead className="th-bg-1 sticky top-0 ">
                                                 <tr>
-                                                    <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                                                    <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
                                                         Designation
                                                     </th>
-                                                    <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-600 uppercase tracking-wider" >
+                                                    <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider" >
                                                         Description
                                                     </th>
-                                                    <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-600 uppercase tracking-wider" >
+                                                    <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider" >
                                                         Status
                                                     </th>
 

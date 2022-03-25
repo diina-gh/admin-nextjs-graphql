@@ -184,15 +184,15 @@ export default function Index() {
 
                                         {(items && items.brands && items?.page == null && items?.filter == null && items?.orderBy == null ) &&
                                             <table className="min-w-full divide-y divide-gray-200 border-b border-gray-200">
-                                                <thead className="bg-gray-100 sticky top-0 ">
+                                                <thead className="th-bg-1 sticky top-0 ">
                                                     <tr>
-                                                        <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                                                        <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
                                                             Nom
                                                         </th>
-                                                        <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-600 uppercase tracking-wider" >
+                                                        <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider" >
                                                             Description
                                                         </th>
-                                                        <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-600 uppercase tracking-wider" >
+                                                        <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider" >
                                                             Ordre
                                                         </th>
                                                         <th scope="col" className="relative px-6 py-3">

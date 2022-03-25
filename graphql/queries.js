@@ -587,3 +587,33 @@ export const inventoryQuery = gql `
         }
     }
 `
+
+export const permissionsQuery = gql `
+    query($filter: String, $page: Int, $take: Int, $orderBy: PermissionOrderByInput){
+        permissions(filter: $filter, page: $page, take: $take, orderBy: $orderBy) {
+            count
+            permissions {
+                id
+                name
+                desc
+            }
+        }
+    }
+`
+
+export const permissionQuery = gql `
+    query($id: Int){
+        permission(id: $id) {
+            __typename
+            ...on Permission{
+                id
+                name
+                desc
+            }
+            ...on InputError{
+                message
+                input
+            }
+        }
+    }
+`

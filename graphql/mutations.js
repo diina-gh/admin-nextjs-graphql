@@ -469,3 +469,37 @@ export const deleteProductMutation = gql `
     }
   }
 `
+
+export const savePermissionMutation = gql`
+    mutation($id: Int, $name: String, $desc: String){
+        savePermission(id: $id, name: $name, desc: $desc){
+            __typename
+            ...on Permission{
+                id
+                name
+                desc
+            }
+            ...on InputError{
+                message
+                input
+            }
+        }
+    }
+`
+
+export const deletePermissionMutation = gql`
+    mutation($id: Int){
+        deletePermission(id: $id){
+            __typename
+            ...on Permission{
+                id
+                name
+                desc
+            }
+            ...on InputError{
+                message
+                input
+            }
+        }
+    }
+`

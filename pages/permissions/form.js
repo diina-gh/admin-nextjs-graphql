@@ -5,11 +5,11 @@ import Header from '../../components/common/header'
 import Sidebar from '../../components/common/sidebar'
 import HeadInfo from '../../components/common/headinfo'
 import ArrowLeftBoldIcon from '../../components/ui/icons/arrowLeftBoldIcon';
-import TrashIcon from '../../components/ui/icons/trashIcon';
-import ImageHolder from '../../components/ui/icons/imageHolder';
+import InfoBoldIcon from '../../components/ui/icons/infoBoldIcon';
 import firebase from "../../config/firebase"
+import { uid } from 'uid';
 import { saveImage, deleteImage } from '../../hooks/image';
-import { saveBrand, getBrand} from '../../hooks/brand';
+import { savePermission, getPermission} from '../../hooks/permission';
 import router from 'next/router'
 import { capitalize } from '../../libs/util';
 import BlockUI from '../../components/common/blockui';
@@ -28,22 +28,18 @@ class Index extends Component {
 
     constructor(props){
         super(props);
-        this.state = { block: false, id:null, name: '', desc: '', order:0, image: null, chosenImage:null, imageref:null, imageId: null};
-        this.handleImage = this.handleImage.bind(this)
-        this.resetImage = this.resetImage.bind(this)
+        this.state = { block: false, id:null, name: '', desc: '', block: false};
         this.checkInput = this.checkInput.bind(this)
         this.saveItem = this.saveItem.bind(this)
-        this.uploadImage = this.uploadImage.bind(this)
-        this.saveImageInfo = this.saveImageInfo.bind(this)
     }
 
     async componentDidMount(){
         var itemId = router.query.id
         if(itemId !=null){
             this.setState({block: true})
-            var {response } = await getBrand(itemId)
-            if(response?.__typename == 'Brand'){
-                this.setState({ id: response.id, name: response.name, desc: response.desc, order: response.order, image:response.image?.url, chosenImage:response.image?.url, imageref:response.image?.imageref, imageId: response.image?.id, block: false })
+            var {response} = await getPermission(itemId)
+            if(response?.__typename == 'Permission'){
+                this.setState({ id: response.id, name: response.name, desc: response.desc, block:false })
             }
             else if(response?.__typename == 'InputError'){
                 toast.error(response.message);
@@ -56,27 +52,14 @@ class Index extends Component {
         }
     }
 
-    handleImage = (e, option) => {
-        e.preventDefault(); 
-        this.setState({[option]:e.target.files[0], ['chosen' + capitalize(option)]: URL.createObjectURL(e.target.files[0])  })
-    }
-
-    resetImage = (e, option) =>{
-        e.preventDefault();
-        this.setState({[option]: null, ['chosen' + capitalize(option)]: null })
-    }
-
     checkInput = (e) => {
 
         e.preventDefault()
-        const {name, desc, order, image} = this.state
+        const {name, desc} = this.state
         var errorMessage
 
         if(!navigator.onLine){
             errorMessage = "Aucun accès à Internet"
-        }
-        else if(image == null){
-            errorMessage = "Veuillez ajouter une image"
         }
 
         if(errorMessage){
@@ -94,92 +77,29 @@ class Index extends Component {
 
     saveItem = async () => {
 
-        const {id, name, desc, order, image} = this.state
+        const {id, name, desc} = this.state
 
-        var {response } = await saveBrand(id, name, desc, order)
+        var {response } = await savePermission(id, name, desc)
 
-        if(response?.__typename == 'Brand'){
-            this.handleUpload(response?.id)
+        if(response?.__typename == 'Permission'){
+            toast.dismiss()
+            toast.success("Mise à jour réussie", {id: toastOne,});
+            this.setState({block: false})
+            setTimeout(() => {router.push('./');}, 2250);
         }
         else if(response?.__typename == 'InputError'){
+            toast.dismiss()
             toast.error(response?.message, {id: toastOne,});
             this.setState({block: false})
         }
         else{
             toast.error("Erreur inconnue. Veuillez vérifier votre connexion internet.", {id: toastOne,});
         }
-    };
-
-    handleUpload = (itemId) => {
-
-        const { id, image, chosenImage, imageref, imageId } = this.state
-
-        if(imageref != null){ 
-            if(image == chosenImage){
-                toast.success("Mise à jour réussie !", {id: toastOne,});
-                this.setState({block: false})
-                return null
-            }
-            else{
-                firebase.storage().ref(`images/${imageref}`).delete().then(async() => {
-                    console.log("File deleted successfuly");
-                    this.uploadImage(itemId);
-                }).catch((error) => {
-                    console.log("Uh-oh, an error occurred: ", error);
-                    if(error.code == 'storage/object-not-found') this.uploadImage(itemId);
-                });
-            }     
-        }
-        else{
-            this.uploadImage(itemId);
-        }
-    };
-
-
-    uploadImage = (itemId) =>{
-        const {image} = this.state
-        var ref = "brand_" + itemId
-        const uploadTask = firebase.storage().ref(`images/${ref}`).put(image);
-        uploadTask.on("state_changed",snapshot => {
-            const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-            console.log("progress ..", progress);
-          },error => {console.log(error);},
-          () => {
-              firebase.storage().ref("images").child(ref).getDownloadURL().then(url => {
-                this.saveImageInfo(url, ref, itemId)
-              });
-          }
-        );
-    };
-
-    saveImageInfo = async (url, ref, itemId) => {
-
-        const {imageId} = this.state
-        var {response } = await saveImage(imageId, url, ref, null, null, itemId)
-
-        if(response?.__typename == 'Image'){
-            toast.dismiss()
-            toast.success("Mise à jour réussie 😏", {id: toastOne,});
-        }
-        else if(response?.__typename == 'InputError'){
-            console.log("ImageInfo mutattion ", response?.message)
-            toast.error("Une erreur s'est produite lors de l'ajout de l'image !", {id: toastOne,});
-        }
-        else{
-            toast.error("Erreur inconnue. Veuillez vérifier votre connexion internet.", {id: toastOne,});
-        }
-
-        this.setState({block: false})
-        setTimeout(() => {
-            router.push('./');
-        }, 2250);
 
     };
 
 
     render() {
-        const {chosenImage} = this.state
-        var imageInput;
 
         return(
             <div className="app-container h-screen">
@@ -208,7 +128,7 @@ class Index extends Component {
                                             </div>
                                         </Link>
         
-                                        <div className='text-lg font-semibold text-purple-600'>Formulaire Marque</div>
+                                        <div className='text-lg font-semibold text-purple-600'>Gestion des permissions</div>
         
                                         <div></div>
         
@@ -218,54 +138,30 @@ class Index extends Component {
         
                                         <div className='w-full grid grid-cols-5 grid-flow-row gap-6 mt-6'>
         
-                                        <div className='col-span-2 bg-gray-200 bg-opacity-60 rounded-xl px-4 py-4 grid grid-cols-2 gap-3 h-max'>
-        
-                                            <div className='relative col-span-2 bg-white bg-opacity-90 border border-gray-200 h-56 flex flex-col justify-center cursor-pointer'>
-                                                {chosenImage &&
-                                                <>
-                                                    <div onClick={() => this.imageInput.click()} className="w-full h-full absolute top-0 left-0">
-                                                        <img className="w-full h-full object-cover" src={chosenImage} />
-                                                    </div>
-                                                    <div onClick={(e) => this.resetImage(e, 'image')} className='z-20 bg-gray-400 bg-opacity-40 hover:bg-opacity-30 border border-gray-600 border-opacity-10 text-center w-7 h-7 rounded-full shadow-lg absolute bottom-2 right-2 flex flex-row justify-center btn-effect1'>
-                                                        <div className='self-center'><TrashIcon customClass="w-4 h-4 text-black" /></div>
-                                                    </div>
-                                                </>
-                                                }
-                                                <div onClick={() => this.imageInput.click()} className="space-y-1 text-center">
-                                                    {!chosenImage && <ImageHolder customClass="mx-auto h-14 w-12 text-gray-400" />}
-                                                    <div className="flex text-sm text-gray-600">
-                                                        <label htmlFor="file-upload" className="relative cursor-pointer rounded-md font-mediu hover:text-opacity-90">
-                                                            <input type="file"  ref={refParam => this.imageInput = refParam} onChange={(e) => this.handleImage(e, 'image')} name="image" id="image" className="sr-only"/>
-                                                        </label>
-                                                        {!chosenImage && <p className="w-full text-center"> <span className="text-iired" >Uploader une image</span> ou le déposer ici</p>}
-                                                    </div>
-                                                    {!chosenImage &&  <p className="text-xs text-gray-500 mb-2">PNG, JPG, GIF jusqu&apos;à 10MB</p>}
-                                                </div>
+                                        <div className='col-span-2 px-4 py-4 '>
+                                            <div className='flex flex-row'>
+                                                <div className='self-center -mb-1 mr-2'><InfoBoldIcon customClass="w-4 h-4"/></div>
+                                                <div className='self-center text-xl font-semibold text-gray-900 '>Permissions</div>
+                                            </div>
+                                            <div className='text-sm font-normal text-gray-700 mt-3'>
+                                                Afin de garantir la qualité des informations disponibles sur votre platform, veillez à bien suivre les consigne. 
+                                                Elles pourront vous aider à  obtenir des statistiques plus précises sur votre activité.
                                             </div>
         
                                         </div>
         
-                                        <div className='col-span-3 bg-gray-200 bg-opacity-60 rounded-xl px-4 py-4'>
-        
-                                            <div className="w-full mb-4">
-                                                <label htmlFor="name" className="block text-sm font-medium text-gray-900">Désignation <span className='font-bold text-purple-600'>*</span> </label>
-                                                <input type="text" value={this.state.name} onChange={(e) => this.setState({name:e.target.value }) } name="name" id="name" autoComplete="title" placeholder="Désignation" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2" required/>
+                                        <div className='col-span-3 bg-gray-200 bg-opacity-60 rounded-xl px-5 py-6'>
+
+                                            <div className="w-full mb-5">
+                                                <label htmlFor="lastname" className="block text-sm font-medium text-gray-900">Désignation <span className='font-bold text-purple-600'>*</span> </label>
+                                                <input type="text" value={this.state.name} onChange={(e) => this.setState({name:e.target.value }) } name="name" id="name" autoComplete="name" placeholder="Désignation" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2" required/>
                                             </div>
         
                                             <div className="w-full mb-3">
-                                                <label htmlFor="desc" className="block text-sm font-medium text-gray-900">Description <span className='font-bold text-purple-600'>*</span></label>
+                                                <label htmlFor="desc" className="block text-sm font-medium text-gray-900">Description</label>
                                                 <div className="mt-1">
-                                                    <textarea value={this.state.desc} onChange={(e) => this.setState({desc:e.target.value })} name="desc" id="desc" rows={8}  className="mt-1 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2 py-2" placeholder="Donner une description" required/>
+                                                    <textarea value={this.state.desc} onChange={(e) => this.setState({desc:e.target.value }) }  id="desc" name="desc" rows={7}  className="mt-1 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2 py-3" placeholder="Donner une description" />
                                                 </div>
-                                            </div>
-        
-                                            <div className="flex flex-row w-full">
-        
-                                                <div className="w-1/2 mr-8 self-center">
-                                                    <label htmlFor="order" className="block text-sm font-medium text-gray-900">Ordre <span className='font-bold text-purple-600'>*</span></label>
-                                                    <input type="number" value={this.state.order} onChange={(e) => this.setState({order: e.target.value })} name="order" id="order" autoComplete="ordre" placeholder="Ordre" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2" required/>
-                                                </div>
-        
                                             </div>
         
                                         </div>
