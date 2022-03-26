@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import firebase from '../../config/firebase'
 import { motion } from "framer-motion";
 import { Tab } from '@headlessui/react'
 import Header from '../../components/common/header'
@@ -10,17 +11,20 @@ import Filter from '../../components/common/filter';
 import { SearchIcon } from '@heroicons/react/solid';
 import AddBoldIcon from '../../components/ui/icons/addBoldIcon';
 import DocBoldIcon from '../../components/ui/icons/docBoldIcon';
-import EditBoldIcon from '../../components/ui/icons/editBoldIcon'
-import TrashBoldIcon from '../../components/ui/icons/trashBoldIcon'
 import { Pagination } from "react-pagination-bar"
 import 'react-pagination-bar/dist/index.css'
 import ChevronLeftIcon from '../../components/ui/icons/chevronLeftIcon';
 import ChevronRightIcon from '../../components/ui/icons/chevronRightIcon';
 import DoubleChevronLeftIcon from '../../components/ui/icons/doubleChevronLeftIcon';
 import DoubleChevronRightIcon from '../../components/ui/icons/doubleChevronRightIcon';
-import { getDeliveryMans, deleteDeliveryMan } from '../../hooks/deliveryMan';
+import EditBoldIcon from '../../components/ui/icons/editBoldIcon'
+import TrashBoldIcon from '../../components/ui/icons/trashBoldIcon'
+import { getUsers, deleteUser } from '../../hooks/user';
+import { deleteImage } from '../../hooks/image';
 import BlockUI from '../../components/common/blockui';
 import toast, { Toaster } from 'react-hot-toast';
+import { classNames } from '../../libs/util';
+import { getClients } from '../../hooks/client';
 
 
 export default function Index() {
@@ -32,7 +36,8 @@ export default function Index() {
     const [orderBy, setOrderBy] = useState({"id": direction})
     const [block, setBlock] = useState(false);
 
-    var { items, isLoading, isError, mutate } = getDeliveryMans(page,take,filter, orderBy )
+
+    var { items, isLoading, isError, mutate } = getClients(page,take,filter, orderBy )
 
     const refetch = (newPage, newFilter = null, newOrder = null ) =>{
         if(newPage){
@@ -53,35 +58,51 @@ export default function Index() {
     if (isLoading) console.log("loading...")
     if(items) console.log("Informations => ", items)
 
-    async function deleteItem (e, id){
-            
+    async function deleteImageref (e, id, imageId, imageref) {
         e.preventDefault()
         setBlock(true)
-
-        if(!navigator.onLine){
-            toast.error('Aucun accès à Internet !');
-            setBlock(false)
-            return null
+        firebase.storage().ref(`images/${imageref}`).delete().then(() => {
+            console.log("File deleted successfuly");
+            deleteImageInfo(id, imageId);
+          }).catch((error) => {
+            console.log("Uh-oh, an error occurred: ", error);
+            if(error.code == 'storage/object-not-found') deleteImageInfo(id, imageId);
+        });
+    }
+    
+    async function deleteImageInfo (id, imageId) {
+        var {response } = await deleteImage(imageId)
+        if(response?.__typename == 'Image'){
+            console.log("Image info deleted ", response.imageref)
+            deleteItem(id);
+        } 
+        else if(response?.__typename == 'InputError'){
+            toast.error(response?.message);
         }
+        else{
+            toast.error("Erreur inconnue. Veuillez contacter l'administrateur");
+        }
+    }
+    
+    async function deleteItem (id){
 
-        var {response } = await deleteDeliveryMan(id)
+        if(!block) setBlock(true)
+        var {response } = await deleteUser(id)
         
-        if(response?.__typename == 'DeliveryMan'){
-            console.log("Item deleted ", response.firstname)
+        if(response?.__typename == 'User'){
+            console.log("Item deleted ", response.name)
             refetch(page);
+            setBlock(false)
             toast.success('Suppression réussie !');
         } 
         else if(response?.__typename == 'InputError'){
-            toast.error(response?.message );
+            toast.error(response?.message);
         }
         else{
-            toast.error("Erreur inconnue. Veuillez contacter l'administrateur ");
+            toast.error("Erreur inconnue. Veuillez contacter l'administrateur !");
         }
 
-        setBlock(false)
-
     }
-
 
     return (
         <div className="app-container h-screen">
@@ -95,7 +116,7 @@ export default function Index() {
                 <Sidebar />
 
                 <motion.div initial={{ opacity: 0.45, x: -150 }}  whileInView={{ opacity: 1, x: 0, transition: { duration: 0.60 }, }}>
-                    <div className='app-body relative'>
+                    <div className='app-body relative rounded-xl'>
 
                         <BlockUI blocking={block} />
 
@@ -103,8 +124,8 @@ export default function Index() {
 
                             <div className='w-full flex flex-row mt-2'>
 
-                                <div className='text-lg font-bold text-purple-600 mr-2 self-center'>Livreurs</div>
-                                <div className='px-2 py-1 rounded-xl bg-purple-600 bg-opacity-90 text-white text-xs font-medium self-center'>{items?.deliveryMans?.count ? items?.deliveryMans?.count: 0 }</div>
+                                <div className='text-lg font-bold text-purple-600 mr-2 self-center'>Cients</div>
+                                <div className='px-2 py-1 rounded-xl bg-purple-600 bg-opacity-90 text-white text-xs font-medium self-center'>{items?.users?.count ? items?.users?.count: 0 }</div>
 
                             </div>
 
@@ -138,7 +159,7 @@ export default function Index() {
                                         </div>
                                     </div>
 
-                                    <Link href='livreurs/form' > 
+                                    <Link href={{pathname: 'clients/form'}} > 
                                         <div className='ml-2 bg-purple-500 bg-opacity-90 shadow shadow-purple-500/50 px-3 py-2 rounded-md flex flex-col justify-center btn-effect1'>
                                             <div className='flex flex-row text-sm font-medium text-gray-100 hover:text-white'>
                                                 <AddBoldIcon customClass="self-center w-4 h-4" />
@@ -162,78 +183,59 @@ export default function Index() {
                                             </div>                                                  
                                         }
 
-                                        {(items && items.deliveryMans && items?.page == null && items?.filter == null && items?.orderBy == null ) &&
+                                        {(items && items.clients && items?.page == null && items?.filter == null && items?.orderBy == null ) &&
                                             <table className="min-w-full divide-y divide-gray-200 border-b border-gray-200">
                                                 <thead className="th-bg-1 sticky top-0 ">
                                                     <tr>
                                                         <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
-                                                            N#
+                                                            Cient
                                                         </th>
                                                         <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider" >
-                                                            Civilité
+                                                            Adresse email
                                                         </th>
-
                                                         <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider" >
-                                                            Prénom
+                                                            Téléphone
                                                         </th>
-
-                                                        <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider" >
-                                                            Nom
-                                                        </th>
-
-                                                        <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider" >
-                                                            EMAIL
-                                                        </th>
-
-                                                        <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider" >
-                                                            TELEPHONE
-                                                        </th>
-  
                                                         <th scope="col" className="relative px-6 py-3">
                                                             <span className="sr-only">Edit</span>
                                                         </th>
-
                                                     </tr>
                                                 </thead>
     
                                                 <tbody className="bg-white divide-y divide-gray-200">
-                                                    {items.deliveryMans.deliveryMans.map((item, i) => (
+                                                    {items.clients.users.map((item, i) => (
                                                         <tr key={item.id} className={(i%2==0) ? "" : "bg-gray-100 bg-opacity-50"}>
                                                             
                                                             <td className="px-6 py-3 whitespace-nowrap">
-                                                                <div className="text-sm text-gray-900">{item.id}</div>
-                                                            </td>
-
-                                                            <td className="px-6 py-3 whitespace-nowrap">
-                                                                <div className="text-sm text-gray-900">{item.civility}</div>
-                                                            </td>
-
-                                                            <td className="px-6 py-3 whitespace-nowrap">
-                                                                <div className="text-sm text-gray-900">{item.firstname}</div>
-                                                            </td>
-
-                                                            <td className="px-6 py-3 whitespace-nowrap">
-                                                                <div className="text-sm text-gray-900">{item.lastname}</div>
+                                                                <div className="flex items-center">
+                                                                    <div className="w-14 h-14 px-[0.075rem] py-[0.075rem] self-center rounded-full border-[0.135rem] border-purple-500">
+                                                                      <img className="w-full h-full object-cover rounded-full" src={item.image?.url} />
+                                                                    </div>
+                                                                    <div className="ml-4">
+                                                                        <div className="text-sm font-medium text-gray-900">{item.firstname + ' '+ item.lastname}</div>
+                                                                    </div>
+                                                                </div>
                                                             </td>
 
                                                             <td className="px-6 py-3 whitespace-nowrap">
                                                                 <div className="text-sm text-gray-900">{item.email}</div>
                                                             </td>
-                                                            
+
                                                             <td className="px-6 py-3 whitespace-nowrap">
                                                                 <div className="text-sm text-gray-900">{item.phonenumber}</div>
                                                             </td>
-                                            
-                                                            <td className="px-2 py-3 whitespace-nowrap text-right flex flex-row justify-end">
+                                                            
+                                                            <td className="px-2 py-3 whitespace-nowrap text-right flex flex-row justify-end items-center">
 
-                                                                <div className="flex flex-row">
-                                                                    <Link  href={{pathname: 'livreurs/form', query: { id: item.id},}} >
+                                                                <div className="flex flex-row h-max self-center">
+                                                                    <Link  href={{pathname: 'clients/form', query: { id: item.id },}} >
                                                                         <button className="w-7 h-7 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-300 mr-2">
                                                                             <EditBoldIcon customClass="w-3 text-gray-600 text-opacity-90 self-center"/>
                                                                         </button>
                                                                     </Link>
 
-                                                                    <button onClick={(e) => deleteItem(e, item.id)} className="w-7 h-7 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-30">
+
+                                                                    <button  onClick={(e) => item.image == null ? deleteItem(item.id) : deleteImageref(e, item.id, item.image?.id, item.image?.imageref)} className="w-7 h-7 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-30">
                                                                         <TrashBoldIcon customClass="w-3 text-red-600 text-opacity-90 self-center"/>
                                                                     </button>
                                                                 </div>
@@ -256,7 +258,7 @@ export default function Index() {
                                     initialPage={page} 
                                     itemsPerPage={take} 
                                     onPageСhange={(pageNumber) => refetch(pageNumber)} 
-                                    totalItems={items?.deliveryMans?.count}  
+                                    totalItems={items?.users?.count}  
                                     pageNeighbours={2} 
                                     startLabel= {<DoubleChevronLeftIcon customClass="w-3 h-3"/>}
                                     endLabel={<DoubleChevronRightIcon customClass="w-3 h-3"/>}
@@ -278,55 +280,5 @@ export default function Index() {
     )
 }
 
-
-const people = [
-    {
-      name: 'Jane Cooper',
-      title: 'Regional Paradigm Technician',
-      department: 'Optimization',
-      role: 'Admin',
-      email: 'jane.cooper@example.com',
-      image:
-        'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-    },
-    {
-        name: 'Jane Cooper',
-        title: 'Regional Paradigm Technician',
-        department: 'Optimization',
-        role: 'Admin',
-        email: 'jane.cooper@example.com',
-        image:
-          'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-    },
-    {
-        name: 'Jane Cooper',
-        title: 'Regional Paradigm Technician',
-        department: 'Optimization',
-        role: 'Admin',
-        email: 'jane.cooper@example.com',
-        image:
-          'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-    },
-
-    {
-        name: 'Jane Cooper',
-        title: 'Regional Paradigm Technician',
-        department: 'Optimization',
-        role: 'Admin',
-        email: 'jane.cooper@example.com',
-        image:
-          'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-    },
-
-    {
-        name: 'Jane Cooper',
-        title: 'Regional Paradigm Technician',
-        department: 'Optimization',
-        role: 'Admin',
-        email: 'jane.cooper@example.com',
-        image:
-          'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-    },
-  ]
 
 

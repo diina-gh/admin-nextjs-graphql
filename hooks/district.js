@@ -14,6 +14,13 @@ export function getDistricts (page, take, filter, orderBy) {
     return {items: data, isLoading: !error && !data, isError: error, mutate}
 }
 
+export async function allDistricts(){
+    const data = await graphQLClient.request(districtsQuery)
+    console.info("The response : ", data )
+    return {response: data.districts}
+}
+
+
 export async function getDistrict (id) {
     var variables = {"id": filterInt(id)}
     const data = await graphQLClient.request(districtQuery, variables)

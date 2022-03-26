@@ -160,9 +160,14 @@ export default function Sidebar() {
 
                 <Link  href='/messages' >
                     <li>
-                        <a  className={`${(router.asPath === '/messages') ? 'text-purple-800 border-purple-500 bg-gradient-to-r from-purple-50 to-fuchsia-50 bg-opacity-5' : 'border-white text-gray-900'} flex items-center py-2 px-4 text-base font-medium border-l-2 hover:text-purple-800 hover:border-purple-500 hover:bg-gradient-to-r hover:from-purple-50 hover:to-fuchsia-50 hover:bg-opacity-5 cursor-pointer duration-700 ease-in-out `}>
-                            <EnvelopeBoldIcon  customClass="w-4 h-4" />
-                            <span className="ml-3">Messages</span>
+                        <a  className={`${(router.asPath === '/messages') ? 'text-purple-800 border-purple-500 bg-gradient-to-r from-purple-50 to-fuchsia-50 bg-opacity-5' : 'border-white text-gray-900'} flex justify-between py-2 px-4 text-base font-medium border-l-2 hover:text-purple-800 hover:border-purple-500 hover:bg-gradient-to-r hover:from-purple-50 hover:to-fuchsia-50 hover:bg-opacity-5 cursor-pointer duration-700 ease-in-out `}>
+                            <div className='flex items-center'>
+                                <EnvelopeBoldIcon  customClass="w-4 h-4" />
+                                <span className="ml-3">Messages</span>
+                            </div>
+                            <div className='flex flex-row justify-center bg-gray-900 bg-opacity-90 h-[1.35rem] w-[1.35rem] rounded-full self-center'>
+                                <div className='text-white text-[0.6rem] font-medium self-center'>4</div>
+                            </div>
                         </a>
                     </li>
                 </Link>

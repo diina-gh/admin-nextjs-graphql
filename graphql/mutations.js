@@ -582,3 +582,56 @@ export const deleteUserMutation = gql `
         }
     }
 `
+
+export const saveClientMutation = gql `
+    mutation($id: Int, $firstname: String, $lastname: String, $email: String, $phonenumber: String, $addresses: [AddressInput], $civility: Civility){
+        saveClient(id: $id, firstname: $firstname, lastname: $lastname, email: $email, phonenumber: $phonenumber, addresses: $addresses, civility: $civility){
+            __typename
+            ...on User{
+                id
+                firstname
+                lastname
+                email
+                phonenumber
+                districts {
+                    districtId
+                    district {
+                        id
+                        name
+                    }
+                }
+            }
+            ...on InputError{
+                message
+                input
+            }
+        }
+    }
+`
+
+
+export const deleteClientMutation = gql `
+    mutation($id: Int){
+        saveClient(id: $id){
+            __typename
+            ...on User{
+                id
+                firstname
+                lastname
+                email
+                phonenumber
+                districts {
+                    districtId
+                    district {
+                        id
+                        name
+                    }
+                }
+            }
+            ...on InputError{
+                message
+                input
+            }
+        }
+    }
+`

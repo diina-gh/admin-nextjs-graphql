@@ -115,7 +115,7 @@ export default function Index() {
                 <Sidebar />
 
                 <motion.div initial={{ opacity: 0.45, x: -150 }}  whileInView={{ opacity: 1, x: 0, transition: { duration: 0.60 }, }}>
-                    <div className='app-body relative'>
+                    <div className='app-body relative rounded-xl'>
 
                         <BlockUI blocking={block} />
 
@@ -208,7 +208,7 @@ export default function Index() {
                                                             <td className="px-6 py-3 whitespace-nowrap">
                                                                 <div className="flex items-center">
                                                                     <div className="w-14 h-14 px-[0.075rem] py-[0.075rem] self-center rounded-full border-[0.135rem] border-purple-500">
-                                                                      <img className="w-full h-full object-cover rounded-full" src={item.image.url} />
+                                                                      <img className="w-full h-full object-cover rounded-full" src={item.image?.url} />
                                                                     </div>
                                                                     <div className="ml-4">
                                                                         <div className="text-sm font-medium text-gray-900">{item.firstname + ' '+ item.lastname}</div>

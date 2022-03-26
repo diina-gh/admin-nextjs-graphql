@@ -691,6 +691,30 @@ export const usersQuery = gql `
     }
 `
 
+export const clientsQuery = gql `
+    query($filter: String, $page: Int, $take: Int, $orderBy: UserOrderByInput){
+        clients(filter: $filter, page: $page, take: $take, orderBy: $orderBy) {
+            count
+            users {
+                id
+                firstname
+                lastname
+                email
+                phonenumber
+                districts {
+                    districtId
+                    line1
+                    line2
+                    district {
+                        id
+                        name
+                    }
+                }
+            }
+        }
+    }
+`
+
 export const userQuery = gql `
     query($id: Int){
         user(id: $id){

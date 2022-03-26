@@ -35,7 +35,7 @@ const [currentPage, setCurrentPage] = useState(1);
             <Sidebar />
 
             <motion.div initial={{ opacity: 0.45, x: -150 }}  whileInView={{ opacity: 1, x: 0, transition: { duration: 0.60 }, }}>
-                <div className='app-body'>
+                <div className='app-body rounded-xl'>
 
                     <div className='w-full h-full bg-white rounded-xl overflow-y-scroll p-4'>
 
