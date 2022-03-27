@@ -8,7 +8,6 @@ import { SideNav } from './sidebar';
 import Cookies from 'js-cookie'
 
 
-
 export default function Header(props) {
 
     const router = useRouter();

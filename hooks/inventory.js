@@ -1,8 +1,11 @@
 import useSWR from 'swr'
-import request from 'graphql-request'
+import {GraphQLClient, request} from 'graphql-request'
 import { inventoriesQuery, inventoryQuery } from '../graphql/queries'
+import Cookies from 'js-cookie'
 
-const endpoint = "https://trade-two.vercel.app/graphql "
+const token = Cookies.get('user_token')
+const endpoint = "https://trade-two.vercel.app/graphql"
+const graphQLClient = new GraphQLClient(endpoint, {headers: {authorization: token,},})
 
 export function getInventories (page, take, filter, orderBy) {
 

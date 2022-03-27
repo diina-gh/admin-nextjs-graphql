@@ -3,9 +3,11 @@ import {GraphQLClient, request} from 'graphql-request'
 import { regionsQuery, regionQuery } from '../graphql/queries'
 import {saveRegionMutation, deleteRegionMutation} from "../graphql/mutations"
 import { filterInt } from '../libs/util'
+import Cookies from 'js-cookie'
 
+const token = Cookies.get('user_token')
 const endpoint = "https://trade-two.vercel.app/graphql"
-const graphQLClient = new GraphQLClient(endpoint, {headers: {authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY0NjI3NjgyMH0.ZP6ZUMKGFoYdWR28YV06Q4dUaY_HDDyJIjA2hqzwswQ',},})
+const graphQLClient = new GraphQLClient(endpoint, {headers: {authorization: token,},})
 
 export function getRegions (page, take, filter, orderBy) {
     var variables = {"page": page, "take": take,"filter": filter, "orderBy": orderBy}
