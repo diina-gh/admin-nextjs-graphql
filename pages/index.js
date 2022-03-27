@@ -10,7 +10,10 @@ export const getServerSideProps = ({ query }) => ({
     props: query,
 })
 
-export default function Home({ country,}) {
+export default function Home({ name, languages, city, region, country, currencyCode,currencySymbol,}) {
+
+    name = decodeURIComponent(name)
+    city = decodeURIComponent(city)
 
   return (
     <div className="app-container h-screen">
@@ -51,7 +54,10 @@ export default function Home({ country,}) {
 
                     <div className='app-rightbar bg-white rounded-xl px-2 py-2'>
                         <div className='text-sm font-medium'>Pays: <span className='text-green-500'>{country}</span></div>
-                        
+                        <div className='text-sm font-medium'>Ville: <span className='text-green-500'>{city}</span></div>
+                        <div className='text-sm font-medium'>Monnaie: <span className='text-green-500'>{name}</span></div>
+                        <div className='text-sm font-medium'>Langue: <span className='text-green-500'>{languages}</span></div>
+
                     </div>
     
                 </div>

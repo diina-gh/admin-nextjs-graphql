@@ -1,16 +1,31 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { countries } from '../libs/countries'
+// import { setUserCookie } from '@lib/auth'
 
-// Block Austria, prefer Germany
-const BLOCKED_COUNTRY = 'AT'
+export function middleware(req = NextRequest) {
 
-export function middleware(req= NextRequest) {
-  const country = req.geo.country || 'US'
+  // Add the user token to the response
+  //   return setUserCookie(req, NextResponse.next())
 
-  if (country === BLOCKED_COUNTRY) {
-    return new Response('Blocked for legal reasons', { status: 451 })
-  }
+    const { nextUrl: url, geo } = req
+    const country = geo.country || 'US'
+    const city = geo.city || 'San Francisco'
+    const region = geo.region || 'CA'
 
-  req.nextUrl.searchParams.set('country', country)
+    const countryInfo = countries.find((x) => x.cca2 === country)
 
-  return NextResponse.rewrite(req.nextUrl)
+    const currencyCode = Object.keys(countryInfo.currencies)[0]
+    const currency = countryInfo.currencies[currencyCode]
+    const languages = Object.values(countryInfo.languages).join(', ')
+
+    url.searchParams.set('country', country)
+    url.searchParams.set('city', city)
+    url.searchParams.set('region', region)
+    url.searchParams.set('currencyCode', currencyCode)
+    url.searchParams.set('currencySymbol', currency.symbol)
+    url.searchParams.set('name', currency.name)
+    url.searchParams.set('languages', languages)
+
+    return NextResponse.rewrite(url)
 }
+
