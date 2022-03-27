@@ -10,6 +10,13 @@
 }
 
 
+.bg-p4{
+  background-image: url('../public/images/background/bg18.jpg');
+  background-size:cover;
+  background-repeat: no-repeat;
+  background-position: top left;
+}
+
 
 
 

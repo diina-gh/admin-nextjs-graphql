@@ -1,7 +1,7 @@
 import useSWR from 'swr'
 import {GraphQLClient, request} from 'graphql-request'
 import { usersQuery, userQuery } from '../graphql/queries'
-import {saveUserMutation, deleteUserMutation} from "../graphql/mutations"
+import {saveUserMutation, deleteUserMutation, loginMutation} from "../graphql/mutations"
 import { filterInt } from '../libs/util'
 
 const endpoint = "https://trade-two.vercel.app/graphql"
@@ -32,6 +32,13 @@ export async function saveUser (id, firstname, lastname, email, phonenumber, rol
     const data = await graphQLClient.request(saveUserMutation, variables)
     console.info("The response : ", data )
     return {response: data.saveUser }
+}
+
+export async function login(email, password) {
+    var variables = {"email": email, "password": password}
+    const data = await graphQLClient.request(loginMutation, variables)
+    console.info("The response : ", data )
+    return {response: data.login }
 }
 
 export async function deleteUser(id) {

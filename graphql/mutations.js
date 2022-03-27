@@ -635,3 +635,38 @@ export const deleteClientMutation = gql `
         }
     }
 `
+
+export const loginMutation = gql `
+    mutation($email: String, $password: String){
+        login(email: $email, password: $password){
+            __typename
+            ...on AuthPayload{
+            token
+            user {
+                id
+                activated
+                civility
+                firstname
+                lastname
+                email
+                phonenumber
+                image {
+                    imageref
+                    url
+                }
+                roles {
+                    roleId
+                    role{
+                        id
+                        name
+                    }
+                }
+            }
+            }
+            ...on InputError{
+                message
+                input
+            }
+        }
+    }
+`

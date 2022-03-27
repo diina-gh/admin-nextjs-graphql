@@ -6,11 +6,11 @@ import { motion } from "framer-motion";
 import HeadInfo from '../components/common/headinfo'
 
 
-function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
-  }
+export const getServerSideProps = ({ query }) => ({
+    props: query,
+})
 
-export default function Home() {
+export default function Home({ country,}) {
 
   return (
     <div className="app-container h-screen">
@@ -49,8 +49,9 @@ export default function Home() {
 
                     </div>
 
-                    <div className='app-rightbar bg-white rounded-xl'>
-
+                    <div className='app-rightbar bg-white rounded-xl px-2 py-2'>
+                        <div className='text-sm font-medium'>Pays: <span className='text-green-500'>{country}</span></div>
+                        
                     </div>
     
                 </div>
