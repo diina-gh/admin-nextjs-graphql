@@ -2,34 +2,34 @@
 
 .app-container{
   background-color: #faf5ef91;
-  }
+}
 
 
 .app-sidebar{
   min-height: fit-content !important;
-  max-height: calc(100vh - 6rem);
+  max-height: calc(100vh - 6.55rem);
   @extend .gt-shadow2;
 }
 
 .app-rightbar{
   min-height: fit-content;
-  max-height: calc(100vh - 6rem);
+  max-height: calc(100vh - 6.55rem);
   @extend .gt-shadow2;
 }
 
 .app-body0{
   width: calc(100vw - 19.4rem);
-  height: calc(100vh - 6rem);
+  height: calc(100vh - 6.55rem);
 }
 
 .app-body{
   width: calc(100vw - 1.75rem);
-  height: calc(100vh - 6rem);
+  height: calc(100vh - 6.55rem);
   @extend .gt-shadow2;
 }
 
 .app-subbody2{
-  height: calc(100vh - 9rem);
+  height: calc(100vh - 9.55rem);
 }
 
 .app-table{

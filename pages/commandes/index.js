@@ -30,7 +30,7 @@ const [currentPage, setCurrentPage] = useState(1);
         <HeadInfo title= 'Dashboard' description='description here'/>
         <Header/>
 
-        <div className='w-full px-6 py-5 flex flex-row justify-between'>
+        <div className='w-full px-3 md:px-6 py-3 md:py-5 flex flex-row justify-between'>
 
             <Sidebar />
 

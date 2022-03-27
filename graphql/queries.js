@@ -671,6 +671,7 @@ export const usersQuery = gql `
                 id
                 firstname
                 lastname
+                activated
                 email
                 phonenumber
                 image {
@@ -697,6 +698,8 @@ export const clientsQuery = gql `
             count
             users {
                 id
+                civility
+                activated
                 firstname
                 lastname
                 email
@@ -721,8 +724,10 @@ export const userQuery = gql `
             __typename
             ...on User{
                 id
+                civility
                 firstname
                 lastname
+                activated
                 email
                 phonenumber
                 image {

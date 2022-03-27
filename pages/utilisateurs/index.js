@@ -24,6 +24,8 @@ import { deleteImage } from '../../hooks/image';
 import BlockUI from '../../components/common/blockui';
 import toast, { Toaster } from 'react-hot-toast';
 import { classNames } from '../../libs/util';
+import { capitalize } from '../../libs/util';
+
 
 
 export default function Index() {
@@ -110,7 +112,7 @@ export default function Index() {
             <HeadInfo title= 'Dashboard' description='description here'/>
             <Header/>
 
-            <div className='w-full px-6 py-5 flex flex-row justify-between'>
+            <div className='w-full px-3 md:px-6 py-3 md:py-5 flex flex-row justify-between'>
 
                 <Sidebar />
 
@@ -195,6 +197,9 @@ export default function Index() {
                                                         <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider" >
                                                             Téléphone
                                                         </th>
+                                                        <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider" >
+                                                            Status
+                                                        </th>
                                                         <th scope="col" className="relative px-6 py-3">
                                                             <span className="sr-only">Edit</span>
                                                         </th>
@@ -204,43 +209,54 @@ export default function Index() {
                                                 <tbody className="bg-white divide-y divide-gray-200">
                                                     {items.users.users.map((item, i) => (
                                                         <tr key={item.id} className={(i%2==0) ? "" : "bg-gray-100 bg-opacity-50"}>
-                                                            
+
                                                             <td className="px-6 py-3 whitespace-nowrap">
                                                                 <div className="flex items-center">
-                                                                    <div className="w-14 h-14 px-[0.075rem] py-[0.075rem] self-center rounded-full border-[0.135rem] border-purple-500">
-                                                                      <img className="w-full h-full object-cover rounded-full" src={item.image?.url} />
+                                                                <div className={`${item.activated ? 'bg-gradient-to-r from-violet-600 to-purple-600 hover:scale-110' : 'bg-gray-400'} flex-shrink-0 item-image-0 rounded-full border-opacity-80 transition duration-700 ease-in-out cursor-pointer`} >
+                                                                    <div className='image-layer-2 bg-white rounded-full'>
+                                                                    <img className={`${item.activated ? 'opacity-100' : 'opacity-50'} rounded-full object-cover`} src={item?.image?.url ? '../images/avatar2.jpg': item?.image?.url} alt="" />
                                                                     </div>
-                                                                    <div className="ml-4">
-                                                                        <div className="text-sm font-medium text-gray-900">{item.firstname + ' '+ item.lastname}</div>
+                                                                </div>
+                                                                    <div className={`${item.activated ? 'opacity-100' : 'opacity-50'} ml-4`}>
+                                                                        <div className="text-sm font-medium text-gray-900">{capitalize(item.firstname) + ' ' + item.lastname}</div>
                                                                     </div>
                                                                 </div>
                                                             </td>
-
                                                             <td className="px-6 py-3 whitespace-nowrap">
-                                                                <div className="text-sm text-gray-900">{item.email}</div>
+                                                                <div className={`${item.activated ? 'opacity-100' : 'opacity-50'} text-sm text-gray-900`} >{item.email}</div>
+                                                            </td>
+                                                            <td className="px-6 py-3 whitespace-nowrap">
+                                                                <div className={`${item.activated ? 'opacity-100' : 'opacity-50'} text-sm text-gray-900`} >{item.phonenumber}</div>
+                                                            </td>
+                                                            <td className="px-6 py-3 whitespace-nowrap">
+                                                                {item.activated == true ?
+                                                                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                                    Active
+                                                                    </span>
+                                                                :
+                                                                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-200 text-gray-500">
+                                                                    Inactive
+                                                                    </span>
+                                                                }
+                                                                
                                                             </td>
 
-                                                            <td className="px-6 py-3 whitespace-nowrap">
-                                                                <div className="text-sm text-gray-900">{item.phonenumber}</div>
-                                                            </td>
-                                                            
-                                                            <td className="px-2 py-3 whitespace-nowrap text-right flex flex-row justify-end items-center">
+                                                            <td className="px-2 py-3 whitespace-nowrap text-right flex flex-row justify-end">
 
-                                                                <div className="flex flex-row h-max self-center">
+                                                                <div className="flex flex-row">
                                                                     <Link  href={{pathname: 'utilisateurs/form', query: { id: item.id },}} >
                                                                         <button className="w-7 h-7 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-300 mr-2">
                                                                             <EditBoldIcon customClass="w-3 text-gray-600 text-opacity-90 self-center"/>
                                                                         </button>
                                                                     </Link>
 
-
-                                                                    <button  onClick={(e) => item.image == null ? deleteItem(item.id) : deleteImageref(e, item.id, item.image?.id, item.image?.imageref)} className="w-7 h-7 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-30">
+                                                                    <button  onClick={(e) => deleteItem(e, item.id, item.image?.id, item.image?.imageref) } className="w-7 h-7 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-30">
                                                                         <TrashBoldIcon customClass="w-3 text-red-600 text-opacity-90 self-center"/>
                                                                     </button>
                                                                 </div>
 
                                                             </td>
-
+                                                            
                                                         </tr>
                                                     ))}
                                                 </tbody>

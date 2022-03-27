@@ -177,7 +177,7 @@ class Index extends Component {
                 <HeadInfo title= 'Dashboard' description='description here'/>
                 <Header/>
         
-                <div className='w-full overflow-x-auto px-6 py-5 flex flex-row justify-between'>
+                <div className='w-full overflow-x-auto px-3 py-3 md:px-6 md:py-5 flex flex-row justify-between'>
         
                     <Sidebar />
         
@@ -213,6 +213,7 @@ class Index extends Component {
                                                 <div className="">
                                                     <label htmlFor="civility" className="block text-sm font-medium text-gray-900">Civilité <span className='font-bold text-purple-600'>*</span></label>
                                                     <select id="civility" name="civility" onChange={(e) => this.setState({ civility: e.target.value})} autoComplete="civility" className="form-select mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 shadow-inner bg-white bg-opacity-90 rounded-md focus:border-0 focus:ring-2 focus:ring-purple-500 px-2 decorated" placeholder="Civilité">
+                                                        <option  className='' >Choisir une civilité</option>
                                                         <option value="MONSIEUR" className='form-option py-3 hover:bg-purple-500 hover:text-white decorated' >Monsieur</option>
                                                         <option value="MADAME" className='form-option py-3 hover:bg-purple-500 hover:text-white' >Madame</option>
                                                     </select>

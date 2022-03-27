@@ -204,7 +204,7 @@ class Index extends Component {
                 <HeadInfo title= 'Dashboard' description='description here'/>
                 <Header/>
         
-                <div className='w-full overflow-x-auto px-6 py-5 flex flex-row justify-between'>
+                <div className='w-full overflow-x-auto px-3 py-3 md:px-6 md:py-5 flex flex-row justify-between'>
         
                     <Sidebar />
         

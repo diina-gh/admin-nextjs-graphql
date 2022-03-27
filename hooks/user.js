@@ -27,8 +27,8 @@ export async function getUser (id) {
     return {response: data.user}
 }
 
-export async function saveUser (id, firstname, lastname, email, phonenumber, roles, password = null, repassword = null) {
-    var variables = {"id": filterInt(id), "firstname": firstname, "lastname": lastname, "phonenumber": phonenumber, "email":email, "password": password, "repassword": repassword, "roles": roles}
+export async function saveUser (id, firstname, lastname, email, phonenumber, roles, password = null, repassword = null, civility) {
+    var variables = {"id": filterInt(id), "firstname": firstname, "lastname": lastname, "phonenumber": phonenumber, "email":email, "password": password, "repassword": repassword, "roles": roles, "civility": civility}
     const data = await graphQLClient.request(saveUserMutation, variables)
     console.info("The response : ", data )
     return {response: data.saveUser }

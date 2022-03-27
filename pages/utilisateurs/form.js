@@ -32,7 +32,7 @@ class Index extends Component {
 
     constructor(props){
         super(props);
-        this.state = { block: false, id:null, firstname: '', lastname: '', email:'', phonenumber: '', password:'', repassword: '', roles: [], chosenRoles: [], opened: false, checkedAll: false, image: null, chosenImage:null, imageref:null, imageId: null};
+        this.state = { block: false, id:null,civility: null, firstname: '', lastname: '', email:'', phonenumber: '', password:'', repassword: '', roles: [], chosenRoles: [], opened: false, checkedAll: false, image: null, chosenImage:null, imageref:null, imageId: null};
         this.checkInput = this.checkInput.bind(this)
         this.saveItem = this.saveItem.bind(this)
         this.openModal = this.openModal.bind(this)
@@ -50,7 +50,7 @@ class Index extends Component {
             this.setState({block: true})
             var {response } = await getUser(itemId)
             if(response?.__typename == 'User'){
-                this.setState({ id: response.id, firstname: response.firstname, lastname: response.lastname, email: response.email, phonenumber:response.phonenumber, image:response.image?.url, chosenImage:response.image?.url, imageref:response.image?.imageref, imageId: response.image?.id })
+                this.setState({ id: response.id, civility: response.civility, firstname: response.firstname, lastname: response.lastname, email: response.email, phonenumber:response.phonenumber, image:response.image?.url, chosenImage:response.image?.url, imageref:response.image?.imageref, imageId: response.image?.id })
                 var new_roles = []
                 for(let i=0; i< response.roles.length; i++){
                     new_roles.push(response.roles[i].role)
@@ -146,7 +146,7 @@ class Index extends Component {
     checkInput = (e) => {
 
         e.preventDefault()
-        const {id, firstname, lastname, email, phonenumber, chosenRoles, password, repassword, image} = this.state
+        const {id, civility, firstname, lastname, email, phonenumber, chosenRoles, password, repassword, image} = this.state
         var errorMessage
 
         if(!navigator.onLine){
@@ -171,10 +171,10 @@ class Index extends Component {
 
     saveItem = async () => {
 
-        const {id, firstname, lastname, email, phonenumber, chosenRoles, password, repassword} = this.state
+        const {id, civility, firstname, lastname, email, phonenumber, chosenRoles, password, repassword} = this.state
 
         const chosenRoleIds = chosenRoles.map(item => parseInt(item.id));
-        var {response } = await saveUser(id, firstname, lastname, email, phonenumber, chosenRoleIds, password, repassword)
+        var {response } = await saveUser(id, firstname, lastname, email, phonenumber, chosenRoleIds, password, repassword, civility)
 
         if(response?.__typename == 'AuthPayload'){
             this.handleUpload(response?.user?.id)
@@ -196,8 +196,10 @@ class Index extends Component {
 
         if(imageref != null){ 
             if(image == chosenImage){
+                toast.dismiss()
                 toast.success("Mise à jour réussie !", {id: toastOne,});
                 this.setState({block: false})
+                setTimeout(() => {router.push('./');}, 2250);
                 return null
             }
             else{
@@ -270,7 +272,7 @@ class Index extends Component {
                 <HeadInfo title= 'Dashboard' description='description here'/>
                 <Header/>
         
-                <div className='w-full overflow-x-auto px-6 py-5 flex flex-row justify-between'>
+                <div className='w-full overflow-x-auto px-3 py-3 md:px-6 md:py-5 flex flex-row justify-between'>
         
                     <Sidebar />
         
@@ -306,7 +308,7 @@ class Index extends Component {
                                                 <div className='relative bg-gray-50 border-[0.135rem] border-purple-500 h-[6.5rem] w-[6.5rem] rounded-full shadow flex flex-col justify-center cursor-pointer'>
                                                         {chosenImage &&
                                                         <>
-                                                            <div onClick={() => this.imageInput.click()} className="w-full h-full absolute top-0 left-0 px-[0.075rem] py-[0.075rem]">
+                                                            <div onClick={() => this.imageInput.click()} className="w-full h-full absolute top-0 left-0 px-[0.0925rem] py-[0.0925rem]">
                                                                 <img className="w-full h-full object-cover rounded-full" src={chosenImage} />
                                                             </div>
 
@@ -335,6 +337,17 @@ class Index extends Component {
                                         <div className='w-full grid grid-cols-5 grid-flow-row gap-6 mt-6'>
         
                                             <div className='col-span-3 grid grid-cols-2 grid-flow-row gap-6 bg-gray-200 bg-opacity-60 rounded-xl px-4 py-5'>
+
+                                                <div className="">
+                                                    <label htmlFor="civility" className="block text-sm font-medium text-gray-900">Civilité <span className='font-bold text-purple-600'>*</span></label>
+                                                    <select id="civility" name="civility" onChange={(e) => this.setState({ civility: e.target.value})} autoComplete="civility" className="form-select mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 shadow-inner bg-white bg-opacity-90 rounded-md focus:border-0 focus:ring-2 focus:ring-purple-500 px-2 decorated" placeholder="Civilité">
+                                                        <option  className='' >Choisir</option>
+                                                        <option value="MONSIEUR" className='form-option py-3 hover:bg-purple-500 hover:text-white decorated' >Monsieur</option>
+                                                        <option value="MADAME" className='form-option py-3 hover:bg-purple-500 hover:text-white' >Madame</option>
+                                                    </select>
+                                                </div>
+
+                                                <div></div>
             
                                                 <div className="">
                                                     <label htmlFor="name" className="block text-sm font-medium text-gray-900">Prénom <span className='font-bold text-purple-600'>*</span> </label>
@@ -377,7 +390,7 @@ class Index extends Component {
                                                         <div className='px-2 py-[0.45px] text-[10.325px] font-medium bg-purple-500 bg-opacity-80 text-white rounded-xl self-center'>{chosenRoles?.length}</div>
                                                     </div>
 
-                                                    <div className='w-full h-[14rem] overflow-y-auto px-5'>
+                                                    <div className='w-full h-[15rem] overflow-y-auto px-5'>
 
                                                         {chosenRoles?.length == 0 ?
 

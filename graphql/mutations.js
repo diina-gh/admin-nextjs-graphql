@@ -171,14 +171,14 @@ export const deleteBrandMutation = gql`
 `
 
 export const saveImageMutation = gql `
-    mutation($id: Int, $url: String, $imageref:String, $default: Boolean, $productId: Int, $optionId: Int, $brandId: Int, $categoryId: Int, $userId: Int ){
-        saveImage(id: $id, url: $url, imageref: $imageref, default: $default, productId: $productId, optionId: $optionId, brandId: $brandId, categoryId: $categoryId, userId: $userId){
+    mutation($id: Int, $url: String, $imageref:String, $isDefault: Boolean, $productId: Int, $optionId: Int, $brandId: Int, $categoryId: Int, $userId: Int ){
+        saveImage(id: $id, url: $url, imageref: $imageref, isDefault: $isDefault, productId: $productId, optionId: $optionId, brandId: $brandId, categoryId: $categoryId, userId: $userId){
             __typename
             ... on Image{
                 id
                 url
                 imageref
-                default
+                isDefault
             }
             ... on InputError{
                 message
@@ -540,8 +540,8 @@ export const deleteRoleMutation = gql `
 `
 
 export const saveUserMutation = gql `
-    mutation($id: Int, $firstname: String, $lastname: String, $email: String, $phonenumber: String, $roles: [Int], $password: String, $repassword: String){
-        saveUser(id: $id, firstname: $firstname, lastname: $lastname, email: $email, phonenumber: $phonenumber, roles: $roles, password: $password, repassword: $repassword){
+    mutation($id: Int, $firstname: String, $lastname: String, $email: String, $phonenumber: String, $roles: [Int], $password: String, $repassword: String, $civility: Civility){
+        saveUser(id: $id, firstname: $firstname, lastname: $lastname, email: $email, phonenumber: $phonenumber, roles: $roles, password: $password, repassword: $repassword, civility: $civility){
             __typename
             ...on AuthPayload{
             token
