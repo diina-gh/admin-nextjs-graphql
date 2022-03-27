@@ -2,10 +2,18 @@ import { NextRequest, NextResponse } from 'next/server'
 import { countries } from '../libs/countries'
 // import { setUserCookie } from '@lib/auth'
 
-export function middleware(req = NextRequest) {
+export function middleware(req) {
 
   // Add the user token to the response
   //   return setUserCookie(req, NextResponse.next())
+
+    const query =  req.query
+
+    if(query != null){
+        const new_query = btoa(query)
+        request.nextUrl.query = `${new_query}`;
+        return NextResponse.rewrite(request.nextUrl);
+    }
 
     const { nextUrl: url, geo } = req
     const country = geo.country || 'US'
