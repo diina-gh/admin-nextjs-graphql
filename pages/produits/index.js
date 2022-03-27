@@ -10,6 +10,8 @@ import Filter from '../../components/common/filter';
 import { SearchIcon } from '@heroicons/react/solid';
 import AddBoldIcon from '../../components/ui/icons/addBoldIcon';
 import DocBoldIcon from '../../components/ui/icons/docBoldIcon';
+import EditBoldIcon from '../../components/ui/icons/editBoldIcon'
+import TrashBoldIcon from '../../components/ui/icons/trashBoldIcon'
 import { Pagination } from "react-pagination-bar"
 import 'react-pagination-bar/dist/index.css'
 import ChevronLeftIcon from '../../components/ui/icons/chevronLeftIcon';
@@ -17,6 +19,7 @@ import ChevronRightIcon from '../../components/ui/icons/chevronRightIcon';
 import DoubleChevronLeftIcon from '../../components/ui/icons/doubleChevronLeftIcon';
 import DoubleChevronRightIcon from '../../components/ui/icons/doubleChevronRightIcon';
 import { getProducts } from '../../hooks/product';
+import { capitalize } from '../../libs/util';
 
 
 export default function Index() {
@@ -135,12 +138,6 @@ export default function Index() {
                                                             Description
                                                         </th>
                                                         <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider" >
-                                                            Unité
-                                                        </th>
-                                                        <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider" >
-                                                            Poids/Unité
-                                                        </th>
-                                                        <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider" >
                                                             Prix/Unité
                                                         </th>
                                                         <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider" >
@@ -178,29 +175,38 @@ export default function Index() {
                                                                 </div>
                                                             </td>
                                                             <td className="px-6 py-3 whitespace-nowrap">
-                                                                <span className="px-2 inline-flex text-[10px] leading-5 font-semibold rounded-full bg-fuchsia-200 shadow shadow-fuchsia-200 text-fuchsia-900">
-                                                                    {item.unit}
-                                                                </span>
+                                                                <div className="text-sm text-gray-900">
+                                                                    <span className="px-2 py-[0.115] inline-flex text-[0.7rem] leading-5 font-semibold rounded-full bg-orange-100 bg-opacity-80 text-orange-800">
+                                                                        {new Intl.NumberFormat('fr-FR', {style: 'currency', currency:'XOF'}).format(item.unitprice)}
+                                                                    </span>
+                                                                </div>
                                                             </td>
                                                             <td className="px-6 py-3 whitespace-nowrap">
-                                                                <div className="text-sm text-gray-900">{item.unitweight}</div>
+                                                                <div className="text-sm text-gray-900">{capitalize(item.category?.name)}</div>
                                                             </td>
                                                             <td className="px-6 py-3 whitespace-nowrap">
-                                                                <div className="text-sm text-gray-900">{item.unitprice}</div>
+                                                                <div className="text-sm text-gray-900">{capitalize(item.brand?.name)}</div>
                                                             </td>
                                                             <td className="px-6 py-3 whitespace-nowrap">
-                                                                <div className="text-sm text-gray-900">{item.category?.name}</div>
+                                                                <div className="text-sm text-gray-900">
+                                                                    <span className="px-2 py-[0.115] inline-flex text-[0.7rem] leading-5 font-semibold rounded-full bg-red-100 bg-opacity-80 text-red-800">
+                                                                        {item.inventory?.quantity == null ? 0 : item.inventory?.quantity}
+                                                                    </span>
+                                                                </div>
                                                             </td>
-                                                            <td className="px-6 py-3 whitespace-nowrap">
-                                                                <div className="text-sm text-gray-900">{item.brand?.name}</div>
-                                                            </td>
-                                                            <td className="px-6 py-3 whitespace-nowrap">
-                                                                <div className="text-sm text-gray-900">{item.inventory?.quantity}</div>
-                                                            </td>
-                                                            <td className="px-6 py-3 whitespace-nowrap text-right text-sm font-medium">
-                                                                <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                                                    Edit
-                                                                </a>
+
+                                                            <td className="px-2 whitespace-nowrap">
+                                                                <div className="flex flex-row justify-end">
+                                                                    <Link  href={{pathname: 'produits/form', query: { id: item.id},}} >
+                                                                        <button className="w-7 h-7 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-300 mr-2">
+                                                                            <EditBoldIcon customClass="w-3 text-gray-600 text-opacity-90 self-center"/>
+                                                                        </button>
+                                                                    </Link>
+
+                                                                    <button onClick={(e) => deleteItem(e, item.id)} className="w-7 h-7 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-30">
+                                                                        <TrashBoldIcon customClass="w-3 text-red-600 text-opacity-90 self-center"/>
+                                                                    </button>
+                                                                </div>
                                                             </td>
 
                                                         </tr>

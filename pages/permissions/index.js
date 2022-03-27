@@ -199,9 +199,9 @@ export default function Index() {
                                                                 <div className="text-sm text-gray-900">{item.desc}</div>
                                                             </td>
                                             
-                                                            <td className="px-2 py-3 whitespace-nowrap text-right flex flex-row justify-end">
+                                                            <td className="px-2 whitespace-nowrap">
 
-                                                                <div className="flex flex-row">
+                                                                <div className="flex flex-row justify-end">
                                                                     <Link  href={{pathname: 'permissions/form', query: { id: item.id},}} >
                                                                         <button className="w-7 h-7 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-300 mr-2">
                                                                             <EditBoldIcon customClass="w-3 text-gray-600 text-opacity-90 self-center"/>

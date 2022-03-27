@@ -228,7 +228,7 @@ export default function Index() {
                                                             <td className="px-6 py-3 whitespace-nowrap">
                                                                 <div className={`${item.activated ? 'opacity-100' : 'opacity-50'} text-sm text-gray-900`} >{item.phonenumber}</div>
                                                             </td>
-                                                            <td className="px-6 py-3 whitespace-nowrap">
+                                                            <td className="px-6 whitespace-nowrap">
                                                                 {item.activated == true ?
                                                                     <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                                                                     Active
@@ -241,10 +241,10 @@ export default function Index() {
                                                                 
                                                             </td>
 
-                                                            <td className="px-2 py-3 whitespace-nowrap text-right flex flex-row justify-end">
+                                                            <td className="px-2 whitespace-nowrap">
 
-                                                                <div className="flex flex-row">
-                                                                    <Link  href={{pathname: 'utilisateurs/form', query: { id: item.id },}} >
+                                                                <div className="flex flex-row justify-end ">
+                                                                    <Link  href={{pathname: 'clients/form', query: { id: item.id },}} >
                                                                         <button className="w-7 h-7 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-300 mr-2">
                                                                             <EditBoldIcon customClass="w-3 text-gray-600 text-opacity-90 self-center"/>
                                                                         </button>

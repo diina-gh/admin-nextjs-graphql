@@ -214,7 +214,7 @@ export default function Index() {
                                                                 <div className="flex items-center">
                                                                 <div className={`${item.activated ? 'bg-gradient-to-r from-violet-600 to-purple-600 hover:scale-110' : 'bg-gray-400'} flex-shrink-0 item-image-0 rounded-full border-opacity-80 transition duration-700 ease-in-out cursor-pointer`} >
                                                                     <div className='image-layer-2 bg-white rounded-full'>
-                                                                    <img className={`${item.activated ? 'opacity-100' : 'opacity-50'} rounded-full object-cover`} src={item?.image?.url ? '../images/avatar2.jpg': item?.image?.url} alt="" />
+                                                                    <img className={`${item.activated ? 'opacity-100' : 'opacity-50'} rounded-full object-cover`} src={item?.image?.url == null ? '../images/avatar2.jpg': item?.image?.url} alt="" />
                                                                     </div>
                                                                 </div>
                                                                     <div className={`${item.activated ? 'opacity-100' : 'opacity-50'} ml-4`}>
@@ -241,9 +241,9 @@ export default function Index() {
                                                                 
                                                             </td>
 
-                                                            <td className="px-2 py-3 whitespace-nowrap text-right flex flex-row justify-end">
+                                                            <td className="px-2 whitespace-nowrap">
 
-                                                                <div className="flex flex-row">
+                                                                <div className="flex flex-row justify-end ">
                                                                     <Link  href={{pathname: 'utilisateurs/form', query: { id: item.id },}} >
                                                                         <button className="w-7 h-7 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-300 mr-2">
                                                                             <EditBoldIcon customClass="w-3 text-gray-600 text-opacity-90 self-center"/>
