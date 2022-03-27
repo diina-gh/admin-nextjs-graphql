@@ -5,12 +5,19 @@ import CalendarBoldIcon from '../ui/icons/calendarBoldIcon';
 import BellBoldIcon from '../ui/icons/bellBoldIcon';
 import MenuBurgerIcon from '../ui/icons/menuBurgerIcon';
 import { SideNav } from './sidebar';
+import Cookies from 'js-cookie'
+
 
 
 export default function Header(props) {
 
     const router = useRouter();
     const [open, setOpen] = useState(false)
+
+    const username = Cookies.get('username')
+    const user_image = Cookies.get('user_image')
+    const user_mail = Cookies.get('user_mail')
+
 
     const onOpenChange = (SideNavData) => {
         setOpen(SideNavData);
@@ -64,7 +71,7 @@ export default function Header(props) {
                 </div>
 
                 <div className='w-8 h-8 th-bg-1 border-2 border-purple-600 px-[0.035rem] py-[0.035rem] rounded-full flex flex-row justify-center'>
-                    <img className='w-full h-full object-cover rounded-full' src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" />
+                    <img className='w-full h-full object-cover rounded-full' src={user_image} />
                 </div>
 
             </div>

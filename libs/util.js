@@ -25,19 +25,14 @@ export function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export function uploadImage(image){
-    var imageref = image.name + uid(32)
-    const uploadTask = firebase.storage().ref(`images/${imageref}`).put(image);
-    uploadTask.on("state_changed",snapshot => {
-        const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-        console.log("progress ..", progress);
-      },error => {console.log(error);},
-      () => {
-          firebase.storage().ref("images").child(imageref).getDownloadURL().then(url => {
-            let imageInfo = {url, imageref}
-            return imageInfo
-          });
-      }
-    );
-  };
-  
+export function jsonResponse(status= number, data= any, init = ResponseInit) {
+  return new Response(JSON.stringify(data), {
+    ...init,
+    status,
+    headers: {
+      ...init?.headers,
+      'Content-Type': 'application/json',
+    },
+  })
+}
+

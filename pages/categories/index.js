@@ -217,7 +217,7 @@ export default function Index() {
                                                         }
 
                                                         {(items && items.categories && items?.page == null) &&
-                                                            <table className="min-w-full divide-y divide-gray-200 ">
+                                                            <table className="min-w-full divide-y divide-gray-200">
                                                                 <thead className="th-bg-1 sticky top-0 ">
                                                                     <tr>
                                                                         <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">

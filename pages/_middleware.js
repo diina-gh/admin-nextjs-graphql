@@ -7,14 +7,6 @@ export function middleware(req) {
   // Add the user token to the response
   //   return setUserCookie(req, NextResponse.next())
 
-    const query =  req.query
-
-    if(query != null){
-        const new_query = btoa(query)
-        request.nextUrl.query = `${new_query}`;
-        return NextResponse.rewrite(request.nextUrl);
-    }
-
     const { nextUrl: url, geo } = req
     const country = geo.country || 'US'
     const city = geo.city || 'San Francisco'
