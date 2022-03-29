@@ -170,7 +170,7 @@ class Index extends Component {
 
                     for(let j=0; j < response.variants?.length; j++){
                         for(let i=0; i<response.options?.length; i++){
-                            response.variants[j].variant.options.find(item => item.id == response.options[i]?.option?.id)?.selected = true
+                            response.variants[j].variant.options.find(item => item.id == response.options[i]?.option?.id).selected = true
                         }
                     }
 
