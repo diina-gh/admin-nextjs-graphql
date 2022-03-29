@@ -1,7 +1,7 @@
 import useSWR from 'swr'
 import {GraphQLClient, request} from 'graphql-request'
 import { optionsQuery, optionQuery } from '../graphql/queries'
-import {saveOptionMutation, deleteOptionMutation} from "../graphql/mutations"
+// import {saveOptionMutation, deleteOptionMutation} from "../graphql/mutations"
 import { filterInt } from '../libs/util'
 import Cookies from 'js-cookie'
 
@@ -29,17 +29,17 @@ export async function getOption (id) {
     return {response: data.option}
 }
 
-export async function saveOption (id, name, desc, options) {
-    var newOptions = options.map((item) => ({value: item.value, colorCode: item.colorCode}));
-    var variables = {"id": filterInt(id), "name": name, "desc": desc, "options": newOptions}
-    const data = await graphQLClient.request(saveOptionMutation, variables)
-    console.info("The response : ", data )
-    return {response: data.saveOption }
-}
+// export async function saveOption (id, name, desc, options) {
+//     var newOptions = options.map((item) => ({value: item.value, colorCode: item.colorCode}));
+//     var variables = {"id": filterInt(id), "name": name, "desc": desc, "options": newOptions}
+//     const data = await graphQLClient.request(saveOptionMutation, variables)
+//     console.info("The response : ", data )
+//     return {response: data.saveOption }
+// }
 
-export async function deleteOption (id) {
-    var variables = {"id": filterInt(id)}
-    const data = await graphQLClient.request(deleteOptionMutation, variables)
-    console.info("The response : ", data )
-    return {response: data.deleteOption }
-}
+// export async function deleteOption (id) {
+//     var variables = {"id": filterInt(id)}
+//     const data = await graphQLClient.request(deleteOptionMutation, variables)
+//     console.info("The response : ", data )
+//     return {response: data.deleteOption }
+// }
