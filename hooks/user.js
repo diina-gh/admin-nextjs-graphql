@@ -5,8 +5,9 @@ import {saveUserMutation, deleteUserMutation, loginMutation} from "../graphql/mu
 import { filterInt } from '../libs/util'
 import Cookies from 'js-cookie'
 
-const token = Cookies.get('user_token')
+const token = Cookies.get('userToken')
 const endpoint = "https://trade-two.vercel.app/graphql"
+const graphQLClient0 = new GraphQLClient(endpoint)
 const graphQLClient = new GraphQLClient(endpoint, {headers: {authorization: token,},})
 
 export function getUsers (page = null, take = null, filter= null, orderBy =null) {
@@ -38,7 +39,7 @@ export async function saveUser (id, firstname, lastname, email, phonenumber, rol
 
 export async function login(email, password) {
     var variables = {"email": email, "password": password}
-    const data = await graphQLClient.request(loginMutation, variables)
+    const data = await graphQLClient0.request(loginMutation, variables)
     console.info("The response : ", data )
     return {response: data.login }
 }

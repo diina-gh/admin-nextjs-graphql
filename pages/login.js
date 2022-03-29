@@ -8,10 +8,15 @@ import HeadInfo from '../components/common/headinfo';
 import { login } from '../hooks/user';
 import Cookies from 'js-cookie'
 
-
 var toastOne ;
 
-class Login extends Component {
+export async function getServerSideProps(context) {
+    return {
+      props: {},
+    }
+}
+
+class Login extends Component({error}) {
 
   constructor(props){
     super(props);
@@ -37,20 +42,21 @@ class Login extends Component {
     var {response } = await login(email, password)
 
     if(response?.__typename == 'AuthPayload'){
-        Cookies.set('user_token', response.token)
+        Cookies.set('userToken', response.token)
         Cookies.set('username', response.user.firstname)
         Cookies.set('user_mail', response.user.email)
         Cookies.set('user_image', response.user.image.url)
         toast.dismiss()
-        router.push('./')
+        router.push('/')
     }
     else if(response?.__typename == 'InputError'){
         toast.dismiss()
-        toast.error(response?.message, {id: toastOne,});
         this.setState({block: false})
+        toast.error(response?.message, {id: toastOne,});
     }
     else{
         toast.dismiss()
+        this.setState({block: false})
         toast.error("Erreur inconnue. Veuillez vérifier votre connexion internet.", {id: toastOne,});
     }
 };

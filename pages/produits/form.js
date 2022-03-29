@@ -291,6 +291,17 @@ class Index extends Component {
         toast.success("Variant supprimé !");
     }
 
+    // saveRelatives = (e, product) => {
+    //     e.preventDefault()
+
+    //     const {chosenProducts} = this.state
+    //     var new_products = chosenProducts
+    //     new_products.push(product)
+    //     this.setState({chosenVariants: new_variants});
+    //     toast.success("Variant supprimé !");
+
+    // }
+
 
     checkInput = (e) => {
 

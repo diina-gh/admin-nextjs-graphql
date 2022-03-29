@@ -6,7 +6,7 @@ import { filterInt } from '../libs/util'
 import { ENDPOINTS } from '../libs/constants'
 import Cookies from 'js-cookie'
 
-const token = Cookies.get('user_token')
+const token = Cookies.get('userToken')
 const endpoint = "https://trade-two.vercel.app/graphql"
 const graphQLClient = new GraphQLClient(endpoint, {headers: {authorization: token,},})
 

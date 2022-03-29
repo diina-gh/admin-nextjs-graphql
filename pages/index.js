@@ -4,16 +4,16 @@ import Header from '../components/common/header'
 import Sidebar from '../components/common/sidebar'
 import { motion } from "framer-motion";
 import HeadInfo from '../components/common/headinfo'
+import Cookies from 'js-cookie'
 
 
-export const getServerSideProps = ({ query }) => ({
-    props: query,
-})
+export async function getServerSideProps(context) {
+    return {
+      props: {},
+    }
+}
 
-export default function Home({ name, languages, city, country,}) {
-
-    name = decodeURIComponent(name)
-    city = decodeURIComponent(city)
+export default function Home({userId}) {
 
   return (
     <div className="app-container h-screen">
@@ -53,9 +53,7 @@ export default function Home({ name, languages, city, country,}) {
                     </div>
 
                     <div className='app-rightbar bg-white rounded-xl px-2 py-2'>
-                        <div className='text-sm font-medium'>Pays: <span className='text-green-500'>{country}</span></div>
-                        <div className='text-sm font-medium'>Ville: <span className='text-green-500'>{city}</span></div>
-                        <div className='text-sm font-medium'>Langue: <span className='text-green-500'>{languages}</span></div>
+                        <div className='text-sm font-medium'>userId: <span className='text-green-500'>{userId}</span></div>
 
                     </div>
     

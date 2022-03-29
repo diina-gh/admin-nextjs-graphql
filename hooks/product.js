@@ -5,7 +5,7 @@ import { productsQuery, productQuery } from '../graphql/queries'
 import { saveProductMutation, deleteProductMutation } from '../graphql/mutations'
 import Cookies from 'js-cookie'
 
-const token = Cookies.get('user_token')
+const token = Cookies.get('userToken')
 const endpoint = "https://trade-two.vercel.app/graphql"
 const graphQLClient = new GraphQLClient(endpoint, {headers: {authorization: token,},})
 

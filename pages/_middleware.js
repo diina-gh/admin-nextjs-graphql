@@ -1,23 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { countries } from '../libs/countries'
-import Cookies from 'js-cookie'
-import { getTokenPayload } from '../libs/auth'
+import jwt from "jsonwebtoken";
 
-// const token = Cookies.get('user_token')
+const APP_SECRET = 'GraphQL-is-aw3some';
 
 export function middleware(req) {
 
-    const { nextUrl: url, geo } = req
+    const url = req.nextUrl.clone()
+    const token = req.cookies['userToken'] || null
 
-    const country = geo.country || 'US'
-    const city = geo.city || 'San Francisco'
-
-    const countryInfo = countries.find((x) => x.cca2 === country)
-    const languages = Object.values(countryInfo.languages).join(', ')
-
-    url.searchParams.set('country', country)
-    url.searchParams.set('city', city)
-    url.searchParams.set('languages', languages)
+    if(token != null){
+        try{
+            const {userId} = jwt.verify(token, APP_SECRET);
+            if(userId != null) url.searchParams.set('userId', userId)
+            if(userId == null) url.pathname = '/login'
+        }
+        catch(err){
+            url.pathname = '/login'
+        }
+    }
+    else{
+        url.pathname = '/login'
+    }
 
     return NextResponse.rewrite(url)
 
