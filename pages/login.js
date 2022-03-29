@@ -16,7 +16,7 @@ export async function getServerSideProps(context) {
     }
 }
 
-class Login extends Component({error}) {
+class Login extends Component() {
 
   constructor(props){
     super(props);
