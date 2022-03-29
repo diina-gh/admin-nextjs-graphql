@@ -130,44 +130,69 @@ class Index extends Component {
         this.handleOption = this.handleOption.bind(this)
         this.saveVariant = this.saveVariant.bind(this)
         this.deleteVariant = this.deleteVariant.bind(this)
+        this.saveRelative = this.saveRelative.bind(this)
+        this.deleteRelative = this.deleteRelative.bind(this);
         this.onDescChange = this.onDescChange.bind(this)
         this.refetch = this.refetch.bind(this)
     }
 
     async componentDidMount(){
+
         var itemId = router.query.id
+
         if(itemId !=null){
             this.setState({block: true})
             var {response} = await getProduct(itemId)
+
             if(response?.__typename == 'Product'){
+
                 this.setState(
                     { id: response.id, name: response.name, desc: response.desc, activated: response.activated, unit: response.unit, unitWeight: response.unitWeight, unitPrice: response.unitPrice, order: response.order , 
-                      gender: response.gender, category: response.category, brand: response.brand, chosenVariants: response.variants, chosenOptions: response.options, chosenProducts: response.related, 
+                      gender: response.gender, category: response.category, brand: response.brand, chosenOptions: response.options, chosenProducts: response.related, 
                     }
                 );
+
                 if(response.images != null && response.images.length > 0){
-                    for(let i=1; i< response.images.length; i++){
+                    for(let i=1; i <= 5; i++){
                         this.setState(
                             {
-                                ['image' + i]: response.images[i].url,
-                                ['chosenImage' + i]: response.images[i].url,
-                                ['imageref' + i]: response.images[i].imageref,
-                                ['imageId' + i]: response.images[i].id,
+                                ['image' + i]: response.images.find(item => item.imageref == ('product_'+itemId+i))?.url,
+                                ['chosenImage' + i]: response.images.find(item => item.imageref == ('product_'+itemId+i))?.url,
+                                ['imageref' + i]: response.images.find(item => item.imageref == ('product_'+itemId+i))?.imageref,
+                                ['imageId' + i]: response.images.find(item => item.imageref == ('product_'+itemId+i))?.id,
                             }
                         );
                     }
+
                 }
+
+                if(response.variants != null && response.variants.length > 0){
+
+                    for(let j=0; j < response.variants?.length; j++){
+                        for(let i=0; i<response.options?.length; i++){
+                            response.variants[j].variant.options.find(item => item.id == response.options[i]?.option?.id)?.selected = true
+                        }
+                    }
+
+                    this.setState({chosenVariants: response.variants.map(item => item.variant),})
+                }
+
                 this.setState({block: false})
+
             }
+
             else if(response?.__typename == 'InputError'){
                 toast.error(response.message);
                 router.push('./');
             }
+
             else{
                 toast.error("Erreur inconnue. Veuillez contacter l'administrateur.");
                 router.push('./');
             }
+
         }
+
         this.getCategories()
         this.getBrands()
         this.getVariants()
@@ -199,6 +224,12 @@ class Index extends Component {
         const{page, take, filter, orderBy} = this.state
         var {response} = await allProducts(page, take, filter, orderBy)
         if(response){
+            const {chosenProducts} = this.state
+            if(chosenProducts != null && chosenProducts.length >0){
+                for(let i=0; i<chosenProducts.length; i++){
+                    response.products.find(item => item.id == chosenProducts[i].id).selected = true
+                }
+            }
             this.setState({products: response.products})
         }
     }
@@ -291,16 +322,35 @@ class Index extends Component {
         toast.success("Variant supprimé !");
     }
 
-    // saveRelatives = (e, product) => {
-    //     e.preventDefault()
 
-    //     const {chosenProducts} = this.state
-    //     var new_products = chosenProducts
-    //     new_products.push(product)
-    //     this.setState({chosenVariants: new_variants});
-    //     toast.success("Variant supprimé !");
+    saveRelative = (e, product) => {
 
-    // }
+        e.preventDefault()
+        const {chosenProducts, products} = this.state
+
+        var new_products = products
+        var new_chosen_products = chosenProducts
+
+        new_chosen_products.push(product)
+        new_products.find(item => item.id == product.id).selected = true
+
+        this.setState({chosenProducts: new_chosen_products, products: new_products});
+        toast.success("Produit ajouté !");
+    }
+
+    deleteRelative = (e, index, id) =>{
+        e.preventDefault()
+
+        const {chosenProducts, products} = this.state
+        var new_products = products
+        var new_chosen_products = chosenProducts
+
+        new_chosen_products.splice(index, 1)
+        new_products.find(item => item.id == id).selected = false
+
+        this.setState({chosenProducts: new_chosen_products, products: new_products});
+        toast.success("Produit retiré !");
+    }
 
 
     checkInput = (e) => {
@@ -398,34 +448,16 @@ class Index extends Component {
     uploadImage = async (itemId, i) =>{
 
         const {image1, image2, image3, image4, image5} = this.state
-        var ref = "product_" + i + itemId
+        var image
 
-        var storage = firebase.storage().ref(`images/${ref}`);
-        var upload = storage.put(['image' + i]);
+        if(i == 1){image = image1} 
+        else if(i == 2){image = image2}
+        else if(i == 3){image = image3}
+        else if(i == 4){image = image4}
+        else if(i == 5){image = image5}
 
-        upload.on("state_changed",
-          function progress(snapshot) {
-            var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log("progress ..", percentage);
-          },
-
-          function error(err) { console.log("error uploading file ", err);},
-
-          async function complete() {
-            await firebase.storage().ref("images").child(ref).getDownloadURL().then(url => {
-                this.saveImageInfo(url, ref, itemId, i)
-            });
-          }
-
-        );
-
-    }
-
-
-    uploadImage0 = async (itemId, i) =>{
-        const {image1, image2, image3, image4, image5} = this.state
-        var ref = "product_" + i + itemId
-        const uploadTask = firebase.storage().ref(`images/${ref}`).put(['image' + i]);
+        var ref = "product_" + itemId + i 
+        const uploadTask = firebase.storage().ref(`images/${ref}`).put(image);
         uploadTask.on("state_changed",snapshot => {
             const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
             console.log("progress ..", progress);
@@ -436,17 +468,40 @@ class Index extends Component {
               });
           }
         );
+
     };
 
     saveImageInfo = async (url, ref, itemId, i) => {
+
         const {imageId1, imageId2, imageId3, imageId4, imageId5} = this.state
-        var {response } = await saveImage(['imageId' + i], url, ref, itemId)
+        var imageId
+
+        if(i == 1){imageId = imageId1} 
+        else if(i == 2){imageId = imageId2}
+        else if(i == 3){imageId = imageId3}
+        else if(i == 4){imageId = imageId4}
+        else if(i == 5){imageId = imageId5}
+
+        var {response } = await saveImage(imageId, url, ref, itemId)
+
+        if(response?.__typename == 'Image'){
+            toast.success("Image " + i + " ajoutée !", {id: toastOne,});
+            if(i == 5){
+                toast.dismiss()
+                toast.success("Mise à jour terminée !", {id: toastOne,});
+                setTimeout(() => {router.push('./');}, 2500);
+            }
+        }
 
         if(response?.__typename == 'InputError'){
+            toast.dismiss()
+            this.setState({block: false})
             console.log("ImageInfo mutation ", response?.message)
             toast.error("Une erreur s'est produite lors de l'ajout de l'image " + i, {id: toastOne,});
         }
         else{
+            toast.dismiss()
+            this.setState({block: false})
             toast.error("Erreur inconnue. Veuillez vérifier votre connexion internet.", {id: toastOne,});
         }
     };
@@ -907,7 +962,7 @@ class Index extends Component {
                                                                                                 </tr>
                                                                                             </thead>
                                                                                             <tbody className="bg-white divide-y divide-gray-200">
-                                                                                                {item.options.map((item2, i2) => (
+                                                                                                {item.options?.map((item2, i2) => (
                                                                                                     <tr key={item2.id} className={(i2%2==0) ? "" : "bg-gray-100 bg-opacity-50"}>
                                                                                                         <td className="px-6 py-3 whitespace-nowrap">
                                                                                                             <div className="text-[0.8rem] text-gray-900">{i2+1}</div>

@@ -503,57 +503,60 @@ export const productsQuery = gql `
 
 export const productQuery = gql `
     query($id: Int){
-        product(id: $id) {
-            id
-            name
-            desc
-            details
-            activated
-            status
-            unit
-            unitweight
-            unitprice
-            ranking
-            order
-            likes
-            views
-            createdat
-            category {
+        product(id: $id){
+            __typename
+            ... on Product{
                 id
                 name
-            }
-            images {
-                id
-                url
-            }
-            brand {
-                id
-                name
-            }
-            variants {
-                variantId
-                variant {
+                desc
+                activated
+                unit
+                unitprice
+                unitweight
+                order
+                gender
+                categoryId
+                category{
                     id
                     name
-                    desc
                 }
-            }
-            options {
-                optionId
-                option {
+                brandId
+                brand{
                     id
-                    value
+                    name
+                }
+                variants {
+                    variant {
+                        id
+                        name
+                        desc
+                        options {
+                            id
+                            value
+                            colorCode
+                        }
+                    }
+                }
+                options {
+                    optionId
+                    option {
+                        id
+                        value
+                        colorCode
+                    }
+                }
+                images {
+                    id
+                    url
+                    imageref
                 }
             }
-            discount {
-                id
-                percent
-            }
-            inventory {
-                id
-                quantity
+            ... on InputError{
+                message
+                input
             }
         }
+            
     }
 `
 
