@@ -39,7 +39,7 @@ class Index extends Component {
 
     constructor(props){
         super(props);
-        this.state = { block: false, id:null, firstname: 'Seydina', lastname: 'GUEYE', email:'dina3903@gmail.com', phonenumber: '+221781234997', filteredClients: people, selectedClient:null, query: ''};
+        this.state = { block: false, id:null, firstname: 'Seydina', lastname: 'GUEYE', email:'dina3903@gmail.com', phonenumber: '+221781234997', addresses: [], filteredClients: people, selectedClient:null, query: ''};
         this.checkInput = this.checkInput.bind(this)
         this.saveItem = this.saveItem.bind(this)
         this,this.filterItems = this.filterItems.bind(this)
