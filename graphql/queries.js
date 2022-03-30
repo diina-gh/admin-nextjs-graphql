@@ -550,6 +550,20 @@ export const productQuery = gql `
                     url
                     imageref
                 }
+                relatives {
+                    related {
+                    id
+                    name
+                    unit
+                    category {
+                        id
+                        name
+                    }
+                    images {
+                        url
+                    }
+                    }
+                }
             }
             ... on InputError{
                 message

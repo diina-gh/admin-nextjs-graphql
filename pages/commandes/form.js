@@ -6,20 +6,25 @@ import Sidebar from '../../components/common/sidebar'
 import HeadInfo from '../../components/common/headinfo'
 import ArrowLeftBoldIcon from '../../components/ui/icons/arrowLeftBoldIcon';
 import InfoBoldIcon from '../../components/ui/icons/infoBoldIcon';
-import { saveImage, deleteImage } from '../../hooks/image';
 import { saveCategory, getCategory} from '../../hooks/category';
-import {allCategories } from '../../hooks/category';
 import router from 'next/router'
 import BlockUI from '../../components/common/blockui';
 import toast, { Toaster } from 'react-hot-toast';
-import { Listbox, Transition } from '@headlessui/react'
+import { Listbox, Combobox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 import { classNames } from '../../libs/util';
 import { Switch } from '@headlessui/react'
-import ImageHolder from '../../components/ui/icons/imageHolder';
 import { capitalize } from '../../libs/util';
 import TrashIcon from '../../components/ui/icons/trashIcon';
-import firebase from "../../config/firebase"
+
+const people = [
+  { id: 1, name: 'Wade Cooper' },
+  { id: 2, name: 'Arlene Mccoy' },
+  { id: 3, name: 'Devon Webb' },
+  { id: 4, name: 'Tom Cook' },
+  { id: 5, name: 'Tanya Fox' },
+  { id: 6, name: 'Hellen Schmidt' },
+]
 
 export async function getServerSideProps(context) {
     return {
@@ -34,14 +39,10 @@ class Index extends Component {
 
     constructor(props){
         super(props);
-        this.state = { block: false, id:null, itemType: null, name: '', desc: '', order: 0, activated: false, parent: null, parents : [], image: null, chosenImage:null, imageref:null, imageId: null};
+        this.state = { block: false, id:null, firstname: 'Seydina', lastname: 'GUEYE', email:'dina3903@gmail.com', phonenumber: '+221781234997', filteredClients: people, selectedClient:null, query: ''};
         this.checkInput = this.checkInput.bind(this)
         this.saveItem = this.saveItem.bind(this)
-        this.getParents = this.getParents.bind(this)
-        this.handleImage = this.handleImage.bind(this)
-        this.resetImage = this.resetImage.bind(this)
-        this.uploadImage = this.uploadImage.bind(this)
-        this.saveImageInfo = this.saveImageInfo.bind(this)
+        this,this.filterItems = this.filterItems.bind(this)
     }
 
     async componentDidMount(){
@@ -63,25 +64,14 @@ class Index extends Component {
                 router.push('./');
             }
         }
-        this.getParents()
     }
 
-    handleImage = (e, option) => {
-        e.preventDefault(); 
-        this.setState({[option]:e.target.files[0], ['chosen' + capitalize(option)]: URL.createObjectURL(e.target.files[0])  })
-    }
-
-    resetImage = (e, option) =>{
-        e.preventDefault();
-        this.setState({[option]: null, ['chosen' + capitalize(option)]: null })
-    }
-
-    getParents = async() => {
-        var {response} = await allCategories()
-        if(response){
-            console.lo
-            this.setState({parents: response.categories})
-        }
+    filterItems = (e) =>{
+        e.preventDefault()
+        this.setState({query: e.target.value})
+        const {query} = this.state
+        this.setState({filteredClients: query === '' ? people : people.filter((person) => person.name.toLowerCase().replace(/\s+/g, '').includes(query.toLowerCase().replace(/\s+/g, ''))) })
+        if(query == '') this.setState({selectedClient: null})
     }
 
     checkInput = (e) => {
@@ -127,77 +117,15 @@ class Index extends Component {
 
     };
 
-    handleUpload = (itemId) => {
-
-        const { id, image, chosenImage, imageref, imageId } = this.state
-
-        if(imageref != null){ 
-            if(image == chosenImage){
-                toast.success("Mise à jour réussie !", {id: toastOne,});
-                this.setState({block: false})
-                return null
-            }
-            else{
-                firebase.storage().ref(`images/${imageref}`).delete().then(async() => {
-                    console.log("File deleted successfuly");
-                    this.uploadImage(itemId);
-                }).catch((error) => {
-                    console.log("Uh-oh, an error occurred: ", error);
-                    if(error.code == 'storage/object-not-found') this.uploadImage(itemId);
-                });
-            }     
-        }
-        else{
-            this.uploadImage(itemId);
-        }
-    };
-
-
-    uploadImage = (itemId) =>{
-        const {image} = this.state
-        var ref = "category_" + itemId
-        const uploadTask = firebase.storage().ref(`images/${ref}`).put(image);
-        uploadTask.on("state_changed",snapshot => {
-            const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-            console.log("progress ..", progress);
-          },error => {console.log(error);},
-          () => {
-              firebase.storage().ref("images").child(ref).getDownloadURL().then(url => {
-                this.saveImageInfo(url, ref, itemId)
-              });
-          }
-        );
-    };
-
-    saveImageInfo = async (url, ref, itemId) => {
-
-        const {imageId} = this.state
-        var {response } = await saveImage(imageId, url, ref, null, null, null, itemId)
-
-        if(response?.__typename == 'Image'){
-            toast.dismiss()
-            toast.success("Mise à jour réussie !", {id: toastOne,});
-        }
-        else if(response?.__typename == 'InputError'){
-            console.log("ImageInfo mutation ", response?.message)
-            toast.error("Une erreur s'est produite lors de l'ajout de l'image !", {id: toastOne,});
-        }
-        else{
-            toast.error("Erreur inconnue. Veuillez vérifier votre connexion internet.", {id: toastOne,});
-        }
-
-        this.setState({block: false})
-        setTimeout(() => {
-            toast.dismiss()
-            router.push('./');
-        }, 2250);
-
-    };
+   
 
     render() {
 
-        const {parent, parents, activated, chosenImage, itemType} = this.state
-        var imageInput;
+        const {filteredClients, selectedClient, query} = this.state
+
+        let class_type_1 = "mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2"
+        let class_type_2 = "mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-0 focus:border focus:border-gray-400 shadow-inner bg-gray-50 bg-opacity-95 rounded-md px-2"
+
 
         return(
             <div className="app-container h-screen">
@@ -233,9 +161,115 @@ class Index extends Component {
                                     </div>
         
                                     <div className='app-form overflow-y-auto mt-3 px-5'>
+
+                                        <div className='text-base font-semibold text-purple-600 mt-4 mb-3 ml-1'>Informations générales</div>
+
+                                        <div className='w-full grid grid-cols-3 grid-flow-row gap-6 bg-gray-200 bg-opacity-80 rounded-xl px-5 py-5'>
+                                            
+                                            <div className="w-full mb-4">
+                                                <label htmlFor="name" className="block text-sm font-medium text-gray-900">Type de comande</label>
+                                                <input type="text" value={this.state.name} onChange={(e) => this.setState({name:e.target.value }) }  name="name" id="name" autoComplete="title" placeholder="Désignation" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2"/>
+                                            </div>
+
+                                            <div className="mb-4">
+                                                <label htmlFor="order" className="block text-sm font-medium text-gray-900">Mode de paiement</label>
+                                                <input type="number" value={this.state.order} onChange={(e) => this.setState({order:e.target.value }) }  name="order" id="order" autoComplete="order" placeholder="Ordre" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2"/>
+                                            </div>
+
+                                        </div>
+
+                                        <div className='divider w-full h-[1px] bg-gray-400 bg-opacity-30 mt-8 mb-4'></div>
+                                        <div className='text-base font-semibold text-purple-600 mt-4 mb-3 ml-1'>Informations du client</div>
         
-                                        <div className='w-full grid grid-cols-3 grid-flow-row gap-6 bg-gray-200 bg-opacity-80 rounded-xl px-5 py-5 mt-6'>
-                    
+                                        <div className='w-full grid grid-cols-3 grid-flow-row gap-6 bg-gray-200 bg-opacity-80 rounded-xl px-5 py-5'>
+
+                                            <div className="col-span-3 mb-2">
+                                                <label htmlFor="client" className="block text-sm font-medium text-gray-900">Choisir un client</label>
+                                                <Combobox value={selectedClient} onChange={(e) => this.setState({selectedClient: e})}>
+                                                    <div className="relative mt-1">
+                                                        <div className="relative w-full text-left bg-white rounded-md shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-purple-300 focus-visible:ring-offset-2 sm:text-sm overflow-hidden">
+                                                            <Combobox.Input displayValue={(person) => person != null ? person.name : ''} onChange={(e) => this.filterItems(e)} className="w-full rounded-md border border-gray-400 focus:border-2 focus:border-purple-500 py-[0.535rem] px-3 text-sm leading-5 text-gray-900" placeholder="Rechercher un prénom, nom ou adresse email"/>
+                                                            <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
+                                                                <SelectorIcon className="w-5 h-5 text-gray-400" aria-hidden="true" />
+                                                            </Combobox.Button>
+                                                        </div>
+                                                        <Transition as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0" afterLeave={() => this.setState({query: ''})}>
+                                                            <Combobox.Options className="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-64 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                                                                {filteredClients.length === 0 && query !== '' ? (
+                                                                    <div className="cursor-default select-none relative py-2 px-3 text-gray-700">
+                                                                        Nothing found.
+                                                                    </div>
+                                                                ) : (
+                                                                    filteredClients.map((person) => (
+                                                                        <Combobox.Option key={person.id} className={({ active }) => `cursor-default select-none relative py-2 px-4 ${active ? 'text-white bg-purple-600' : 'text-gray-900'}`} value={person}>
+                                                                            {({ selectedClient, active }) => (
+                                                                                <div className='w-full flex flex-row justify-between'>
+
+                                                                                    <div className='flex flex-row self-center'>
+
+                                                                                        <div className='w-8 h-8 rounded-full bg-gray-500 self-center mr-3'>
+                                                                                        </div>
+
+                                                                                        <div className='self-center'>
+                                                                                            <span className={`block truncate ${ selectedClient ? 'font-medium' : 'font-normal'}`}>
+                                                                                                {person.name}
+                                                                                            </span>
+                                                                                        </div>
+
+                                                                                    </div>
+                                                                                    
+                                                                                    <div className='self-center'>
+                                                                                        {selectedClient || active ? (
+                                                                                            <span className={`${active ? 'text-white' : 'text-purple-600'}`}>
+                                                                                                <CheckIcon className="w-5 h-5" aria-hidden="true" />
+                                                                                            </span>
+                                                                                        ) : null}
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            )}
+                                                                        </Combobox.Option>
+                                                                    ))
+                                                                )}
+                                                            </Combobox.Options>
+                                                        </Transition>
+                                                    </div>
+                                                </Combobox>
+                                            </div>
+
+                
+                                            <div className="mb-3">
+                                                <label htmlFor="name" className="block text-sm font-medium text-gray-900">Prénom</label>
+                                                <input type="text" readOnly={selectedClient != null} value={this.state.firstname} onChange={(e) => this.setState({firstname:e.target.value }) }  name="firstname" id="firstname" autoComplete="firstname" placeholder="" className={selectedClient != null ? class_type_2 : class_type_1}/>
+                                            </div>
+
+                                            <div className="mb-3">
+                                                <label htmlFor="order" className="block text-sm font-medium text-gray-900">Nom</label>
+                                                <input type="text" readOnly={selectedClient != null} value={this.state.lastname} onChange={(e) => this.setState({lastname:e.target.value }) }  name="lastname" id="lastname" autoComplete="lastname" placeholder="" className={selectedClient != null ? class_type_2 : class_type_1}/>
+                                            </div>
+
+                                            <div className="mb-3">
+                                                <label htmlFor="order" className="block text-sm font-medium text-gray-900">Adresse email</label>
+                                                <input type="text" readOnly={selectedClient != null} value={this.state.email} onChange={(e) => this.setState({email:e.target.value }) }  name="email" id="email" autoComplete="email" placeholder="" className={selectedClient != null ? class_type_2 : class_type_1}/>
+                                            </div>
+
+                                            <div className="mb-3">
+                                                <label htmlFor="order" className="block text-sm font-medium text-gray-900">Téléphone</label>
+                                                <input type="text" readOnly={selectedClient != null} value={this.state.phonenumber} onChange={(e) => this.setState({phonenumber:e.target.value }) }  name="phonenumber" id="phonenumber" autoComplete="phonenumber" placeholder="" className={selectedClient != null ? class_type_2 : class_type_1}/>
+                                            </div>
+
+                                            <div className="mb-3">
+                                                <label htmlFor="order" className="block text-sm font-medium text-gray-900">Adresse</label>
+                                                <input type="text"  name="phonenumber" id="phonenumber" autoComplete="phonenumber" placeholder="" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2"/>
+                                            </div>
+
+                                        </div>
+
+                                        <div className='divider w-full h-[1px] bg-gray-400 bg-opacity-30 mt-8 mb-4'></div>
+                                        <div className='text-base font-semibold text-purple-600 mb-3 ml-1'>Panier</div>
+
+                                        <div className='w-full grid grid-cols-3 grid-flow-row gap-6 bg-gray-200 bg-opacity-80 rounded-xl px-5 py-5'>
+                                            
                                             <div className="w-full mb-4">
                                                 <label htmlFor="name" className="block text-sm font-medium text-gray-900">Désignation</label>
                                                 <input type="text" value={this.state.name} onChange={(e) => this.setState({name:e.target.value }) }  name="name" id="name" autoComplete="title" placeholder="Désignation" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2"/>
@@ -245,69 +279,7 @@ class Index extends Component {
                                                 <label htmlFor="order" className="block text-sm font-medium text-gray-900">Ordre</label>
                                                 <input type="number" value={this.state.order} onChange={(e) => this.setState({order:e.target.value }) }  name="order" id="order" autoComplete="order" placeholder="Ordre" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2"/>
                                             </div>
-        
-                                            <div className="mb-4">
-                                                <label htmlFor="desc" className="block text-sm font-medium text-gray-900 mb-1">Visiblité</label>
-                                                <Switch checked={activated} onChange={(e) => this.setState({activated: e})} className={`${activated ? 'bg-purple-600 bg-opacity-80 shadow-sm' : 'bg-white bg-opacity-80 shadow-sm'} relative inline-flex flex-shrink-0 h-[34px] w-[70px] border border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}>
-                                                    <span className="sr-only">Use setting</span>
-                                                    <span aria-hidden="true" className={`${activated ? 'translate-x-9' : 'translate-x-0'} pointer-events-none inline-block h-[29.5px] w-[29.5px] rounded-full bg-white shadow-lg transform ring-0 transition ease-in-out duration-200 border border-gray-200 border-opacity-80 self-center`}/>
-                                                </Switch>
-                                            </div>
 
-                                            {itemType == 2 &&
-                                                <div className='mb-4'>
-                                                    <Listbox value={parent} onChange={(e) => this.setState({parent: e})}>
-                                                        {({ open }) => (
-                                                            <>
-                                                            <Listbox.Label className="block text-sm font-medium text-gray-900">Choisir un parent <span className='font-bold text-purple-600'>*</span></Listbox.Label>
-                                                            <div className="mt-1 relative">
-                                                                <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 sm:text-sm">
-                                                                    <span className="flex items-center">
-                                                                        <span className="ml-3 block truncate capitalize">{parent ? parent.name : 'Choisir un parent'}</span>
-                                                                    </span>
-                                                                    <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                                                                        <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-                                                                    </span>
-                                                                </Listbox.Button>
-
-                                                                {parents?.length > 0 &&
-
-                                                                    <Transition show={open} as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
-                                                                        <Listbox.Options className="absolute sticky mt-1 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
-                                                                            {parents?.map((item) => (
-                                                                            <Listbox.Option key={item.id} className={({ active }) => classNames(active ? 'text-white bg-purple-600' : 'text-gray-900','cursor-pointer select-none relative py-2 pl-3 pr-9')} value={item}>
-                                                                                {({ parent, active }) => (
-                                                                                <>
-                                                                                    <div className="flex items-center">
-                                                                                        <span className={classNames(parent ? 'font-semibold' : 'font-normal', 'ml-3 block truncate capitalize')}>
-                                                                                            {item.name}
-                                                                                        </span>
-                                                                                    </div>
-
-                                                                                    {parent || active &&
-                                                                                        <span className={classNames(active ? 'text-white' : 'text-indigo-600','absolute inset-y-0 right-0 flex items-center pr-4')}>
-                                                                                            <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                                                                                        </span>
-                                                                                    }
-
-                                                                                </>
-                                                                                )}
-                                                                            </Listbox.Option>
-                                                                            ))}
-                                                                        </Listbox.Options>
-                                                                    </Transition>
-
-                                                                }
-
-                                                            </div>
-                                                            </>
-                                                        )}
-                                                    </Listbox>
-                                                </div>
-                                            }
-
-                                        
-        
                                         </div>
             
                                     </div>

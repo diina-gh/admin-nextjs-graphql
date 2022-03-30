@@ -174,7 +174,7 @@ class Index extends Component {
                                                 <p className="mt-2 text-xs text-gray-600">ⓘ Le code d&#39;une région doit comporter 2 charactères.</p>
                                             </div>
 
-                                            <div className='w-full mb-1 '>
+                                            <div className='w-full mb-1'>
                                                 <Listbox value={country} onChange={(e) => this.setState({country: e})}>
                                                     {({ open }) => (
                                                         <>

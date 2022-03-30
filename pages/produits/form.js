@@ -42,53 +42,6 @@ var Editor = dynamic(() => import("../../components/common/editor"), {
 
 var genders = ['UNISEX', 'HOMME', 'FEMME']
 
-const products = [
-
-    {
-        id: 1,
-        name: 'Macbook Pro',
-        category: 'Oridnateurs',
-        price: '780 000 CFA',
-        image: "../images/product/product1.png",
-    },
-    {
-        id: 2,
-        name: 'Ipad Air',
-        category: 'Tablette',
-        price: '575 000 CFA',
-        image: "../images/product/product4.png",
-    },
-    {
-        id: 3,
-        name: 'Iphone 13 Pro',
-        category: 'Phone',
-        price: '880 000 CFA',
-        image: "../images/product/product3.png",
-    },
-    {
-        id: 4,
-        name: 'Smart Watch',
-        category: 'Smart Watch',
-        price: '450 000 CFA',
-        image: "../images/product/product5.png",
-    },
-    {
-        id: 5,
-        name: 'Homepod mini',
-        category: 'Acessories',
-        price: '265 000 CFA',
-        image: "../images/product/product6.png",
-    },
-    // {
-    //     id: 6,
-    //     name: 'Airpod Pro',
-    //     category: 'Acessories',
-    //     price: '140 000 CFA',
-    //     image: "../images/product/product7.png",
-    // }
-
-]
-
 
 export async function getServerSideProps(context) {
     return {
@@ -148,7 +101,7 @@ class Index extends Component {
 
                 this.setState(
                     { id: response.id, name: response.name, desc: response.desc, activated: response.activated, unit: response.unit, unitWeight: response.unitWeight, unitPrice: response.unitPrice, order: response.order , 
-                      gender: response.gender, category: response.category, brand: response.brand, chosenOptions: response.options, chosenProducts: response.related, 
+                      gender: response.gender, category: response.category, brand: response.brand, chosenOptions: response.options, chosenProducts: response.related == null ? response.related : [] , 
                     }
                 );
 
@@ -510,8 +463,8 @@ class Index extends Component {
 
         const 
             { 
-                desc, activated, gender, category, categories, brand, brands,chosenVariants, variant_res, variants, chosenOptions, 
-                options, chosenProducts, chosenImage1, chosenImage2, chosenImage3, chosenImage4, chosenImage5, checkedAll
+                desc, activated, gender, category, categories, brand, brands,chosenVariants, variant_res, variants, 
+                products, chosenProducts, chosenImage1, chosenImage2, chosenImage3, chosenImage4, chosenImage5, checkedAll
             } 
         = this.state
 
@@ -692,43 +645,74 @@ class Index extends Component {
         
                                         <div className='w-full grid grid-cols-3 grid-flow-row gap-5 bg-gray-200 bg-opacity-60 rounded-xl px-4 py-5'>
         
-                                            <div className="w-full mb-4">
+                                            <div className="mb-4">
                                                 <label htmlFor="name" className="block text-sm font-medium text-gray-900">Désignation <span className='font-bold text-purple-600'>*</span></label>
                                                 <input type="text" value={this.state.name} onChange={(e) => this.setState({name:e.target.value }) } name="name" id="name" autoComplete="name" placeholder="Désignation" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2"/>
                                             </div>
         
-                                            <div className="w-full mb-4">
+                                            <div className="mb-4">
                                                 <label htmlFor="name" className="block text-sm font-medium text-gray-900">Unité <span className='font-bold text-purple-600'>*</span></label>
                                                 <input type="text" value={this.state.unit} onChange={(e) => this.setState({unit:e.target.value }) } name="unit" id="unit" autoComplete="unit" placeholder="unité" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2"/>
                                             </div>
         
-                                            <div className="w-full mb-4">
+                                            <div className="mb-4">
                                                 <label htmlFor="name" className="block text-sm font-medium text-gray-900">Prix par unité <span className='font-bold text-purple-600'>*</span></label>
                                                 <input type="nomber" value={this.state.unitPrice} onChange={(e) => this.setState({unitPrice:e.target.value }) }  name="unitPrice" id="unitPrice" autoComplete="unitPrice" placeholder="prix par unité" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2"/>
                                             </div>
         
-                                            <div className="w-full mb-4">
+                                            <div className="mb-4">
                                                 <label htmlFor="name" className="block text-sm font-medium text-gray-900">Poids par unité</label>
                                                 <input type="number" value={this.state.unitWeight} onChange={(e) => this.setState({unitWeight:e.target.value }) }  name="unitWeight" id="unitWeight" autoComplete="weight" placeholder="poids par unité" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2"/>
                                             </div>
         
-                                            <div className="w-full mb-4">
+                                            <div className="mb-4">
                                                 <label htmlFor="name" className="block text-sm font-medium text-gray-900">Ordre</label>
                                                 <input type="text" value={this.state.order} onChange={(e) => this.setState({order:e.target.value }) }  name="order" id="order" autoComplete="order" placeholder="Ordre" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2"/>
                                             </div>
-        
-                                            <div className="flex flex-row -mt-4">
-                                                <div className="self-center ml-1">
-                                                    <label htmlFor="desc" className="block text-sm font-medium text-gray-900 mb-1">Visiblité</label>
-                                                    <Switch checked={activated} onChange={(e) => this.setState({activated: e})} className={`${activated ? 'bg-purple-600 bg-opacity-80 shadow-sm' : 'bg-white bg-opacity-80 shadow-sm'} relative inline-flex flex-shrink-0 h-[34px] w-[70px] border border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}>                                                    
-                                                        <span className="sr-only">Use setting</span>
-                                                        <span
-                                                        aria-hidden="true"
-                                                        className={`${activated ? 'translate-x-9' : 'translate-x-0'}
-                                                            pointer-events-none inline-block h-[29.5px] w-[29.5px] rounded-full bg-white shadow-lg transform ring-0 transition ease-in-out duration-200 border border-gray-200 border-opacity-80 self-center`}
-                                                        />
-                                                    </Switch>
-                                                </div>
+
+                                            <div className='mb-6'>
+                                                <Listbox value={gender} onChange={(e) => this.setState({gender:e})}>
+                                                    {({ open }) => (
+                                                        <>
+                                                        <Listbox.Label className="block text-sm font-medium text-gray-900">Sexe <span className='font-bold text-purple-600'>*</span></Listbox.Label>
+                                                        <div className="mt-1 relative">
+                                                            <Listbox.Button className="relative w-full bg-white border border-gray-400 rounded-md shadow-sm pl-3 pr-10 py-[0.525rem] text-left cursor-default focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 sm:text-sm">
+                                                                <span className="flex items-center">
+                                                                    <span className="ml-3 block truncate">{gender ? gender : 'Choisir un sexe'}</span>
+                                                                </span>
+                                                                <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                                                                    <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                                                                </span>
+                                                            </Listbox.Button>
+
+                                                            <Transition show={open} as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
+                                                                <Listbox.Options className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
+                                                                    {genders.map((item) => (
+                                                                    <Listbox.Option key={item.id} className={({ active }) => classNames(active ? 'text-white bg-purple-600' : 'text-gray-900','cursor-pointer select-none relative py-2 pl-3 pr-9')} value={item}>
+                                                                        {({ gender, active }) => (
+                                                                        <>
+                                                                            <div className="flex items-center">
+                                                                                <span className={classNames(gender == item ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}>
+                                                                                    {item}
+                                                                                </span>
+                                                                            </div>
+
+                                                                            {gender || active &&
+                                                                                <span className={classNames(active ? 'text-white' : 'text-indigo-600','absolute inset-y-0 right-0 flex items-center pr-4')}>
+                                                                                    <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                                                                </span>
+                                                                            }
+
+                                                                        </>
+                                                                        )}
+                                                                    </Listbox.Option>
+                                                                    ))}
+                                                                </Listbox.Options>
+                                                            </Transition>
+                                                        </div>
+                                                        </>
+                                                    )}
+                                                </Listbox>
                                             </div>
         
         
@@ -741,41 +725,40 @@ class Index extends Component {
                                                 </div>
         
                                                 <div className=''>
-        
-        
-                                                    <div className='mb-6'>
-                                                        <Listbox value={gender} onChange={(e) => this.setState({gender:e})}>
+                                                    
+                                                    <div className='mb-8'>
+                                                        <Listbox value={category} onChange={(e) => this.setState({category: e})}>
                                                             {({ open }) => (
                                                                 <>
-                                                                <Listbox.Label className="block text-sm font-medium text-gray-900">Sexe <span className='font-bold text-purple-600'>*</span></Listbox.Label>
+                                                                <Listbox.Label className="block text-sm font-medium text-gray-900">Catégorie <span className='font-bold text-purple-600'>*</span></Listbox.Label>
                                                                 <div className="mt-1 relative">
-                                                                    <Listbox.Button className="relative w-full bg-white border border-gray-400 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 sm:text-sm">
+                                                                    <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-[0.525rem] text-left cursor-default focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 sm:text-sm">
                                                                         <span className="flex items-center">
-                                                                            <span className="ml-3 block truncate">{gender ? gender : 'Choisir un sexe'}</span>
+                                                                            <span className="ml-3 block truncate">{category ? capitalize(category.name) : 'Choisir une catégorie'}</span>
                                                                         </span>
                                                                         <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                                                                             <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
                                                                         </span>
                                                                     </Listbox.Button>
-        
+    
                                                                     <Transition show={open} as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
-                                                                        <Listbox.Options className="absolute sticky mt-1 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
-                                                                            {genders.map((item) => (
+                                                                        <Listbox.Options className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
+                                                                            {categories.map((item) => (
                                                                             <Listbox.Option key={item.id} className={({ active }) => classNames(active ? 'text-white bg-purple-600' : 'text-gray-900','cursor-pointer select-none relative py-2 pl-3 pr-9')} value={item}>
-                                                                                {({ gender, active }) => (
+                                                                                {({ category, active }) => (
                                                                                 <>
                                                                                     <div className="flex items-center">
-                                                                                        <span className={classNames(gender == item ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}>
-                                                                                            {item}
+                                                                                        <span className={classNames(category ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}>
+                                                                                            {capitalize(item.name)}
                                                                                         </span>
                                                                                     </div>
-        
-                                                                                    {gender || active &&
+    
+                                                                                    {category || active &&
                                                                                         <span className={classNames(active ? 'text-white' : 'text-indigo-600','absolute inset-y-0 right-0 flex items-center pr-4')}>
                                                                                             <CheckIcon className="h-5 w-5" aria-hidden="true" />
                                                                                         </span>
                                                                                     }
-        
+    
                                                                                 </>
                                                                                 )}
                                                                             </Listbox.Option>
@@ -788,60 +771,15 @@ class Index extends Component {
                                                         </Listbox>
                                                     </div>
         
-                                                    <div className='mb-6'>
-                                                            <Listbox value={category} onChange={(e) => this.setState({category: e})}>
-                                                                {({ open }) => (
-                                                                    <>
-                                                                    <Listbox.Label className="block text-sm font-medium text-gray-900">Catégorie <span className='font-bold text-purple-600'>*</span></Listbox.Label>
-                                                                    <div className="mt-1 relative">
-                                                                        <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 sm:text-sm">
-                                                                            <span className="flex items-center">
-                                                                                <span className="ml-3 block truncate">{category ? category.name : 'Choisir une catégorie'}</span>
-                                                                            </span>
-                                                                            <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                                                                                <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-                                                                            </span>
-                                                                        </Listbox.Button>
-        
-                                                                        <Transition show={open} as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
-                                                                            <Listbox.Options className="absolute sticky mt-1 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
-                                                                                {categories.map((item) => (
-                                                                                <Listbox.Option key={item.id} className={({ active }) => classNames(active ? 'text-white bg-purple-600' : 'text-gray-900','cursor-pointer select-none relative py-2 pl-3 pr-9')} value={item}>
-                                                                                    {({ category, active }) => (
-                                                                                    <>
-                                                                                        <div className="flex items-center">
-                                                                                            <span className={classNames(category ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}>
-                                                                                                {item.name}
-                                                                                            </span>
-                                                                                        </div>
-        
-                                                                                        {category || active &&
-                                                                                            <span className={classNames(active ? 'text-white' : 'text-indigo-600','absolute inset-y-0 right-0 flex items-center pr-4')}>
-                                                                                                <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                                                                                            </span>
-                                                                                        }
-        
-                                                                                    </>
-                                                                                    )}
-                                                                                </Listbox.Option>
-                                                                                ))}
-                                                                            </Listbox.Options>
-                                                                        </Transition>
-                                                                    </div>
-                                                                    </>
-                                                                )}
-                                                            </Listbox>
-                                                    </div>
-        
-                                                    <div className=''>
+                                                    <div className='mb-8'>
                                                         <Listbox value={brand} onChange={(e) => this.setState({brand: e})}>
                                                             {({ open }) => (
                                                                 <>
                                                                 <Listbox.Label className="block text-sm font-medium text-gray-900">Marque <span className='font-bold text-purple-600'>*</span></Listbox.Label>
                                                                 <div className="mt-1 relative">
-                                                                    <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 sm:text-sm">
+                                                                    <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-[0.525rem] text-left cursor-default focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 sm:text-sm">
                                                                         <span className="flex items-center">
-                                                                            <span className="ml-3 block truncate">{brand ? brand.name : 'Choisir une marque'}</span>
+                                                                            <span className="ml-3 block truncate">{brand ? capitalize(brand.name) : 'Choisir une marque'}</span>
                                                                         </span>
                                                                         <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                                                                             <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -849,14 +787,14 @@ class Index extends Component {
                                                                     </Listbox.Button>
         
                                                                     <Transition show={open} as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
-                                                                        <Listbox.Options className="absolute sticky mt-1 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
+                                                                        <Listbox.Options className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
                                                                             {brands.map((item) => (
                                                                             <Listbox.Option key={item.id} className={({ active }) => classNames(active ? 'text-white bg-purple-600' : 'text-gray-900','cursor-pointer select-none relative py-2 pl-3 pr-9')} value={item}>
                                                                                 {({ brand, active }) => (
                                                                                 <>
                                                                                     <div className="flex items-center">
                                                                                         <span className={classNames(brand ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}>
-                                                                                            {item.name}
+                                                                                            {capitalize(item.name)}
                                                                                         </span>
                                                                                     </div>
         
@@ -876,6 +814,20 @@ class Index extends Component {
                                                                 </>
                                                             )}
                                                         </Listbox>
+                                                    </div>
+
+                                                    <div className="flex flex-row">
+                                                        <div className="self-center ml-1">
+                                                            <label htmlFor="desc" className="block text-sm font-medium text-gray-900 mb-1">Visiblité</label>
+                                                            <Switch checked={activated} onChange={(e) => this.setState({activated: e})} className={`${activated ? 'bg-purple-600 bg-opacity-80 shadow-sm' : 'bg-white bg-opacity-80 shadow-sm'} relative inline-flex flex-shrink-0 h-[34px] w-[70px] border border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}>                                                    
+                                                                <span className="sr-only">Use setting</span>
+                                                                <span
+                                                                aria-hidden="true"
+                                                                className={`${activated ? 'translate-x-9' : 'translate-x-0'}
+                                                                    pointer-events-none inline-block h-[29.5px] w-[29.5px] rounded-full bg-white shadow-lg transform ring-0 transition ease-in-out duration-200 border border-gray-200 border-opacity-80 self-center`}
+                                                                />
+                                                            </Switch>
+                                                        </div>
                                                     </div>
         
         
@@ -1334,7 +1286,7 @@ class Index extends Component {
                                     <div className='modal-content bg-white transition-all transform rounded-lg gt-shadow6 self-center my-8 mx-2'>
                                         <div className="w-full flex flex-row justify-center mt-2">
                                             <div className="w-full">
-                                                <form role="form" method="post" onSubmit={(e) => this.saveVariant(e)}>
+                                                <form role="form" method="post" onSubmit={(e) => this.closeModal(e, 'modal2')}>
 
                                                 <div className="" >
 
@@ -1359,7 +1311,32 @@ class Index extends Component {
 
                                                                         {products.map((item, i) => (
                                                                             <div key={i}>
-                                                                                <Product product={item} />
+                                                                                <motion.div initial={{ opacity: 0, y: ( Math.random() * 15) }} whileInView={{ opacity: 1, y: 0, transition: { duration: 1.05 }, }}>
+                                                                                    <div className="w-full pt-1 pb-5 rounded-xl bg-gray-200 bg-opacity-80 cursor-pointer relative">
+
+                                                                                        <div className="form-check absolute top-[0.65rem] right-[0.65rem]">
+                                                                                            <input checked={item.selected} onFocus={(e) =>  this.saveRelative(e, item)} type="checkbox" className="form-check-input rounded-md appearance-none h-[0.765rem] w-[0.765rem] border border-purple-300 rounded-full bg-gray-100 checked:bg-purple-600 checked:border-purple-600 text-purple-500 focus:outline-none focus:border-0 focus:ring-2 focus:ring-purple-500 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left cursor-pointer"  />
+                                                                                        </div>
+
+                                                                                        <div className='w-full h-[6rem] flex flex-row justify-center'>
+                                                                                            <div className='max-h-[4rem] max-w-[3.75rem] self-center'>
+                                                                                                <img className='w-full h-full' src={item.images[0]?.url} />
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <div className='w-full mt-2 px-3'>
+                                                                                            <div className='w-full text-gray-500 text-[0.65rem] font-medium'>{item.category?.name}</div>
+                                                                                            <div className='w-full flex mt-1'>
+                                                                                                <div className='self-center w-full'>
+                                                                                                    <div className='w-full text-gray-900 text-sm font-semibold truncate'>{item.name}</div>
+                                                                                                    <div className='w-full text-gray-800 text-xs font-medium mt-1'>{item.unitprice}</div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                    </div>
+
+                                                                                </motion.div>
                                                                             </div>
                                                                         ))}
 
@@ -1387,12 +1364,12 @@ class Index extends Component {
                                                             <div className='mt-6 w-full h-[5.25rem] border-2 border-gray-500 border-opacity-90 rounded-xl shadow-inner flex flex-col justify-center'>
 
                                                                 <div className='w-full px-3 self-center flex flex-row'>
-                                                                    {products.map((item, i) => (
+                                                                    {chosenProducts.map((item, i) => (
                                                                         <motion.div key={i} initial={{ opacity: 0, x: 300 + Math.random() * 15 }} whileInView={{ opacity: 1, x: 0, transition: { type: 'spring', stiffness: 195, damping: 20 }, }}>
                                                                             <div className='relative h-full'>
                                                                                 <div className='item-image-1 bg-gradient-to-r from-violet-600 to-purple-600 hover:scale-110 rounded-full border-opacity-80 self-center mr-4' >
                                                                                     <div className='image-layer-2 rounded-full'>
-                                                                                        <div className='image-layer-3'><img src={item?.image}  /></div>
+                                                                                        <div className='image-layer-3'><img src={item?.images[0].url}  /></div>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div className='absolute -top-0.5 -left-0.5 w-4 h-4 bg-red-500 hover:bg-red-600 rounded-full flex flex-row justify-center shadow-sm'>
@@ -1412,12 +1389,12 @@ class Index extends Component {
 
                                                     <div className="px-3 py-2.5 bg-gray-50 sm:px-6 flex flex-row justify-end rounded-b-lg border-t border-gray-200 ">
 
-                                                        <div onClick={(e) => this.closeModal(e, 'modal1')} className='bg-gray-500 bg-opacity-90 shadow-lg h-9 px-3 rounded-md flex flex-col justify-center btn-effect1 self-center mr-2'>
+                                                        {/* <div onClick={(e) => this.closeModal(e, 'modal1')} className='bg-gray-500 bg-opacity-90 shadow-lg h-9 px-3 rounded-md flex flex-col justify-center btn-effect1 self-center mr-2'>
                                                             <button type="reset" className='text-[0.8rem] font-medium text-gray-100 hover:text-white self-center tracking-wide'>Annuler</button>
-                                                        </div>
+                                                        </div> */}
                             
-                                                        <div className='ml-1.5 bg-purple-500 bg-opacity-90 shadow-lg h-9 px-4 rounded-md flex flex-col justify-center btn-effect1 self-center'>
-                                                            <button type="submit" className='text-[0.8rem] font-medium text-gray-100 hover:text-white self-center tracking-wide'>Valider</button>
+                                                        <div className='ml-1.5 bg-gray-900 bg-opacity-90 shadow-lg h-9 px-5 rounded-md flex flex-col justify-center btn-effect1 self-center'>
+                                                            <button type="submit" className='text-[0.8rem] font-medium text-gray-100 hover:text-white self-center tracking-wide'>Terminer</button>
                                                         </div>
 
                                                     </div>
