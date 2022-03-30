@@ -23,7 +23,7 @@
 }
 
 .app-body{
-  width: calc(100vw - 1.75rem);
+  // width: calc(100vw - 1.75rem);
   height: calc(100vh - 6.55rem);
   @extend .gt-shadow2;
 }
@@ -254,6 +254,7 @@
 
 /** 2xl **/
 @media (min-width: 1536px) {
+  
   
 }
 

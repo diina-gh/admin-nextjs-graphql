@@ -62,23 +62,23 @@ export default function Index() {
             <HeadInfo title= 'Dashboard' description='description here'/>
             <Header/>
 
-            <div className='w-full px-3 md:px-6 py-3 md:py-5 flex flex-row justify-between'>
+            <div className='w-full py-3 md:py-4 px-3 md:px-6 flex flex-row justify-between'>
 
                 <Sidebar />
 
                 <motion.div initial={{ opacity: 0.45, x: -150 }}  whileInView={{ opacity: 1, x: 0, transition: { duration: 0.60 }, }}>
                     <div className='app-body rounded-xl'>
 
-                        <div className='w-full h-full bg-white rounded-xl overflow-y-scroll py-3 px-4'>
+                        <div className='w-full h-full bg-white rounded-xl overflow-y-scroll py-3'>
 
-                            <div className='w-full flex flex-row mt-2'>
+                            <div className='w-full flex flex-row mt-2 px-4'>
 
                                 <div className='text-lg font-bold text-purple-600 mr-2 self-center'>Produits</div>
                                 <div className='px-2 py-1 rounded-xl bg-purple-600 bg-opacity-90 text-white text-xs font-medium self-center'>{items?.products?.count ? items?.products?.count: 0 }</div>
 
                             </div>
 
-                            <div className='w-full flex flex-row justify-between mt-4'>
+                            <div className='w-full flex flex-row justify-between px-4 mt-4'>
 
                                 <div className='flex flex-row'>
                                     
@@ -124,7 +124,7 @@ export default function Index() {
                             <div className="w-full flex flex-col overflow-x-auto mt-4">
                                 <div className="w-full overflow-x-auto">
                                     <div className="align-middle inline-block min-w-full">
-                                        <div className="overflow-hidden app-table sm:rounded-lg">
+                                        <div className="overflow-hidden app-table sm:rounded-lg px-4">
 
                                         {(isLoading || items?.page != null || items?.filter != null || items?.orderBy != null ) &&
                                             <div className='app-table w-full flex flex-row justify-center'>
@@ -163,7 +163,7 @@ export default function Index() {
                                                                             <div className='w-full text-gray-500 text-[0.7rem] font-medium'>{capitalize(item.category?.name)}</div>
                                                                             <div className='w-full flex mt-1'>
                                                                                 <div className='self-center w-full'>
-                                                                                    <div className='w-full text-gray-900 hover:text-purple-500 cursor-pointer text-[0.87rem] font-semibold truncate transition duration-700 ease-in-out'>{capitalize(item.name)}</div>
+                                                                                    <div className='w-full main-item text-gray-900 cursor-pointer text-[0.87rem] font-semibold truncate transition duration-700 ease-in-out'>{capitalize(item.name)}</div>
                                                                                     <div className='w-full text-gray-800 text-[0.71rem] font-medium mt-1'> {new Intl.NumberFormat('fr-FR', {style: 'currency', currency:'XOF'}).format(item.unitprice)}</div>
                                                                                 </div>
                                                                             </div>

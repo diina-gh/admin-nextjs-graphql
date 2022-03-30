@@ -16,6 +16,7 @@ import { classNames } from '../../libs/util';
 import { Switch } from '@headlessui/react'
 import { capitalize } from '../../libs/util';
 import TrashIcon from '../../components/ui/icons/trashIcon';
+import { allShippingMethods, getShippingMethods } from '../../hooks/shippingMethod';
 
 const people = [
   { id: 1, name: 'Wade Cooper' },
@@ -39,10 +40,12 @@ class Index extends Component {
 
     constructor(props){
         super(props);
-        this.state = { block: false, id:null, firstname: 'Seydina', lastname: 'GUEYE', email:'dina3903@gmail.com', phonenumber: '+221781234997', addresses: [], filteredClients: people, selectedClient:null, query: '', shippingMethods: [], shippingMethod: null, paymentMethods: [], paymentMethod: null, };
+        this.state = { block: false, id:null, firstname: 'Seydina', lastname: 'GUEYE', email:'dina3903@gmail.com', phonenumber: '+221781234997', addresses: [], filteredClients: people, selectedClient:null, query: '', discount: 0, shippingMethods: [], shippingMethod: null, paymentMethods: [], paymentMethod: null, };
         this.checkInput = this.checkInput.bind(this)
         this.saveItem = this.saveItem.bind(this)
         this,this.filterItems = this.filterItems.bind(this)
+        this.getShippingMethods = this.getShippingMethods.bind(this)
+        this.getPaymentMethods = this.getPaymentMethods.bind(this)
     }
 
     async componentDidMount(){
@@ -64,6 +67,20 @@ class Index extends Component {
                 router.push('./');
             }
         }
+        this.getShippingMethods()
+        this.getPaymentMethods()
+    }
+
+    getShippingMethods = async() =>{
+        this.setState({block: true})
+        var {response} = await allShippingMethods()
+        if(response){
+            this.setState({shippingMethods: response.shippingMethods, block: false})
+        }
+    }
+
+    getPaymentMethods = () =>{
+
     }
 
     filterItems = (e) =>{
@@ -257,7 +274,7 @@ class Index extends Component {
                                             </div>
 
                                             <div className="">
-                                                <label htmlFor="order" className="block text-sm font-medium text-gray-900">Remise (en %) <span className='font-bold text-purple-600'>*</span></label>
+                                                <label htmlFor="discount" className="block text-sm font-medium text-gray-900">Remise (en %) </label>
                                                 <input type="number" value={this.state.discount} onChange={(e) => this.setState({discount:e.target.value }) }  name="discount" id="discount" autoComplete="discount" placeholder="Remise" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2"/>
                                             </div>
 

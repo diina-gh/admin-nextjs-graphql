@@ -23,7 +23,7 @@ export default function Header(props) {
     }
 
     return (
-        <header className="h-14 w-full bg-white flex flex-row justify-between px-[0.885rem] md:px-6 shadow-sm" >
+        <header className="h-14 w-full bg-white flex flex-row justify-between px-[0.885rem] md:px-6 2xl:px-8 shadow-sm" >
 
             <div className='flex flex-row self-center '>
 
