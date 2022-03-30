@@ -11,6 +11,16 @@
         }
     }
 }
+.parent-layer{
+    .hided-item{
+        opacity: 0.005;
+    }
+    &:hover{
+        .hided-item{
+            opacity: 1;
+        }
+    }
+}
 
 
 /** sm  **/

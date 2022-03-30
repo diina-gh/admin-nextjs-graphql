@@ -27,7 +27,7 @@ import { capitalize } from '../../libs/util';
 
 export default function Index() {
 
-    const take = 12;
+    const take = 8;
     const [page, setPage] = useState(1);
     const [filter, setFilter] = useState('')
     const [direction, setDirection] = useState('asc')
@@ -39,8 +39,8 @@ export default function Index() {
 
     const refetch = (newPage, newFilter = null, newOrder = null ) =>{
         if(newPage){
-            setPage(newPage)
-            mutate({...items, page:newPage})
+                setPage(newPage)
+                mutate({...items, page:newPage})
         } 
         if(newFilter){
             setFilter(newFilter)
@@ -88,7 +88,7 @@ export default function Index() {
                                     <div className='ml-2 h-8 px-2 self-center bg-gray-100 bg-opacity-95 shadow-inner rounded-full flex flex-row'>
 
                                         <div className='w-4 h-4 self-center'>
-                                            <SearchIcon className='w-full h-full text-gray-800' />
+                                            <SearchIcon customClass='w-full h-full text-gray-600' />
                                         </div>
 
                                         <div className='w-72 h-full'>
@@ -140,14 +140,14 @@ export default function Index() {
                                                         {items.products.products.map((item, i) => (
                                                             <div key={i}>
                                                                 <motion.div initial={{ opacity: 0, y: ( Math.random() * (i+1) * 15) }} whileInView={{ opacity: 1, y: 0, transition: { duration: 1.05 }, }}>
-                                                                    <div className="w-full pt-1 pb-5 rounded-xl bg-gray-200 bg-opacity-80 cursor-pointer relative">
+                                                                    <div className="w-full pt-1 pb-5 rounded-xl bg-gray-200 bg-opacity-80 cursor-pointer relative parent-layer">
 
-                                                                        <div onClick={(e) => deleteItem(e, item.id)}  className='absolute top-[0.55rem] right-[0.4rem] w-[1.25rem] h-[1.25rem] bg-red-400 hover:bg-red-500 rounded-full flex flex-row justify-center z-10 shadow-sm'>
+                                                                        <div onClick={(e) => deleteItem(e, item.id)}  className='hided-item absolute top-[0.55rem] right-[0.4rem] w-[1.25rem] h-[1.25rem] bg-red-400 hover:bg-red-500 rounded-full flex flex-row justify-center z-10 shadow-sm transition duration-700 ease-in-out'>
                                                                             <CrossIcon customClass="w-2 h-2 text-white self-center" />
                                                                         </div>
 
                                                                         <Link  href={{pathname: 'produits/form', query: { id: item.id},}} >
-                                                                            <div className='absolute top-[2.1rem] right-[0.4rem] w-[1.25rem] h-[1.25rem] bg-gray-500 hover:bg-gray-600 rounded-full flex flex-row justify-center z-10 shadow-sm'>
+                                                                            <div className='hided-item absolute top-[2.1rem] right-[0.4rem] w-[1.25rem] h-[1.25rem] bg-gray-500 hover:bg-gray-600 rounded-full flex flex-row justify-center z-10 shadow-sm transition duration-700 ease-in-out'>
                                                                                 <PencilIcon customClass="w-[0.7rem] h-[0.7rem] text-white self-center" />
                                                                             </div>
                                                                         </Link>
@@ -163,7 +163,7 @@ export default function Index() {
                                                                             <div className='w-full text-gray-500 text-[0.7rem] font-medium'>{capitalize(item.category?.name)}</div>
                                                                             <div className='w-full flex mt-1'>
                                                                                 <div className='self-center w-full'>
-                                                                                    <div className='w-full text-gray-900 text-[0.87rem] font-semibold truncate'>{capitalize(item.name)}</div>
+                                                                                    <div className='w-full text-gray-900 hover:text-purple-500 cursor-pointer text-[0.87rem] font-semibold truncate transition duration-700 ease-in-out'>{capitalize(item.name)}</div>
                                                                                     <div className='w-full text-gray-800 text-[0.71rem] font-medium mt-1'> {new Intl.NumberFormat('fr-FR', {style: 'currency', currency:'XOF'}).format(item.unitprice)}</div>
                                                                                 </div>
                                                                             </div>
@@ -281,19 +281,21 @@ export default function Index() {
                                 </div>
                             </div>
 
-                            <div className='w-full flex flex-row justify-end mt-6'>
-                                <Pagination 
-                                    initialPage={page} 
-                                    itemsPerPage={take} 
-                                    onPageСhange={(pageNumber) => refetch(pageNumber)} 
-                                    totalItems={items?.products?.count}  
-                                    pageNeighbours={2} 
-                                    startLabel= {<DoubleChevronLeftIcon customClass="w-3 h-3"/>}
-                                    endLabel={<DoubleChevronRightIcon customClass="w-3 h-3"/>}
-                                    nextLabel={<ChevronRightIcon customClass="w-3 h-3"/>}
-                                    prevLabel={<ChevronLeftIcon customClass="w-3 h-3"/>}
-                                    customClassNames={{rpbItemClassName:'pg-btn', rpbItemClassNameActive:'pg-active-btn',}}
-                                />
+                            <div className='w-full flex flex-row justify-end mt-4'>
+                                {items?.products != null &&
+                                    <Pagination 
+                                        initialPage={page} 
+                                        itemsPerPage={take} 
+                                        onPageСhange={(pageNumber) => refetch(pageNumber)} 
+                                        totalItems={items?.products?.count}  
+                                        pageNeighbours={2} 
+                                        startLabel= {<DoubleChevronLeftIcon customClass="w-3 h-3"/>}
+                                        endLabel={<DoubleChevronRightIcon customClass="w-3 h-3"/>}
+                                        nextLabel={<ChevronRightIcon customClass="w-3 h-3"/>}
+                                        prevLabel={<ChevronLeftIcon customClass="w-3 h-3"/>}
+                                        customClassNames={{rpbItemClassName:'pg-btn', rpbItemClassNameActive:'pg-active-btn',}}
+                                    />
+                                }
                             </div>
 
                         </div>
