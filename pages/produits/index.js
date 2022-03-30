@@ -7,28 +7,33 @@ import Sidebar from '../../components/common/sidebar'
 import HeadInfo from '../../components/common/headinfo'
 import Sort from '../../components/common/sort';
 import Filter from '../../components/common/filter';
-import { SearchIcon } from '@heroicons/react/solid';
+// import { SearchIcon } from '@heroicons/react/solid';
+import SearchIcon from '../../components/ui/icons/searchIcon';
 import AddBoldIcon from '../../components/ui/icons/addBoldIcon';
 import DocBoldIcon from '../../components/ui/icons/docBoldIcon';
 import EditBoldIcon from '../../components/ui/icons/editBoldIcon'
 import TrashBoldIcon from '../../components/ui/icons/trashBoldIcon'
+import PencilIcon from '../../components/ui/icons/pencilIcon';
 import { Pagination } from "react-pagination-bar"
 import 'react-pagination-bar/dist/index.css'
 import ChevronLeftIcon from '../../components/ui/icons/chevronLeftIcon';
 import ChevronRightIcon from '../../components/ui/icons/chevronRightIcon';
 import DoubleChevronLeftIcon from '../../components/ui/icons/doubleChevronLeftIcon';
 import DoubleChevronRightIcon from '../../components/ui/icons/doubleChevronRightIcon';
+import CrossIcon from '../../components/ui/icons/crossIcon';
 import { getProducts } from '../../hooks/product';
 import { capitalize } from '../../libs/util';
 
 
 export default function Index() {
 
-    const take = 6;
+    const take = 12;
     const [page, setPage] = useState(1);
     const [filter, setFilter] = useState('')
     const [direction, setDirection] = useState('asc')
     const [orderBy, setOrderBy] = useState({"id": direction})
+    const [display, setDisplay] = useState(1);
+
 
     var { items, isLoading, isError, mutate } = getProducts(page,take,filter, orderBy )
 
@@ -64,7 +69,7 @@ export default function Index() {
                 <motion.div initial={{ opacity: 0.45, x: -150 }}  whileInView={{ opacity: 1, x: 0, transition: { duration: 0.60 }, }}>
                     <div className='app-body rounded-xl'>
 
-                        <div className='w-full h-full bg-white rounded-xl overflow-y-scroll p-4'>
+                        <div className='w-full h-full bg-white rounded-xl overflow-y-scroll py-3 px-4'>
 
                             <div className='w-full flex flex-row mt-2'>
 
@@ -128,95 +133,147 @@ export default function Index() {
                                         }
 
                                         {(items && items.products && items?.page == null && items?.filter == null && items?.orderBy == null ) &&
-                                            <table className="min-w-full divide-y divide-gray-200 border-b border-gray-200">
-                                                <thead className="th-bg-1 sticky top-0 ">
-                                                    <tr>
-                                                        <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
-                                                            Nom
-                                                        </th>
-                                                        <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider" >
-                                                            Description
-                                                        </th>
-                                                        <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider" >
-                                                            Prix/Unité
-                                                        </th>
-                                                        <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider" >
-                                                            Catégorie
-                                                        </th>
-                                                        <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider" >
-                                                            Marques
-                                                        </th>
-                                                        <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider" >
-                                                            Stock
-                                                        </th>
-                                                        <th scope="col" className="relative px-6 py-3">
-                                                            <span className="sr-only">Edit</span>
-                                                        </th>
-                                                    </tr>
-                                                </thead>
-    
-                                                <tbody className="bg-white divide-y divide-gray-200">
-                                                    {items.products.products.map((item, i) => (
-                                                        <tr key={item.id} className={(i%2==0) ? "" : "bg-gray-100 bg-opacity-50"}>
-                                                            
-                                                            <td className="px-6 py-3 whitespace-nowrap">
-                                                                <div className="flex items-center">
-                                                                    {item?.images[0] != null &&
-                                                                        <div className={`${item.activated ? 'bg-gradient-to-r from-violet-600 to-purple-600 hover:scale-110' : 'bg-gray-400'} flex-shrink-0 item-image-0 rounded-full border-opacity-80 transition duration-700 ease-in-out cursor-pointer mr-4`} >
-                                                                            <div className='image-layer-2 bg-gray-200 rounded-full'>
-                                                                                <img className={`${item.activated ? 'opacity-100' : 'opacity-50'} rounded-full object-cover`} src={item?.images[0].url} alt="" />
+                                            <>
+                                                { display == 1 &&
+
+                                                    <div className="w-full grid grid-cols-6 gap-4 mt-2">
+                                                        {items.products.products.map((item, i) => (
+                                                            <div key={i}>
+                                                                <motion.div initial={{ opacity: 0, y: ( Math.random() * (i+1) * 15) }} whileInView={{ opacity: 1, y: 0, transition: { duration: 1.05 }, }}>
+                                                                    <div className="w-full pt-1 pb-5 rounded-xl bg-gray-200 bg-opacity-80 cursor-pointer relative">
+
+                                                                        <div onClick={(e) => deleteItem(e, item.id)}  className='absolute top-[0.55rem] right-[0.4rem] w-[1.25rem] h-[1.25rem] bg-red-400 hover:bg-red-500 rounded-full flex flex-row justify-center z-10 shadow-sm'>
+                                                                            <CrossIcon customClass="w-2 h-2 text-white self-center" />
+                                                                        </div>
+
+                                                                        <Link  href={{pathname: 'produits/form', query: { id: item.id},}} >
+                                                                            <div className='absolute top-[2.1rem] right-[0.4rem] w-[1.25rem] h-[1.25rem] bg-gray-500 hover:bg-gray-600 rounded-full flex flex-row justify-center z-10 shadow-sm'>
+                                                                                <PencilIcon customClass="w-[0.7rem] h-[0.7rem] text-white self-center" />
+                                                                            </div>
+                                                                        </Link>
+                                                                        
+
+                                                                        <div className='w-full image-layer-00 flex flex-row justify-center'>
+                                                                            <div className='image-layer-01 self-center'>
+                                                                                <img src={item.images[0]?.url} />
                                                                             </div>
                                                                         </div>
-                                                                    }
-                                                                    <div className={`${item.activated ? 'opacity-100' : 'opacity-50'}`}>
-                                                                        <div className="text-sm font-medium text-gray-900">{capitalize(item.name)}</div>
+
+                                                                        <div className='w-full mt-2 px-3'>
+                                                                            <div className='w-full text-gray-500 text-[0.7rem] font-medium'>{capitalize(item.category?.name)}</div>
+                                                                            <div className='w-full flex mt-1'>
+                                                                                <div className='self-center w-full'>
+                                                                                    <div className='w-full text-gray-900 text-[0.87rem] font-semibold truncate'>{capitalize(item.name)}</div>
+                                                                                    <div className='w-full text-gray-800 text-[0.71rem] font-medium mt-1'> {new Intl.NumberFormat('fr-FR', {style: 'currency', currency:'XOF'}).format(item.unitprice)}</div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
                                                                     </div>
-                                                                </div>
-                                                            </td>
-                                                            <td className="px-6 py-3 whitespace-nowrap">
-                                                                <div className="text-sm text-gray-900">
-                                                                    <div dangerouslySetInnerHTML={{__html: item.desc}}></div>
-                                                                </div>
-                                                            </td>
-                                                            <td className="px-6 py-3 whitespace-nowrap">
-                                                                <div className="text-sm text-gray-900">
-                                                                    <span className="px-2 py-[0.115] inline-flex text-[0.7rem] leading-5 font-semibold rounded-full bg-orange-100 bg-opacity-80 text-orange-800">
-                                                                        {new Intl.NumberFormat('fr-FR', {style: 'currency', currency:'XOF'}).format(item.unitprice)}
-                                                                    </span>
-                                                                </div>
-                                                            </td>
-                                                            <td className="px-6 py-3 whitespace-nowrap">
-                                                                <div className="text-sm text-gray-900">{capitalize(item.category?.name)}</div>
-                                                            </td>
-                                                            <td className="px-6 py-3 whitespace-nowrap">
-                                                                <div className="text-sm text-gray-900">{capitalize(item.brand?.name)}</div>
-                                                            </td>
-                                                            <td className="px-6 py-3 whitespace-nowrap">
-                                                                <div className="text-sm text-gray-900">
-                                                                    <span className="px-2 py-[0.115] inline-flex text-[0.7rem] leading-5 font-semibold rounded-full bg-red-100 bg-opacity-80 text-red-800">
-                                                                        {item.inventory?.quantity == null ? 0 : item.inventory?.quantity}
-                                                                    </span>
-                                                                </div>
-                                                            </td>
 
-                                                            <td className="px-2 whitespace-nowrap">
-                                                                <div className="flex flex-row justify-end">
-                                                                    <Link  href={{pathname: 'produits/form', query: { id: item.id},}} >
-                                                                        <button className="w-7 h-7 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-300 mr-2">
-                                                                            <EditBoldIcon customClass="w-3 text-gray-600 text-opacity-90 self-center"/>
-                                                                        </button>
-                                                                    </Link>
+                                                                </motion.div>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                    
+                                                }
+                                                { display == 0 &&
 
-                                                                    <button onClick={(e) => deleteItem(e, item.id)} className="w-7 h-7 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-30">
-                                                                        <TrashBoldIcon customClass="w-3 text-red-600 text-opacity-90 self-center"/>
-                                                                    </button>
-                                                                </div>
-                                                            </td>
+                                                    <table className="min-w-full divide-y divide-gray-200 border-b border-gray-200">
 
-                                                        </tr>
-                                                    ))}
-                                                </tbody>
-                                            </table>
+                                                        <thead className="th-bg-1 sticky top-0 ">
+                                                            <tr>
+                                                                <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
+                                                                    Nom
+                                                                </th>
+                                                                <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider" >
+                                                                    Description
+                                                                </th>
+                                                                <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider" >
+                                                                    Prix/Unité
+                                                                </th>
+                                                                <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider" >
+                                                                    Catégorie
+                                                                </th>
+                                                                <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider" >
+                                                                    Marques
+                                                                </th>
+                                                                <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider" >
+                                                                    Stock
+                                                                </th>
+                                                                <th scope="col" className="relative px-6 py-3">
+                                                                    <span className="sr-only">Edit</span>
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+
+                                                        <tbody className="bg-white divide-y divide-gray-200">
+                                                            {items.products.products.map((item, i) => (
+                                                                <tr key={item.id} className={(i%2==0) ? "" : "bg-gray-100 bg-opacity-50"}>
+                                                                    
+                                                                    <td className="px-6 py-3 whitespace-nowrap">
+                                                                        <div className="flex items-center">
+                                                                            {item?.images[0] != null &&
+                                                                                <div className={`${item.activated ? 'bg-gradient-to-r from-violet-600 to-purple-600 hover:scale-110' : 'bg-gray-400'} flex-shrink-0 item-image-0 rounded-full border-opacity-80 transition duration-700 ease-in-out cursor-pointer mr-4`} >
+                                                                                    <div className='image-layer-2 bg-gray-200 rounded-full'>
+                                                                                        <img className={`${item.activated ? 'opacity-100' : 'opacity-50'} rounded-full object-cover`} src={item?.images[0].url} alt="" />
+                                                                                    </div>
+                                                                                </div>
+                                                                            }
+                                                                            <div className={`${item.activated ? 'opacity-100' : 'opacity-50'}`}>
+                                                                                <div className="text-sm font-medium text-gray-900">{capitalize(item.name)}</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td className="px-6 py-3 whitespace-nowrap">
+                                                                        <div className="text-sm text-gray-900">
+                                                                            <div dangerouslySetInnerHTML={{__html: item.desc}}></div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td className="px-6 py-3 whitespace-nowrap">
+                                                                        <div className="text-sm text-gray-900">
+                                                                            <span className="px-2 py-[0.115] inline-flex text-[0.7rem] leading-5 font-semibold rounded-full bg-orange-100 bg-opacity-80 text-orange-800">
+                                                                                {new Intl.NumberFormat('fr-FR', {style: 'currency', currency:'XOF'}).format(item.unitprice)}
+                                                                            </span>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td className="px-6 py-3 whitespace-nowrap">
+                                                                        <div className="text-sm text-gray-900">{capitalize(item.category?.name)}</div>
+                                                                    </td>
+                                                                    <td className="px-6 py-3 whitespace-nowrap">
+                                                                        <div className="text-sm text-gray-900">{capitalize(item.brand?.name)}</div>
+                                                                    </td>
+                                                                    <td className="px-6 py-3 whitespace-nowrap">
+                                                                        <div className="text-sm text-gray-900">
+                                                                            <span className="px-2 py-[0.115] inline-flex text-[0.7rem] leading-5 font-semibold rounded-full bg-red-100 bg-opacity-80 text-red-800">
+                                                                                {item.inventory?.quantity == null ? 0 : item.inventory?.quantity}
+                                                                            </span>
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <td className="px-2 whitespace-nowrap">
+                                                                        <div className="flex flex-row justify-end">
+                                                                            <Link  href={{pathname: 'produits/form', query: { id: item.id},}} >
+                                                                                <button className="w-7 h-7 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-300 mr-2">
+                                                                                    <EditBoldIcon customClass="w-3 text-gray-600 text-opacity-90 self-center"/>
+                                                                                </button>
+                                                                            </Link>
+
+                                                                            <button onClick={(e) => deleteItem(e, item.id)} className="w-7 h-7 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-30">
+                                                                                <TrashBoldIcon customClass="w-3 text-red-600 text-opacity-90 self-center"/>
+                                                                            </button>
+                                                                        </div>
+                                                                    </td>
+
+                                                                </tr>
+                                                            ))}
+                                                        </tbody>
+
+                                                    </table>
+                                                
+                                                }
+                                            </>
+                                                
                                         }
                     
                                         </div>

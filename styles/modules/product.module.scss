@@ -1,0 +1,41 @@
+
+.image-layer-00{
+    height: 7rem;
+    width: 100%;
+    .image-layer-01{
+        max-height: 6rem;
+        max-width: 80%;
+        img{
+            max-height: 6rem;
+            max-width: 90%;
+        }
+    }
+}
+
+
+/** sm  **/
+@media (min-width: 640px) {
+
+
+}
+
+/** md  **/
+@media (min-width: 768px) {
+
+}
+
+/** lg **/
+@media (min-width: 1024px) {
+
+}
+
+/** xl **/
+@media (min-width: 1280px) {
+  
+}
+
+/** 2xl **/
+@media (min-width: 1536px) {
+  
+}
+
