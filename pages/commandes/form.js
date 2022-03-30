@@ -39,7 +39,7 @@ class Index extends Component {
 
     constructor(props){
         super(props);
-        this.state = { block: false, id:null, firstname: 'Seydina', lastname: 'GUEYE', email:'dina3903@gmail.com', phonenumber: '+221781234997', addresses: [], filteredClients: people, selectedClient:null, query: ''};
+        this.state = { block: false, id:null, firstname: 'Seydina', lastname: 'GUEYE', email:'dina3903@gmail.com', phonenumber: '+221781234997', addresses: [], filteredClients: people, selectedClient:null, query: '', shippingMethods: [], shippingMethod: null, paymentMethods: [], paymentMethod: null, };
         this.checkInput = this.checkInput.bind(this)
         this.saveItem = this.saveItem.bind(this)
         this,this.filterItems = this.filterItems.bind(this)
@@ -121,7 +121,7 @@ class Index extends Component {
 
     render() {
 
-        const {filteredClients, selectedClient, query} = this.state
+        const {filteredClients, selectedClient, query,  shippingMethods, shippingMethod, paymentMethods, paymentMethod} = this.state
 
         let class_type_1 = "mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2"
         let class_type_2 = "mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-0 focus:border focus:border-gray-400 shadow-inner bg-gray-50 bg-opacity-95 rounded-md px-2"
@@ -164,16 +164,101 @@ class Index extends Component {
 
                                         <div className='text-base font-semibold text-purple-600 mt-4 mb-3 ml-1'>Informations générales</div>
 
-                                        <div className='w-full grid grid-cols-3 grid-flow-row gap-6 bg-gray-200 bg-opacity-80 rounded-xl px-5 py-5'>
+                                        <div className='w-full grid grid-cols-3 grid-flow-row gap-6 bg-gray-200 bg-opacity-80 rounded-xl px-5 py-7'>
                                             
-                                            <div className="w-full mb-4">
-                                                <label htmlFor="name" className="block text-sm font-medium text-gray-900">Type de comande</label>
-                                                <input type="text" value={this.state.name} onChange={(e) => this.setState({name:e.target.value }) }  name="name" id="name" autoComplete="title" placeholder="Désignation" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2"/>
+                                            <div className=''>
+                                                <Listbox value={shippingMethod} onChange={(e) => this.setState({shippingMethod: e})}>
+                                                    {({ open }) => (
+                                                        <>
+                                                        <Listbox.Label className="block text-sm font-medium text-gray-900">Mode de livraison <span className='font-bold text-purple-600'>*</span></Listbox.Label>
+                                                        <div className="mt-1 relative">
+                                                            <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-[0.525rem] text-left cursor-default focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 sm:text-sm">
+                                                                <span className="flex items-center">
+                                                                    <span className="ml-3 block truncate">{shippingMethod ? capitalize(shippingMethod.name) : 'Mode de livraison'}</span>
+                                                                </span>
+                                                                <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                                                                    <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                                                                </span>
+                                                            </Listbox.Button>
+
+                                                            <Transition show={open} as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
+                                                                <Listbox.Options className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
+                                                                    {shippingMethods.map((item) => (
+                                                                    <Listbox.Option key={item.id} className={({ active }) => classNames(active ? 'text-white bg-purple-600' : 'text-gray-900','cursor-pointer select-none relative py-2 pl-3 pr-9')} value={item}>
+                                                                        {({ shippingMethod, active }) => (
+                                                                        <>
+                                                                            <div className="flex items-center">
+                                                                                <span className={classNames(shippingMethod ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}>
+                                                                                    {capitalize(item.name)}
+                                                                                </span>
+                                                                            </div>
+
+                                                                            {shippingMethod || active &&
+                                                                                <span className={classNames(active ? 'text-white' : 'text-indigo-600','absolute inset-y-0 right-0 flex items-center pr-4')}>
+                                                                                    <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                                                                </span>
+                                                                            }
+
+                                                                        </>
+                                                                        )}
+                                                                    </Listbox.Option>
+                                                                    ))}
+                                                                </Listbox.Options>
+                                                            </Transition>
+                                                        </div>
+                                                        </>
+                                                    )}
+                                                </Listbox>
                                             </div>
 
-                                            <div className="mb-4">
-                                                <label htmlFor="order" className="block text-sm font-medium text-gray-900">Mode de paiement</label>
-                                                <input type="number" value={this.state.order} onChange={(e) => this.setState({order:e.target.value }) }  name="order" id="order" autoComplete="order" placeholder="Ordre" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2"/>
+                                            <div className=''>
+                                                <Listbox value={paymentMethod} onChange={(e) => this.setState({paymentMethod: e})}>
+                                                    {({ open }) => (
+                                                        <>
+                                                        <Listbox.Label className="block text-sm font-medium text-gray-900">Mode de paiement <span className='font-bold text-purple-600'>*</span></Listbox.Label>
+                                                        <div className="mt-1 relative">
+                                                            <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-[0.525rem] text-left cursor-default focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 sm:text-sm">
+                                                                <span className="flex items-center">
+                                                                    <span className="ml-3 block truncate">{paymentMethod ? capitalize(paymentMethod.name) : 'Mode de paiement'}</span>
+                                                                </span>
+                                                                <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                                                                    <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                                                                </span>
+                                                            </Listbox.Button>
+
+                                                            <Transition show={open} as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
+                                                                <Listbox.Options className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
+                                                                    {paymentMethods.map((item) => (
+                                                                    <Listbox.Option key={item.id} className={({ active }) => classNames(active ? 'text-white bg-purple-600' : 'text-gray-900','cursor-pointer select-none relative py-2 pl-3 pr-9')} value={item}>
+                                                                        {({ shippingMethod, active }) => (
+                                                                        <>
+                                                                            <div className="flex items-center">
+                                                                                <span className={classNames(paymentMethod ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}>
+                                                                                    {capitalize(item.name)}
+                                                                                </span>
+                                                                            </div>
+
+                                                                            {paymentMethod || active &&
+                                                                                <span className={classNames(active ? 'text-white' : 'text-indigo-600','absolute inset-y-0 right-0 flex items-center pr-4')}>
+                                                                                    <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                                                                </span>
+                                                                            }
+
+                                                                        </>
+                                                                        )}
+                                                                    </Listbox.Option>
+                                                                    ))}
+                                                                </Listbox.Options>
+                                                            </Transition>
+                                                        </div>
+                                                        </>
+                                                    )}
+                                                </Listbox>
+                                            </div>
+
+                                            <div className="">
+                                                <label htmlFor="order" className="block text-sm font-medium text-gray-900">Remise (en %) <span className='font-bold text-purple-600'>*</span></label>
+                                                <input type="number" value={this.state.discount} onChange={(e) => this.setState({discount:e.target.value }) }  name="discount" id="discount" autoComplete="discount" placeholder="Remise" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2"/>
                                             </div>
 
                                         </div>
@@ -239,22 +324,22 @@ class Index extends Component {
 
                 
                                             <div className="mb-3">
-                                                <label htmlFor="name" className="block text-sm font-medium text-gray-900">Prénom</label>
+                                                <label htmlFor="name" className="block text-sm font-medium text-gray-900">Prénom <span className='font-bold text-purple-600'>*</span></label>
                                                 <input type="text" readOnly={selectedClient != null} value={this.state.firstname} onChange={(e) => this.setState({firstname:e.target.value }) }  name="firstname" id="firstname" autoComplete="firstname" placeholder="" className={selectedClient != null ? class_type_2 : class_type_1}/>
                                             </div>
 
                                             <div className="mb-3">
-                                                <label htmlFor="order" className="block text-sm font-medium text-gray-900">Nom</label>
+                                                <label htmlFor="order" className="block text-sm font-medium text-gray-900">Nom <span className='font-bold text-purple-600'>*</span></label>
                                                 <input type="text" readOnly={selectedClient != null} value={this.state.lastname} onChange={(e) => this.setState({lastname:e.target.value }) }  name="lastname" id="lastname" autoComplete="lastname" placeholder="" className={selectedClient != null ? class_type_2 : class_type_1}/>
                                             </div>
 
                                             <div className="mb-3">
-                                                <label htmlFor="order" className="block text-sm font-medium text-gray-900">Adresse email</label>
+                                                <label htmlFor="order" className="block text-sm font-medium text-gray-900">Adresse email <span className='font-bold text-purple-600'>*</span></label>
                                                 <input type="text" readOnly={selectedClient != null} value={this.state.email} onChange={(e) => this.setState({email:e.target.value }) }  name="email" id="email" autoComplete="email" placeholder="" className={selectedClient != null ? class_type_2 : class_type_1}/>
                                             </div>
 
                                             <div className="mb-3">
-                                                <label htmlFor="order" className="block text-sm font-medium text-gray-900">Téléphone</label>
+                                                <label htmlFor="order" className="block text-sm font-medium text-gray-900">Téléphone <span className='font-bold text-purple-600'>*</span></label>
                                                 <input type="text" readOnly={selectedClient != null} value={this.state.phonenumber} onChange={(e) => this.setState({phonenumber:e.target.value }) }  name="phonenumber" id="phonenumber" autoComplete="phonenumber" placeholder="" className={selectedClient != null ? class_type_2 : class_type_1}/>
                                             </div>
 
