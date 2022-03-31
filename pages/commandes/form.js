@@ -110,8 +110,8 @@ class Index extends Component {
             if(chosenProducts != null && chosenProducts.length >0){
                 for(let i=0; i<chosenProducts.length; i++){
                     for(let j=0; j< response?.products?.length; j++){
-                        if(chosenProducts[i].id == response?.products[j].id ){
-                            response?.products[j].selected = true
+                        if(chosenProducts[i].id == response.products[j].id ){
+                            response.products[j].selected = true
                         }
                     }
                 }
