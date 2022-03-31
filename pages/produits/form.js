@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import Header from '../../components/common/header'
 import Sidebar from '../../components/common/sidebar'
 import HeadInfo from '../../components/common/headinfo'
-import Product from '../../components/product/product';
 import ArrowLeftBoldIcon from '../../components/ui/icons/arrowLeftBoldIcon';
 import InfoBoldIcon from '../../components/ui/icons/infoBoldIcon';
 import { saveImage, deleteImage } from '../../hooks/image';
@@ -188,7 +187,7 @@ class Index extends Component {
     }
 
     refetch = async (newPage, newFilter = null, newOrder = null ) =>{
-        if(newPage) this.setState({page: newPage}) 
+        if(newPage != null) this.setState({page: newPage}) 
         if(newFilter) this.setState({filter: newFilter})
         if(newOrder) this.setState({filter: newOrder})
         this.getProducts()

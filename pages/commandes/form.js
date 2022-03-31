@@ -6,11 +6,12 @@ import Sidebar from '../../components/common/sidebar'
 import HeadInfo from '../../components/common/headinfo'
 import ArrowLeftBoldIcon from '../../components/ui/icons/arrowLeftBoldIcon';
 import InfoBoldIcon from '../../components/ui/icons/infoBoldIcon';
+import { allProducts } from '../../hooks/product';
 import { saveCategory, getCategory} from '../../hooks/category';
 import router from 'next/router'
 import BlockUI from '../../components/common/blockui';
 import toast, { Toaster } from 'react-hot-toast';
-import { Listbox, Combobox, Transition } from '@headlessui/react'
+import { Listbox, Combobox, Dialog, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 import { classNames } from '../../libs/util';
 import { Switch } from '@headlessui/react'
@@ -18,6 +19,12 @@ import { capitalize } from '../../libs/util';
 import TrashIcon from '../../components/ui/icons/trashIcon';
 import { allShippingMethods, getShippingMethods } from '../../hooks/shippingMethod';
 import { allPaymentMethods } from '../../hooks/paymentMethod';
+import { Pagination } from "react-pagination-bar"
+import 'react-pagination-bar/dist/index.css'
+import ChevronLeftIcon from '../../components/ui/icons/chevronLeftIcon';
+import ChevronRightIcon from '../../components/ui/icons/chevronRightIcon';
+import DoubleChevronLeftIcon from '../../components/ui/icons/doubleChevronLeftIcon';
+import DoubleChevronRightIcon from '../../components/ui/icons/doubleChevronRightIcon';
 
 const people = [
   { id: 1, name: 'Wade Cooper' },
@@ -41,12 +48,16 @@ class Index extends Component {
 
     constructor(props){
         super(props);
-        this.state = { block: false, id:null, firstname: 'Seydina', lastname: 'GUEYE', email:'dina3903@gmail.com', phonenumber: '+221781234997', addresses: [], filteredClients: people, selectedClient:null, query: '', discount: 0, shippingMethods: [], shippingMethod: null, paymentMethods: [], paymentMethod: null, };
+        this.state = { block: false, block2: false, id:null, firstname: 'Seydina', lastname: 'GUEYE', email:'dina3903@gmail.com', phonenumber: '+221781234997', addresses: [], filteredClients: people, selectedClient:null, query: '', discount: 0, shippingMethods: [], shippingMethod: null, paymentMethods: [], paymentMethod: null, products: [], chosenProducts: [], opened: false, page: 1, take: 5, filter:'', orderBy: {"id": 'asc'}  };
         this.checkInput = this.checkInput.bind(this)
         this.saveItem = this.saveItem.bind(this)
-        this,this.filterItems = this.filterItems.bind(this)
+        this.filterItems = this.filterItems.bind(this)
         this.getShippingMethods = this.getShippingMethods.bind(this)
         this.getPaymentMethods = this.getPaymentMethods.bind(this)
+        this.getProducts = this.getProducts.bind(this)
+        this.refetch = this.refetch.bind(this)
+        this.openModal = this.openModal.bind(this)
+        this.closeModal = this.closeModal.bind(this)
     }
 
     async componentDidMount(){
@@ -70,6 +81,7 @@ class Index extends Component {
         }
         this.getShippingMethods()
         this.getPaymentMethods()
+        this.getProducts()
     }
 
     getShippingMethods = async() =>{
@@ -84,8 +96,30 @@ class Index extends Component {
         this.setState({block: true})
         var {response} = await allPaymentMethods()
         if(response){
-            this.setState({paymentMethods: response.paymentMethods, block: false})
+            this.setState({paymentMethods: response.paymentMethods})
         }
+    }
+
+    getProducts = async() => {
+        const{page, take, filter, orderBy} = this.state
+        var {response} = await allProducts(page, take, filter, orderBy)
+        if(response){
+            const {chosenProducts} = this.state
+            if(chosenProducts != null && chosenProducts.length >0){
+                for(let i=0; i<chosenProducts.length; i++){
+                    response.products.find(item => item.id == chosenProducts[i].id).selected = true
+                }
+            }
+            this.setState({products: response, block: false, block2: false})
+        }
+    }
+
+    refetch = async (newPage, newFilter = null, newOrder = null ) =>{
+        this.setState({block2: true})
+        if(newPage != null) this.setState({page: newPage}) 
+        if(newFilter != null) this.setState({filter: newFilter})
+        if(newOrder != null) this.setState({filter: newOrder})
+        setTimeout(() => { this.getProducts() }, 250);
     }
 
     filterItems = (e) =>{
@@ -94,6 +128,16 @@ class Index extends Component {
         const {query} = this.state
         this.setState({filteredClients: query === '' ? people : people.filter((person) => person.name.toLowerCase().replace(/\s+/g, '').includes(query.toLowerCase().replace(/\s+/g, ''))) })
         if(query == '') this.setState({selectedClient: null})
+    }
+
+    closeModal = (e) => {
+        e.preventDefault();
+        this.setState({ opened: false });
+    }
+
+    openModal = (e) => {
+        e.preventDefault();
+        this.setState({ opened: true});
     }
 
     checkInput = (e) => {
@@ -143,7 +187,7 @@ class Index extends Component {
 
     render() {
 
-        const {filteredClients, selectedClient, query,  shippingMethods, shippingMethod, paymentMethods, paymentMethod} = this.state
+        const {filteredClients, selectedClient, query,  shippingMethods, shippingMethod, paymentMethods, paymentMethod, products, chosenProducts} = this.state
 
         let class_type_1 = "mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2"
         let class_type_2 = "mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-0 focus:border focus:border-gray-400 shadow-inner bg-gray-50 bg-opacity-95 rounded-md px-2"
@@ -252,7 +296,7 @@ class Index extends Component {
                                                                 <Listbox.Options className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
                                                                     {paymentMethods.map((item) => (
                                                                     <Listbox.Option key={item.id} className={({ active }) => classNames(active ? 'text-white bg-purple-600' : 'text-gray-900','cursor-pointer select-none relative py-2 pl-3 pr-9')} value={item}>
-                                                                        {({ shippingMethod, active }) => (
+                                                                        {({ paymentMethod, active }) => (
                                                                         <>
                                                                             <div className="flex items-center">
                                                                                 <span className={classNames(paymentMethod ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}>
@@ -373,18 +417,35 @@ class Index extends Component {
                                         </div>
 
                                         <div className='divider w-full h-[1px] bg-gray-400 bg-opacity-30 mt-8 mb-4'></div>
-                                        <div className='text-base font-semibold text-purple-600 mb-3 ml-1'>Panier</div>
+                                        <div className='mb-3 ml-0.5 flex flex-row px-5'>
+                                            <div className='text-base font-semibold text-purple-600 mr-1 self-center'>Panier</div>
+                                            <div className='px-2 py-[0.45px] text-[10.325px] font-medium bg-purple-500 bg-opacity-80 text-white rounded-xl self-center'>{chosenProducts?.length}</div>
+                                        </div>
 
-                                        <div className='w-full grid grid-cols-3 grid-flow-row gap-6 bg-gray-200 bg-opacity-80 rounded-xl px-5 py-5'>
+                                        <div className='w-full grid grid-cols-3 grid-flow-row gap-6'>
                                             
-                                            <div className="w-full mb-4">
-                                                <label htmlFor="name" className="block text-sm font-medium text-gray-900">Désignation</label>
-                                                <input type="text" value={this.state.name} onChange={(e) => this.setState({name:e.target.value }) }  name="name" id="name" autoComplete="title" placeholder="Désignation" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2"/>
+                                            <div className="col-span-2 bg-gray-200 bg-opacity-80 rounded-xl py-5">
+                                                <div className='w-full h-80 overflow-y-auto px-5'>
+                                                    {chosenProducts?.length == 0 ?
+
+                                                        <div className='w-full h-full flex flex-row justify-center '>
+                                                            <div className='h-24 self-center'>
+                                                                <img src="../empty_svg.svg" className='h-full opacity-90' />
+                                                            </div>
+                                                        </div>
+                                                        :
+                                                        <div>
+                                                          
+                                                        </div>
+
+                                                    }
+                                                </div>
+                                                <div onClick={(e) => this.openModal(e)} className='mt-3 bg-black bg-opacity-80 shadow-lg h-10 px-5 rounded-md flex flex-col justify-center btn-effect1 self-center mx-5'>
+                                                    <div className='text-sm font-medium text-gray-100 hover:text-white self-center tracking-wide'>Ajouter des produits</div>
+                                                </div>
                                             </div>
 
-                                            <div className="mb-4">
-                                                <label htmlFor="order" className="block text-sm font-medium text-gray-900">Ordre</label>
-                                                <input type="number" value={this.state.order} onChange={(e) => this.setState({order:e.target.value }) }  name="order" id="order" autoComplete="order" placeholder="Ordre" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2"/>
+                                            <div className="bg-gray-200 bg-opacity-80 rounded-xl px-5 py-5 h-80">
                                             </div>
 
                                         </div>
@@ -410,9 +471,163 @@ class Index extends Component {
         
                         </div>
                     </motion.div>
-                    
         
                 </div>
+
+                <Transition appear show={this.state.opened} as={Fragment}>
+                    <Dialog as="div" className="fixed inset-0 z-50 overflow-y-auto" onClose={(e) => this.setState({opened: false})}>
+                        <div className="">
+
+                            <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="ease-in duration-200" leaveFrom="opacity-100" leaveTo="opacity-0">
+                                <Dialog.Overlay className="fixed inset-0" />
+                            </Transition.Child>
+
+                            {/* <span className="inline-block h-screen align-middle" aria-hidden="true">&#8203;</span> */}
+                            <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0 scale-95" enterTo="opacity-100 scale-100" leave="ease-in duration-200" leaveFrom="opacity-100 scale-100" leaveTo="opacity-0 scale-95">
+                                <div className="modal-width-3 overflow-y-auto flex flex-row justify-center">
+                                    <div className='modal-content bg-white transition-all transform rounded-lg gt-shadow6 self-center my-8 mx-2'>
+                                        <div className="w-full flex flex-row justify-center mt-2">
+                                            <div className="w-full">
+                                                <form role="form" method="post" onSubmit={(e) => this.closeModal(e)}>
+
+                                                <div className="" >
+
+                                                    <div className="px-3 mt-1 mb-1 w-full text-center text-lg font-medium text-purple-500">Liste des produits</div>
+
+                                                    <div className="bg-white px-3 py-3">
+
+
+                                                        <div className="w-full">
+                                                            
+                                                            <div className='w-full px-3'>
+
+                                                                <div className='w-full h-10 mb-2'>
+                                                                    <input type="search" onChange={(e) => this.refetch(null, e.target.value)} className='w-full h-full px-4 focus:ring-0 text-sm border-0 bg-gray-200 bg-opacity-80 rounded-full' placeholder='Rechercher un nom, une description ou une catégorie ...' />
+                                                                </div>
+
+                                                            </div>
+                                                            
+
+                                                            <div className='py-3 px-3 w-full relative'>
+                                                            
+                                                                <BlockUI blocking={this.state.block2} />
+
+                                                                <div className='mb-3 text-[0.915rem] font-medium text-gray-900'>Sélectionner des produits</div>
+
+                                                                <div className='w-full h-[12.5rem] overflow-y-auto'>
+
+                                                                    <div className="grid grid-cols-5 gap-5">
+
+                                                                        {products?.products?.map((item, i) => (
+                                                                            <div key={i}>
+                                                                                <motion.div initial={{ opacity: 0, y: ( Math.random() * 15) }} whileInView={{ opacity: 1, y: 0, transition: { duration: 1.05 }, }}>
+                                                                                    <div className="w-full pt-1 pb-5 rounded-xl bg-gray-200 bg-opacity-80 cursor-pointer relative">
+
+                                                                                        <div className="form-check absolute top-[0.65rem] right-[0.65rem]">
+                                                                                            <input checked={item.selected} onFocus={(e) =>  this.saveRelative(e, item)} type="checkbox" className="form-check-input rounded-md appearance-none h-[0.765rem] w-[0.765rem] border border-purple-300 rounded-full bg-gray-100 checked:bg-purple-600 checked:border-purple-600 text-purple-500 focus:outline-none focus:border-0 focus:ring-2 focus:ring-purple-500 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left cursor-pointer"  />
+                                                                                        </div>
+
+                                                                                        <div className='w-full h-[6rem] flex flex-row justify-center'>
+                                                                                            <div className='max-h-[4rem] max-w-[3.75rem] self-center'>
+                                                                                                <img className='w-full h-full' src={item.images[0]?.url} />
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <div className='w-full mt-2 px-3'>
+                                                                                            <div className='w-full text-gray-500 text-[0.65rem] font-medium'>{item.category?.name}</div>
+                                                                                            <div className='w-full flex mt-1'>
+                                                                                                <div className='self-center w-full'>
+                                                                                                    <div className='w-full text-gray-900 text-sm font-semibold truncate'>{item.name}</div>
+                                                                                                    <div className='w-full text-gray-800 text-xs font-medium mt-1'>{item.unitprice}</div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                    </div>
+
+                                                                                </motion.div>
+                                                                            </div>
+                                                                        ))}
+
+                                                                    </div>
+
+                                                                </div>
+
+                                                                <div onClick={e => e.preventDefault()} className='w-full flex flex-row justify-end h-8 overflow-hidden mt-5'>
+                                                                    {products?.count != null &&
+                                                                        <Pagination
+                                                                            initialPage={1} 
+                                                                            itemsPerPage={this.state.take} 
+                                                                            onPageСhange={(pageNumber) => this.refetch(pageNumber)} 
+                                                                            totalItems={products?.count}  
+                                                                            pageNeighbours={2} 
+                                                                            startLabel= {<DoubleChevronLeftIcon customClass="w-3 h-3"/>}
+                                                                            endLabel={<DoubleChevronRightIcon customClass="w-3 h-3"/>}
+                                                                            nextLabel={<ChevronRightIcon customClass="w-3 h-3"/>}
+                                                                            prevLabel={<ChevronLeftIcon customClass="w-3 h-3"/>}
+                                                                            customClassNames={{rpbItemClassName:'pg-btn', rpbItemClassNameActive:'pg-active-btn',}}
+                                                                        />
+                                                                    }
+                                                                    
+                                                                </div>
+
+                                                            </div>
+
+                                                            <div className='w-full px-3'>
+
+                                                                <div className='mt-3 w-full h-[5.25rem] border-2 border-gray-500 border-opacity-90 rounded-xl shadow-inner flex flex-col justify-center'>
+
+                                                                    <div className='w-full px-3 self-center flex flex-row'>
+                                                                        {chosenProducts.map((item, i) => (
+                                                                            <motion.div key={i} initial={{ opacity: 0, x: 300 + Math.random() * 15 }} whileInView={{ opacity: 1, x: 0, transition: { type: 'spring', stiffness: 195, damping: 20 }, }}>
+                                                                                <div className='relative h-full'>
+                                                                                    <div className='item-image-1 bg-gradient-to-r from-violet-600 to-purple-600 hover:scale-110 rounded-full border-opacity-80 self-center mr-4' >
+                                                                                        <div className='image-layer-2 rounded-full'>
+                                                                                            <div className='image-layer-3'><img src={item?.images[0].url}  /></div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div className='absolute -top-0.5 -left-0.5 w-4 h-4 bg-red-500 hover:bg-red-600 rounded-full flex flex-row justify-center shadow-sm'>
+                                                                                        <CrossIcon customClass="w-1.5 h-1.5 text-white self-center" />
+                                                                                    </div>
+                                                                                </div>
+                                                                                
+                                                                            </motion.div>
+                                                                        ))}
+                                                                    </div>
+
+                                                                </div>
+
+                                                            </div>
+
+                                                            
+
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div className="px-3 py-2.5 bg-gray-50 sm:px-6 flex flex-row justify-end rounded-b-lg border-t border-gray-200 ">
+
+                                                        {/* <div onClick={(e) => this.closeModal(e, 'modal1')} className='bg-gray-500 bg-opacity-90 shadow-lg h-9 px-3 rounded-md flex flex-col justify-center btn-effect1 self-center mr-2'>
+                                                            <button type="reset" className='text-[0.8rem] font-medium text-gray-100 hover:text-white self-center tracking-wide'>Annuler</button>
+                                                        </div> */}
+                            
+                                                        <div className='ml-1.5 bg-gray-900 bg-opacity-90 shadow-lg h-9 px-5 rounded-md flex flex-col justify-center btn-effect1 self-center'>
+                                                            <button type="submit" className='text-[0.8rem] font-medium text-gray-100 hover:text-white self-center tracking-wide'>Terminer</button>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </Transition.Child>
+                        </div>
+                    </Dialog>
+                </Transition>
         
             </div>
         )
