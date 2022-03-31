@@ -361,6 +361,38 @@ export const shippingMethodQuery = gql`
     }
 `
 
+export const paymentMethodsQuery = gql`
+    query($page: Int, $take: Int, $filter: String, $orderBy: PaymentMethodOrderByInput){
+        paymentMethods(page: $page, take: $take, filter: $filter, orderBy: $orderBy) {
+            count
+            paymentMethods {
+                id
+                code
+                desc
+                name
+            }
+        }
+    }
+`
+
+export const paymentMethodQuery = gql`
+    query($id: Int){
+        paymentMethod(id: $id) {
+            __typename
+            ... on PaymentMethod{
+                id
+                name
+                code
+                desc
+            }
+            ... on InputError{
+                message
+                input
+            }
+        }
+    }
+`
+
 export const deliveryMansQuery = gql`
     query($page: Int, $take: Int, $filter: String, $orderBy: DeliveryManOrderByInput){
         deliveryMans(page: $page, take: $take, filter: $filter, orderBy: $orderBy) {

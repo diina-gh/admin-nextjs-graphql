@@ -6,7 +6,7 @@ import Sidebar from '../../components/common/sidebar'
 import HeadInfo from '../../components/common/headinfo'
 import ArrowLeftBoldIcon from '../../components/ui/icons/arrowLeftBoldIcon';
 import InfoBoldIcon from '../../components/ui/icons/infoBoldIcon';
-import { saveShippingMethod, getShippingMethod} from '../../hooks/shippingMethod';
+import { savePaymentMethod, getPaymentMethod} from '../../hooks/paymentMethod';
 import router from 'next/router'
 import BlockUI from '../../components/common/blockui';
 import toast, { Toaster } from 'react-hot-toast';
@@ -33,8 +33,8 @@ class Index extends Component {
         var itemId = router.query.id
         if(itemId !=null){
             this.setState({block: true})
-            var {response} = await getShippingMethod(itemId)
-            if(response?.__typename == 'ShippingMethod'){
+            var {response} = await getPaymentMethod(itemId)
+            if(response?.__typename == 'PaymentMethod'){
                 this.setState({ id: response.id, name: response.name, code: response.code, desc: response.desc, block:false })
             }
             else if(response?.__typename == 'InputError'){
@@ -75,9 +75,9 @@ class Index extends Component {
 
         const {id, name, code, desc} = this.state
 
-        var {response } = await saveShippingMethod(id, name, code, desc)
+        var {response } = await savePaymentMethod(id, name, code, desc)
 
-        if(response?.__typename == 'ShippingMethod'){
+        if(response?.__typename == 'PaymentMethod'){
             toast.dismiss()
             toast.success("Mise à jour réussie", {id: toastOne,});
             this.setState({block: false})
@@ -124,7 +124,7 @@ class Index extends Component {
                                             </div>
                                         </Link>
         
-                                        <div className='text-lg font-semibold text-purple-600'>Modes de livraison</div>
+                                        <div className='text-lg font-semibold text-purple-600'>Modes de paiement</div>
         
                                         <div></div>
         

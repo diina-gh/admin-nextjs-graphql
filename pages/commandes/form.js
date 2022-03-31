@@ -17,6 +17,7 @@ import { Switch } from '@headlessui/react'
 import { capitalize } from '../../libs/util';
 import TrashIcon from '../../components/ui/icons/trashIcon';
 import { allShippingMethods, getShippingMethods } from '../../hooks/shippingMethod';
+import { allPaymentMethods } from '../../hooks/paymentMethod';
 
 const people = [
   { id: 1, name: 'Wade Cooper' },
@@ -75,12 +76,16 @@ class Index extends Component {
         this.setState({block: true})
         var {response} = await allShippingMethods()
         if(response){
-            this.setState({shippingMethods: response.shippingMethods, block: false})
+            this.setState({shippingMethods: response.shippingMethods})
         }
     }
 
-    getPaymentMethods = () =>{
-
+    getPaymentMethods = async() =>{
+        this.setState({block: true})
+        var {response} = await allPaymentMethods()
+        if(response){
+            this.setState({paymentMethods: response.paymentMethods, block: false})
+        }
     }
 
     filterItems = (e) =>{

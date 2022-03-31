@@ -336,6 +336,42 @@ export const deleteShippingMethodMutation = gql `
     }
 `
 
+export const savePaymentMethodMutation = gql `
+    mutation($id: Int, $name: String, $code: String, $desc: String){
+        savePaymentMethod(id: $id, name: $name, code: $code, desc: $desc){
+            __typename
+            ... on PaymentMethod{
+                id
+                name
+                code
+                desc
+            }
+            ... on InputError{
+                message
+                input
+            }
+        }
+    }
+`
+
+export const deletePaymentMethodMutation = gql `
+    mutation($id: Int){
+        deletePaymentMethod(id: $id){
+            __typename
+            ... on PaymentMethod{
+                id
+                name
+                code
+                desc
+            }
+            ... on InputError{
+                message
+                input
+            }
+        }
+    }
+`
+
 export const saveDeliveryManMutation = gql `
     mutation($id: Int, $firstname: String, $lastname: String, $email: String, $phonenumber: String, $civility: Civility){
         saveDeliveryMan(id: $id, firstname: $firstname, lastname: $lastname, email: $email, phonenumber: $phonenumber, civility: $civility){

@@ -12,6 +12,7 @@ import SettingsBoldIcon from "../ui/icons/settingsBoldIcon";
 import InterfaceBoldIcon from "../ui/icons/interfaceBoldIcon";
 import EnvelopeBoldIcon from "../ui/icons/envelopeBoldIcon";
 import CarnetBoldIcon from "../ui/icons/carnetBoldIcon";
+import PaymentBoldIcon from '../ui/icons/paymentBoldIcon';
 import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
@@ -70,6 +71,28 @@ export function Navigation(){
                     </li>
                 </Link>
 
+                <Disclosure as="li" className="mt-2">
+                    {({ open }) => (
+                        <>
+                        <Disclosure.Button className={`${open || router.asPath.indexOf('/paiements') != -1 || router.asPath.indexOf('/modes_de_paiement') != -1 ? 'text-purple-800 border-purple-500 bg-gradient-to-r from-purple-50 to-fuchsia-50 bg-opacity-5' : 'border-white text-gray-900'} w-full flex justify-between py-2 px-4 text-base font-medium border-l-2 hover:text-purple-800 hover:border-purple-500 hover:bg-gradient-to-r hover:from-purple-50 hover:to-fuchsia-50 hover:bg-opacity-5`} >
+                            <a  className="flex items-center ">
+                                <PaymentBoldIcon customClass="w-4 h-4" />
+                                <span className="ml-3">Paiements</span>
+                            </a>
+                            <ChevronDownIcon className={`${open  ? 'transform rotate-180' : ''} w-5 h-5 self-center`}/>
+                        </Disclosure.Button>
+                        <Disclosure.Panel className="my-2 text-sm font-medium ">
+                            <Link  href='/paiements' >
+                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '>Paiements</div>
+                            </Link>
+                            <Link  href='/modes_de_paiement' >
+                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '>Modes de paiement</div>
+                            </Link>
+                        </Disclosure.Panel>
+                        </>
+                    )}
+                </Disclosure>
+
                 <Link  href='/categories' >
                     <li>
                         <a  className={`${(router.asPath === '/categories' || router.asPath === '/categories/form') ? 'text-purple-800 border-purple-500 bg-gradient-to-r from-purple-50 to-fuchsia-50 bg-opacity-5' : 'border-white text-gray-900'} flex items-center py-2 px-4 text-base font-medium border-l-2 hover:text-purple-800 hover:border-purple-500 hover:bg-gradient-to-r hover:from-purple-50 hover:to-fuchsia-50 hover:bg-opacity-5 cursor-pointer duration-700 ease-in-out `}>
@@ -78,15 +101,6 @@ export function Navigation(){
                         </a>
                     </li>
                 </Link>
-
-                {/* <Link  href='/produits' >
-                    <li>
-                        <a  className={`${(router.asPath === '/produits' || router.asPath === '/produits/form') ? 'text-purple-800 border-purple-500 bg-gradient-to-r from-purple-50 to-fuchsia-50 bg-opacity-5' : 'border-white text-gray-900'} flex items-center py-2 px-4 text-base font-medium border-l-2 hover:text-purple-800 hover:border-purple-500 hover:bg-gradient-to-r hover:from-purple-50 hover:to-fuchsia-50 hover:bg-opacity-5 cursor-pointer duration-700 ease-in-out `}>
-                            <LaptopBoldIcon customClass="w-4 h-4" />
-                            <span className="ml-3">Produits</span>
-                        </a>
-                    </li>
-                </Link> */}
 
                 <Disclosure as="li" className="mt-2">
                     {({ open }) => (
