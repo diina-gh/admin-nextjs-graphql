@@ -13,6 +13,7 @@ import BlockUI from '../../components/common/blockui';
 import toast, { Toaster } from 'react-hot-toast';
 import { Listbox, Combobox, Dialog, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
+import CrossIcon from '../../components/ui/icons/crossIcon';
 import { classNames } from '../../libs/util';
 import { Switch } from '@headlessui/react'
 import { capitalize } from '../../libs/util';
@@ -58,6 +59,7 @@ class Index extends Component {
         this.refetch = this.refetch.bind(this)
         this.openModal = this.openModal.bind(this)
         this.closeModal = this.closeModal.bind(this)
+        this.handleBasket = this.handleBasket.bind(this);
     }
 
     async componentDidMount(){
@@ -107,7 +109,11 @@ class Index extends Component {
             const {chosenProducts} = this.state
             if(chosenProducts != null && chosenProducts.length >0){
                 for(let i=0; i<chosenProducts.length; i++){
-                    response.products.find(item => item.id == chosenProducts[i].id).selected = true
+                    for(let j=0; j< response?.products?.length; j++){
+                        if(chosenProducts[i].id == response?.products[j].id ){
+                            response?.products[j].selected = true
+                        }
+                    }
                 }
             }
             this.setState({products: response, block: false, block2: false})
@@ -120,6 +126,34 @@ class Index extends Component {
         if(newFilter != null) this.setState({filter: newFilter})
         if(newOrder != null) this.setState({filter: newOrder})
         setTimeout(() => { this.getProducts() }, 250);
+    }
+
+    handleChecked = (e, i, item) =>{
+        e.preventDefault()
+        if(e.target.checked == false) this.handleBasket(e, item)
+        if(e.target.checked == true) this.handleBasket(e, null, i, item.id)
+    }
+
+    handleBasket = (e, product, index = null, id = null) => {
+
+        e.preventDefault()
+
+        const {chosenProducts, products} = this.state
+
+        var new_products = products
+        var new_chosen_products = chosenProducts
+
+        if(product != null){
+            new_chosen_products.push(product)
+            new_products.products.find(item => item.id == product.id).selected = true
+        }
+        if(index != null && id != null){
+            new_chosen_products.splice(index, 1)
+            this.getProducts()
+        }
+
+        this.setState({chosenProducts: new_chosen_products, products: new_products});
+        toast.success(product != null ? "Produit ajouté !" : "Produit retiré !" );
     }
 
     filterItems = (e) =>{
@@ -524,7 +558,7 @@ class Index extends Component {
                                                                                     <div className="w-full pt-1 pb-5 rounded-xl bg-gray-200 bg-opacity-80 cursor-pointer relative">
 
                                                                                         <div className="form-check absolute top-[0.65rem] right-[0.65rem]">
-                                                                                            <input checked={item.selected} onFocus={(e) =>  this.saveRelative(e, item)} type="checkbox" className="form-check-input rounded-md appearance-none h-[0.765rem] w-[0.765rem] border border-purple-300 rounded-full bg-gray-100 checked:bg-purple-600 checked:border-purple-600 text-purple-500 focus:outline-none focus:border-0 focus:ring-2 focus:ring-purple-500 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left cursor-pointer"  />
+                                                                                            <input checked={item?.selected == true} onFocus={(e) => this.handleChecked(e, i, item)} type="checkbox" className="form-check-input rounded-md appearance-none h-[0.765rem] w-[0.765rem] border border-purple-300 rounded-full bg-gray-100 checked:bg-purple-600 checked:border-purple-600 text-purple-500 focus:outline-none focus:border-0 focus:ring-2 focus:ring-purple-500 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left cursor-pointer"  />
                                                                                         </div>
 
                                                                                         <div className='w-full h-[6rem] flex flex-row justify-center'>
@@ -586,7 +620,7 @@ class Index extends Component {
                                                                                             <div className='image-layer-3'><img src={item?.images[0].url}  /></div>
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div className='absolute -top-0.5 -left-0.5 w-4 h-4 bg-red-500 hover:bg-red-600 rounded-full flex flex-row justify-center shadow-sm'>
+                                                                                    <div onClick={(e) => this.handleBasket(e, null, i, item.id)} className='absolute -top-0.5 -left-0.5 w-4 h-4 bg-red-500 hover:bg-red-600 rounded-full flex flex-row justify-center shadow-sm'>
                                                                                         <CrossIcon customClass="w-1.5 h-1.5 text-white self-center" />
                                                                                     </div>
                                                                                 </div>
