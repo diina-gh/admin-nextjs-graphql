@@ -509,7 +509,7 @@ class Index extends Component {
                                                         <div className='w-full'>
 
                                                           {chosenProducts.map((item, i) => (
-                                                            <AnimatePresence>
+                                                            <AnimatePresence  key={i}>
                                                                 <motion.div initial={{ opacity: 0, y: ( Math.random() * 15) }} whileInView={{ opacity: 1, y: 0, transition: { duration: 0.85 }, }}>
                                                                    
                                                                     <div className='w-full bg-white bg-opacity-90 rounded-xl px-4 py-3 mb-4 shadow-sm'>
@@ -804,7 +804,7 @@ class Index extends Component {
 
                                                                     <div className='w-full px-3 self-center flex flex-row'>
                                                                         {chosenProducts.map((item, i) => (
-                                                                            <AnimatePresence>
+                                                                            <AnimatePresence key={i}>
                                                                                 <motion.div key={i} initial={{ opacity: 0, x: 300 + Math.random() * 15 }} whileInView={{ opacity: 1, x: 0, transition: { type: 'spring', stiffness: 195, damping: 20 }, }} exit={{ opacity: 0}}>
                                                                                     <div className='relative h-full'>
                                                                                         <div className='item-image-1 bg-gradient-to-r from-violet-600 to-purple-600 hover:scale-110 rounded-full border-opacity-80 self-center mr-4' >
