@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import Link from 'next/link'
-import { motion } from "framer-motion";
+import { motion, AnimatePresence  } from "framer-motion";
 import Header from '../../components/common/header'
 import Sidebar from '../../components/common/sidebar'
 import HeadInfo from '../../components/common/headinfo'
@@ -60,7 +60,8 @@ class Index extends Component {
         this.refetch = this.refetch.bind(this)
         this.openModal = this.openModal.bind(this)
         this.closeModal = this.closeModal.bind(this)
-        this.handleBasket = this.handleBasket.bind(this);
+        this.handleBasket = this.handleBasket.bind(this)
+        this.handleQuanity = this.handleQuanity.bind(this)
     }
 
     async componentDidMount(){
@@ -129,13 +130,7 @@ class Index extends Component {
         setTimeout(() => { this.getProducts() }, 250);
     }
 
-    handleChecked = (e, i, item) =>{
-        e.preventDefault()
-        if(e.target.checked == false) this.handleBasket(e, item)
-        if(e.target.checked == true) this.handleBasket(e, null, i, item.id)
-    }
-
-    handleBasket = (e, product, index = null, id = null) => {
+    handleBasket = (e, product, index = null) => {
 
         e.preventDefault()
 
@@ -144,17 +139,41 @@ class Index extends Component {
         var new_products = products
         var new_chosen_products = chosenProducts
 
-        if(product != null){
-            new_chosen_products.push(product)
-            new_products.products.find(item => item.id == product.id).selected = true
+        if(index == null){
+
+            var founded = false
+
+            for(let i = 0; i< new_chosen_products.length; i++){
+                if(new_chosen_products[i].id == product.id){
+                    new_chosen_products.splice(i, 1)
+                    this.getProducts()
+                    founded = true
+                    break
+                }
+            }
+
+            if(founded == false){
+                product.quantity = 1
+                new_chosen_products.push(product)
+                new_products.products.find(item => item.id == product.id).selected = true
+            }
+
         }
-        if(index != null && id != null){
+        else{
             new_chosen_products.splice(index, 1)
             this.getProducts()
         }
 
         this.setState({chosenProducts: new_chosen_products, products: new_products});
-        toast.success(product != null ? "Produit ajouté !" : "Produit retiré !" );
+    }
+
+    handleQuanity = (e,index, action) =>{
+        e.preventDefault()
+        const {chosenProducts} = this.state
+        var new_chosen_products = chosenProducts
+        if(action == 'plus') new_chosen_products[index].quantity += 1
+        if(action == 'minus' && new_chosen_products[index].quantity >= 2 ) new_chosen_products[index].quantity -= 1 
+        this.setState({chosenProducts: new_chosen_products});
     }
 
     filterItems = (e) =>{
@@ -472,8 +491,14 @@ class Index extends Component {
                                             </div>
                                             
                                             <div className="col-span-4 bg-gray-200 bg-opacity-80 rounded-xl py-5">
-                                                <div className='w-full h-80 overflow-y-auto px-5'>
-                                                    {chosenProducts?.length != 0 ?
+
+                                                <div className='mb-3 px-4 flex flex-row'>
+                                                    <div className='text-base font-medium text-purple-600 mr-1 self-center'>Panier</div>
+                                                    {chosenProducts?.length > 0 && <div className='px-2 py-[0.45px] text-[10.325px] font-medium bg-purple-500 bg-opacity-80 text-white rounded-xl self-center'>{chosenProducts?.length}</div>}
+                                                </div>
+
+                                                <div className='w-full h-[18rem] overflow-y-auto px-5'>
+                                                    {chosenProducts?.length == 0 ?
 
                                                         <div className='w-full h-full flex flex-row justify-center '>
                                                             <div className='h-24 self-center'>
@@ -483,213 +508,122 @@ class Index extends Component {
                                                         :
                                                         <div className='w-full'>
 
-                                                          <div className='mb-3 ml-0.5 flex flex-row'>
-                                                            <div className='text-base font-medium text-purple-600 mr-1 self-center'>Panier</div>
-                                                            <div className='px-2 py-[0.45px] text-[10.325px] font-medium bg-purple-500 bg-opacity-80 text-white rounded-xl self-center'>{chosenProducts?.length}</div>
-                                                          </div>
+                                                          {chosenProducts.map((item, i) => (
+                                                            <AnimatePresence>
+                                                                <motion.div initial={{ opacity: 0, y: ( Math.random() * 15) }} whileInView={{ opacity: 1, y: 0, transition: { duration: 0.85 }, }}>
+                                                                   
+                                                                    <div className='w-full bg-white bg-opacity-90 rounded-xl px-4 py-3 mb-4 shadow-sm'>
 
-                                                          <div className='w-full bg-white bg-opacity-90 rounded-xl px-4 py-3 mb-4 shadow-sm'>
+                                                                        <div className='flex flex-row justify-between'>
 
-                                                              <div className='flex flex-row justify-between'>
+                                                                            <div className='flex flex-row w-full'>
 
-                                                                  <div className='flex flex-row'>
+                                                                                <div className='item-image-1 bg-gradient-to-r from-violet-600 to-purple-600 rounded-full border-opacity-80 self-center mr-4' >
+                                                                                    <div className='image-layer-2 rounded-full'>
+                                                                                        <div className='image-layer-3'><img src={item?.images[0].url}  /></div>
+                                                                                    </div>
+                                                                                </div>
 
-                                                                      <div className='w-12 h-12 bg-purple-100 rounded-full border-2 border-purple-500 mr-3 self-center'>
+                                                                                <div className='self-center w-8/12'>
+                                                                                    <div className='text-sm font-semibold text-gray-900 w-full truncate'>{capitalize(item.name)}</div>
+                                                                                    <div className='mt-0.5 text-xs font-normal text-gray-500 w-full truncate'>{capitalize(item.category.name)}</div>
+                                                                                </div>
 
-                                                                      </div>
+                                                                            </div>
 
-                                                                      <div className='self-center'>
-                                                                        <div className='text-sm font-semibold text-gray-900'>Apple MacBook Pro</div>
-                                                                        <div className='mt-0.5 text-xs font-normal text-gray-500'>Ordinateur</div>
-                                                                      </div>
+                                                                            <div className="self-center">
+                                                                                <button onClick={(e) => this.handleBasket(e, null, i)} className="w-6 h-6 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-30">
+                                                                                    <TrashBoldIcon customClass="w-[0.75rem] text-red-600 text-opacity-90 self-center"/>
+                                                                                </button>
+                                                                            </div>
 
-                                                                  </div>
+                                                                        </div>
 
-                                                                  <div className="self-center">
-                                                                    <button className="w-6 h-6 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-30">
-                                                                        <TrashBoldIcon customClass="w-[0.75rem] text-red-600 text-opacity-90 self-center"/>
-                                                                    </button>
-                                                                  </div>
+                                                                        <div className='mt-4 flex flex-row justify-between px-1'>
 
-                                                              </div>
+                                                                            <div className='text-[0.8rem] font-semibold self-center'>{new Intl.NumberFormat('fr-FR', {style: 'currency', currency:'XOF'}).format(item.unitprice)}</div>
 
-                                                              <div className='mt-4 flex flex-row justify-between px-1'>
+                                                                            <div className="h-5 flex flex-row self-center">
+                                                                                <div onClick={(e) => this.handleQuanity(e, i, 'minus')} className="h-full w-5 flex flex-row justify-center bg-gray-900 border border-gray-800 rounded-md gt-shadow1 btn-effect1 cursor-pointer mr-1">
+                                                                                    <div className="self-center text-base font-semibold text-gray-100 -mt-1">-</div>
+                                                                                </div>
+                                                                                <div className="h-full w-12 h-5 border border-gray-500 truncate text-xs font-medium text-center self-center">{item.quantity}</div>
+                                                                                <div onClick={(e) => this.handleQuanity(e, i, 'plus')} className="h-full w-5 flex flex-row justify-center bg-gray-900 border border-gray-800 rounded-md gt-shadow1 btn-effect1 cursor-pointer ml-1">
+                                                                                    <div className="self-center text-base font-semibold text-gray-100 -mt-1">+</div>
+                                                                                </div>
+                                                                            </div>
 
-                                                                  <div className='text-sm font-semibold'>1500 CFA</div>
+                                                                            <div className='text-[0.8rem] font-semibold self-center'>{new Intl.NumberFormat('fr-FR', {style: 'currency', currency:'XOF'}).format(item.unitprice * 2)}</div>
 
-                                                                  <div className="h-5 flex flex-row">
-                                                                    <div className="h-full w-5 flex flex-row justify-center bg-gray-900 border border-gray-800 rounded-md gt-shadow1 btn-effect1 cursor-pointer mr-1">
-                                                                        <div className="self-center text-base font-semibold text-gray-100 -mt-1">-</div>
-                                                                    </div>
-                                                                    <div className="h-full w-12 h-5 border border-gray-500 truncate text-xs font-medium text-center self-center">2</div>
-                                                                    <div className="h-full w-5 flex flex-row justify-center bg-gray-900 border border-gray-800 rounded-md gt-shadow1 btn-effect1 cursor-pointer ml-1">
-                                                                        <div className="self-center text-base font-semibold text-gray-100 -mt-1">+</div>
-                                                                    </div>
-                                                                  </div>
+                                                                        </div>
 
-                                                                  <div className='text-sm font-semibold'>3000 CFA</div>
 
-                                                              </div>
+                                                                            <div key={i} className='mt-4 flex flex-row'>
 
-                                                              <div className='mt-4 flex flex-row'>
+                                                                                <div className='flex flex-row justify-center w-5 h-5 mr-4'>
+                                                                                    <div className='text-[0.75rem] font-medium text-gray-900 self-center'>1</div>
+                                                                                </div>
 
-                                                                    <div className='flex flex-row justify-center w-5 h-5 mr-4'>
-                                                                        <div className='text-[0.75rem] font-medium text-gray-900 self-center'>1</div>
-                                                                    </div>
+                                                                                <div className='flex flex-row self-center mr-6'>
 
-                                                                    <div className='flex flex-row self-center mr-6'>
+                                                                                    <div className='text-sm font-semibold text-gray-900 self-center mr-2'>Couleur : </div>
 
-                                                                        <div className='text-sm font-semibold text-gray-900 self-center mr-2'>Couleur : </div>
+                                                                                    <div className='w-6 h-6 rounded-full bg-purple-600 shadow-lg flex flex-row justify-center btn-effect1 cursor-pointer self-center'>
+                                                                                        <div className='text-[0.95rem] font-semibold text-gray-50 self-center -mt-0.5'>+</div>
+                                                                                    </div>
 
-                                                                        <div className='w-6 h-6 rounded-full bg-purple-600 shadow-lg flex flex-row justify-center btn-effect1 cursor-pointer self-center'>
-                                                                            <div className='text-[0.95rem] font-semibold text-gray-50 self-center -mt-0.5'>+</div>
+                                                                                </div>
+
+                                                                                <div className='flex flex-row self-center'>
+
+                                                                                    <div className='text-sm font-semibold text-gray-900 self-center mr-2'>Mémoire : </div>
+
+                                                                                    <div className='w-6 h-6 rounded-full bg-purple-600 shadow-lg flex flex-row justify-center btn-effect1 cursor-pointer self-center'>
+                                                                                        <div className='text-[0.95rem] font-semibold text-gray-50 self-center -mt-0.5'>+</div>
+                                                                                    </div>
+
+                                                                                </div>
+
+                                                                            </div> 
+
+
+
+                                                                        <div className='mt-4 flex flex-row'>
+
+                                                                                <div className='flex flex-row justify-center w-5 h-5 mr-4'>
+                                                                                    <div className='text-[0.75rem] font-medium text-gray-900 self-center'>2</div>
+                                                                                </div>
+
+                                                                                <div className='flex flex-row self-center mr-6'>
+
+                                                                                    <div className='text-sm font-semibold text-gray-900 self-center mr-2'>Couleur : </div>
+
+                                                                                    <div className='w-6 h-6 rounded-full bg-purple-600 shadow-lg flex flex-row justify-center btn-effect1 cursor-pointer self-center'>
+                                                                                        <div className='text-[0.95rem] font-semibold text-gray-50 self-center -mt-0.5'>+</div>
+                                                                                    </div>
+
+                                                                                </div>
+
+                                                                                <div className='flex flex-row self-center'>
+
+                                                                                    <div className='text-sm font-semibold text-gray-900 self-center mr-2'>Mémoire : </div>
+
+                                                                                    <div className='w-6 h-6 rounded-full bg-purple-600 shadow-lg flex flex-row justify-center btn-effect1 cursor-pointer self-center'>
+                                                                                        <div className='text-[0.95rem] font-semibold text-gray-50 self-center -mt-0.5'>+</div>
+                                                                                    </div>
+
+                                                                                </div>
+
                                                                         </div>
 
                                                                     </div>
+                                                                </motion.div>
+                                                            </AnimatePresence>
+                                                           
+                                                          ))}
 
-                                                                    <div className='flex flex-row self-center'>
 
-                                                                        <div className='text-sm font-semibold text-gray-900 self-center mr-2'>Mémoire : </div>
-
-                                                                        <div className='w-6 h-6 rounded-full bg-purple-600 shadow-lg flex flex-row justify-center btn-effect1 cursor-pointer self-center'>
-                                                                            <div className='text-[0.95rem] font-semibold text-gray-50 self-center -mt-0.5'>+</div>
-                                                                        </div>
-
-                                                                    </div>
-
-                                                              </div>
-
-                                                              <div className='mt-4 flex flex-row'>
-
-                                                                    <div className='flex flex-row justify-center w-5 h-5 mr-4'>
-                                                                        <div className='text-[0.75rem] font-medium text-gray-900 self-center'>2</div>
-                                                                    </div>
-
-                                                                    <div className='flex flex-row self-center mr-6'>
-
-                                                                        <div className='text-sm font-semibold text-gray-900 self-center mr-2'>Couleur : </div>
-
-                                                                        <div className='w-6 h-6 rounded-full bg-purple-600 shadow-lg flex flex-row justify-center btn-effect1 cursor-pointer self-center'>
-                                                                            <div className='text-[0.95rem] font-semibold text-gray-50 self-center -mt-0.5'>+</div>
-                                                                        </div>
-
-                                                                    </div>
-
-                                                                    <div className='flex flex-row self-center'>
-
-                                                                        <div className='text-sm font-semibold text-gray-900 self-center mr-2'>Mémoire : </div>
-
-                                                                        <div className='w-6 h-6 rounded-full bg-purple-600 shadow-lg flex flex-row justify-center btn-effect1 cursor-pointer self-center'>
-                                                                            <div className='text-[0.95rem] font-semibold text-gray-50 self-center -mt-0.5'>+</div>
-                                                                        </div>
-
-                                                                    </div>
-
-                                                              </div>
-
-                                                          </div>
-
-                                                          <div className='w-full bg-white bg-opacity-90 rounded-xl px-4 py-3 mb-4 shadow-sm'>
-
-                                                              <div className='flex flex-row justify-between'>
-
-                                                                  <div className='flex flex-row'>
-
-                                                                      <div className='w-12 h-12 bg-purple-100 rounded-full border-2 border-purple-500 mr-3 self-center'>
-
-                                                                      </div>
-
-                                                                      <div className='self-center'>
-                                                                        <div className='text-sm font-semibold text-gray-900'>Apple MacBook Pro</div>
-                                                                        <div className='mt-0.5 text-xs font-normal text-gray-500'>Ordinateur</div>
-                                                                      </div>
-
-                                                                  </div>
-
-                                                                  <div className="self-center">
-                                                                    <button className="w-6 h-6 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-30">
-                                                                        <TrashBoldIcon customClass="w-[0.75rem] text-red-600 text-opacity-90 self-center"/>
-                                                                    </button>
-                                                                  </div>
-
-                                                              </div>
-
-                                                              <div className='mt-4 flex flex-row justify-between px-1'>
-
-                                                                  <div className='text-sm font-semibold'>1500 CFA</div>
-
-                                                                  <div className="h-5 flex flex-row">
-                                                                    <div className="h-full w-5 flex flex-row justify-center bg-gray-900 border border-gray-800 rounded-md gt-shadow1 btn-effect1 cursor-pointer mr-1">
-                                                                        <div className="self-center text-base font-semibold text-gray-100 -mt-1">-</div>
-                                                                    </div>
-                                                                    <div className="h-full w-12 h-5 border border-gray-500 truncate text-xs font-medium text-center self-center">2</div>
-                                                                    <div className="h-full w-5 flex flex-row justify-center bg-gray-900 border border-gray-800 rounded-md gt-shadow1 btn-effect1 cursor-pointer ml-1">
-                                                                        <div className="self-center text-base font-semibold text-gray-100 -mt-1">+</div>
-                                                                    </div>
-                                                                  </div>
-
-                                                                  <div className='text-sm font-semibold'>3000 CFA</div>
-
-                                                              </div>
-
-                                                              <div className='mt-4 flex flex-row'>
-
-                                                                    <div className='flex flex-row justify-center w-5 h-5 mr-4'>
-                                                                        <div className='text-[0.75rem] font-medium text-gray-900 self-center'>1</div>
-                                                                    </div>
-
-                                                                    <div className='flex flex-row self-center mr-6'>
-
-                                                                        <div className='text-sm font-semibold text-gray-900 self-center mr-2'>Couleur : </div>
-
-                                                                        <div className='w-6 h-6 rounded-full bg-purple-600 shadow-lg flex flex-row justify-center btn-effect1 cursor-pointer self-center'>
-                                                                            <div className='text-[0.95rem] font-semibold text-gray-50 self-center -mt-0.5'>+</div>
-                                                                        </div>
-
-                                                                    </div>
-
-                                                                    <div className='flex flex-row self-center'>
-
-                                                                        <div className='text-sm font-semibold text-gray-900 self-center mr-2'>Mémoire : </div>
-
-                                                                        <div className='w-6 h-6 rounded-full bg-purple-600 shadow-lg flex flex-row justify-center btn-effect1 cursor-pointer self-center'>
-                                                                            <div className='text-[0.95rem] font-semibold text-gray-50 self-center -mt-0.5'>+</div>
-                                                                        </div>
-
-                                                                    </div>
-
-                                                              </div>
-
-                                                              <div className='mt-4 flex flex-row'>
-
-                                                                    <div className='flex flex-row justify-center w-5 h-5 mr-4'>
-                                                                        <div className='text-[0.75rem] font-medium text-gray-900 self-center'>2</div>
-                                                                    </div>
-
-                                                                    <div className='flex flex-row self-center mr-6'>
-
-                                                                        <div className='text-sm font-semibold text-gray-900 self-center mr-2'>Couleur : </div>
-
-                                                                        <div className='w-6 h-6 rounded-full bg-purple-600 shadow-lg flex flex-row justify-center btn-effect1 cursor-pointer self-center'>
-                                                                            <div className='text-[0.95rem] font-semibold text-gray-50 self-center -mt-0.5'>+</div>
-                                                                        </div>
-
-                                                                    </div>
-
-                                                                    <div className='flex flex-row self-center'>
-
-                                                                        <div className='text-sm font-semibold text-gray-900 self-center mr-2'>Mémoire : </div>
-
-                                                                        <div className='w-6 h-6 rounded-full bg-purple-600 shadow-lg flex flex-row justify-center btn-effect1 cursor-pointer self-center'>
-                                                                            <div className='text-[0.95rem] font-semibold text-gray-50 self-center -mt-0.5'>+</div>
-                                                                        </div>
-
-                                                                    </div>
-
-                                                              </div>
-
-                                                          </div>
-
+                                                          
                                                         </div>
 
                                                     }
@@ -809,11 +743,14 @@ class Index extends Component {
                                                                         {products?.products?.map((item, i) => (
                                                                             <div key={i}>
                                                                                 <motion.div initial={{ opacity: 0, y: ( Math.random() * 15) }} whileInView={{ opacity: 1, y: 0, transition: { duration: 1.05 }, }}>
-                                                                                    <div className="w-full pt-1 pb-5 rounded-xl bg-gray-200 bg-opacity-80 cursor-pointer relative">
+                                                                                    <div onClick={(e) => this.handleBasket(e, item)} className="w-full pt-1 pb-5 rounded-xl bg-gray-200 bg-opacity-80 cursor-pointer relative">
 
-                                                                                        <div className="form-check absolute top-[0.65rem] right-[0.65rem]">
-                                                                                            <input checked={item?.selected == true} onFocus={(e) => this.handleChecked(e, i, item)} type="checkbox" className="form-check-input rounded-md appearance-none h-[0.765rem] w-[0.765rem] border border-purple-300 rounded-full bg-gray-100 checked:bg-purple-600 checked:border-purple-600 text-purple-500 focus:outline-none focus:border-0 focus:ring-2 focus:ring-purple-500 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left cursor-pointer"  />
-                                                                                        </div>
+                                                                                        {item?.selected  &&
+                                                                                            <div className="absolute top-[0.75rem] right-[0.75rem] w-5 h-5 bg-purple-600 rounded-full shadow-sm flex flex-row justify-center">
+                                                                                                <div className='w-3 h-3 text-white self-center'><CheckIcon className='w-full h-full'/></div>
+                                                                                            </div>
+                                                                                        }
+                                                                                        
 
                                                                                         <div className='w-full h-[6rem] flex flex-row justify-center'>
                                                                                             <div className='max-h-[4rem] max-w-[3.75rem] self-center'>
@@ -867,19 +804,20 @@ class Index extends Component {
 
                                                                     <div className='w-full px-3 self-center flex flex-row'>
                                                                         {chosenProducts.map((item, i) => (
-                                                                            <motion.div key={i} initial={{ opacity: 0, x: 300 + Math.random() * 15 }} whileInView={{ opacity: 1, x: 0, transition: { type: 'spring', stiffness: 195, damping: 20 }, }}>
-                                                                                <div className='relative h-full'>
-                                                                                    <div className='item-image-1 bg-gradient-to-r from-violet-600 to-purple-600 hover:scale-110 rounded-full border-opacity-80 self-center mr-4' >
-                                                                                        <div className='image-layer-2 rounded-full'>
-                                                                                            <div className='image-layer-3'><img src={item?.images[0].url}  /></div>
+                                                                            <AnimatePresence>
+                                                                                <motion.div key={i} initial={{ opacity: 0, x: 300 + Math.random() * 15 }} whileInView={{ opacity: 1, x: 0, transition: { type: 'spring', stiffness: 195, damping: 20 }, }} exit={{ opacity: 0}}>
+                                                                                    <div className='relative h-full'>
+                                                                                        <div className='item-image-1 bg-gradient-to-r from-violet-600 to-purple-600 hover:scale-110 rounded-full border-opacity-80 self-center mr-4' >
+                                                                                            <div className='image-layer-2 rounded-full'>
+                                                                                                <div className='image-layer-3'><img src={item?.images[0].url}  /></div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div onClick={(e) => this.handleBasket(e, null, i)} className='absolute -top-0.5 -left-0.5 w-4 h-4 bg-red-500 hover:bg-red-600 rounded-full flex flex-row justify-center shadow-sm'>
+                                                                                            <CrossIcon customClass="w-1.5 h-1.5 text-white self-center" />
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div onClick={(e) => this.handleBasket(e, null, i, item.id)} className='absolute -top-0.5 -left-0.5 w-4 h-4 bg-red-500 hover:bg-red-600 rounded-full flex flex-row justify-center shadow-sm'>
-                                                                                        <CrossIcon customClass="w-1.5 h-1.5 text-white self-center" />
-                                                                                    </div>
-                                                                                </div>
-                                                                                
-                                                                            </motion.div>
+                                                                                </motion.div>
+                                                                            </AnimatePresence>
                                                                         ))}
                                                                     </div>
 
