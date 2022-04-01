@@ -541,7 +541,7 @@ class Index extends Component {
 
                                                                         <div className='mt-4 flex flex-row justify-between px-1'>
 
-                                                                            <div className='text-[0.8rem] font-semibold self-center'>{new Intl.NumberFormat('fr-FR', {style: 'currency', currency:'XOF'}).format(item.unitprice)}</div>
+                                                                            <div className='text-[0.8rem] font-semibold self-center w-36 truncate'>{new Intl.NumberFormat('fr-FR', {style: 'currency', currency:'XOF'}).format(item.unitprice)}</div>
 
                                                                             <div className="h-5 flex flex-row self-center">
                                                                                 <div onClick={(e) => this.handleQuanity(e, i, 'minus')} className="h-full w-5 flex flex-row justify-center bg-gray-900 border border-gray-800 rounded-md gt-shadow1 btn-effect1 cursor-pointer mr-1">
@@ -553,7 +553,7 @@ class Index extends Component {
                                                                                 </div>
                                                                             </div>
 
-                                                                            <div className='text-[0.8rem] font-semibold self-center'>{new Intl.NumberFormat('fr-FR', {style: 'currency', currency:'XOF'}).format(item.unitprice * item.quantity)}</div>
+                                                                            <div className='text-[0.8rem] font-semibold self-center w-36 truncate'>{new Intl.NumberFormat('fr-FR', {style: 'currency', currency:'XOF'}).format(item.unitprice * item.quantity)}</div>
 
                                                                         </div>
 
