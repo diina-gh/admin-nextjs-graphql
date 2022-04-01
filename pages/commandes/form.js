@@ -452,7 +452,7 @@ class Index extends Component {
 
                                         <div className='divider w-full h-[1px] bg-gray-400 bg-opacity-30 mt-8 mb-4'></div>
                                         <div className='mb-3 ml-0.5 flex flex-row px-3'>
-                                            <div className='text-base font-semibold text-purple-600 mr-1 self-center'>Panier</div>
+                                            <div className='text-base font-semibold text-purple-600 mr-1 self-center'>Panier et Récapitulatif</div>
                                         </div>
 
                                         <div className='w-full grid grid-cols-10 grid-flow-row gap-4'>
@@ -484,11 +484,11 @@ class Index extends Component {
                                                         <div className='w-full'>
 
                                                           <div className='mb-3 ml-0.5 flex flex-row'>
-                                                            <div className='text-base font-medium text-purple-600 mr-1 self-center'>Produits</div>
+                                                            <div className='text-base font-medium text-purple-600 mr-1 self-center'>Panier</div>
                                                             <div className='px-2 py-[0.45px] text-[10.325px] font-medium bg-purple-500 bg-opacity-80 text-white rounded-xl self-center'>{chosenProducts?.length}</div>
                                                           </div>
 
-                                                          <div className='w-full bg-white bg-opacity-90 rounded-xl px-4 py-3 mb-4'>
+                                                          <div className='w-full bg-white bg-opacity-90 rounded-xl px-4 py-3 mb-4 shadow-sm'>
 
                                                               <div className='flex flex-row justify-between'>
 
@@ -589,7 +589,7 @@ class Index extends Component {
 
                                                           </div>
 
-                                                          <div className='w-full bg-white bg-opacity-90 rounded-xl px-4 py-3 mb-4'>
+                                                          <div className='w-full bg-white bg-opacity-90 rounded-xl px-4 py-3 mb-4 shadow-sm'>
 
                                                               <div className='flex flex-row justify-between'>
 
@@ -699,7 +699,41 @@ class Index extends Component {
                                                 </div>
                                             </div>
 
-                                            <div className="col-span-3 bg-gray-200 bg-opacity-80 rounded-xl px-5 py-5 h-80">
+                                            <div className="col-span-3 bg-gray-200 bg-opacity-80 rounded-xl px-5 py-5 flex flex-col justify-between ">
+
+                                                <div>
+
+                                                    <div className='text-base font-medium text-purple-600 ml-0.5 mb-4'>Récapitulatif</div>
+
+                                                    <div className='text-sm font-medium flex flex-row justify-between mb-3 bg-white bg-opacity-90 px-2 py-2'>
+                                                        <div className='text-gray-800'>Sous total</div>
+                                                        <div className='text-gray-900  text-xs self-center'>7500 CFA</div>
+                                                    </div>
+
+                                                    <div className='text-sm font-medium flex flex-row justify-between mb-3 bg-white bg-opacity-90 px-2 py-2'>
+                                                        <div className='text-gray-800'>Livraison</div>
+                                                        <div className='text-gray-900  text-xs self-center'>500 CFA</div>
+                                                    </div>
+
+                                                    <div className='text-sm font-medium flex flex-row justify-between mb-3 bg-white bg-opacity-90 px-2 py-2'>
+                                                        <div className='text-gray-800'>Remise</div>
+                                                        <div className='text-gray-900  text-xs self-center'>- 250 CFA</div>
+                                                    </div>
+
+                                                    <div className='text-sm font-medium flex flex-row justify-between mb-3 bg-white bg-opacity-90 px-2 py-2'>
+                                                        <div className='text-gray-800'>Taxe</div>
+                                                        <div className='text-gray-900  text-xs self-center'>0 CFA</div>
+                                                    </div>
+
+                                                </div>
+                                               
+                                                <div className='border-t border-gray-800 border-opacity-60 pt-4'>
+                                                    <div className='w-full text-sm font-semibold flex flex-row justify-between bg-white bg-opacity-90 px-2 py-2 mb-0.5'>
+                                                        <div className='text-gray-800'>Total</div>
+                                                        <div className='text-gray-900 text-xs self-center'>7750 CFA</div>
+                                                    </div>
+                                                </div>
+
                                             </div>
 
                                         </div>
