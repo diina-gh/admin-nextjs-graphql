@@ -26,6 +26,7 @@ import ChevronLeftIcon from '../../components/ui/icons/chevronLeftIcon';
 import ChevronRightIcon from '../../components/ui/icons/chevronRightIcon';
 import DoubleChevronLeftIcon from '../../components/ui/icons/doubleChevronLeftIcon';
 import DoubleChevronRightIcon from '../../components/ui/icons/doubleChevronRightIcon';
+import TrashBoldIcon from '../../components/ui/icons/trashBoldIcon'
 
 const people = [
   { id: 1, name: 'Wade Cooper' },
@@ -343,7 +344,6 @@ class Index extends Component {
                                                                                     <CheckIcon className="h-5 w-5" aria-hidden="true" />
                                                                                 </span>
                                                                             }
-
                                                                         </>
                                                                         )}
                                                                     </Listbox.Option>
@@ -451,16 +451,29 @@ class Index extends Component {
                                         </div>
 
                                         <div className='divider w-full h-[1px] bg-gray-400 bg-opacity-30 mt-8 mb-4'></div>
-                                        <div className='mb-3 ml-0.5 flex flex-row px-5'>
+                                        <div className='mb-3 ml-0.5 flex flex-row px-3'>
                                             <div className='text-base font-semibold text-purple-600 mr-1 self-center'>Panier</div>
-                                            <div className='px-2 py-[0.45px] text-[10.325px] font-medium bg-purple-500 bg-opacity-80 text-white rounded-xl self-center'>{chosenProducts?.length}</div>
                                         </div>
 
-                                        <div className='w-full grid grid-cols-3 grid-flow-row gap-6'>
+                                        <div className='w-full grid grid-cols-10 grid-flow-row gap-4'>
+
+                                            <div className='col-span-3 pl-2'>
+                                                <div className='flex flex-row'>
+                                                    <div className='self-center -mb-1 mr-2'><InfoBoldIcon customClass="w-4 h-4 text-gray-700"/></div>
+                                                    <div className='self-center text-lg font-semibold text-gray-800 '>Conseils</div>
+                                                </div>
+                                                <div className='text-[13px] font-normal text-gray-800 mt-3 pl-5'>
+                                                    <ul className="list-disc">
+                                                        <li className='mb-2'>lorem ipsum dolor sit amet consectetur adipiscing elit</li>
+                                                        <li className='mb-2'>Sed aliquet ac sem sed porttitor</li>
+                                                        <li className=''>Curabitur at mauris imperdiet, feugiat risus vitae, pellentesque augue</li>
+                                                    </ul>  
+                                                </div>
+                                            </div>
                                             
-                                            <div className="col-span-2 bg-gray-200 bg-opacity-80 rounded-xl py-5">
+                                            <div className="col-span-4 bg-gray-200 bg-opacity-80 rounded-xl py-5">
                                                 <div className='w-full h-80 overflow-y-auto px-5'>
-                                                    {chosenProducts?.length == 0 ?
+                                                    {chosenProducts?.length != 0 ?
 
                                                         <div className='w-full h-full flex flex-row justify-center '>
                                                             <div className='h-24 self-center'>
@@ -468,8 +481,215 @@ class Index extends Component {
                                                             </div>
                                                         </div>
                                                         :
-                                                        <div>
-                                                          
+                                                        <div className='w-full'>
+
+                                                          <div className='mb-3 ml-0.5 flex flex-row'>
+                                                            <div className='text-base font-medium text-purple-600 mr-1 self-center'>Produits</div>
+                                                            <div className='px-2 py-[0.45px] text-[10.325px] font-medium bg-purple-500 bg-opacity-80 text-white rounded-xl self-center'>{chosenProducts?.length}</div>
+                                                          </div>
+
+                                                          <div className='w-full bg-white bg-opacity-90 rounded-xl px-4 py-3 mb-4'>
+
+                                                              <div className='flex flex-row justify-between'>
+
+                                                                  <div className='flex flex-row'>
+
+                                                                      <div className='w-12 h-12 bg-purple-100 rounded-full border-2 border-purple-500 mr-3 self-center'>
+
+                                                                      </div>
+
+                                                                      <div className='self-center'>
+                                                                        <div className='text-sm font-semibold text-gray-900'>Apple MacBook Pro</div>
+                                                                        <div className='mt-0.5 text-xs font-normal text-gray-500'>Ordinateur</div>
+                                                                      </div>
+
+                                                                  </div>
+
+                                                                  <div className="self-center">
+                                                                    <button className="w-6 h-6 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-30">
+                                                                        <TrashBoldIcon customClass="w-[0.75rem] text-red-600 text-opacity-90 self-center"/>
+                                                                    </button>
+                                                                  </div>
+
+                                                              </div>
+
+                                                              <div className='mt-4 flex flex-row justify-between px-1'>
+
+                                                                  <div className='text-sm font-semibold'>1500 CFA</div>
+
+                                                                  <div className="h-5 flex flex-row">
+                                                                    <div className="h-full w-5 flex flex-row justify-center bg-gray-900 border border-gray-800 rounded-md gt-shadow1 btn-effect1 cursor-pointer mr-1">
+                                                                        <div className="self-center text-base font-semibold text-gray-100 -mt-1">-</div>
+                                                                    </div>
+                                                                    <div className="h-full w-12 h-5 border border-gray-500 truncate text-xs font-medium text-center self-center">2</div>
+                                                                    <div className="h-full w-5 flex flex-row justify-center bg-gray-900 border border-gray-800 rounded-md gt-shadow1 btn-effect1 cursor-pointer ml-1">
+                                                                        <div className="self-center text-base font-semibold text-gray-100 -mt-1">+</div>
+                                                                    </div>
+                                                                  </div>
+
+                                                                  <div className='text-sm font-semibold'>3000 CFA</div>
+
+                                                              </div>
+
+                                                              <div className='mt-4 flex flex-row'>
+
+                                                                    <div className='flex flex-row justify-center w-5 h-5 mr-4'>
+                                                                        <div className='text-[0.75rem] font-medium text-gray-900 self-center'>1</div>
+                                                                    </div>
+
+                                                                    <div className='flex flex-row self-center mr-6'>
+
+                                                                        <div className='text-sm font-semibold text-gray-900 self-center mr-2'>Couleur : </div>
+
+                                                                        <div className='w-6 h-6 rounded-full bg-purple-600 shadow-lg flex flex-row justify-center btn-effect1 cursor-pointer self-center'>
+                                                                            <div className='text-[0.95rem] font-semibold text-gray-50 self-center -mt-0.5'>+</div>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                    <div className='flex flex-row self-center'>
+
+                                                                        <div className='text-sm font-semibold text-gray-900 self-center mr-2'>Mémoire : </div>
+
+                                                                        <div className='w-6 h-6 rounded-full bg-purple-600 shadow-lg flex flex-row justify-center btn-effect1 cursor-pointer self-center'>
+                                                                            <div className='text-[0.95rem] font-semibold text-gray-50 self-center -mt-0.5'>+</div>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                              </div>
+
+                                                              <div className='mt-4 flex flex-row'>
+
+                                                                    <div className='flex flex-row justify-center w-5 h-5 mr-4'>
+                                                                        <div className='text-[0.75rem] font-medium text-gray-900 self-center'>2</div>
+                                                                    </div>
+
+                                                                    <div className='flex flex-row self-center mr-6'>
+
+                                                                        <div className='text-sm font-semibold text-gray-900 self-center mr-2'>Couleur : </div>
+
+                                                                        <div className='w-6 h-6 rounded-full bg-purple-600 shadow-lg flex flex-row justify-center btn-effect1 cursor-pointer self-center'>
+                                                                            <div className='text-[0.95rem] font-semibold text-gray-50 self-center -mt-0.5'>+</div>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                    <div className='flex flex-row self-center'>
+
+                                                                        <div className='text-sm font-semibold text-gray-900 self-center mr-2'>Mémoire : </div>
+
+                                                                        <div className='w-6 h-6 rounded-full bg-purple-600 shadow-lg flex flex-row justify-center btn-effect1 cursor-pointer self-center'>
+                                                                            <div className='text-[0.95rem] font-semibold text-gray-50 self-center -mt-0.5'>+</div>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                              </div>
+
+                                                          </div>
+
+                                                          <div className='w-full bg-white bg-opacity-90 rounded-xl px-4 py-3 mb-4'>
+
+                                                              <div className='flex flex-row justify-between'>
+
+                                                                  <div className='flex flex-row'>
+
+                                                                      <div className='w-12 h-12 bg-purple-100 rounded-full border-2 border-purple-500 mr-3 self-center'>
+
+                                                                      </div>
+
+                                                                      <div className='self-center'>
+                                                                        <div className='text-sm font-semibold text-gray-900'>Apple MacBook Pro</div>
+                                                                        <div className='mt-0.5 text-xs font-normal text-gray-500'>Ordinateur</div>
+                                                                      </div>
+
+                                                                  </div>
+
+                                                                  <div className="self-center">
+                                                                    <button className="w-6 h-6 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-30">
+                                                                        <TrashBoldIcon customClass="w-[0.75rem] text-red-600 text-opacity-90 self-center"/>
+                                                                    </button>
+                                                                  </div>
+
+                                                              </div>
+
+                                                              <div className='mt-4 flex flex-row justify-between px-1'>
+
+                                                                  <div className='text-sm font-semibold'>1500 CFA</div>
+
+                                                                  <div className="h-5 flex flex-row">
+                                                                    <div className="h-full w-5 flex flex-row justify-center bg-gray-900 border border-gray-800 rounded-md gt-shadow1 btn-effect1 cursor-pointer mr-1">
+                                                                        <div className="self-center text-base font-semibold text-gray-100 -mt-1">-</div>
+                                                                    </div>
+                                                                    <div className="h-full w-12 h-5 border border-gray-500 truncate text-xs font-medium text-center self-center">2</div>
+                                                                    <div className="h-full w-5 flex flex-row justify-center bg-gray-900 border border-gray-800 rounded-md gt-shadow1 btn-effect1 cursor-pointer ml-1">
+                                                                        <div className="self-center text-base font-semibold text-gray-100 -mt-1">+</div>
+                                                                    </div>
+                                                                  </div>
+
+                                                                  <div className='text-sm font-semibold'>3000 CFA</div>
+
+                                                              </div>
+
+                                                              <div className='mt-4 flex flex-row'>
+
+                                                                    <div className='flex flex-row justify-center w-5 h-5 mr-4'>
+                                                                        <div className='text-[0.75rem] font-medium text-gray-900 self-center'>1</div>
+                                                                    </div>
+
+                                                                    <div className='flex flex-row self-center mr-6'>
+
+                                                                        <div className='text-sm font-semibold text-gray-900 self-center mr-2'>Couleur : </div>
+
+                                                                        <div className='w-6 h-6 rounded-full bg-purple-600 shadow-lg flex flex-row justify-center btn-effect1 cursor-pointer self-center'>
+                                                                            <div className='text-[0.95rem] font-semibold text-gray-50 self-center -mt-0.5'>+</div>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                    <div className='flex flex-row self-center'>
+
+                                                                        <div className='text-sm font-semibold text-gray-900 self-center mr-2'>Mémoire : </div>
+
+                                                                        <div className='w-6 h-6 rounded-full bg-purple-600 shadow-lg flex flex-row justify-center btn-effect1 cursor-pointer self-center'>
+                                                                            <div className='text-[0.95rem] font-semibold text-gray-50 self-center -mt-0.5'>+</div>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                              </div>
+
+                                                              <div className='mt-4 flex flex-row'>
+
+                                                                    <div className='flex flex-row justify-center w-5 h-5 mr-4'>
+                                                                        <div className='text-[0.75rem] font-medium text-gray-900 self-center'>2</div>
+                                                                    </div>
+
+                                                                    <div className='flex flex-row self-center mr-6'>
+
+                                                                        <div className='text-sm font-semibold text-gray-900 self-center mr-2'>Couleur : </div>
+
+                                                                        <div className='w-6 h-6 rounded-full bg-purple-600 shadow-lg flex flex-row justify-center btn-effect1 cursor-pointer self-center'>
+                                                                            <div className='text-[0.95rem] font-semibold text-gray-50 self-center -mt-0.5'>+</div>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                    <div className='flex flex-row self-center'>
+
+                                                                        <div className='text-sm font-semibold text-gray-900 self-center mr-2'>Mémoire : </div>
+
+                                                                        <div className='w-6 h-6 rounded-full bg-purple-600 shadow-lg flex flex-row justify-center btn-effect1 cursor-pointer self-center'>
+                                                                            <div className='text-[0.95rem] font-semibold text-gray-50 self-center -mt-0.5'>+</div>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                              </div>
+
+                                                          </div>
+
                                                         </div>
 
                                                     }
@@ -479,7 +699,7 @@ class Index extends Component {
                                                 </div>
                                             </div>
 
-                                            <div className="bg-gray-200 bg-opacity-80 rounded-xl px-5 py-5 h-80">
+                                            <div className="col-span-3 bg-gray-200 bg-opacity-80 rounded-xl px-5 py-5 h-80">
                                             </div>
 
                                         </div>
