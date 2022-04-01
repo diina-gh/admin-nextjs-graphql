@@ -553,7 +553,7 @@ class Index extends Component {
                                                                                 </div>
                                                                             </div>
 
-                                                                            <div className='text-[0.8rem] font-semibold self-center'>{new Intl.NumberFormat('fr-FR', {style: 'currency', currency:'XOF'}).format(item.unitprice * 2)}</div>
+                                                                            <div className='text-[0.8rem] font-semibold self-center'>{new Intl.NumberFormat('fr-FR', {style: 'currency', currency:'XOF'}).format(item.unitprice * item.quantity)}</div>
 
                                                                         </div>
 
