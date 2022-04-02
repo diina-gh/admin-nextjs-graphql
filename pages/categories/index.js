@@ -128,7 +128,7 @@ export default function Index() {
         <HeadInfo title= 'Dashboard' description='description here'/>
         <Header/>
 
-        <div className='w-full px-3 md:px-6 py-3 md:py-5 flex flex-row justify-between'>
+        <div className='w-full pt-3 px-3 md:px-6 flex flex-row justify-between'>
 
             <Sidebar />
 
@@ -160,9 +160,9 @@ export default function Index() {
                             <Tab.Panels className='app-subbody2'>
                                     <Tab.Panel key={1} className={classNames('','bg-white h-full focus:outline-none focus:ring-0 ring-opacity-0 rounded-b-xl ')}>
 
-                                        <div className='w-full h-full rounded-b-xl overflow-y-scroll p-4'>
+                                        <div className='w-full h-full rounded-b-xl overflow-y-scroll pt-4 pb-3'>
 
-                                            <div className='w-full flex flex-row justify-between mt-3'>
+                                            <div className='w-full flex flex-row justify-between px-4'>
 
                                                 <div className='flex flex-row'>
                                                     
@@ -208,7 +208,7 @@ export default function Index() {
                                             <div className="w-full flex flex-col overflow-x-auto mt-4">
                                                 <div className="w-full overflow-x-auto">
                                                     <div className="align-middle inline-block min-w-full">
-                                                        <div className="shadow overflow-hidden app-table sm:rounded-lg">
+                                                        <div className="shadow overflow-hidden app-table sm:rounded-lg pl-4 pr-3">
 
                                                         {(isLoading || items?.page != null ) &&
                                                             <div className='app-table w-full flex flex-row justify-center'>
@@ -428,11 +428,11 @@ function SubCategories () {
 
 
     return (
-        <div className='w-full h-full rounded-b-xl overflow-y-scroll p-4'>
+        <div className='w-full h-full rounded-b-xl overflow-y-scroll pt-4 pb-3'>
 
             <BlockUI blocking={block} />
 
-            <div className='w-full flex flex-row justify-between mt-3'>
+            <div className='w-full flex flex-row justify-between px-4 mt-3'>
 
                 <div className='flex flex-row'>
                     
@@ -478,7 +478,7 @@ function SubCategories () {
             <div className="w-full flex flex-col overflow-x-auto mt-4">
                 <div className="w-full overflow-x-auto">
                     <div className="align-middle inline-block min-w-full">
-                        <div className="shadow overflow-hidden app-table sm:rounded-lg">
+                        <div className="shadow overflow-hidden app-table sm:rounded-lg pl-4 pr-3">
 
                         {(isLoading || items?.page != null ) &&
                             <div className='app-table w-full flex flex-row justify-center'>

@@ -7,24 +7,24 @@
 
 .app-sidebar{
   min-height: fit-content !important;
-  max-height: calc(100vh - 6.55rem);
+  max-height: calc(100vh - 5rem);
   @extend .gt-shadow2;
 }
 
 .app-rightbar{
   min-height: fit-content;
-  max-height: calc(100vh - 6.55rem);
+  max-height: calc(100vh - 5rem);
   @extend .gt-shadow2;
 }
 
-.app-body0{
-  width: calc(100vw - 19.4rem);
-  height: calc(100vh - 6.55rem);
-}
+// .app-body0{
+//   width: calc(100vw - 19.4rem);
+//   height: calc(100vh - 6.55rem);
+// }
 
 .app-body{
   // width: calc(100vw - 1.75rem);
-  height: calc(100vh - 6.55rem);
+  height: calc(100vh - 5rem);
   @extend .gt-shadow2;
 }
 
@@ -33,7 +33,7 @@
 }
 
 .app-table{
-  height: calc(100vh - 18.45rem) !important;
+  height: calc(100vh - 16.50rem) !important;
   overflow-y: auto !important;
 }
 

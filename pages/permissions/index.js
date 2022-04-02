@@ -24,7 +24,7 @@ import toast, { Toaster } from 'react-hot-toast';
 
 export default function Index() {
 
-    const take = 6;
+    const take = 8;
     const [page, setPage] = useState(1);
     const [filter, setFilter] = useState('')
     const [direction, setDirection] = useState('asc')
@@ -89,7 +89,7 @@ export default function Index() {
             <HeadInfo title= 'Dashboard' description='description here'/>
             <Header/>
 
-            <div className='w-full px-3 md:px-6 py-3 md:py-5 flex flex-row justify-between'>
+            <div className='w-full pt-3 px-3 md:px-6 flex flex-row justify-between'>
 
                 <Sidebar />
 
@@ -98,16 +98,16 @@ export default function Index() {
 
                         <BlockUI blocking={block} />
 
-                        <div className='w-full h-full bg-white rounded-xl overflow-y-scroll p-4'>
+                        <div className='w-full h-full bg-white rounded-xl overflow-y-scroll pt-4 pb-3'>
 
-                            <div className='w-full flex flex-row mt-2'>
+                            <div className='w-full flex flex-row px-4'>
 
                                 <div className='text-lg font-bold text-purple-600 mr-2 self-center'>Permissions</div>
                                 <div className='px-2 py-1 rounded-xl bg-purple-600 bg-opacity-90 text-white text-xs font-medium self-center'>{items?.permissions?.count ? items?.permissions?.count: 0 }</div>
 
                             </div>
 
-                            <div className='w-full flex flex-row justify-between mt-4'>
+                            <div className='w-full flex flex-row justify-between px-4 mt-4'>
 
                                 <div className='flex flex-row'>
                                     
@@ -153,7 +153,7 @@ export default function Index() {
                             <div className="w-full flex flex-col overflow-x-auto mt-4">
                                 <div className="w-full overflow-x-auto">
                                     <div className="align-middle inline-block min-w-full">
-                                        <div className="overflow-hidden app-table sm:rounded-lg">
+                                        <div className="overflow-hidden app-table sm:rounded-lg px-4 px-4">
 
                                         {(isLoading || items?.page != null || items?.filter != null || items?.orderBy != null ) &&
                                             <div className='app-table w-full flex flex-row justify-center'>
@@ -226,7 +226,7 @@ export default function Index() {
                                 </div>
                             </div>
 
-                            <div className='w-full flex flex-row justify-end mt-6'>
+                            <div className='w-full flex flex-row justify-end px-4 mt-6'>
                                 <Pagination 
                                     initialPage={page} 
                                     itemsPerPage={take} 

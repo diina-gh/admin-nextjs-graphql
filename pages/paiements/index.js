@@ -29,23 +29,23 @@ const [currentPage, setCurrentPage] = useState(1);
         <HeadInfo title= 'Dashboard' description='description here'/>
         <Header/>
 
-        <div className='w-full px-3 md:px-6 py-3 md:py-5 flex flex-row justify-between'>
+        <div className='w-full pt-3 px-3 md:px-6 flex flex-row justify-between'>
 
             <Sidebar />
 
             <motion.div initial={{ opacity: 0.45, x: -150 }}  whileInView={{ opacity: 1, x: 0, transition: { duration: 0.60 }, }}>
                 <div className='app-body rounded-xl'>
 
-                    <div className='w-full h-full bg-white rounded-xl overflow-y-scroll p-4'>
+                    <div className='w-full h-full bg-white rounded-xl overflow-y-scroll pt-4 pb-3'>
 
-                        <div className='w-full flex flex-row mt-2'>
+                        <div className='w-full flex flex-row mt-2 px-4'>
 
                             <div className='text-lg font-bold text-purple-600 mr-2 self-center'>Paiements</div>
                             <div className='px-2 py-1 rounded-xl bg-purple-600 bg-opacity-90 text-white text-xs font-medium self-center'>226</div>
 
                         </div>
 
-                        <div className='w-full flex flex-row justify-between mt-4'>
+                        <div className='w-full flex flex-row justify-between px-4 mt-4'>
 
                             <div className='flex flex-row'>
                                 

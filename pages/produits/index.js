@@ -30,7 +30,7 @@ import { capitalize } from '../../libs/util';
 
 export default function Index() {
 
-    const take = 8;
+    const [take, setTake] = useState(12);
     const [page, setPage] = useState(1);
     const [filter, setFilter] = useState('')
     const [direction, setDirection] = useState('asc')
@@ -43,6 +43,7 @@ export default function Index() {
     const changeDisplay = (e, option) => {
         e.preventDefault()
         setDisplay(option)
+        setTake(option == 0 ? 8 : 12)
     }
 
     const refetch = (newPage, newFilter = null, newOrder = null ) =>{
@@ -70,14 +71,14 @@ export default function Index() {
             <HeadInfo title= 'Dashboard' description='description here'/>
             <Header/>
 
-            <div className='w-full py-3 md:py-4 px-3 md:px-6 flex flex-row justify-between'>
+            <div className='w-full pt-3 px-3 md:px-6 flex flex-row justify-between'>
 
                 <Sidebar />
 
                 <motion.div initial={{ opacity: 0.45, x: -150 }}  whileInView={{ opacity: 1, x: 0, transition: { duration: 0.60 }, }}>
                     <div className='app-body rounded-xl'>
 
-                        <div className='w-full h-full bg-white rounded-xl overflow-y-scroll py-3'>
+                        <div className='w-full h-full bg-white rounded-xl overflow-y-scroll pt-4 pb-3'>
 
                             <div className='w-full flex flex-row mt-2 px-4'>
 
@@ -137,10 +138,10 @@ export default function Index() {
 
                             </div>
 
-                            <div className="w-full flex flex-col overflow-x-auto mt-4">
+                            <div className="w-full flex flex-col overflow-x-auto mt-5">
                                 <div className="w-full overflow-x-auto">
                                     <div className="align-middle inline-block min-w-full">
-                                        <div className="overflow-hidden app-table sm:rounded-lg px-4">
+                                        <div className="overflow-hidden app-table sm:rounded-lg pl-4 pr-3">
 
                                         {(isLoading || items?.page != null || items?.filter != null || items?.orderBy != null ) &&
                                             <div className='app-table w-full flex flex-row justify-center'>
@@ -152,10 +153,10 @@ export default function Index() {
                                             <>
                                                 { display == 1 &&
 
-                                                    <div className="w-full grid grid-cols-6 gap-4 mt-2">
+                                                    <div className="w-full grid grid-cols-6 gap-4">
                                                         {items.products.products.map((item, i) => (
                                                             <div key={i}>
-                                                                <motion.div initial={{ opacity: 0, y: ( Math.random() * (i+1) * 15) }} whileInView={{ opacity: 1, y: 0, transition: { duration: 1.05 }, }}>
+                                                                <motion.div initial={{ opacity: 0, y: ( Math.random() + i) }} whileInView={{ opacity: 1, y: 0, transition: { duration: 1.05 }, }}>
                                                                     <div className="w-full pt-1 pb-5 rounded-xl bg-gray-200 bg-opacity-80 cursor-pointer relative parent-layer">
 
                                                                         <div onClick={(e) => deleteItem(e, item.id)}  className='hided-item absolute top-[0.55rem] right-[0.4rem] w-[1.25rem] h-[1.25rem] bg-red-400 hover:bg-red-500 rounded-full flex flex-row justify-center z-10 shadow-sm transition duration-700 ease-in-out'>
