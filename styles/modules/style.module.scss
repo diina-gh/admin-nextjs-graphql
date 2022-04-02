@@ -17,13 +17,13 @@
   @extend .gt-shadow2;
 }
 
-// .app-body0{
-//   width: calc(100vw - 19.4rem);
-//   height: calc(100vh - 6.55rem);
-// }
+.app-body0{
+  width: calc(100vw - 19.4rem);
+  height: calc(100vh - 5rem);
+}
 
 .app-body{
-  // width: calc(100vw - 1.75rem);
+  width: calc(100vw - 1.75rem);
   height: calc(100vh - 5rem);
   @extend .gt-shadow2;
 }

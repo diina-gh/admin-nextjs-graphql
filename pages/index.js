@@ -21,7 +21,7 @@ export default function Home({userId}) {
         <HeadInfo title= 'Dashboard' description='description here'/>
         <Header />
 
-        <div className='w-full px-6 py-6 flex flex-row justify-between'>
+        <div className='w-full px-6 py-3 flex flex-row justify-between'>
 
             <Sidebar />
             
