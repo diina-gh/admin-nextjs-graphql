@@ -26,15 +26,19 @@ const solutions = [
 
 export default function Filter() {
   return (
-    <div className="">
+    <div className="self-center mr-4">
       <Popover className="relative">
         {({ open }) => (
           <>
 
             <Popover.Button className={` ${open ? '' : 'text-opacity-90'} text-white group bg-pink-600 bg-opacity-90 px-3 py-2 rounded-md inline-flex justify-center text-sm font-medium hover:text-opacity-100 self-center btn-effect1 shadow shadow-pink-600/50`}>
+              <FilterBoldIcon customClass={`${open ? '' : 'text-opacity-80'} h-3.5 w-3.5 text-white group-hover:text-opacity-90 transition ease-in-out duration-150 self-center mr-1 -mb-0.5`} />
+              <span>Filtrer</span>
+            </Popover.Button>
+            {/* <Popover.Button className={` ${open ? '' : 'text-opacity-90'} text-white group bg-pink-600 bg-opacity-90 px-3 py-2 rounded-md inline-flex justify-center text-sm font-medium hover:text-opacity-100 self-center btn-effect1 shadow shadow-pink-600/50`}>
                 <FilterBoldIcon customClass={`${open ? '' : 'text-opacity-80'} mr-2 h-4 w-4 text-white group-hover:text-opacity-90 transition ease-in-out duration-150 self-center`} />
                 <span>Filtrer</span>
-            </Popover.Button>
+            </Popover.Button> */}
 
             <Transition as={Fragment} enter="transition ease-out duration-200" enterFrom="opacity-0 translate-y-1" enterTo="opacity-100 translate-y-0" leave="transition ease-in duration-150" leaveFrom="opacity-100 translate-y-0" leaveTo="opacity-0 translate-y-1">
               <Popover.Panel className="absolute left-48 z-10 w-96 px-4 mt-3 transform -translate-x-1/2 left-1/2 sm:px-0 lg:max-w-3xl shadow-2xl">

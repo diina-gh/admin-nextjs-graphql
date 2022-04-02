@@ -20,9 +20,12 @@ import ChevronLeftIcon from '../../components/ui/icons/chevronLeftIcon';
 import ChevronRightIcon from '../../components/ui/icons/chevronRightIcon';
 import DoubleChevronLeftIcon from '../../components/ui/icons/doubleChevronLeftIcon';
 import DoubleChevronRightIcon from '../../components/ui/icons/doubleChevronRightIcon';
+import ListBoldIcon from '../../components/ui/icons/listBoldIcon';
+import AppBoldIcon from '../../components/ui/icons/appBoldIcon';
 import CrossIcon from '../../components/ui/icons/crossIcon';
 import { getProducts } from '../../hooks/product';
 import { capitalize } from '../../libs/util';
+
 
 
 export default function Index() {
@@ -36,6 +39,11 @@ export default function Index() {
 
 
     var { items, isLoading, isError, mutate } = getProducts(page,take,filter, orderBy )
+
+    const changeDisplay = (e, option) => {
+        e.preventDefault()
+        setDisplay(option)
+    }
 
     const refetch = (newPage, newFilter = null, newOrder = null ) =>{
         if(newPage){
@@ -85,7 +93,15 @@ export default function Index() {
                                     <Sort />
                                     <Filter />
 
-                                    <div className='ml-2 h-8 px-2 self-center bg-gray-100 bg-opacity-95 shadow-inner rounded-full flex flex-row'>
+                                    <div onClick={(e) => changeDisplay(e,0)} className={` ${display == 0 ? 'text-purple-600' : 'text-gray-800'} hover:text-purple-600 self-center cursor-pointer mr-4`}>
+                                        <ListBoldIcon customClass="w-4 h-7" />
+                                    </div>
+
+                                    <div onClick={(e) => changeDisplay(e,1)} className={` ${display == 1 ? 'text-purple-600' : 'text-gray-800'} hover:text-purple-600 self-center cursor-pointer mr-4`}>
+                                        <AppBoldIcon customClass="w-4 h-4" />
+                                    </div>
+
+                                    <div className='h-8 px-2 self-center bg-gray-100 bg-opacity-95 shadow-inner rounded-full flex flex-row'>
 
                                         <div className='w-4 h-4 self-center'>
                                             <SearchIcon customClass='w-full h-full text-gray-600' />
