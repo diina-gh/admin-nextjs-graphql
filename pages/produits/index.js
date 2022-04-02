@@ -30,7 +30,7 @@ import { capitalize } from '../../libs/util';
 
 export default function Index() {
 
-    const [take, setTake] = useState(12);
+    const [take, setTake] = useState(8);
     const [page, setPage] = useState(1);
     const [filter, setFilter] = useState('')
     const [direction, setDirection] = useState('asc')
@@ -43,7 +43,7 @@ export default function Index() {
     const changeDisplay = (e, option) => {
         e.preventDefault()
         setDisplay(option)
-        setTake(option == 0 ? 8 : 12)
+        // refetch(1)
     }
 
     const refetch = (newPage, newFilter = null, newOrder = null ) =>{
