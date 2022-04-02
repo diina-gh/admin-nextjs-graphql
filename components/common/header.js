@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import CalendarBoldIcon from '../ui/icons/calendarBoldIcon';
 import BellBoldIcon from '../ui/icons/bellBoldIcon';
+import CommentBoldIcon from '../ui/icons/commentBoldIcon';
 import MenuBurgerIcon from '../ui/icons/menuBurgerIcon';
 import { SideNav } from './sidebar';
 import Cookies from 'js-cookie'
@@ -61,6 +62,12 @@ export default function Header(props) {
                         <CalendarBoldIcon customClass="w-full h-full" />
                     </div>
                     <div className='text-xs font-semibold self-center'>07 Mars 2021</div>
+                </div>
+
+                <div className='w-8 h-8 th-bg-1 text-gray-900 rounded-full flex flex-row justify-center mr-3'>
+                    <div className='w-4 h-4 self-center'>
+                        <CommentBoldIcon customClass="w-full h-full" />
+                    </div>
                 </div>
 
                 <div className='w-8 h-8 th-bg-1 text-gray-900 rounded-full flex flex-row justify-center mr-3'>

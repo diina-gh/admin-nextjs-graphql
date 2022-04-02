@@ -102,10 +102,12 @@ class Index extends Component {
             this.handleUpload(response?.id)
         }
         else if(response?.__typename == 'InputError'){
+            toast.dismiss()
             toast.error(response?.message, {id: toastOne,});
             this.setState({block: false})
         }
         else{
+            toast.dismiss()
             toast.error("Erreur inconnue. Veuillez vérifier votre connexion internet.", {id: toastOne,});
         }
     };
@@ -116,6 +118,7 @@ class Index extends Component {
 
         if(imageref != null){ 
             if(image == chosenImage){
+                toast.dismiss()
                 toast.success("Mise à jour réussie !", {id: toastOne,});
                 this.setState({block: false})
                 return null
@@ -162,6 +165,7 @@ class Index extends Component {
             toast.success("Mise à jour réussie 😏", {id: toastOne,});
         }
         else if(response?.__typename == 'InputError'){
+            toast.dismiss()
             console.log("ImageInfo mutattion ", response?.message)
             toast.error("Une erreur s'est produite lors de l'ajout de l'image !", {id: toastOne,});
         }

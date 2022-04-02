@@ -169,7 +169,7 @@ export function Navigation(){
                     </li>
                 </Link>
 
-                <Link  href='/messages' >
+                {/* <Link  href='/messages' >
                     <li>
                         <a  className={`${(router.asPath === '/messages') ? 'text-purple-800 border-purple-500 bg-gradient-to-r from-purple-50 to-fuchsia-50 bg-opacity-5' : 'border-white text-gray-900'} flex justify-between py-2 px-4 text-base font-medium border-l-2 hover:text-purple-800 hover:border-purple-500 hover:bg-gradient-to-r hover:from-purple-50 hover:to-fuchsia-50 hover:bg-opacity-5 cursor-pointer duration-700 ease-in-out `}>
                             <div className='flex items-center'>
@@ -181,7 +181,7 @@ export function Navigation(){
                             </div>
                         </a>
                     </li>
-                </Link>
+                </Link> */}
 
                 <Link  href='/newsletters' >  
                     <li>

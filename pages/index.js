@@ -33,27 +33,38 @@ export default function Home({userId}) {
 
                         <div className='h-36 grid grid-cols-3 grid-flow-row gap-4'>
 
-                            <div className='h-full bg-purple-200 bg-opacity-70 rounded-xl shadow shadow-purple-200/50'>
-                            </div>
+                            <motion.div initial={{ opacity: 0.65, y: ( Math.random() * 2 * 5) }} whileInView={{ opacity: 1, y: 0, transition: { duration: 1.05 }, }}>
+                                <div className='h-full bg-purple-200 bg-opacity-95 rounded-xl shadow shadow-purple-200/50'>
+                                </div>
+                            </motion.div>
 
-                            <div className='h-full bg-red-200 bg-opacity-70 rounded-xl shadow shadow-red-200/50'>
-                            </div>
+                            <motion.div initial={{ opacity: 0.55, y: ( Math.random() * 3 * 5) }} whileInView={{ opacity: 1, y: 0, transition: { duration: 1.05 }, }}>
+                                <div className='h-full bg-red-200 rounded-xl shadow shadow-red-200/50'>
+                                </div>
+                            </motion.div>
 
-                            <div className='h-full bg-amber-200 bg-opacity-70 rounded-xl shadow shadow-amber-200/50'>
-                            </div>
-
+                            <motion.div initial={{ opacity: 0.45, y: ( Math.random() * 4 * 5) }} whileInView={{ opacity: 1, y: 0, transition: { duration: 1.05 }, }}>
+                                <div className='h-full bg-amber-200 rounded-xl shadow shadow-amber-200/50'>
+                                </div>
+                            </motion.div>
+                    
                         </div>
 
-                        <div className='w-full h-56 bg-white rounded-xl shadow mt-4'>
-                        </div>
+                        <motion.div initial={{ opacity: 0.5, y: ( Math.random() * 2 * 5) }} whileInView={{ opacity: 1, y: 0, transition: { duration: 1.05 }, }}>
+                            <div className='w-full h-56 bg-white rounded-xl shadow mt-4'>
+                            </div>
+                        </motion.div>
 
-                        <div className='w-full h-56 bg-white rounded-xl shadow mt-4'>
-                        </div>
+                        <motion.div initial={{ opacity: 0.5, y: ( Math.random() * 3 * 5) }} whileInView={{ opacity: 1, y: 0, transition: { duration: 1.05 }, }}>
+                            <div className='w-full h-56 bg-white rounded-xl shadow mt-4'>
+                            </div>
+                        </motion.div>
+
 
                     </div>
 
                     <div className='app-rightbar bg-white rounded-xl px-2 py-2'>
-                        <div className='text-sm font-medium'>userId: <span className='text-green-500'>{userId}</span></div>
+                        {/* <div className='text-sm font-medium'>userId: <span className='text-green-500'>{userId}</span></div> */}
 
                     </div>
     
