@@ -30,7 +30,7 @@ import { capitalize } from '../../libs/util';
 
 export default function Index() {
 
-    const [take, setTake] = useState(8);
+    const [take, setTake] = useState(12);
     const [page, setPage] = useState(1);
     const [filter, setFilter] = useState('')
     const [direction, setDirection] = useState('asc')
