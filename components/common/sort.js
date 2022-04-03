@@ -49,35 +49,35 @@ export default function Filter() {
                         Trier par
                     </div>
 
-                    <div class="flex flex-col mt-3">
+                    <div className="flex flex-col mt-3">
                       <div>
-                        <div class="form-check">
-                          <input class="form-check-input appearance-none rounded-full h-3.5 w-3.5 border border-purple-300  bg-white checked:bg-purple-600 checked:border-purple-600 text-purple-500 focus:ring-2 focus:ring-purple-500 transition duration-200 mt-1.5 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
-                          <label class="form-check-label inline-block text-gray-900 cursor-pointer font-medium text-sm" for="flexRadioDefault1">
+                        <div className="form-check">
+                          <input className="form-check-input appearance-none rounded-full h-3.5 w-3.5 border border-purple-300  bg-white checked:bg-purple-600 checked:border-purple-600 text-purple-500 focus:ring-2 focus:ring-purple-500 transition duration-200 mt-1.5 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
+                          <label className="form-check-label inline-block text-gray-900 cursor-pointer font-medium text-sm" for="flexRadioDefault1">
                             Ordre
                           </label>
                         </div>
-                        <div class="form-check mt-2">
-                          <input class="form-check-input appearance-none rounded-full h-3.5 w-3.5 border border-purple-300  bg-white checked:bg-purple-600 checked:border-purple-600 text-purple-500 focus:ring-2 focus:ring-purple-500 transition duration-200 mt-1.5 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="flexRadioDefault" id="flexRadioDefault2"  />
-                          <label class="form-check-label inline-block text-gray-900 cursor-pointer font-medium text-sm" for="flexRadioDefault2">
+                        <div className="form-check mt-2">
+                          <input className="form-check-input appearance-none rounded-full h-3.5 w-3.5 border border-purple-300  bg-white checked:bg-purple-600 checked:border-purple-600 text-purple-500 focus:ring-2 focus:ring-purple-500 transition duration-200 mt-1.5 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="flexRadioDefault" id="flexRadioDefault2"  />
+                          <label className="form-check-label inline-block text-gray-900 cursor-pointer font-medium text-sm" for="flexRadioDefault2">
                             Nom
                           </label>
                         </div>
-                        <div class="form-check mt-2">
-                          <input class="form-check-input appearance-none rounded-full h-3.5 w-3.5 border border-purple-300  bg-white checked:bg-purple-600 checked:border-purple-600 text-purple-500 focus:ring-2 focus:ring-purple-500 transition duration-200 mt-1.5 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="flexRadioDefault" id="flexRadioDefault3" />
-                          <label class="form-check-label inline-block text-gray-900 cursor-pointer font-medium text-sm" for="flexRadioDefault3">
+                        <div className="form-check mt-2">
+                          <input className="form-check-input appearance-none rounded-full h-3.5 w-3.5 border border-purple-300  bg-white checked:bg-purple-600 checked:border-purple-600 text-purple-500 focus:ring-2 focus:ring-purple-500 transition duration-200 mt-1.5 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="flexRadioDefault" id="flexRadioDefault3" />
+                          <label className="form-check-label inline-block text-gray-900 cursor-pointer font-medium text-sm" for="flexRadioDefault3">
                             Description
                           </label>
                         </div>
-                        <div class="form-check mt-2">
-                          <input class="form-check-input appearance-none rounded-full h-3.5 w-3.5 border border-purple-300  bg-white checked:bg-purple-600 checked:border-purple-600 text-purple-500 focus:ring-2 focus:ring-purple-500 transition duration-200 mt-1.5 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="flexRadioDefault" id="flexRadioDefault4"  />
-                          <label class="form-check-label inline-block text-gray-900 cursor-pointer font-medium text-sm" for="flexRadioDefault4">
+                        <div className="form-check mt-2">
+                          <input className="form-check-input appearance-none rounded-full h-3.5 w-3.5 border border-purple-300  bg-white checked:bg-purple-600 checked:border-purple-600 text-purple-500 focus:ring-2 focus:ring-purple-500 transition duration-200 mt-1.5 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="flexRadioDefault" id="flexRadioDefault4"  />
+                          <label className="form-check-label inline-block text-gray-900 cursor-pointer font-medium text-sm" for="flexRadioDefault4">
                             Prix
                           </label>
                         </div>
-                        <div class="form-check mt-2">
-                          <input class="form-check-input appearance-none rounded-full h-3.5 w-3.5 border border-purple-300  bg-white checked:bg-purple-600 checked:border-purple-600 text-purple-500 focus:ring-2 focus:ring-purple-500 transition duration-200 mt-1.5 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="flexRadioDefault" id="flexRadioDefault5"  />
-                          <label class="form-check-label inline-block text-gray-900 cursor-pointer font-medium text-sm" for="flexRadioDefault5">
+                        <div className="form-check mt-2">
+                          <input className="form-check-input appearance-none rounded-full h-3.5 w-3.5 border border-purple-300  bg-white checked:bg-purple-600 checked:border-purple-600 text-purple-500 focus:ring-2 focus:ring-purple-500 transition duration-200 mt-1.5 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="flexRadioDefault" id="flexRadioDefault5"  />
+                          <label className="form-check-label inline-block text-gray-900 cursor-pointer font-medium text-sm" for="flexRadioDefault5">
                             Quatité en stock
                           </label>
                         </div>
@@ -90,17 +90,17 @@ export default function Filter() {
                         Ordre
                     </div>
 
-                    <div class="flex flex-col mt-3">
+                    <div className="flex flex-col mt-3">
                       <div>
-                        <div class="form-check">
-                          <input class="form-check-input appearance-none rounded-full h-3.5 w-3.5 border border-purple-300  bg-white checked:bg-purple-600 checked:border-purple-600 text-purple-500 focus:ring-2 focus:ring-purple-500 transition duration-200 mt-1.5 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="flexRadioDefault2" id="flexRadioDefault11" />
-                          <label class="form-check-label inline-block text-gray-900 cursor-pointer font-medium text-sm" for="flexRadioDefault11">
+                        <div className="form-check">
+                          <input className="form-check-input appearance-none rounded-full h-3.5 w-3.5 border border-purple-300  bg-white checked:bg-purple-600 checked:border-purple-600 text-purple-500 focus:ring-2 focus:ring-purple-500 transition duration-200 mt-1.5 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="flexRadioDefault2" id="flexRadioDefault11" />
+                          <label className="form-check-label inline-block text-gray-900 cursor-pointer font-medium text-sm" for="flexRadioDefault11">
                             Croissant
                           </label>
                         </div>
-                        <div class="form-check mt-2">
-                          <input class="form-check-input appearance-none rounded-full h-3.5 w-3.5 border border-purple-300  bg-white checked:bg-purple-600 checked:border-purple-600 text-purple-500 focus:ring-2 focus:ring-purple-500 transition duration-200 mt-1.5 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="flexRadioDefault2" id="flexRadioDefault22"  />
-                          <label class="form-check-label inline-block text-gray-900 cursor-pointer font-medium text-sm" for="flexRadioDefault22">
+                        <div className="form-check mt-2">
+                          <input className="form-check-input appearance-none rounded-full h-3.5 w-3.5 border border-purple-300  bg-white checked:bg-purple-600 checked:border-purple-600 text-purple-500 focus:ring-2 focus:ring-purple-500 transition duration-200 mt-1.5 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="flexRadioDefault2" id="flexRadioDefault22"  />
+                          <label className="form-check-label inline-block text-gray-900 cursor-pointer font-medium text-sm" for="flexRadioDefault22">
                             Décroissant
                           </label>
                         </div>
