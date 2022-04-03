@@ -94,11 +94,11 @@ export default function Index() {
                                     <Sort />
                                     <Filter />
 
-                                    <div onClick={(e) => changeDisplay(e,0)} className={` ${display == 0 ? 'text-purple-600' : 'text-gray-800'} hover:text-purple-600 duration-700 ease-in-out self-center cursor-pointer mr-4`}>
+                                    <div onClick={(e) => changeDisplay(e,0)} className={` ${display == 0 ? 'text-purple-600' : 'text-gray-700'} hover:text-purple-600 duration-700 ease-in-out self-center cursor-pointer mr-4`}>
                                         <ListBoldIcon customClass="w-4 h-7" />
                                     </div>
 
-                                    <div onClick={(e) => changeDisplay(e,1)} className={` ${display == 1 ? 'text-purple-600' : 'text-gray-800'} hover:text-purple-600 duration-700 ease-in-out self-center cursor-pointer mr-4`}>
+                                    <div onClick={(e) => changeDisplay(e,1)} className={` ${display == 1 ? 'text-purple-600' : 'text-gray-700'} hover:text-purple-600 duration-700 ease-in-out self-center cursor-pointer mr-4`}>
                                         <AppBoldIcon customClass="w-4 h-4" />
                                     </div>
 
@@ -156,7 +156,7 @@ export default function Index() {
                                                     <div className="w-full grid grid-cols-6 gap-4">
                                                         {items.products.products.map((item, i) => (
                                                             <div key={i}>
-                                                                <motion.div initial={{ opacity: 0, y: ( Math.random() + i) }} whileInView={{ opacity: 1, y: 0, transition: { duration: 1.05 }, }}>
+                                                                <motion.div initial={{ opacity: 0, y: ( Math.random() + i * 5) }} whileInView={{ opacity: 1, y: 0, transition: { duration: 1.05 }, }}>
                                                                     <div className="w-full pt-1 pb-5 rounded-xl bg-gray-200 bg-opacity-80 cursor-pointer relative parent-layer">
 
                                                                         <div onClick={(e) => deleteItem(e, item.id)}  className='hided-item absolute top-[0.55rem] right-[0.4rem] w-[1.25rem] h-[1.25rem] bg-red-400 hover:bg-red-500 rounded-full flex flex-row justify-center z-10 shadow-sm transition duration-700 ease-in-out'>

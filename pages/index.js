@@ -60,6 +60,12 @@ export default function Home({userId}) {
                             </div>
                         </motion.div>
 
+                        
+                        <motion.div initial={{ opacity: 0.5, y: ( Math.random() * 3 * 5) }} whileInView={{ opacity: 1, y: 0, transition: { duration: 1.05 }, }}>
+                            <div className='w-full h-56 bg-white rounded-xl shadow mt-4 mb-4'>
+                            </div>
+                        </motion.div>
+
 
                     </div>
 
