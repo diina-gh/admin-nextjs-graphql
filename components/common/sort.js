@@ -84,7 +84,7 @@ export default function Filter() {
                       </div>
                     </div>
 
-                    <div className='divider w-full h-[1px] bg-gray-400 bg-opacity-90 mt-4 mb-4'></div>
+                    <div className='divider w-full h-[1px] bg-gray-400 bg-opacity-90 shadow-inner mt-4 mb-4'></div>
 
                     <div className="text-sm font-medium text-gray-900 ">
                         Ordre
