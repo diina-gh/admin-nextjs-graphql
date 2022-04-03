@@ -25,8 +25,9 @@ import AppBoldIcon from '../../components/ui/icons/appBoldIcon';
 import CrossIcon from '../../components/ui/icons/crossIcon';
 import { getProducts } from '../../hooks/product';
 import { capitalize } from '../../libs/util';
+import { allCategories, getCategories } from '../../hooks/category';
 
-
+var genders = ['UNISEX', 'HOMME', 'FEMME']
 
 export default function Index() {
 
@@ -36,7 +37,6 @@ export default function Index() {
     const [direction, setDirection] = useState('asc')
     const [orderBy, setOrderBy] = useState({"id": direction})
     const [display, setDisplay] = useState(1);
-
 
     var { items, isLoading, isError, mutate } = getProducts(page,take,filter, orderBy )
 
@@ -65,6 +65,7 @@ export default function Index() {
     if (isLoading) console.log("loading...")
     if(items) console.log("Informations => ", items)
 
+
     return (
         <div className="app-container h-screen">
 
@@ -92,7 +93,7 @@ export default function Index() {
                                 <div className='flex flex-row'>
                                     
                                     <Sort />
-                                    <Filter />
+                                    <Filter genders={genders} />
 
                                     <div onClick={(e) => changeDisplay(e,0)} className={` ${display == 0 ? 'text-purple-600' : 'text-gray-700'} hover:text-purple-600 duration-700 ease-in-out self-center cursor-pointer mr-4`}>
                                         <ListBoldIcon customClass="w-4 h-7" />
