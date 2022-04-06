@@ -1,6 +1,6 @@
 import useSWR from 'swr'
 import {GraphQLClient, request} from 'graphql-request'
-import { categoriesQuery, categoryQuery, subCategoriesQuery } from '../graphql/queries'
+import { categoriesQuery, categoriesQuery2, categoryQuery, subCategoriesQuery } from '../graphql/queries'
 import {saveCategoryMutation, deleteCategoryMutation} from "../graphql/mutations"
 import { filterInt } from '../libs/util'
 import Cookies from 'js-cookie'
@@ -24,7 +24,7 @@ export function getSubCategories (page, take, filter, orderBy) {
 }
 
 export async function allCategories(){
-    const data = await graphQLClient.request(categoriesQuery)
+    const data = await graphQLClient.request(categoriesQuery2)
     console.info("The response : ", data )
     return {response: data.categories}
 }

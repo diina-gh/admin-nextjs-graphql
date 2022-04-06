@@ -49,7 +49,6 @@ export const districtsOnUsersQuery = gql `
         }
     }
 `
-
 export const categoriesQuery = gql`
     query($page: Int, $take: Int, $filter: String, $orderBy: CategoryOrderByInput){
         categories(page: $page, take: $take, filter: $filter, orderBy: $orderBy) {
@@ -68,6 +67,41 @@ export const categoriesQuery = gql`
                 }
             }
             
+        }
+    }
+`
+
+export const categoriesQuery2 = gql`
+    query($page: Int, $take: Int, $filter: String, $orderBy: CategoryOrderByInput){
+        categories(page: $page, take: $take, filter: $filter, orderBy: $orderBy) {
+            count
+            countSub
+            categories {
+                id
+                name
+                desc
+                createdat
+                activated
+                parent {
+                    id
+                    name
+                }
+                childs {
+                    id
+                    name
+                    desc
+                    image {
+                        id 
+                        url
+                        imageref
+                    }
+                }
+                image {
+                    id
+                    url
+                    imageref
+                }
+            }
         }
     }
 `
@@ -482,17 +516,11 @@ export const productsQuery = gql `
                 id
                 name
                 desc
-                details
                 activated
-                status
                 unit
                 unitweight
                 unitprice
-                ranking
                 order
-                likes
-                views
-                createdat
                 category {
                     id
                     name
@@ -505,21 +533,7 @@ export const productsQuery = gql `
                     id
                     name
                 }
-                variants {
-                    variantId
-                    variant {
-                        id
-                        name
-                        desc
-                    }
-                }
-                options {
-                    optionId
-                    option {
-                        id
-                        value
-                    }
-                }
+                
                 discount {
                     id
                     percent
@@ -577,6 +591,14 @@ export const productQuery = gql `
                         colorCode
                     }
                 }
+                discount {
+                    id
+                    percent
+                }
+                inventory {
+                    id
+                    quantity
+                }
                 images {
                     id
                     url
@@ -584,16 +606,16 @@ export const productQuery = gql `
                 }
                 relatives {
                     related {
-                    id
-                    name
-                    unit
-                    category {
                         id
                         name
-                    }
-                    images {
-                        url
-                    }
+                        unit
+                        category {
+                            id
+                            name
+                        }
+                        images {
+                            url
+                        }
                     }
                 }
             }

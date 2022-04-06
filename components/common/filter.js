@@ -59,7 +59,7 @@ class Filter extends Component {
 
   render() {
 
-      const {gender, brands, allBrands, categories } = this.state
+      const {gender, brands, allBrands, categories, category, allCategories } = this.state
 
       return(
           <div className="self-center mr-4">
@@ -77,19 +77,69 @@ class Filter extends Component {
                       <div className="overflow-hidden rounded-lg border border-gray-100 ring-1 ring-black ring-opacity-5">
                         <div className="flex flex-col bg-white p-4 h-96 overflow-y-scroll">
       
-                          <div className="text-sm font-semibold text-purple-600 mb-5">
+                          <div className="text-sm font-semibold text-purple-600 mb-4">
                               Filtrer par
                           </div>
-      
-                          {this.props.gender == true && genders != null &&
+
+                          {this.props.category == true && categories != null &&
+                              <div className='mb-5'>
+                                  <Listbox value={category} onChange={(e) => this.setState({category: e})}>
+                                      {({ open }) => (
+                                          <>
+                                          <Listbox.Label className="text-sm font-semibold text-purple-600 ">Catégorie</Listbox.Label>
+                                          <div className="mt-2 relative">
+                                              <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-[0.525rem] text-left cursor-default focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 sm:text-sm">
+                                                  <span className="flex items-center">
+                                                      <span className="ml-3 block truncate">{category ? capitalize(category.name) : 'Choisir une catégorie'}</span>
+                                                  </span>
+                                                  <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                                                      <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                                                  </span>
+                                              </Listbox.Button>
+    
+                                              <Transition show={open} as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
+                                                  <Listbox.Options className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
+                                                      {categories.map((item) => (
+                                                      <Listbox.Option key={item.id} className={({ active }) => classNames(active ? 'text-white bg-purple-600' : 'text-gray-900','cursor-pointer select-none relative py-2 pl-3 pr-9')} value={item}>
+                                                          {({ category, active }) => (
+                                                          <>
+                                                              <div className="flex items-center">
+                                                                  <span className={classNames(category ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}>
+                                                                      {capitalize(item.name)}
+                                                                  </span>
+                                                              </div>
+    
+                                                              {category || active &&
+                                                                  <span className={classNames(active ? 'text-white' : 'text-indigo-600','absolute inset-y-0 right-0 flex items-center pr-4')}>
+                                                                      <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                                                  </span>
+                                                              }
+    
+                                                          </>
+                                                          )}
+                                                      </Listbox.Option>
+                                                      ))}
+                                                  </Listbox.Options>
+                                              </Transition>
+                                          </div>
+                                          </>
+                                      )}
+                                  </Listbox>
+                              </div>
+                          }
+
+                          {category?.childs != null && category?.childs?.length > 0 &&
                             <>
                               <div className="text-sm font-semibold text-purple-600 ">
-                                Sexe
+                                Sous catégories
                               </div>
-                              <div className='mt-3 mb-5 flex flex-row flex-wrap'>
-                                {genders.map((item, i) => (
-                                  <div key={i} className='bg-gray-50/50 border border-gray-600 rounded-2xl text-gray-700 cursor-pointer px-2 py-1 mr-3'>
-                                      <div className='font-normal text-[10.5px]'>{capitalize(item.toLowerCase())}</div>
+                              <div className='mt-3 mb-3 flex flex-row flex-wrap'>
+                                <div className={classNames(allCategories ? 'bg-purple-600 border border-purple-600 shadow-sm shadow-purple-400 text-white' : 'bg-gray-50/50 border border-gray-600 text-gray-700', 'rounded-2xl cursor-pointer px-2 py-1 mr-2 mb-2')} >
+                                      <div className='font-normal text-[11px] tracking-wide'>Tout</div>
+                                </div>
+                                {category.childs.map((item, i) => (
+                                  <div key={i} className={classNames(item.checked ? 'bg-purple-600 border border-purple-600 shadow-sm shadow-purple-400 text-white' : 'bg-gray-50/50 border border-gray-600 text-gray-700', 'rounded-2xl cursor-pointer px-2 py-1 mr-2 mb-2')} >
+                                      <div className='font-normal text-[11px] tracking-wide'>{capitalize(item.name.toLowerCase())}</div>
                                   </div>
                                 ))}
                               </div>
@@ -103,16 +153,33 @@ class Filter extends Component {
                               </div>
                               <div className='mt-3 mb-3 flex flex-row flex-wrap'>
                                 <div onClick={(e) => this.filterBrands(e, null, true) }  className={classNames(allBrands ? 'bg-purple-600 border border-purple-600 shadow-sm shadow-purple-400 text-white' : 'bg-gray-50/50 border border-gray-600 text-gray-700', 'rounded-2xl cursor-pointer px-2 py-1 mr-2 mb-2')} >
-                                      <div className='font-normal text-[10.5px]'>Tout</div>
+                                      <div className='font-normal text-[11px] tracking-wide'>Tout</div>
                                 </div>
                                 {brands.map((item, i) => (
                                   <div key={i} onClick={(e) => this.filterBrands(e, i) }  className={classNames(item.checked ? 'bg-purple-600 border border-purple-600 shadow-sm shadow-purple-400 text-white' : 'bg-gray-50/50 border border-gray-600 text-gray-700', 'rounded-2xl cursor-pointer px-2 py-1 mr-2 mb-2')} >
-                                      <div className='font-normal text-[10.5px]'>{capitalize(item.name.toLowerCase())}</div>
+                                      <div className='font-normal text-[11px] tracking-wide'>{capitalize(item.name.toLowerCase())}</div>
                                   </div>
                                 ))}
                               </div>
                             </>
                           }
+
+                          {this.props.gender == true && genders != null &&
+                            <>
+                              <div className="text-sm font-semibold text-purple-600 ">
+                                Sexe
+                              </div>
+                              <div className='mt-3 mb-5 flex flex-row flex-wrap'>
+                                {genders.map((item, i) => (
+                                  <div key={i} className='bg-gray-50/50 border border-gray-600 rounded-2xl text-gray-700 cursor-pointer px-2 py-1 mr-3'>
+                                      <div className='font-normal text-[11px] tracking-wide'>{capitalize(item.toLowerCase())}</div>
+                                  </div>
+                                ))}
+                              </div>
+                            </>
+                          }
+
+                          
       
       
                         </div>
