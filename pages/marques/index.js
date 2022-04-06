@@ -29,7 +29,7 @@ import { useDebouncedCallback } from 'use-debounce';
 
 export default function Index() {
 
-    const take = 6;
+    const take = 12;
     const [page, setPage] = useState(1);
     const [filter, setFilter] = useState('')
     const [direction, setDirection] = useState('asc')
