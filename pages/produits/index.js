@@ -7,7 +7,7 @@ import Sidebar from '../../components/common/sidebar'
 import HeadInfo from '../../components/common/headinfo'
 import Sort from '../../components/common/sort';
 import Filter from '../../components/common/filter';
-// import { SearchIcon } from '@heroicons/react/solid';
+// import SearchIcon from '../../components/ui/icons/searchIcon';
 import SearchIcon from '../../components/ui/icons/searchIcon';
 import AddBoldIcon from '../../components/ui/icons/addBoldIcon';
 import DocBoldIcon from '../../components/ui/icons/docBoldIcon';
@@ -26,8 +26,8 @@ import CrossIcon from '../../components/ui/icons/crossIcon';
 import { getProducts } from '../../hooks/product';
 import { capitalize } from '../../libs/util';
 import { allCategories, getCategories } from '../../hooks/category';
+import { useDebouncedCallback } from 'use-debounce';
 
-var genders = ['UNISEX', 'HOMME', 'FEMME']
 
 export default function Index() {
 
@@ -46,20 +46,37 @@ export default function Index() {
         // refetch(1)
     }
 
-    const refetch = (newPage, newFilter = null, newOrder = null ) =>{
-        if(newPage){
+    const refetch = useDebouncedCallback(
+        (newPage, newFilter = null, newOrder = null ) => {
+            if(newPage && newPage != page){
                 setPage(newPage)
                 mutate({...items, page:newPage})
-        } 
-        if(newFilter){
-            setFilter(newFilter)
-            mutate({...items, filter:newFilter})
-        }
-        if(newOrder){
-            setOrderBy(newOrder)
-            mutate({...items, orderBy:newOrder})
-        }
-    }
+            } 
+            if(newFilter){
+                setFilter(newFilter)
+                mutate({...items, filter:newFilter})
+            }
+            if(newOrder){
+                setOrderBy(newOrder)
+                mutate({...items, orderBy:newOrder})
+            }
+        }, 680
+    );
+
+    // const refetch = (newPage, newFilter = null, newOrder = null ) =>{
+    //     if(newPage){
+    //             setPage(newPage)
+    //             mutate({...items, page:newPage})
+    //     } 
+    //     if(newFilter){
+    //         setFilter(newFilter)
+    //         mutate({...items, filter:newFilter})
+    //     }
+    //     if(newOrder){
+    //         setOrderBy(newOrder)
+    //         mutate({...items, orderBy:newOrder})
+    //     }
+    // }
 
     if (isError) console.log("The error here ", isError)
     if (isLoading) console.log("loading...")
@@ -93,7 +110,7 @@ export default function Index() {
                                 <div className='flex flex-row'>
                                     
                                     <Sort />
-                                    <Filter genders={genders} />
+                                    <Filter gender={true} />
 
                                     <div onClick={(e) => changeDisplay(e,0)} className={` ${display == 0 ? 'text-purple-600' : 'text-gray-700'} hover:text-purple-600 duration-700 ease-in-out self-center cursor-pointer mr-4`}>
                                         <ListBoldIcon customClass="w-4 h-7" />
@@ -106,11 +123,11 @@ export default function Index() {
                                     <div className='h-8 px-2 self-center bg-gray-100 bg-opacity-95 shadow-inner rounded-full flex flex-row'>
 
                                         <div className='w-4 h-4 -mb-0.5 self-center'>
-                                            <SearchIcon customClass='w-full h-full text-gray-600' />
+                                            <SearchIcon customClass='w-full h-full text-gray-700' />
                                         </div>
 
                                         <div className='w-72 h-full'>
-                                            <input type="search" onChange={(e) => e.target.value == '' ? mutate({...items, orderBy:''}) : refetch(null, e.target.value)}  className='w-full h-full focus:ring-0 text-sm border-0 bg-gray-200 bg-opacity-0' placeholder='Rechercher un nom ou une description ...' />
+                                            <input type="search" onChange={(e) => e.target.value == '' ? mutate({...items, filter:''}) : refetch(null, e.target.value)}  className='w-full h-full focus:ring-0 text-sm border-0 bg-gray-200 bg-opacity-0' placeholder='Rechercher un nom ou une description ...' />
                                         </div>
 
                                     </div>

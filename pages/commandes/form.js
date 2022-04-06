@@ -27,6 +27,8 @@ import ChevronRightIcon from '../../components/ui/icons/chevronRightIcon';
 import DoubleChevronLeftIcon from '../../components/ui/icons/doubleChevronLeftIcon';
 import DoubleChevronRightIcon from '../../components/ui/icons/doubleChevronRightIcon';
 import TrashBoldIcon from '../../components/ui/icons/trashBoldIcon'
+import { useDebouncedCallback } from 'use-debounce';
+
 
 const people = [
   { id: 1, name: 'Wade Cooper' },

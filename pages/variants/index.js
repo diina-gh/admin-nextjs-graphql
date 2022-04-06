@@ -7,7 +7,7 @@ import Sidebar from '../../components/common/sidebar'
 import HeadInfo from '../../components/common/headinfo'
 import Sort from '../../components/common/sort';
 import Filter from '../../components/common/filter';
-import { SearchIcon } from '@heroicons/react/solid';
+import SearchIcon from '../../components/ui/icons/searchIcon';
 import AddBoldIcon from '../../components/ui/icons/addBoldIcon';
 import DocBoldIcon from '../../components/ui/icons/docBoldIcon';
 import EditBoldIcon from '../../components/ui/icons/editBoldIcon'
@@ -20,6 +20,7 @@ import DoubleChevronLeftIcon from '../../components/ui/icons/doubleChevronLeftIc
 import DoubleChevronRightIcon from '../../components/ui/icons/doubleChevronRightIcon';
 import {getVariants } from '../../hooks/variant';
 import { getOptions } from '../../hooks/option';
+import { useDebouncedCallback } from 'use-debounce';
 
 
 function classNames(...classes) {
@@ -293,20 +294,22 @@ function Options () {
   
     var { items, isLoading, isError, mutate } = getOptions(page,take,filter, orderBy )
   
-    const refetch = (newPage, newFilter = null, newOrder = null ) =>{
-        if(newPage){
-            setPage(newPage)
-            mutate({...items, page:newPage})
-        } 
-        if(newFilter){
-            setFilter(newFilter)
-            mutate({...items, filter:newFilter})
-        }
-        if(newOrder){
-            setOrderBy(newOrder)
-            mutate({...items, orderBy:newOrder})
-        }
-    }
+    const refetch = useDebouncedCallback(
+        (newPage, newFilter = null, newOrder = null ) => {
+            if(newPage && newPage != page){
+                setPage(newPage)
+                mutate({...items, page:newPage})
+            } 
+            if(newFilter){
+                setFilter(newFilter)
+                mutate({...items, filter:newFilter})
+            }
+            if(newOrder){
+                setOrderBy(newOrder)
+                mutate({...items, orderBy:newOrder})
+            }
+        }, 680
+    );
   
     if (isError) console.log("The error here ", isError)
     if (isLoading) console.log("loading...")

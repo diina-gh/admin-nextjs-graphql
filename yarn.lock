@@ -2976,6 +2976,11 @@
   dependencies:
     "punycode" "^2.1.0"
 
+"use-debounce@^7.0.1":
+  "integrity" "sha512-fOrzIw2wstbAJuv8PC9Vg4XgwyTLEOdq4y/Z3IhVl8DAE4svRcgyEUvrEXu+BMNgMoc3YND6qLT61kkgEKXh7Q=="
+  "resolved" "https://registry.npmjs.org/use-debounce/-/use-debounce-7.0.1.tgz"
+  "version" "7.0.1"
+
 "use-subscription@1.5.1":
   "integrity" "sha512-Xv2a1P/yReAjAbhylMfFplFKj9GssgTwN7RlcTxBujFQcloStWNDQdc4g4NRWH9xS4i/FDk04vQBptAXoF3VcA=="
   "resolved" "https://registry.npmjs.org/use-subscription/-/use-subscription-1.5.1.tgz"

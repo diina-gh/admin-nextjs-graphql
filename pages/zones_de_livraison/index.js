@@ -7,7 +7,7 @@ import Sidebar from '../../components/common/sidebar'
 import HeadInfo from '../../components/common/headinfo'
 import Sort from '../../components/common/sort';
 import Filter from '../../components/common/filter';
-import { SearchIcon } from '@heroicons/react/solid';
+import SearchIcon from '../../components/ui/icons/searchIcon';
 import AddBoldIcon from '../../components/ui/icons/addBoldIcon';
 import DocBoldIcon from '../../components/ui/icons/docBoldIcon';
 import EditBoldIcon from '../../components/ui/icons/editBoldIcon'
@@ -23,6 +23,7 @@ import { deleteRegion, getRegions } from '../../hooks/region';
 import { deleteDistrict, getDistricts } from '../../hooks/district';
 import BlockUI from '../../components/common/blockui';
 import toast, { Toaster } from 'react-hot-toast';
+import { useDebouncedCallback } from 'use-debounce';
 
 
 function classNames(...classes) {
@@ -44,20 +45,22 @@ export default function Index() {
 
     if(mutate) console.log("The mutate ", mutate)
   
-    const refetch = (newPage, newFilter = null, newOrder = null ) =>{
-        if(newPage){
-            setPage(newPage)
-            mutate({...items, page:newPage})
-        } 
-        if(newFilter){
-            setFilter(newFilter)
-            mutate({ ...items, filter:newFilter })
-        }
-        if(newOrder){
-            setOrderBy(newOrder)
-            mutate({...items, orderBy:newOrder})
-        }
-    }
+    const refetch = useDebouncedCallback(
+        (newPage, newFilter = null, newOrder = null ) => {
+            if(newPage && newPage != page){
+                setPage(newPage)
+                mutate({...items, page:newPage})
+            } 
+            if(newFilter){
+                setFilter(newFilter)
+                mutate({...items, filter:newFilter})
+            }
+            if(newOrder){
+                setOrderBy(newOrder)
+                mutate({...items, orderBy:newOrder})
+            }
+        }, 680
+    );
   
     if (isError) console.log("The error here ", isError)
     if (isLoading) console.log("loading...")
@@ -144,14 +147,14 @@ export default function Index() {
                                                     <Sort />
                                                     <Filter />
 
-                                                    <div className='ml-2 h-8 px-2 self-center bg-gray-100 bg-opacity-95 shadow-inner rounded-full flex flex-row'>
+                                                    <div className='h-8 px-2 self-center bg-gray-100 bg-opacity-95 shadow-inner rounded-full flex flex-row'>
 
-                                                        <div className='w-4 h-4 self-center'>
-                                                            <SearchIcon className='w-full h-full text-gray-800' />
+                                                        <div className='w-4 h-4 -mb-0.5 self-center'>
+                                                            <SearchIcon customClass='w-full h-full text-gray-700' />
                                                         </div>
 
                                                         <div className='w-72 h-full'>
-                                                            <input type="search" onChange={(e) =>  refetch(null, e.target.value)}  className='w-full h-full focus:ring-0 text-sm border-0 bg-gray-200 bg-opacity-0' placeholder='Rechercher un nom ou une description ...' />
+                                                            <input type="search" onChange={(e) => e.target.value == '' ? mutate({...items, filter:''}) : refetch(null, e.target.value)}  className='w-full h-full focus:ring-0 text-sm border-0 bg-gray-200 bg-opacity-0' placeholder='Rechercher un nom ou une description ...' />
                                                         </div>
 
                                                     </div>
@@ -313,20 +316,22 @@ function Regions () {
   
     var { items, isLoading, isError, mutate } = getRegions(page,take,filter, orderBy )
   
-    const refetch = (newPage, newFilter = null, newOrder = null ) =>{
-        if(newPage){
-            setPage(newPage)
-            mutate({...items, page:newPage})
-        } 
-        if(newFilter){
-            setFilter(newFilter)
-            mutate({...items, filter:newFilter})
-        }
-        if(newOrder){
-            setOrderBy(newOrder)
-            mutate({...items, orderBy:newOrder})
-        }
-    }
+    const refetch = useDebouncedCallback(
+        (newPage, newFilter = null, newOrder = null ) => {
+            if(newPage && newPage != page){
+                setPage(newPage)
+                mutate({...items, page:newPage})
+            } 
+            if(newFilter){
+                setFilter(newFilter)
+                mutate({...items, filter:newFilter})
+            }
+            if(newOrder){
+                setOrderBy(newOrder)
+                mutate({...items, orderBy:newOrder})
+            }
+        }, 680
+    );
   
     if (isError) console.log("The error here ", isError)
     if (isLoading) console.log("loading...")
@@ -374,14 +379,14 @@ function Regions () {
                     <Sort />
                     <Filter />
 
-                    <div className='ml-2 h-8 px-2 self-center bg-gray-100 bg-opacity-95 shadow-inner rounded-full flex flex-row'>
+                    <div className='h-8 px-2 self-center bg-gray-100 bg-opacity-95 shadow-inner rounded-full flex flex-row'>
 
-                        <div className='w-4 h-4 self-center'>
-                            <SearchIcon className='w-full h-full text-gray-800' />
+                        <div className='w-4 h-4 -mb-0.5 self-center'>
+                            <SearchIcon customClass='w-full h-full text-gray-700' />
                         </div>
 
                         <div className='w-72 h-full'>
-                            <input type="search"  className='w-full h-full focus:ring-0 text-sm border-0 bg-gray-200 bg-opacity-0' placeholder='Rechercher un nom ou une description ...' />
+                            <input type="search" onChange={(e) => e.target.value == '' ? mutate({...items, filter:''}) : refetch(null, e.target.value)}  className='w-full h-full focus:ring-0 text-sm border-0 bg-gray-200 bg-opacity-0' placeholder='Rechercher un nom ou une description ...' />
                         </div>
 
                     </div>
@@ -522,20 +527,22 @@ function Countries () {
 
     var { items, isLoading, isError, mutate } = getCountries(page,take,filter, orderBy )
 
-    const refetch = (newPage, newFilter = null, newOrder = null ) =>{
-        if(newPage){
-            setPage(newPage)
-            mutate({...items, page:newPage})
-        } 
-        if(newFilter){
-            setFilter(newFilter)
-            mutate({...items, filter:newFilter})
-        }
-        if(newOrder){
-            setOrderBy(newOrder)
-            mutate({...items, orderBy:newOrder})
-        }
-    }
+    const refetch = useDebouncedCallback(
+        (newPage, newFilter = null, newOrder = null ) => {
+            if(newPage && newPage != page){
+                setPage(newPage)
+                mutate({...items, page:newPage})
+            } 
+            if(newFilter){
+                setFilter(newFilter)
+                mutate({...items, filter:newFilter})
+            }
+            if(newOrder){
+                setOrderBy(newOrder)
+                mutate({...items, orderBy:newOrder})
+            }
+        }, 680
+    );
 
     if (isError) console.log("The error here ", isError)
     if (isLoading) console.log("loading...")
@@ -583,17 +590,17 @@ function Countries () {
                   <Sort />
                   <Filter />
 
-                  <div className='ml-2 h-8 px-2 self-center bg-gray-100 bg-opacity-95 shadow-inner rounded-full flex flex-row'>
+                  <div className='h-8 px-2 self-center bg-gray-100 bg-opacity-95 shadow-inner rounded-full flex flex-row'>
 
-                      <div className='w-4 h-4 self-center'>
-                          <SearchIcon className='w-full h-full text-gray-800' />
-                      </div>
+                        <div className='w-4 h-4 -mb-0.5 self-center'>
+                            <SearchIcon customClass='w-full h-full text-gray-700' />
+                        </div>
 
-                      <div className='w-72 h-full'>
-                          <input type="search"  className='w-full h-full focus:ring-0 text-sm border-0 bg-gray-200 bg-opacity-0' placeholder='Rechercher un nom ou une description ...' />
-                      </div>
+                        <div className='w-72 h-full'>
+                            <input type="search" onChange={(e) => e.target.value == '' ? mutate({...items, filter:''}) : refetch(null, e.target.value)}  className='w-full h-full focus:ring-0 text-sm border-0 bg-gray-200 bg-opacity-0' placeholder='Rechercher un nom ou une description ...' />
+                        </div>
 
-                  </div>
+                </div>
                   
               </div>
 

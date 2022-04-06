@@ -7,7 +7,7 @@ import Sidebar from '../../components/common/sidebar'
 import HeadInfo from '../../components/common/headinfo'
 import Sort from '../../components/common/sort';
 import Filter from '../../components/common/filter';
-import { SearchIcon } from '@heroicons/react/solid';
+// import SearchIcon from '../../components/ui/icons/searchIcon';
 import AddBoldIcon from '../../components/ui/icons/addBoldIcon';
 import DocBoldIcon from '../../components/ui/icons/docBoldIcon';
 import { Pagination } from "react-pagination-bar"
@@ -24,6 +24,8 @@ import BlockUI from '../../components/common/blockui';
 import toast, { Toaster } from 'react-hot-toast';
 import firebase from '../../config/firebase'
 import { capitalize } from '../../libs/util';
+import { useDebouncedCallback } from 'use-debounce';
+import SearchIcon from '../../components/ui/icons/searchIcon';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -45,20 +47,22 @@ export default function Index() {
 
     if(mutate) console.log("The mutate ", mutate)
   
-    const refetch = (newPage, newFilter = null, newOrder = null ) =>{
-        if(newPage){
-            setPage(newPage)
-            mutate({...items, page:newPage})
-        } 
-        if(newFilter){
-            setFilter(newFilter)
-            mutate({ ...items, filter:newFilter })
-        }
-        if(newOrder){
-            setOrderBy(newOrder)
-            mutate({...items, orderBy:newOrder})
-        }
-    }
+    const refetch = useDebouncedCallback(
+        (newPage, newFilter = null, newOrder = null ) => {
+            if(newPage && newPage != page){
+                setPage(newPage)
+                mutate({...items, page:newPage})
+            } 
+            if(newFilter){
+                setFilter(newFilter)
+                mutate({...items, filter:newFilter})
+            }
+            if(newOrder){
+                setOrderBy(newOrder)
+                mutate({...items, orderBy:newOrder})
+            }
+        }, 1000
+    );
   
     if (isError) console.log("The error here ", isError)
     if (isLoading) console.log("loading...")
@@ -350,20 +354,22 @@ function SubCategories () {
   
     var { items, isLoading, isError, mutate } = getSubCategories(page,take,filter, orderBy )
   
-    const refetch = (newPage, newFilter = null, newOrder = null ) =>{
-        if(newPage){
-            setPage(newPage)
-            mutate({...items, page:newPage})
-        } 
-        if(newFilter){
-            setFilter(newFilter)
-            mutate({...items, filter:newFilter})
-        }
-        if(newOrder){
-            setOrderBy(newOrder)
-            mutate({...items, orderBy:newOrder})
-        }
-    }
+    const refetch = useDebouncedCallback(
+        (newPage, newFilter = null, newOrder = null ) => {
+            if(newPage && newPage != page){
+                setPage(newPage)
+                mutate({...items, page:newPage})
+            } 
+            if(newFilter){
+                setFilter(newFilter)
+                mutate({...items, filter:newFilter})
+            }
+            if(newOrder){
+                setOrderBy(newOrder)
+                mutate({...items, orderBy:newOrder})
+            }
+        }, 1000
+    );
   
     if (isError) console.log("The error here ", isError)
     if (isLoading) console.log("loading...")

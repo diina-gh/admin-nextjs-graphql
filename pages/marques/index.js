@@ -8,7 +8,7 @@ import Sidebar from '../../components/common/sidebar'
 import HeadInfo from '../../components/common/headinfo'
 import Sort from '../../components/common/sort';
 import Filter from '../../components/common/filter';
-import { SearchIcon } from '@heroicons/react/solid';
+import SearchIcon from '../../components/ui/icons/searchIcon';
 import AddBoldIcon from '../../components/ui/icons/addBoldIcon';
 import DocBoldIcon from '../../components/ui/icons/docBoldIcon';
 import { Pagination } from "react-pagination-bar"
@@ -24,6 +24,7 @@ import { deleteImage } from '../../hooks/image';
 import BlockUI from '../../components/common/blockui';
 import toast, { Toaster } from 'react-hot-toast';
 import { classNames } from '../../libs/util';
+import { useDebouncedCallback } from 'use-debounce';
 
 
 export default function Index() {
@@ -38,20 +39,22 @@ export default function Index() {
 
     var { items, isLoading, isError, mutate } = getBrands(page,take,filter, orderBy )
 
-    const refetch = (newPage, newFilter = null, newOrder = null ) =>{
-        if(newPage){
-            setPage(newPage)
-            mutate({...items, page:newPage})
-        } 
-        if(newFilter){
-            setFilter(newFilter)
-            mutate({...items, filter:newFilter})
-        }
-        if(newOrder){
-            setOrderBy(newOrder)
-            mutate({...items, orderBy:newOrder})
-        }
-    }
+    const refetch = useDebouncedCallback(
+        (newPage, newFilter = null, newOrder = null ) => {
+            if(newPage && newPage != page){
+                setPage(newPage)
+                mutate({...items, page:newPage})
+            } 
+            if(newFilter){
+                setFilter(newFilter)
+                mutate({...items, filter:newFilter})
+            }
+            if(newOrder){
+                setOrderBy(newOrder)
+                mutate({...items, orderBy:newOrder})
+            }
+        }, 680
+    );
 
     if (isError) console.log("The error here ", isError)
     if (isLoading) console.log("loading...")
@@ -135,14 +138,14 @@ export default function Index() {
                                     <Sort />
                                     <Filter />
 
-                                    <div className='ml-2 h-8 px-2 self-center bg-gray-100 bg-opacity-95 shadow-inner rounded-full flex flex-row'>
+                                    <div className='h-8 px-2 self-center bg-gray-100 bg-opacity-95 shadow-inner rounded-full flex flex-row'>
 
-                                        <div className='w-4 h-4 self-center'>
-                                            <SearchIcon className='w-full h-full text-gray-800' />
+                                        <div className='w-4 h-4 -mb-0.5 self-center'>
+                                            <SearchIcon customClass='w-full h-full text-gray-700' />
                                         </div>
 
                                         <div className='w-72 h-full'>
-                                            <input type="search" onChange={(e) => e.target.value == '' ? mutate({...items, orderBy:''}) : refetch(null, e.target.value)}  className='w-full h-full focus:ring-0 text-sm border-0 bg-gray-200 bg-opacity-0' placeholder='Rechercher un nom ou une description ...' />
+                                            <input type="search" onChange={(e) => e.target.value == '' ? mutate({...items, filter:''}) : refetch(null, e.target.value)}  className='w-full h-full focus:ring-0 text-sm border-0 bg-gray-200 bg-opacity-0' placeholder='Rechercher un nom ou une description ...' />
                                         </div>
 
                                     </div>

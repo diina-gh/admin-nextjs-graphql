@@ -7,7 +7,7 @@ import Sidebar from '../../components/common/sidebar'
 import HeadInfo from '../../components/common/headinfo'
 import Sort from '../../components/common/sort';
 import Filter from '../../components/common/filter';
-// import { SearchIcon } from '@heroicons/react/solid';
+// import SearchIcon from '../../components/ui/icons/searchIcon';
 import SearchIcon from '../../components/ui/icons/searchIcon';
 import AddBoldIcon from '../../components/ui/icons/addBoldIcon';
 import DocBoldIcon from '../../components/ui/icons/docBoldIcon';
@@ -25,7 +25,7 @@ import AppBoldIcon from '../../components/ui/icons/appBoldIcon';
 import CrossIcon from '../../components/ui/icons/crossIcon';
 import { getProducts } from '../../hooks/product';
 import { capitalize } from '../../libs/util';
-
+import { useDebouncedCallback } from 'use-debounce';
 
 
 export default function Index() {
