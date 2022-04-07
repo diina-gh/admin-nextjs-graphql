@@ -75,15 +75,16 @@ const StyledThumb = styled(SliderPrimitive.Thumb, {
   '&:focus': { boxShadow: `0 0 0 5px ${blackA.blackA8}` },
 });
 
-var genders = ['UNISEX', 'HOMME', 'FEMME']
+var genders_list = [{id:1, name:'UNISEX'},{id:2, name:'HOMME'},{id:3, name:'FEMME'}]
 
 class Filter extends Component {
 
   constructor(props){
       super(props);
-      this.state = {gender: null, categories: [], allCategories: true, category: null, brands: [], allBrands: true,
-                    clients: [], client: null, variants: [], allOptions: true}
+      this.state = {genders: genders_list, categories: [], category: null, brands: [],
+                    clients: [], client: null, variants: []}
       this.filterBrands = this.filterBrands.bind(this);
+      this.filterGenders = this.filterGenders.bind(this)
   }
 
   async componentDidMount(){
@@ -121,13 +122,25 @@ class Filter extends Component {
     this.setState({brands: new_brands})
   }
 
+  filterGenders = async(e, pos) =>{
+
+    e.preventDefault()
+
+    const {genders} = this.state
+    var new_genders = genders
+
+    new_genders[pos].checked = !new_genders[pos].checked
+
+    this.setState({new_genders: new_genders})
+  }
+
   render() {
 
-      const {gender, brands, allBrands, categories, category, allCategories, variants } = this.state
+      const {genders, brands, categories, category, variants } = this.state
 
       return(
-          <div className="self-center mr-4">
-            <Popover className="relative">
+          <div className="self-center mr-4 relative">
+            <Popover className="">
               {({ open }) => (
                 <>
       
@@ -137,7 +150,7 @@ class Filter extends Component {
                   </Popover.Button>
       
                   <Transition as={Fragment} enter="transition ease-out duration-200" enterFrom="opacity-0 translate-y-1" enterTo="opacity-100 translate-y-0" leave="transition ease-in duration-150" leaveFrom="opacity-100 translate-y-0" leaveTo="opacity-0 translate-y-1">
-                    <Popover.Panel className="absolute left-[10.55rem] z-10 w-80 px-4 mt-3 transform -translate-x-1/2 left-1/2 sm:px-0 lg:max-w-3xl rounded-lg shadow-2xl">
+                    <Popover.Panel className="absolute left-[10rem] z-10 w-80 px-4 mt-3 transform -translate-x-1/2 left-1/2 sm:px-0 lg:max-w-3xl rounded-lg shadow-2xl">
                       <div className="overflow-hidden bg-white rounded-lg border border-gray-100 ring-1 ring-black ring-opacity-5">
                         <div className="text-sm font-semibold text-gray-900 px-4 mt-4 mb-3">
                               Filtrer par
@@ -211,8 +224,8 @@ class Filter extends Component {
                               <div className="text-sm font-semibold text-purple-600 ">
                                 Marque
                               </div>
-                              <div className='mt-3 mb-3 flex flex-row'>
-                                <Swiper className="mb-1" spaceBetween={10} slidesPerView={4} freeMode={true} watchSlidesProgress={true} modules={[FreeMode, Navigation]} >
+                              <div className='mt-3 mb-3'>
+                                <Swiper spaceBetween={10} slidesPerView={4} freeMode={true} modules={[FreeMode, Navigation]} >
                                   {brands.map((item, i) => (
                                     <SwiperSlide key={i} className="slider-type2">
                                       <div onClick={(e) => this.filterBrands(e, i) }  className={classNames(item.checked ? 'bg-purple-600 border border-purple-600 shadow-sm shadow-purple-400 text-white' : 'bg-gray-50/50 border border-gray-600 text-gray-700', 'rounded-2xl cursor-pointer px-2 py-1 my-1')} >
@@ -232,8 +245,8 @@ class Filter extends Component {
                               </div>
                               <div className='mt-3 mb-3 flex flex-row flex-wrap'>
                                 {genders.map((item, i) => (
-                                  <div key={i} className='bg-gray-50/50 border border-gray-600 rounded-2xl text-gray-700 cursor-pointer px-2 py-1 mr-3'>
-                                      <div className='font-normal text-[11px] tracking-wide'>{capitalize(item.toLowerCase())}</div>
+                                  <div key={i} onClick={(e) => this.filterGenders(e, i) }  className={classNames(item.checked ? 'bg-purple-600 border border-purple-600 shadow-sm shadow-purple-400 text-white' : 'bg-gray-50/50 border border-gray-600 text-gray-700', 'rounded-2xl cursor-pointer px-2 py-1 mr-2 mb-2')} >
+                                    <div className='font-normal text-[11px] tracking-wide'>{capitalize(item.name.toLowerCase())}</div>
                                   </div>
                                 ))}
                               </div>
@@ -260,7 +273,7 @@ class Filter extends Component {
                                                     {/* <div className="text-sm text-gray-900 self-center">{item.value}</div> */}
                                                 </div>
                                               :<div className='flex flex-row'>
-                                                    <div className="flex flex-row justify-center w-6 h-6 mr-3 rounded-full border-2 border-gray-200 border-opacity-40 self-center" style={{backgroundColor: item.colorCode}}></div>
+                                                    <div className="flex flex-row justify-center w-6 h-6 mr-3 rounded-full border-2 border-gray-200 border-opacity-60 self-center" style={{backgroundColor: item.colorCode, }}></div>
                                                     {/* <div className="text-sm text-gray-900 self-center">{item.value}</div> */}
                                                 </div>
                                             }
