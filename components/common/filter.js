@@ -81,10 +81,12 @@ class Filter extends Component {
 
   constructor(props){
       super(props);
-      this.state = {genders: genders_list, categories: [], category: null, brands: [],
+      this.state = {genders: genders_list, categories: [], category: null, subCategories: [], brands: [],
                     clients: [], client: null, variants: []}
       this.filterBrands = this.filterBrands.bind(this);
       this.filterGenders = this.filterGenders.bind(this)
+      this.filterSubCategories = this.filterSubCategories.bind(this)
+      this.filterOptions = this.filterOptions.bind(this)
   }
 
   async componentDidMount(){
@@ -131,12 +133,36 @@ class Filter extends Component {
 
     new_genders[pos].checked = !new_genders[pos].checked
 
-    this.setState({new_genders: new_genders})
+    this.setState({genders: new_genders})
+  }
+
+  filterSubCategories = async(e, pos) =>{
+
+    e.preventDefault()
+
+    const {subCategories} = this.state
+    var new_categories = subCategories
+
+    new_categories[pos].checked = !new_categories[pos].checked
+
+    this.setState({subCategories: new_categories})
+  }
+
+  filterOptions = async(e, pos1, pos2) =>{
+
+    e.preventDefault()
+
+    const {variants} = this.state
+    var new_variants = variants
+
+    new_variants[pos1].options[pos2].checked = !new_variants[pos1].options[pos2].checked
+
+    this.setState({variants: new_variants})
   }
 
   render() {
 
-      const {genders, brands, categories, category, variants } = this.state
+      const {genders, brands, categories, category, subCategories, variants } = this.state
 
       return(
           <div className="self-center mr-4 relative">
@@ -159,7 +185,7 @@ class Filter extends Component {
 
                           {this.props.category == true && categories != null &&
                               <div className='mb-3'>
-                                  <Listbox value={category} onChange={(e) => this.setState({category: e})}>
+                                  <Listbox value={category} onChange={(e) => this.setState({category: e, subCategories: e.childs})}>
                                       {({ open }) => (
                                           <>
                                           <Listbox.Label className="text-sm font-semibold text-purple-600 ">Catégorie</Listbox.Label>
@@ -204,19 +230,18 @@ class Filter extends Component {
                               </div>
                           }
 
-                          {category?.childs != null && category?.childs?.length > 0 &&
-                            <>
-                              {/* <div className="text-sm font-semibold text-purple-600 ">
-                                Sous catégories
-                              </div> */}
-                              <div className='mb-3 flex flex-row flex-wrap'>
-                                {category.childs.map((item, i) => (
-                                  <div key={i} className={classNames(item.checked ? 'bg-purple-600 border border-purple-600 shadow-sm shadow-purple-400 text-white' : 'bg-gray-50/50 border border-gray-600 text-gray-700', 'rounded-2xl cursor-pointer px-2 py-1 mr-2 mb-2')} >
+                          {subCategories != null && subCategories?.length > 0 &&
+                            <div className='mb-3'>
+                            <Swiper spaceBetween={10} slidesPerView={4} freeMode={true} modules={[FreeMode, Navigation]} >
+                              {subCategories.map((item, i) => (
+                                <SwiperSlide key={i} className="slider-type2">
+                                  <div onClick={(e) => this.filterSubCategories(e, i) }  className={classNames(item.checked ? 'bg-purple-600 border border-purple-600 shadow-sm shadow-purple-400 text-white' : 'bg-gray-50/50 border border-gray-600 text-gray-700', 'rounded-2xl cursor-pointer px-2 py-1 my-1 transition duration-500 ease-in-out')} >
                                       <div className='font-normal text-[11px] tracking-wide'>{capitalize(item.name.toLowerCase())}</div>
                                   </div>
-                                ))}
-                              </div>
-                            </>
+                                </SwiperSlide>
+                              ))}
+                            </Swiper>
+                          </div>
                           }
 
                           {this.props.brand == true && brands != null &&
@@ -228,7 +253,7 @@ class Filter extends Component {
                                 <Swiper spaceBetween={10} slidesPerView={4} freeMode={true} modules={[FreeMode, Navigation]} >
                                   {brands.map((item, i) => (
                                     <SwiperSlide key={i} className="slider-type2">
-                                      <div onClick={(e) => this.filterBrands(e, i) }  className={classNames(item.checked ? 'bg-purple-600 border border-purple-600 shadow-sm shadow-purple-400 text-white' : 'bg-gray-50/50 border border-gray-600 text-gray-700', 'rounded-2xl cursor-pointer px-2 py-1 my-1')} >
+                                      <div onClick={(e) => this.filterBrands(e, i) }  className={classNames(item.checked ? 'bg-purple-600 border border-purple-600 shadow-sm shadow-purple-400 text-white' : 'bg-gray-50/50 border border-gray-600 text-gray-700', 'rounded-2xl cursor-pointer px-2 py-1 my-1 transition duration-500 ease-in-out')} >
                                           <div className='font-normal text-[11px] tracking-wide'>{capitalize(item.name.toLowerCase())}</div>
                                       </div>
                                     </SwiperSlide>
@@ -245,7 +270,7 @@ class Filter extends Component {
                               </div>
                               <div className='mt-3 mb-3 flex flex-row flex-wrap'>
                                 {genders.map((item, i) => (
-                                  <div key={i} onClick={(e) => this.filterGenders(e, i) }  className={classNames(item.checked ? 'bg-purple-600 border border-purple-600 shadow-sm shadow-purple-400 text-white' : 'bg-gray-50/50 border border-gray-600 text-gray-700', 'rounded-2xl cursor-pointer px-2 py-1 mr-2 mb-2')} >
+                                  <div key={i} onClick={(e) => this.filterGenders(e, i) }  className={classNames(item.checked ? 'bg-purple-600 border border-purple-600 shadow-sm shadow-purple-400 text-white' : 'bg-gray-50/50 border border-gray-600 text-gray-700', 'rounded-2xl cursor-pointer px-2 py-1 mr-2 mb-2 transition duration-500 ease-in-out')} >
                                     <div className='font-normal text-[11px] tracking-wide'>{capitalize(item.name.toLowerCase())}</div>
                                   </div>
                                 ))}
@@ -263,21 +288,15 @@ class Filter extends Component {
                                   <div className='mt-3 mb-3 flex flex-row justify-start'>
                                     <Swiper className="mb-1" spaceBetween={4} slidesPerView={9} freeMode={true} watchSlidesProgress={true} modules={[FreeMode, Navigation]} >
                                       {item0.options.map((item, i) => (
-                                        <SwiperSlide key={i} className="slider-type2">
-                                          <div className='mb-2' key={i}>
+                                        <SwiperSlide key={i} className="slider-type2 mb-2">
                                             {!item.colorCode 
-                                              ?<div className='flex flex-row'>
-                                                    <div className="flex flex-row justify-center w-6 h-6 mr-3 rounded-md border border-gray-400 bg-gray-200 bg-opacity-50 self-center">
-                                                        <div className="self-center text-[10px] font-medium text-gray-800">{item.value}</div>
-                                                    </div>
-                                                    {/* <div className="text-sm text-gray-900 self-center">{item.value}</div> */}
+                                                ?<div onClick={(e) => this.filterOptions(e, i0, i) } className={classNames(item.checked ? 'border-2 border-purple-600 bg-purple-600 text-white shadow shadow-purple-300' : 'bg-gray-50/50 border border-gray-600 text-gray-800', 'flex flex-row justify-center w-7 h-7 mr-3 rounded-md cursor-pointer self-center transition duration-500 ease-in-out ')}>
+                                                    <div className="self-center text-[10px] font-semibold">{item.value}</div>
                                                 </div>
-                                              :<div className='flex flex-row'>
-                                                    <div className="flex flex-row justify-center w-6 h-6 mr-3 rounded-full border-2 border-gray-200 border-opacity-60 self-center" style={{backgroundColor: item.colorCode, }}></div>
-                                                    {/* <div className="text-sm text-gray-900 self-center">{item.value}</div> */}
-                                                </div>
+                                                :<div onClick={(e) => this.filterOptions(e, i0, i) }  className={classNames(item.checked ? 'border-2 border-purple-600' : 'border-2 border-gray-200 border-opacity-60', 'w-7 h-7 mr-3 rounded-full cursor-pointer self-center py-[2px] px-[2px] transition duration-500 ease-in-out')}  >
+                                                    <div className='w-full h-full rounded-full' style={{backgroundColor: item.colorCode, }}></div>
+                                                 </div>
                                             }
-                                          </div>
                                         </SwiperSlide>
                                       ))}
                                     </Swiper>
