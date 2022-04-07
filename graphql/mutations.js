@@ -196,7 +196,7 @@ export const deleteImageMutation = gql `
                 id
                 url
                 imageref
-                default
+                isDefault
             }
             ... on InputError{
                 message

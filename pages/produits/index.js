@@ -110,7 +110,7 @@ export default function Index() {
                                 <div className='flex flex-row'>
                                     
                                     <Sort />
-                                    <Filter gender={true} brand={true} category={true} />
+                                    <Filter gender={true} brand={true} category={true} price={true} option={true} />
 
                                     <div onClick={(e) => changeDisplay(e,0)} className={` ${display == 0 ? 'text-purple-600' : 'text-gray-700'} hover:text-purple-600 duration-700 ease-in-out self-center cursor-pointer mr-4`}>
                                         <ListBoldIcon customClass="w-4 h-7" />

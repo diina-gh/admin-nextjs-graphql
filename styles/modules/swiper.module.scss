@@ -12,14 +12,15 @@
 
 
   .swiper-type2{
-    width: 100% !important;
-    height: 5.5rem !important;
+    // width: 100% !important;
+    height: fit-content !important;
+    min-height: fit-content !important;
+    max-height: fit-content !important;
   }
 
   .slider-type2{
-    // width: 100% !important;
-    height: 100% !important;
-    background-color: #6b51b427;
+    width: fit-content !important;
+    height: fit-content !important;
   }
   
   .mySwiper .swiper-slide-thumb-active {
