@@ -12,6 +12,7 @@ import SettingsBoldIcon from "../ui/icons/settingsBoldIcon";
 import InterfaceBoldIcon from "../ui/icons/interfaceBoldIcon";
 import EnvelopeBoldIcon from "../ui/icons/envelopeBoldIcon";
 import CarnetBoldIcon from "../ui/icons/carnetBoldIcon";
+import ShopBoldIcon from '../ui/icons/shopBoldIcon';
 import PaymentBoldIcon from '../ui/icons/paymentBoldIcon';
 import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
@@ -29,7 +30,7 @@ export function Navigation(){
                 <Link  href='/' >
                     <li>
                         <a  className={`${(router.asPath === '/') ? 'text-purple-800 border-purple-500 bg-gradient-to-r from-purple-50 to-fuchsia-50 bg-opacity-5' : 'border-white text-gray-900'} flex items-center py-2 px-4 text-base font-medium border-l-2 hover:text-purple-800 hover:border-purple-500 hover:bg-gradient-to-r hover:from-purple-50 hover:to-fuchsia-50 hover:bg-opacity-5 cursor-pointer duration-700 ease-in-out `}>
-                            <AppBoldIcon  customClass="w-4 h-4" />
+                            <ShopBoldIcon  customClass="w-4 h-4" />
                             <span className="ml-3">Dashboard</span>
                         </a>
                     </li>

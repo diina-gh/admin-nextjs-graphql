@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import Link from 'next/link'
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Header from '../../components/common/header'
 import Sidebar from '../../components/common/sidebar'
 import HeadInfo from '../../components/common/headinfo'
@@ -34,8 +34,7 @@ import ChevronLeftIcon from '../../components/ui/icons/chevronLeftIcon';
 import ChevronRightIcon from '../../components/ui/icons/chevronRightIcon';
 import DoubleChevronLeftIcon from '../../components/ui/icons/doubleChevronLeftIcon';
 import DoubleChevronRightIcon from '../../components/ui/icons/doubleChevronRightIcon';
-import { useDebouncedCallback } from 'use-debounce';
-
+import { debounce } from 'lodash';
 var Editor = dynamic(() => import("../../components/common/editor"), {
   ssr: false
 })
@@ -58,7 +57,7 @@ class Index extends Component {
 
         super(props);
 
-        this.state = { block: false, id:null, name: '', desc: '', activated: false, unit: '', unitWeight: 0.0, unitPrice: 0.0, order : 0, gender: genders[0], modal1: false, modal2:false, checkedAll: false,
+        this.state = { block: false, block2: false, id:null, name: '', desc: '', activated: false, unit: '', unitWeight: 0.0, unitPrice: 0.0, order : 0, gender: genders[0], modal1: false, modal2:false, checkedAll: false,
                        category: null, categories: [], brand: null, brands:[], variant_res: null, variants: [], chosenVariants: [], options:[], chosenOptions:[], products: [], chosenProducts:[],
                        image1:null, chosenImage1:null, imageref1: null, imageId1: null,
                        image2:null, chosenImage2:null, imageref2: null, imageId2: null,
@@ -83,8 +82,7 @@ class Index extends Component {
         this.handleOption = this.handleOption.bind(this)
         this.saveVariant = this.saveVariant.bind(this)
         this.deleteVariant = this.deleteVariant.bind(this)
-        this.saveRelative = this.saveRelative.bind(this)
-        this.deleteRelative = this.deleteRelative.bind(this);
+        this.handleRelatives = this.handleRelatives.bind(this)
         this.onDescChange = this.onDescChange.bind(this)
         this.refetch = this.refetch.bind(this)
     }
@@ -180,19 +178,26 @@ class Index extends Component {
             const {chosenProducts} = this.state
             if(chosenProducts != null && chosenProducts.length >0){
                 for(let i=0; i<chosenProducts.length; i++){
-                    response.products.find(item => item.id == chosenProducts[i].id).selected = true
+                    for(let j=0; j< response?.products?.length; j++){
+                        if(chosenProducts[i].id == response.products[j].id ){
+                            response.products[j].selected = true
+                        }
+                    }
                 }
             }
-            this.setState({products: response.products})
+            this.setState({products: response, block: false, block2: false})
         }
     }
 
-    refetch = async (newPage, newFilter = null, newOrder = null ) =>{
-        if(newPage != null) this.setState({page: newPage}) 
-        if(newFilter) this.setState({filter: newFilter})
-        if(newOrder) this.setState({filter: newOrder})
-        this.getProducts()
-    }
+    refetch = debounce(
+        (newPage, newFilter = null, newOrder = null ) => {
+           this.setState({block2: true})
+           if(newPage != null && newPage != this.state.page) this.setState({page: newPage}) 
+           if(newFilter != null) this.setState({filter: newFilter})
+           if(newOrder != null) this.setState({filter: newOrder})
+           this.getProducts()         
+       },695
+   );
 
     handleImage = (e, option) => {
         e.preventDefault(); 
@@ -276,33 +281,41 @@ class Index extends Component {
     }
 
 
-    saveRelative = (e, product) => {
+    handleRelatives = (e, product, index = null) => {
 
         e.preventDefault()
+
         const {chosenProducts, products} = this.state
 
         var new_products = products
         var new_chosen_products = chosenProducts
 
-        new_chosen_products.push(product)
-        new_products.find(item => item.id == product.id).selected = true
+        if(index == null){
+
+            var founded = false
+
+            for(let i = 0; i< new_chosen_products.length; i++){
+                if(new_chosen_products[i].id == product.id){
+                    new_chosen_products.splice(i, 1)
+                    this.getProducts()
+                    founded = true
+                    break
+                }
+            }
+
+            if(founded == false){
+                product.quantity = 1
+                new_chosen_products.push(product)
+                new_products.products.find(item => item.id == product.id).selected = true
+            }
+
+        }
+        else{
+            new_chosen_products.splice(index, 1)
+            this.getProducts()
+        }
 
         this.setState({chosenProducts: new_chosen_products, products: new_products});
-        toast.success("Produit ajouté !");
-    }
-
-    deleteRelative = (e, index, id) =>{
-        e.preventDefault()
-
-        const {chosenProducts, products} = this.state
-        var new_products = products
-        var new_chosen_products = chosenProducts
-
-        new_chosen_products.splice(index, 1)
-        new_products.find(item => item.id == id).selected = false
-
-        this.setState({chosenProducts: new_chosen_products, products: new_products});
-        toast.success("Produit retiré !");
     }
 
 
@@ -450,12 +463,12 @@ class Index extends Component {
             toast.dismiss()
             this.setState({block: false})
             console.log("ImageInfo mutation ", response?.message)
-            toast.error("Une erreur s'est produite lors de l'ajout de l'image " + i, {id: toastOne,});
+            // toast.error("Une erreur s'est produite lors de l'ajout de l'image " + i, {id: toastOne,});
         }
         else{
             toast.dismiss()
             this.setState({block: false})
-            toast.error("Erreur inconnue. Veuillez vérifier votre connexion internet.", {id: toastOne,});
+            // toast.error("Erreur inconnue. Veuillez vérifier votre connexion internet.", {id: toastOne,});
         }
     };
 
@@ -970,7 +983,7 @@ class Index extends Component {
         
                                                 <div className='w-full h-[14.5rem] overflow-y-auto px-5'>
         
-                                                    {chosenProducts?.length != 0 ?
+                                                    {chosenProducts?.length == 0 ?
         
                                                         <div className='w-full h-full flex flex-row justify-center '>
                                                             <div className='h-24 self-center'>
@@ -980,91 +993,41 @@ class Index extends Component {
 
                                                         :
 
-                                                        <div className='flex flex-col'>
+                                                        <div className='w-full h-full flex flex-col'>
 
-                                                            <div className='flex flex-row justify-between bg-white bg-opacity-80 py-2 px-2 rounded-md mb-2'>
+                                                            {chosenProducts.map((item, i) => (
+                                                                <AnimatePresence  key={i}>
+                                                                        <motion.div initial={{ opacity: 0, y: ( Math.random() * 15) }} whileInView={{ opacity: 1, y: 0, transition: { duration: 0.85 }, }}>
+                                                                            <div className='w-full flex flex-row justify-between bg-white bg-opacity-95 py-2 px-2 rounded-lg shadow-sm mb-2.5'>
 
-                                                                <div className='flex flex-row'>
+                                                                                <div className='flex flex-row w-10/12'>
 
-                                                                    <div className='h-[3rem] w-[3rem] bg-red-300 rounded-full mr-2'>
+                                                                                    <div className='item-image-1 bg-gradient-to-r from-violet-600 to-purple-600 rounded-full border-opacity-80 self-center mr-4' >
+                                                                                        <div className='image-layer-2 rounded-full'>
+                                                                                            <div className='image-layer-3'><img src={item?.images[0].url} /></div>
+                                                                                        </div>
+                                                                                    </div>
 
-                                                                    </div>
+                                                                                    <div className='flex flex-col justify-center w-8/12'>
+                                                                                        <div className='text-[14px] font-medium text-gray-800 w-full truncate'>{item?.name}</div>
+                                                                                        <div className='text-[12px] font-normal text-gray-600 w-full truncate mt-1'>{new Intl.NumberFormat('fr-FR', {style: 'currency', currency:'XOF'}).format(item.unitprice)}</div>
+                                                                                    </div>
 
-                                                                    <div className='flex flex-col justify-center'>
-                                                                        <div className='text-sm font-medium text-gray-800'>Nom du produit</div>
-                                                                        <div className='text-xs font-normal text-gray-600 mt-1'>18 000 CFA</div>
-                                                                    </div>
+                                                                                </div>
 
-                                                                </div>
+                                                                                <div onClick={(e) => this.handleRelatives(e, null, i)} className="w-6 h-6 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-30 self-center">
+                                                                                    <TrashBoldIcon customClass="w-[0.575rem] text-red-600 text-opacity-90 self-center"/>
+                                                                                </div>
 
-                                                                <div className="w-6 h-6 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-30 self-center">
-                                                                    <TrashBoldIcon customClass="w-[0.575rem] text-red-600 text-opacity-90 self-center"/>
-                                                                </div>
+                                                                            </div>
+                                                                        </motion.div>
+                                                                    </AnimatePresence>
+                                                                
+                                                            ))}
 
-                                                            </div>
+                                                          
 
-                                                            <div className='flex flex-row justify-between bg-white bg-opacity-80 py-2 px-2 rounded-md mb-2'>
-
-                                                                <div className='flex flex-row'>
-
-                                                                    <div className='h-[3rem] w-[3rem] bg-red-300 rounded-full mr-2'>
-
-                                                                    </div>
-
-                                                                    <div className='flex flex-col justify-center'>
-                                                                        <div className='text-sm font-medium text-gray-800'>Nom du produit</div>
-                                                                        <div className='text-xs font-normal text-gray-600 mt-1'>18 000 CFA</div>
-                                                                    </div>
-
-                                                                </div>
-
-                                                                <div className="w-6 h-6 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-30 self-center">
-                                                                    <TrashBoldIcon customClass="w-[0.575rem] text-red-600 text-opacity-90 self-center"/>
-                                                                </div>
-
-                                                            </div>
-
-                                                            <div className='flex flex-row justify-between bg-white bg-opacity-80 py-2 px-2 rounded-md mb-2'>
-
-                                                                <div className='flex flex-row'>
-
-                                                                    <div className='h-[3rem] w-[3rem] bg-red-300 rounded-full mr-2'>
-
-                                                                    </div>
-
-                                                                    <div className='flex flex-col justify-center'>
-                                                                        <div className='text-sm font-medium text-gray-800'>Nom du produit</div>
-                                                                        <div className='text-xs font-normal text-gray-600 mt-1'>18 000 CFA</div>
-                                                                    </div>
-
-                                                                </div>
-
-                                                                <div className="w-6 h-6 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-30 self-center">
-                                                                    <TrashBoldIcon customClass="w-[0.575rem] text-red-600 text-opacity-90 self-center"/>
-                                                                </div>
-
-                                                            </div>
-
-                                                            <div className='flex flex-row justify-between bg-white bg-opacity-80 py-2 px-2 rounded-md mb-2'>
-
-                                                                <div className='flex flex-row'>
-
-                                                                    <div className='h-[3rem] w-[3rem] bg-red-300 rounded-full mr-2'>
-
-                                                                    </div>
-
-                                                                    <div className='flex flex-col justify-center'>
-                                                                        <div className='text-sm font-medium text-gray-800'>Nom du produit</div>
-                                                                        <div className='text-xs font-normal text-gray-600 mt-1'>18 000 CFA</div>
-                                                                    </div>
-
-                                                                </div>
-
-                                                                <div className="w-6 h-6 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-30 self-center">
-                                                                    <TrashBoldIcon customClass="w-[0.575rem] text-red-600 text-opacity-90 self-center"/>
-                                                                </div>
-
-                                                            </div>
+                                                            
                                                             
                                                         </div>
         
@@ -1273,7 +1236,7 @@ class Index extends Component {
 
 
                 <Transition appear show={this.state.modal2} as={Fragment}>
-                    <Dialog as="div" className="fixed inset-0 z-50 overflow-y-auto" onClose={(e) => this.setState({modal2: false})}>
+                    <Dialog as="div" className="fixed inset-0 z-50 overflow-y-auto" onClose={(e) =>  this.closeModal(e, 'modal2')}>
                         <div className="">
 
                             <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="ease-in duration-200" leaveFrom="opacity-100" leaveTo="opacity-0">
@@ -1286,102 +1249,128 @@ class Index extends Component {
                                     <div className='modal-content bg-white transition-all transform rounded-lg gt-shadow6 self-center my-8 mx-2'>
                                         <div className="w-full flex flex-row justify-center mt-2">
                                             <div className="w-full">
-                                                <form role="form" method="post" onSubmit={(e) => this.closeModal(e, 'modal2')}>
+                                                <form role="form" method="post" onSubmit={(e) =>  this.closeModal(e, 'modal2')}>
 
                                                 <div className="" >
 
-                                                    <div className="px-3 mt-1 mb-1 w-full text-center text-lg font-medium text-purple-500">Produits associés</div>
+                                                    <div className="px-3 mt-1 mb-1 w-full text-center text-lg font-medium text-purple-500">Liste des produits</div>
 
-                                                    <div className="bg-white px-6 py-3">
+                                                    <div className="bg-white px-3 py-3">
 
 
                                                         <div className="w-full">
+                                                            
+                                                            <div className='w-full px-3'>
 
-                                                            <div className='w-full h-10'>
-                                                                <input type="search" className='w-full h-full px-4 focus:ring-0 text-sm border-0 bg-gray-200 bg-opacity-80 rounded-full' placeholder='Rechercher un nom, une description ou une catégorie ...' />
+                                                                <div className='w-full h-10 mb-2'>
+                                                                    <input type="search" onChange={(e) => this.refetch(null, e.target.value)} className='w-full h-full px-4 focus:ring-0 text-sm border-0 bg-gray-200 bg-opacity-80 rounded-full' placeholder='Rechercher un nom, une description ou une catégorie ...' />
+                                                                </div>
+
                                                             </div>
+                                                            
 
-                                                            <div className='mt-5 w-full '>
+                                                            <div className='py-3 px-3 w-full relative'>
+                                                            
+                                                                {/* <BlockUI blocking={this.state.block2} /> */}
 
                                                                 <div className='mb-3 text-[0.915rem] font-medium text-gray-900'>Sélectionner des produits</div>
 
                                                                 <div className='w-full h-[12.5rem] overflow-y-auto'>
+                                                                    {this.state.block2 == true &&
+                                                                        <div className='w-full h-full flex flex-row justify-center self-center'>
+                                                                            <div className='h-10 self-center'><img className='h-full' src="../spinner.gif" /></div>
+                                                                        </div>                                                  
+                                                                    }
 
-                                                                    <div className="grid grid-cols-5 gap-5">
+                                                                    {this.state.block2 == false && products?.products != null &&
+                                                                        <div className="grid grid-cols-5 gap-5">
 
-                                                                        {products.map((item, i) => (
-                                                                            <div key={i}>
-                                                                                <motion.div initial={{ opacity: 0, y: ( Math.random() * 15) }} whileInView={{ opacity: 1, y: 0, transition: { duration: 1.05 }, }}>
-                                                                                    <div className="w-full pt-1 pb-5 rounded-xl bg-gray-200 bg-opacity-80 cursor-pointer relative">
-
-                                                                                        <div className="form-check absolute top-[0.65rem] right-[0.65rem]">
-                                                                                            <input checked={item.selected} onFocus={(e) =>  this.saveRelative(e, item)} type="checkbox" className="form-check-input rounded-md appearance-none h-[0.765rem] w-[0.765rem] border border-purple-300 rounded-full bg-gray-100 checked:bg-purple-600 checked:border-purple-600 text-purple-500 focus:outline-none focus:border-0 focus:ring-2 focus:ring-purple-500 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left cursor-pointer"  />
-                                                                                        </div>
-
-                                                                                        <div className='w-full h-[6rem] flex flex-row justify-center'>
-                                                                                            <div className='max-h-[4rem] max-w-[3.75rem] self-center'>
-                                                                                                <img className='w-full h-full' src={item.images[0]?.url} />
-                                                                                            </div>
-                                                                                        </div>
-
-                                                                                        <div className='w-full mt-2 px-3'>
-                                                                                            <div className='w-full text-gray-500 text-[0.65rem] font-medium'>{item.category?.name}</div>
-                                                                                            <div className='w-full flex mt-1'>
-                                                                                                <div className='self-center w-full'>
-                                                                                                    <div className='w-full text-gray-900 text-sm font-semibold truncate'>{item.name}</div>
-                                                                                                    <div className='w-full text-gray-800 text-xs font-medium mt-1'>{item.unitprice}</div>
+                                                                            {products?.products?.map((item, i) => (
+                                                                                <div key={i}>
+                                                                                    <motion.div initial={{ opacity: 0, y: ( Math.random() * 15) }} whileInView={{ opacity: 1, y: 0, transition: { duration: 1.05 }, }}>
+                                                                                        <div onClick={(e) => this.handleRelatives(e, item)} className="w-full pt-1 pb-5 rounded-xl bg-gray-200 bg-opacity-80 cursor-pointer relative">
+    
+                                                                                            {item?.selected  &&
+                                                                                                <div className="absolute top-[0.75rem] right-[0.75rem] w-5 h-5 bg-purple-600 rounded-full shadow-sm flex flex-row justify-center">
+                                                                                                    <div className='w-3 h-3 text-white self-center'><CheckIcon className='w-full h-full'/></div>
+                                                                                                </div>
+                                                                                            }
+                                                                                            
+    
+                                                                                            <div className='w-full image-layer-00 flex flex-row justify-center'>
+                                                                                                <div className='image-layer-01 self-center'>
+                                                                                                    <img src={item.images[0]?.url} />
                                                                                                 </div>
                                                                                             </div>
+    
+                                                                                            <div className='w-full mt-2 px-3'>
+                                                                                                <div className='w-full text-gray-500 text-[0.65rem] font-medium'>{item.category?.name}</div>
+                                                                                                <div className='w-full flex mt-1'>
+                                                                                                    <div className='self-center w-full'>
+                                                                                                        <div className='w-full text-gray-900 text-sm font-semibold truncate'>{item.name}</div>
+                                                                                                        <div className='w-full text-gray-800 text-xs font-medium mt-1'>{item.unitprice}</div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+    
                                                                                         </div>
+    
+                                                                                    </motion.div>
+                                                                                </div>
+                                                                            ))}
+    
+                                                                        </div>                                               
+                                                                    }
+                                                                </div>
 
+                                                                <div onClick={e => e.preventDefault()} className='w-full flex flex-row justify-end h-8 overflow-hidden mt-5'>
+                                                                    {products?.count != null &&
+                                                                        <Pagination
+                                                                            initialPage={1} 
+                                                                            itemsPerPage={this.state.take} 
+                                                                            onPageСhange={(pageNumber) => pageNumber == this.state.page ? '' : this.refetch(pageNumber)} 
+                                                                            totalItems={products?.count}  
+                                                                            pageNeighbours={2} 
+                                                                            startLabel= {<DoubleChevronLeftIcon customClass="w-3 h-3"/>}
+                                                                            endLabel={<DoubleChevronRightIcon customClass="w-3 h-3"/>}
+                                                                            nextLabel={<ChevronRightIcon customClass="w-3 h-3"/>}
+                                                                            prevLabel={<ChevronLeftIcon customClass="w-3 h-3"/>}
+                                                                            customClassNames={{rpbItemClassName:'pg-btn', rpbItemClassNameActive:'pg-active-btn',}}
+                                                                        />
+                                                                    }
+                                                                    
+                                                                </div>
+
+                                                            </div>
+
+                                                            <div className='w-full px-3'>
+
+                                                                <div className='mt-3 w-full h-[5.25rem] border-2 border-gray-500 border-opacity-90 rounded-xl shadow-inner flex flex-col justify-center'>
+
+                                                                    <div className='w-full px-3 self-center flex flex-row'>
+                                                                        {chosenProducts.map((item, i) => (
+                                                                            <AnimatePresence key={i}>
+                                                                                <motion.div key={i} initial={{ opacity: 0, x: 300 + Math.random() * 15 }} whileInView={{ opacity: 1, x: 0, transition: { type: 'spring', stiffness: 195, damping: 20 }, }} exit={{ opacity: 0}}>
+                                                                                    <div className='relative h-full'>
+                                                                                        <div className='item-image-1 bg-gradient-to-r from-violet-600 to-purple-600 hover:scale-110 rounded-full border-opacity-80 self-center mr-4' >
+                                                                                            <div className='image-layer-2 rounded-full'>
+                                                                                                <div className='image-layer-3'><img src={item?.images[0].url}  /></div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div onClick={(e) => this.handleRelatives(e, null, i)} className='absolute -top-0.5 -left-0.5 w-4 h-4 bg-red-500 hover:bg-red-600 rounded-full flex flex-row justify-center shadow-sm'>
+                                                                                            <CrossIcon customClass="w-1.5 h-1.5 text-white self-center" />
+                                                                                        </div>
                                                                                     </div>
-
                                                                                 </motion.div>
-                                                                            </div>
+                                                                            </AnimatePresence>
                                                                         ))}
-
                                                                     </div>
 
                                                                 </div>
 
-                                                                <div className='w-full flex flex-row justify-end mt-5'>
-                                                                    <Pagination
-                                                                        initialPage={1} 
-                                                                        itemsPerPage={5} 
-                                                                        onPageСhange={(pageNumber) => console.log(pageNumber)} 
-                                                                        totalItems={50}  
-                                                                        pageNeighbours={2} 
-                                                                        startLabel= {<DoubleChevronLeftIcon customClass="w-3 h-3"/>}
-                                                                        endLabel={<DoubleChevronRightIcon customClass="w-3 h-3"/>}
-                                                                        nextLabel={<ChevronRightIcon customClass="w-3 h-3"/>}
-                                                                        prevLabel={<ChevronLeftIcon customClass="w-3 h-3"/>}
-                                                                        customClassNames={{rpbItemClassName:'pg-btn', rpbItemClassNameActive:'pg-active-btn',}}
-                                                                    />
-                                                                </div>
-
                                                             </div>
 
-                                                            <div className='mt-6 w-full h-[5.25rem] border-2 border-gray-500 border-opacity-90 rounded-xl shadow-inner flex flex-col justify-center'>
-
-                                                                <div className='w-full px-3 self-center flex flex-row'>
-                                                                    {chosenProducts.map((item, i) => (
-                                                                        <motion.div key={i} initial={{ opacity: 0, x: 300 + Math.random() * 15 }} whileInView={{ opacity: 1, x: 0, transition: { type: 'spring', stiffness: 195, damping: 20 }, }}>
-                                                                            <div className='relative h-full'>
-                                                                                <div className='item-image-1 bg-gradient-to-r from-violet-600 to-purple-600 hover:scale-110 rounded-full border-opacity-80 self-center mr-4' >
-                                                                                    <div className='image-layer-2 rounded-full'>
-                                                                                        <div className='image-layer-3'><img src={item?.images[0].url}  /></div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div className='absolute -top-0.5 -left-0.5 w-4 h-4 bg-red-500 hover:bg-red-600 rounded-full flex flex-row justify-center shadow-sm'>
-                                                                                    <CrossIcon customClass="w-1.5 h-1.5 text-white self-center" />
-                                                                                </div>
-                                                                            </div>
-                                                                            
-                                                                        </motion.div>
-                                                                    ))}
-                                                                </div>
-
-                                                            </div>
+                                                            
 
                                                         </div>
 

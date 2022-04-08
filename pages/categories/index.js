@@ -154,7 +154,7 @@ export default function Index() {
                                     </Tab>
 
                                     <Tab className={({ selected }) =>classNames('w-full flex flex-row justify-center py-3 text-[1.075rem] font-bold leading-5 rounded-t-xl mb-minus1 tracking-normal','focus:outline-none focus:ring-0 ring-opacity-0', selected ? 'text-purple-800 bg-white shadow-sm badge-active' : 'text-gray-400 text-opacity-80 hover:text-purple-600 badge-disabled')}>
-                                            <div className='mr-2 self-center'>Sous-Catégories</div>
+                                            <div className='mr-2 self-center'>Sous catégories</div>
                                             <div className='px-2 py-[0.25px] rounded-xl tab-badge text-[10.35px] font-medium self-center'>{items?.categories?.countSub ? items?.categories?.countSub : 0 }</div>
                                     </Tab>
 
@@ -166,7 +166,7 @@ export default function Index() {
 
                                         <div className='w-full h-full rounded-b-xl overflow-y-scroll pt-4 pb-3'>
 
-                                            <div className='w-full flex flex-row justify-between px-4'>
+                                            <div className='w-full flex flex-row justify-between px-4 mt-1'>
 
                                                 <div className='flex flex-row'>
                                                     
@@ -176,7 +176,7 @@ export default function Index() {
                                                     <div className='ml-2 h-8 px-2 self-center bg-gray-100 bg-opacity-95 shadow-inner rounded-full flex flex-row'>
 
                                                         <div className='w-4 h-4 self-center'>
-                                                            <SearchIcon className='w-full h-full text-gray-800' />
+                                                            <SearchIcon className='w-full h-full text-gray-600 -mb-0.5' />
                                                         </div>
 
                                                         <div className='w-72 h-full'>
@@ -300,18 +300,21 @@ export default function Index() {
                                             </div>
 
                                             <div className='w-full flex flex-row justify-end mt-5'>
-                                                <Pagination 
-                                                    initialPage={page} 
-                                                    itemsPerPage={take} 
-                                                    onPageСhange={(pageNumber) => refetch(pageNumber)} 
-                                                    totalItems={items?.categories?.count}  
-                                                    pageNeighbours={2} 
-                                                    startLabel= {<DoubleChevronLeftIcon customClass="w-3 h-3"/>}
-                                                    endLabel={<DoubleChevronRightIcon customClass="w-3 h-3"/>}
-                                                    nextLabel={<ChevronRightIcon customClass="w-3 h-3"/>}
-                                                    prevLabel={<ChevronLeftIcon customClass="w-3 h-3"/>}
-                                                    customClassNames={{rpbItemClassName:'pg-btn', rpbItemClassNameActive:'pg-active-btn',}}
-                                                />
+                                                {items?.categories != null &&
+                                                    <Pagination 
+                                                        initialPage={page} 
+                                                        itemsPerPage={take} 
+                                                        onPageСhange={(pageNumber) => refetch(pageNumber)} 
+                                                        totalItems={items?.categories?.count}  
+                                                        pageNeighbours={2} 
+                                                        startLabel= {<DoubleChevronLeftIcon customClass="w-3 h-3"/>}
+                                                        endLabel={<DoubleChevronRightIcon customClass="w-3 h-3"/>}
+                                                        nextLabel={<ChevronRightIcon customClass="w-3 h-3"/>}
+                                                        prevLabel={<ChevronLeftIcon customClass="w-3 h-3"/>}
+                                                        customClassNames={{rpbItemClassName:'pg-btn', rpbItemClassNameActive:'pg-active-btn',}}
+                                                    />
+                                                }
+
                                             </div>
 
 
@@ -438,7 +441,7 @@ function SubCategories () {
 
             <BlockUI blocking={block} />
 
-            <div className='w-full flex flex-row justify-between px-4 mt-3'>
+            <div className='w-full flex flex-row justify-between px-4 mt-1'>
 
                 <div className='flex flex-row'>
                     
@@ -448,7 +451,7 @@ function SubCategories () {
                     <div className='ml-2 h-8 px-2 self-center bg-gray-100 bg-opacity-95 shadow-inner rounded-full flex flex-row'>
 
                         <div className='w-4 h-4 self-center'>
-                            <SearchIcon className='w-full h-full text-gray-800' />
+                            <SearchIcon className='w-full h-full text-gray-600 -mb-0.5' />
                         </div>
 
                         <div className='w-72 h-full'>
@@ -577,11 +580,12 @@ function SubCategories () {
             </div>
 
             <div className='w-full flex flex-row justify-end mt-5'>
-                <Pagination 
+                {items?.subCategories != null &&
+                    <Pagination 
                     initialPage={page} 
                     itemsPerPage={take} 
                     onPageСhange={(pageNumber) => refetch(pageNumber)} 
-                    totalItems={items?.subCategories?.count}  
+                    totalItems={items?.subCategories?.countSub}  
                     pageNeighbours={2} 
                     startLabel= {<DoubleChevronLeftIcon customClass="w-3 h-3"/>}
                     endLabel={<DoubleChevronRightIcon customClass="w-3 h-3"/>}
@@ -589,6 +593,8 @@ function SubCategories () {
                     prevLabel={<ChevronLeftIcon customClass="w-3 h-3"/>}
                     customClassNames={{rpbItemClassName:'pg-btn', rpbItemClassNameActive:'pg-active-btn',}}
                 />
+            }
+                
             </div>
 
 

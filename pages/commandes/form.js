@@ -28,6 +28,7 @@ import DoubleChevronLeftIcon from '../../components/ui/icons/doubleChevronLeftIc
 import DoubleChevronRightIcon from '../../components/ui/icons/doubleChevronRightIcon';
 import TrashBoldIcon from '../../components/ui/icons/trashBoldIcon'
 import { useDebouncedCallback } from 'use-debounce';
+import { debounce } from 'lodash';
 
 
 const people = [
@@ -124,13 +125,15 @@ class Index extends Component {
         }
     }
 
-    refetch = async (newPage, newFilter = null, newOrder = null ) =>{
-        this.setState({block2: true})
-        if(newPage != null) this.setState({page: newPage}) 
-        if(newFilter != null) this.setState({filter: newFilter})
-        if(newOrder != null) this.setState({filter: newOrder})
-        setTimeout(() => { this.getProducts() }, 250);
-    }
+    refetch = debounce(
+         (newPage, newFilter = null, newOrder = null ) => {
+            this.setState({block2: true})
+            if(newPage != null && newPage != this.state.page) this.setState({page: newPage}) 
+            if(newFilter != null) this.setState({filter: newFilter})
+            if(newOrder != null) this.setState({filter: newOrder})
+            this.getProducts()         
+        },695
+    );
 
     handleBasket = (e, product, index = null) => {
 
@@ -623,9 +626,7 @@ class Index extends Component {
                                                             </AnimatePresence>
                                                            
                                                           ))}
-
-
-                                                          
+                         
                                                         </div>
 
                                                     }
@@ -734,50 +735,56 @@ class Index extends Component {
 
                                                             <div className='py-3 px-3 w-full relative'>
                                                             
-                                                                <BlockUI blocking={this.state.block2} />
+                                                                {/* <BlockUI blocking={this.state.block2} /> */}
 
                                                                 <div className='mb-3 text-[0.915rem] font-medium text-gray-900'>Sélectionner des produits</div>
 
                                                                 <div className='w-full h-[12.5rem] overflow-y-auto'>
+                                                                    {this.state.block2 == true &&
+                                                                        <div className='w-full h-full flex flex-row justify-center self-center'>
+                                                                            <div className='h-10 self-center'><img className='h-full' src="../spinner.gif" /></div>
+                                                                        </div>                                                  
+                                                                    }
 
-                                                                    <div className="grid grid-cols-5 gap-5">
+                                                                    {this.state.block2 == false && products?.products != null &&
+                                                                        <div className="grid grid-cols-5 gap-5">
 
-                                                                        {products?.products?.map((item, i) => (
-                                                                            <div key={i}>
-                                                                                <motion.div initial={{ opacity: 0, y: ( Math.random() * 15) }} whileInView={{ opacity: 1, y: 0, transition: { duration: 1.05 }, }}>
-                                                                                    <div onClick={(e) => this.handleBasket(e, item)} className="w-full pt-1 pb-5 rounded-xl bg-gray-200 bg-opacity-80 cursor-pointer relative">
-
-                                                                                        {item?.selected  &&
-                                                                                            <div className="absolute top-[0.75rem] right-[0.75rem] w-5 h-5 bg-purple-600 rounded-full shadow-sm flex flex-row justify-center">
-                                                                                                <div className='w-3 h-3 text-white self-center'><CheckIcon className='w-full h-full'/></div>
-                                                                                            </div>
-                                                                                        }
-                                                                                        
-
-                                                                                        <div className='w-full h-[6rem] flex flex-row justify-center'>
-                                                                                            <div className='max-h-[4rem] max-w-[3.75rem] self-center'>
-                                                                                                <img className='w-full h-full' src={item.images[0]?.url} />
-                                                                                            </div>
-                                                                                        </div>
-
-                                                                                        <div className='w-full mt-2 px-3'>
-                                                                                            <div className='w-full text-gray-500 text-[0.65rem] font-medium'>{item.category?.name}</div>
-                                                                                            <div className='w-full flex mt-1'>
-                                                                                                <div className='self-center w-full'>
-                                                                                                    <div className='w-full text-gray-900 text-sm font-semibold truncate'>{item.name}</div>
-                                                                                                    <div className='w-full text-gray-800 text-xs font-medium mt-1'>{item.unitprice}</div>
+                                                                            {products?.products?.map((item, i) => (
+                                                                                <div key={i}>
+                                                                                    <motion.div initial={{ opacity: 0, y: ( Math.random() * 15) }} whileInView={{ opacity: 1, y: 0, transition: { duration: 1.05 }, }}>
+                                                                                        <div onClick={(e) => this.handleBasket(e, item)} className="w-full pt-1 pb-5 rounded-xl bg-gray-200 bg-opacity-80 cursor-pointer relative">
+    
+                                                                                            {item?.selected  &&
+                                                                                                <div className="absolute top-[0.75rem] right-[0.75rem] w-5 h-5 bg-purple-600 rounded-full shadow-sm flex flex-row justify-center">
+                                                                                                    <div className='w-3 h-3 text-white self-center'><CheckIcon className='w-full h-full'/></div>
+                                                                                                </div>
+                                                                                            }
+                                                                                            
+    
+                                                                                            <div className='w-full image-layer-00 flex flex-row justify-center'>
+                                                                                                <div className='image-layer-01 self-center'>
+                                                                                                    <img src={item.images[0]?.url} />
                                                                                                 </div>
                                                                                             </div>
+    
+                                                                                            <div className='w-full mt-2 px-3'>
+                                                                                                <div className='w-full text-gray-500 text-[0.65rem] font-medium'>{item.category?.name}</div>
+                                                                                                <div className='w-full flex mt-1'>
+                                                                                                    <div className='self-center w-full'>
+                                                                                                        <div className='w-full text-gray-900 text-sm font-semibold truncate'>{item.name}</div>
+                                                                                                        <div className='w-full text-gray-800 text-xs font-medium mt-1'>{item.unitprice}</div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+    
                                                                                         </div>
-
-                                                                                    </div>
-
-                                                                                </motion.div>
-                                                                            </div>
-                                                                        ))}
-
-                                                                    </div>
-
+    
+                                                                                    </motion.div>
+                                                                                </div>
+                                                                            ))}
+    
+                                                                        </div>                                               
+                                                                    }
                                                                 </div>
 
                                                                 <div onClick={e => e.preventDefault()} className='w-full flex flex-row justify-end h-8 overflow-hidden mt-5'>

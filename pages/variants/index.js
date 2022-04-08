@@ -31,7 +31,7 @@ function classNames(...classes) {
 
 export default function Index() {
 
-    const take = 6;
+    const take = 7;
 
     const [page, setPage] = useState(1);
     const [filter, setFilter] = useState('')
@@ -102,9 +102,9 @@ export default function Index() {
             <Sidebar />
 
             <motion.div initial={{ opacity: 0.45, x: -150 }}  whileInView={{ opacity: 1, x: 0, transition: { duration: 0.60 }, }}>
-                <div className='app-body'>
+                <div className='app-body rounded-xl'>
 
-                    <div className='w-full'>
+                    <div className='w-full rounded-xl'>
 
                         <Tab.Group >
 
@@ -126,9 +126,9 @@ export default function Index() {
                             <Tab.Panels className='app-subbody2'>
                                     <Tab.Panel key={1} className={classNames('','bg-white h-full focus:outline-none focus:ring-0 ring-opacity-0 rounded-b-xl ')}>
 
-                                        <div className='w-full h-full rounded-b-xl overflow-y-scroll p-4'>
+                                        <div className='w-full h-full rounded-b-xl overflow-y-scroll pt-4'>
 
-                                            <div className='w-full flex flex-row justify-between mt-3'>
+                                            <div className='w-full flex flex-row justify-between px-4'>
 
                                                 <div className='flex flex-row'>
                                                     
@@ -174,7 +174,7 @@ export default function Index() {
                                             <div className="w-full flex flex-col overflow-x-auto mt-4">
                                                 <div className="w-full overflow-x-auto">
                                                     <div className="align-middle inline-block min-w-full">
-                                                        <div className="shadow overflow-hidden app-table sm:rounded-lg px-4">
+                                                        <div className="shadow overflow-hidden app-table sm:rounded-lg pl-4 pr-3">
 
                                                         {(isLoading || items?.page != null ) &&
                                                             <div className='app-table w-full flex flex-row justify-center'>
@@ -241,19 +241,22 @@ export default function Index() {
                                                 </div>
                                             </div>
 
-                                            <div className='w-full flex flex-row justify-end mt-5'>
-                                                <Pagination 
-                                                    initialPage={page} 
-                                                    itemsPerPage={take} 
-                                                    onPageСhange={(pageNumber) => refetch(pageNumber)} 
-                                                    totalItems={items?.categories?.count}  
-                                                    pageNeighbours={2} 
-                                                    startLabel= {<DoubleChevronLeftIcon customClass="w-3 h-3"/>}
-                                                    endLabel={<DoubleChevronRightIcon customClass="w-3 h-3"/>}
-                                                    nextLabel={<ChevronRightIcon customClass="w-3 h-3"/>}
-                                                    prevLabel={<ChevronLeftIcon customClass="w-3 h-3"/>}
-                                                    customClassNames={{rpbItemClassName:'pg-btn', rpbItemClassNameActive:'pg-active-btn',}}
-                                                />
+                                            <div className='w-full flex flex-row justify-end mt-5 px-4'>
+                                                {items?.variants != null &&
+                                                    <Pagination 
+                                                        initialPage={page} 
+                                                        itemsPerPage={take} 
+                                                        onPageСhange={(pageNumber) => refetch(pageNumber)} 
+                                                        totalItems={items?.categories?.count}  
+                                                        pageNeighbours={2} 
+                                                        startLabel= {<DoubleChevronLeftIcon customClass="w-3 h-3"/>}
+                                                        endLabel={<DoubleChevronRightIcon customClass="w-3 h-3"/>}
+                                                        nextLabel={<ChevronRightIcon customClass="w-3 h-3"/>}
+                                                        prevLabel={<ChevronLeftIcon customClass="w-3 h-3"/>}
+                                                        customClassNames={{rpbItemClassName:'pg-btn', rpbItemClassNameActive:'pg-active-btn',}}
+                                                    />
+                                                }
+
                                             </div>
 
 
@@ -285,7 +288,7 @@ export default function Index() {
 
 function Options () {
 
-    const take = 6;
+    const take = 7;
 
     const [page, setPage] = useState(1);
     const [filter, setFilter] = useState('')
@@ -345,9 +348,9 @@ function Options () {
     }
 
     return (
-        <div className='w-full h-full rounded-b-xl overflow-y-scroll p-4'>
+        <div className='w-full h-full rounded-b-xl overflow-y-scroll pt-4'>
 
-            <div className='w-full flex flex-row justify-between mt-3'>
+            <div className='w-full flex flex-row justify-between px-4'>
 
                 <div className='flex flex-row'>
                     
@@ -370,7 +373,7 @@ function Options () {
 
                 <div className='flex flex-row'>
 
-                    <div className='ml-2 bg-green-500 bg-opacity-90 shadow px-2 py-2 rounded-md flex flex-col justify-center btn-effect1'>
+                    <div className='bg-green-500 bg-opacity-90 shadow px-2 py-2 rounded-md flex flex-col justify-center btn-effect1'>
                         <div className='flex flex-row text-sm font-medium text-gray-100 hover:text-white'>
                             <DocBoldIcon customClass="self-center w-4 h-4" />
                             <div className='ml-2 self-center'>Exporter</div>
@@ -393,7 +396,7 @@ function Options () {
             <div className="w-full flex flex-col overflow-x-auto mt-4">
                 <div className="w-full overflow-x-auto">
                     <div className="align-middle inline-block min-w-full">
-                        <div className="shadow overflow-hidden app-table sm:rounded-lg px-4">
+                        <div className="shadow overflow-hidden app-table sm:rounded-lg pl-4 pr-3">
 
                         {(isLoading || items?.page != null ) &&
                             <div className='app-table w-full flex flex-row justify-center'>
@@ -431,13 +434,13 @@ function Options () {
                                             <td className="px-6 py-3 whitespace-nowrap">
                                                 {!item.colorCode 
                                                   ?<div className='flex flex-row'>
-                                                        <div className="flex flex-row justify-center w-9 h-8 mr-3 rounded-md border border-gray-400 bg-gray-200 bg-opacity-50 self-center">
-                                                            <div className="self-center text-xs font-semibold text-gray-800">{item.value}</div>
+                                                        <div className="flex flex-row justify-center w-6 h-6 mr-3 rounded-md border border-gray-400 bg-gray-200 bg-opacity-50 self-center">
+                                                            <div className="self-center text-[10px] font-semibold text-gray-800">{item.value}</div>
                                                         </div>
                                                         <div className="text-sm text-gray-900 self-center">{item.value}</div>
                                                     </div>
                                                   :<div className='flex flex-row'>
-                                                        <div className="flex flex-row justify-center w-8 h-8 mr-3 rounded-full border-2 border-gray-200 border-opacity-40 self-center" style={{backgroundColor: item.colorCode}}></div>
+                                                        <div className="flex flex-row justify-center w-6 h-6 mr-3 rounded-full border-2 border-gray-200 border-opacity-40 self-center" style={{backgroundColor: item.colorCode}}></div>
                                                         <div className="text-sm text-gray-900 self-center">{item.value}</div>
                                                     </div>
                                                 }
@@ -473,19 +476,21 @@ function Options () {
                 </div>
             </div>
 
-            <div className='w-full flex flex-row justify-end mt-5'>
-                <Pagination 
-                    initialPage={page} 
-                    itemsPerPage={take} 
-                    onPageСhange={(pageNumber) => refetch(pageNumber)} 
-                    totalItems={items?.options?.count}  
-                    pageNeighbours={2} 
-                    startLabel= {<DoubleChevronLeftIcon customClass="w-3 h-3"/>}
-                    endLabel={<DoubleChevronRightIcon customClass="w-3 h-3"/>}
-                    nextLabel={<ChevronRightIcon customClass="w-3 h-3"/>}
-                    prevLabel={<ChevronLeftIcon customClass="w-3 h-3"/>}
-                    customClassNames={{rpbItemClassName:'pg-btn', rpbItemClassNameActive:'pg-active-btn',}}
-                />
+            <div className='w-full flex flex-row justify-end mt-5 mb-1 px-4'>
+                {items?.options != null &&
+                    <Pagination 
+                        initialPage={page} 
+                        itemsPerPage={take} 
+                        onPageСhange={(pageNumber) => refetch(pageNumber)} 
+                        totalItems={items?.options?.count}  
+                        pageNeighbours={2} 
+                        startLabel= {<DoubleChevronLeftIcon customClass="w-3 h-3"/>}
+                        endLabel={<DoubleChevronRightIcon customClass="w-3 h-3"/>}
+                        nextLabel={<ChevronRightIcon customClass="w-3 h-3"/>}
+                        prevLabel={<ChevronLeftIcon customClass="w-3 h-3"/>}
+                        customClassNames={{rpbItemClassName:'pg-btn', rpbItemClassNameActive:'pg-active-btn',}}
+                    />
+                }
             </div>
 
 

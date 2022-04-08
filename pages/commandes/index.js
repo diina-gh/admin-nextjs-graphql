@@ -46,20 +46,22 @@ export default function Index() {
         setTake(option == 0 ? 8 : 12)
     }
 
-    const refetch = (newPage, newFilter = null, newOrder = null ) =>{
-        if(newPage){
+    const refetch = useDebouncedCallback(
+        (newPage, newFilter = null, newOrder = null ) => {
+            if(newPage && newPage != page){
                 setPage(newPage)
                 mutate({...items, page:newPage})
-        } 
-        if(newFilter){
-            setFilter(newFilter)
-            mutate({...items, filter:newFilter})
-        }
-        if(newOrder){
-            setOrderBy(newOrder)
-            mutate({...items, orderBy:newOrder})
-        }
-    }
+            } 
+            if(newFilter){
+                setFilter(newFilter)
+                mutate({...items, filter:newFilter})
+            }
+            if(newOrder){
+                setOrderBy(newOrder)
+                mutate({...items, orderBy:newOrder})
+            }
+        }, 680
+    );
 
     if (isError) console.log("The error here ", isError)
     if (isLoading) console.log("loading...")
