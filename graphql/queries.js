@@ -605,17 +605,21 @@ export const productQuery = gql `
                     imageref
                 }
                 relatives {
-                    related {
+                    id
+                    name
+                    desc
+                    unitprice
+                    category {
                         id
                         name
-                        unit
-                        category {
-                            id
-                            name
-                        }
-                        images {
-                            url
-                        }
+                    }
+                    brand {
+                        id
+                        name
+                    }
+                    images {
+                        id
+                        url
                     }
                 }
             }

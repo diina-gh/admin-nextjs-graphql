@@ -128,6 +128,10 @@ class Index extends Component {
                     this.setState({chosenVariants: response.variants.map(item => item.variant),})
                 }
 
+                if(response.relatives != null && response.relatives.length > 0){
+                    this.setState({chosenProducts: response.relatives})
+                }
+
                 this.setState({block: false})
 
             }
@@ -345,7 +349,7 @@ class Index extends Component {
 
     saveItem = async () => {
 
-        const { id, name, desc, activated, unit, unitWeight, unitPrice, order, gender,category, brand, chosenVariants} = this.state
+        const { id, name, desc, activated, unit, unitWeight, unitPrice, order, gender,category, brand, chosenVariants, chosenProducts} = this.state
         
         var optionIds = []
 
@@ -356,8 +360,9 @@ class Index extends Component {
         }
 
         const variantIds = chosenVariants.map(item => parseInt(item.id));
+        const productIds = chosenProducts.map(item => parseInt(item.id));
 
-        const {response } = await saveProduct(id, name, desc, activated, unit, unitWeight, unitPrice, order, category?.id, brand?.id, variantIds, optionIds, gender, [])
+        const {response } = await saveProduct(id, name, desc, activated, unit, unitWeight, unitPrice, order, category?.id, brand?.id, variantIds, optionIds, gender, productIds)
 
         if(response?.__typename == 'Product'){
             this.handleUpload(response?.id)
@@ -879,7 +884,7 @@ class Index extends Component {
         
                                                 <div className='mb-3 ml-0.5 flex flex-row px-5'>
                                                     <div className='text-base font-medium text-purple-600 mr-1 self-center'>Variants</div>
-                                                    <div className='px-2 py-[0.45px] text-[10.325px] font-medium bg-purple-500 bg-opacity-80 text-white rounded-xl self-center'>{chosenVariants?.length}</div>
+                                                    <div className='px-2 py-[0.45px] text-[10.325px] font-medium bg-purple-500 bg-opacity-80 text-white rounded-xl self-center -mb-0.5'>{chosenVariants?.length}</div>
                                                 </div>
         
                                                 <div className='w-full h-[14.5rem] overflow-y-auto px-5'>
@@ -978,7 +983,7 @@ class Index extends Component {
         
                                                 <div className='mb-3 ml-0.5 flex flex-row px-5'>
                                                     <div className='text-base font-medium text-purple-600 mr-1 self-center'>Produits associés</div>
-                                                    <div className='px-2 py-[0.45px] text-[10.325px] font-medium bg-purple-500 bg-opacity-80 text-white rounded-xl self-center'>{chosenProducts?.length}</div>
+                                                    <div className='px-2 py-[0.45px] text-[10.325px] font-medium bg-purple-500 bg-opacity-80 text-white rounded-xl self-center -mb-0.5'>{chosenProducts?.length == null ? 0 : chosenProducts?.length}</div>
                                                 </div>
         
                                                 <div className='w-full h-[14.5rem] overflow-y-auto px-5'>
@@ -995,7 +1000,7 @@ class Index extends Component {
 
                                                         <div className='w-full h-full flex flex-col'>
 
-                                                            {chosenProducts.map((item, i) => (
+                                                            {chosenProducts?.map((item, i) => (
                                                                 <AnimatePresence  key={i}>
                                                                         <motion.div initial={{ opacity: 0, y: ( Math.random() * 15) }} whileInView={{ opacity: 1, y: 0, transition: { duration: 0.85 }, }}>
                                                                             <div className='w-full flex flex-row justify-between bg-white bg-opacity-95 py-2 px-2 rounded-lg shadow-sm mb-2.5'>
@@ -1348,7 +1353,7 @@ class Index extends Component {
                                                                 <div className='mt-3 w-full h-[5.25rem] border-2 border-gray-500 border-opacity-90 rounded-xl shadow-inner flex flex-col justify-center'>
 
                                                                     <div className='w-full px-3 self-center flex flex-row'>
-                                                                        {chosenProducts.map((item, i) => (
+                                                                        {chosenProducts?.map((item, i) => (
                                                                             <AnimatePresence key={i}>
                                                                                 <motion.div key={i} initial={{ opacity: 0, x: 300 + Math.random() * 15 }} whileInView={{ opacity: 1, x: 0, transition: { type: 'spring', stiffness: 195, damping: 20 }, }} exit={{ opacity: 0}}>
                                                                                     <div className='relative h-full'>
