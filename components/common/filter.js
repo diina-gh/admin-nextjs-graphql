@@ -82,7 +82,7 @@ class Filter extends Component {
   constructor(props){
       super(props);
       this.state = {genders: genders_list, categories: [], category: null, subCategories: [], brands: [],
-                    clients: [], client: null, variants: []}
+                    clients: [], client: null, variants: [], x_min: 30000, x_max: 150000, min: 30000, max: 150000}
       this.filterBrands = this.filterBrands.bind(this);
       this.filterGenders = this.filterGenders.bind(this)
       this.filterSubCategories = this.filterSubCategories.bind(this)
@@ -162,7 +162,7 @@ class Filter extends Component {
 
   render() {
 
-      const {genders, brands, categories, category, subCategories, variants } = this.state
+      const {genders, brands, categories, category, subCategories, variants, min, max, x_min, x_max } = this.state
 
       return(
           <div className="self-center mr-4 relative">
@@ -178,7 +178,7 @@ class Filter extends Component {
                   <Transition as={Fragment} enter="transition ease-out duration-200" enterFrom="opacity-0 translate-y-1" enterTo="opacity-100 translate-y-0" leave="transition ease-in duration-150" leaveFrom="opacity-100 translate-y-0" leaveTo="opacity-0 translate-y-1">
                     <Popover.Panel className="absolute left-[10rem] z-10 w-80 px-4 mt-3 transform -translate-x-1/2 left-1/2 sm:px-0 lg:max-w-3xl rounded-lg shadow-2xl">
                       <div className="overflow-hidden bg-white rounded-lg border border-gray-100 ring-1 ring-black ring-opacity-5">
-                        <div className="text-sm font-semibold text-gray-900 px-4 mt-4 mb-3">
+                        <div className="text-sm font-semibold text-purple-600 px-4 mt-4 mb-3">
                               Filtrer par
                         </div>
                         <div className="flex flex-col px-4 h-80 overflow-y-scroll">
@@ -188,7 +188,7 @@ class Filter extends Component {
                                   <Listbox value={category} onChange={(e) => this.setState({category: e, subCategories: e.childs})}>
                                       {({ open }) => (
                                           <>
-                                          <Listbox.Label className="text-sm font-semibold text-purple-600 ">Catégorie</Listbox.Label>
+                                          <Listbox.Label className="text-sm font-semibold text-gray-900 ">Catégorie</Listbox.Label>
                                           <div className="mt-2 relative">
                                               <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-[0.525rem] text-left cursor-default focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 sm:text-sm">
                                                   <span className="flex items-center">
@@ -246,7 +246,7 @@ class Filter extends Component {
 
                           {this.props.brand == true && brands != null &&
                             <>
-                              <div className="text-sm font-semibold text-purple-600 ">
+                              <div className="text-sm font-semibold text-gray-900 ">
                                 Marque
                               </div>
                               <div className='mt-3 mb-3'>
@@ -265,7 +265,7 @@ class Filter extends Component {
 
                           {this.props.gender == true && genders != null &&
                             <>
-                              <div className="text-sm font-semibold text-purple-600 ">
+                              <div className="text-sm font-semibold text-gray-900 ">
                                 Sexe
                               </div>
                               <div className='mt-3 mb-3 flex flex-row flex-wrap'>
@@ -282,7 +282,7 @@ class Filter extends Component {
                             <>
                               {variants.map((item0, i0) => (
                                 <div key={i0}>
-                                  <div className="text-sm font-semibold text-purple-600 ">
+                                  <div className="text-sm font-semibold text-gray-900 ">
                                     {capitalize(item0.name)}
                                   </div>
                                   <div className='mt-3 mb-3 flex flex-row justify-start'>
@@ -310,17 +310,34 @@ class Filter extends Component {
 
                         {this.props.price == true &&
                           <>
-                            <div className="text-sm font-semibold text-purple-600 ">
-                                  Prix Unitaire
+                            <div className="text-sm font-semibold text-gray-900 ">
+                                  Prix (CFA)
                             </div>
-                            <div className="w-full relative mt-2 mb-3">
-                            <StyledSlider defaultValue={[25, 75]} step={10} minStepsBetweenThumbs={1} aria-label="Volume">
-                              <StyledTrack>
-                                <StyledRange />
-                              </StyledTrack>
-                              <StyledThumb />
-                              <StyledThumb />
-                            </StyledSlider>
+                            <div className="w-full relative mt-2 mb-2">
+                              <StyledSlider min={x_min} max={x_max} value={[min,max]} onValueChange={(e) => this.setState({min:e[0], max:e[1]})} defaultValue={[min, max]} step={10} minStepsBetweenThumbs={1} aria-label="Volume">
+                                <StyledTrack>
+                                  <StyledRange />
+                                </StyledTrack>
+                                <StyledThumb />
+                                <StyledThumb />
+                              </StyledSlider>
+                            </div>
+                            <div className='w-full flex flex-row justify-between mt-1 mb-3'>
+
+                              <div className="w-5/12">
+                                <div  className="w-full shadow-sm text-xs border border-gray-400 shadow-inner bg-white bg-opacity-90 text-purple-600 font-semibold rounded-md px-2 py-2 truncate">
+                                  {new Intl.NumberFormat('fr-FR', {style: 'currency', currency:'XOF'}).format(this.state.min)}                                
+                                </div>                              
+                              </div>
+
+                              <div className='text-gray-700 text-xs self-center'>et</div>
+
+                              <div className="w-5/12">
+                                <div  className="w-full shadow-sm text-xs border border-gray-400 shadow-inner bg-white bg-opacity-90 text-purple-600 font-semibold rounded-md px-2 py-2 truncate">
+                                  {new Intl.NumberFormat('fr-FR', {style: 'currency', currency:'XOF'}).format(this.state.max)}                                
+                                </div>
+                              </div>
+
                             </div>
                           </>
                         }
