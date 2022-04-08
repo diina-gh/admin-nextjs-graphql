@@ -792,7 +792,7 @@ class Index extends Component {
                                                                         <Pagination
                                                                             initialPage={1} 
                                                                             itemsPerPage={this.state.take} 
-                                                                            onPageСhange={(pageNumber) => this.refetch(pageNumber)} 
+                                                                            onPageСhange={(pageNumber) => pageNumber == this.state.page ? '' : this.refetch(pageNumber)} 
                                                                             totalItems={products?.count}  
                                                                             pageNeighbours={2} 
                                                                             startLabel= {<DoubleChevronLeftIcon customClass="w-3 h-3"/>}
