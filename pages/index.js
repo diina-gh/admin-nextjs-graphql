@@ -114,13 +114,6 @@ const data = [
         "client": "Karen Ndiaye",
         "status": "Restituée"
     },
-    {
-        "id": "C03292",
-        "date": "07/04/2022",
-        "total": "10 000 CFA",
-        "client": "Lamine Diop",
-        "status": "Livrée"
-    },
 
   ]
 
@@ -153,7 +146,7 @@ export default function Home({userId}) {
 
                             <Swiper className='w-full h-full swiper-type3' spaceBetween={10} slidesPerView={3} loop={true} speed={5000} freeMode={true} autoplay={true}  modules={[FreeMode, Navigation]} >
                                 <SwiperSlide className="slide-type3">
-                                    <motion.div initial={{ opacity: 0.65, x: ( Math.random() * 2 * 5) }} whileInView={{ opacity: 1, x: 0, transition: { duration: 1.05 }, }}>
+                                    <motion.div initial={{ opacity: 0.95, x: ( Math.random() * 2 * 5) }} whileInView={{ opacity: 1, x: 0, transition: { duration: 1.05 }, }}>
                                         <div className='h-[8.25rem]  bg-purple-200 bg-opacity-95 rounded-xl shadow shadow-purple-200/50 flex flex-col justify-between px-3 py-4 cursor-pointer'>
 
                                             <div className='flex flex-row'>
@@ -172,7 +165,7 @@ export default function Home({userId}) {
                                     </motion.div>
                                 </SwiperSlide>
                                 <SwiperSlide className="slide-type3">
-                                    <motion.div initial={{ opacity: 0.55, x: ( Math.random() * 3 * 5) }} whileInView={{ opacity: 1, x: 0, transition: { duration: 1.05 }, }}>
+                                    <motion.div initial={{ opacity: 0.95, x: ( Math.random() * 3 * 5) }} whileInView={{ opacity: 1, x: 0, transition: { duration: 1.05 }, }}>
                                         <div className='h-[8.25rem] bg-red-200 rounded-xl shadow shadow-red-200/50 flex flex-col justify-between px-3 py-4 cursor-pointer'>
 
                                             <div className='flex flex-row'>
@@ -191,7 +184,7 @@ export default function Home({userId}) {
                                     </motion.div>
                                 </SwiperSlide>
                                 <SwiperSlide className="slide-type3">
-                                    <motion.div initial={{ opacity: 0.45, x: ( Math.random() * 4 * 5) }} whileInView={{ opacity: 1, x: 0, transition: { duration: 1.05 }, }}>
+                                    <motion.div initial={{ opacity: 0.95, x: ( Math.random() * 4 * 5) }} whileInView={{ opacity: 1, x: 0, transition: { duration: 1.05 }, }}>
                                         <div className='h-[8.25rem] bg-amber-200 rounded-xl shadow shadow-amber-200/50 flex flex-col justify-between px-3 py-4 cursor-pointer'>
 
                                             <div className='flex flex-row'>
@@ -210,7 +203,7 @@ export default function Home({userId}) {
                                     </motion.div>
                                 </SwiperSlide>
                                 <SwiperSlide className="slide-type3">
-                                    <motion.div initial={{ opacity: 0.45, x: ( Math.random() * 4 * 5) }} whileInView={{ opacity: 1, x: 0, transition: { duration: 1.05 }, }}>
+                                    <motion.div initial={{ opacity: 0.95, x: ( Math.random() * 4 * 5) }} whileInView={{ opacity: 1, x: 0, transition: { duration: 1.05 }, }}>
                                         <div className='h-[8.25rem] bg-blue-200 rounded-xl shadow shadow-blue-200/50 flex flex-col justify-between px-3 py-4 cursor-pointer'>
 
                                             <div className='flex flex-row'>
@@ -229,7 +222,7 @@ export default function Home({userId}) {
                                     </motion.div>
                                 </SwiperSlide>
                                 <SwiperSlide className="slide-type3">
-                                    <motion.div initial={{ opacity: 0.45, x: ( Math.random() * 4 * 5) }} whileInView={{ opacity: 1, x: 0, transition: { duration: 1.05 }, }}>
+                                    <motion.div initial={{ opacity: 0.95, x: ( Math.random() * 4 * 5) }} whileInView={{ opacity: 1, x: 0, transition: { duration: 1.05 }, }}>
                                         <div className='h-[8.25rem] bg-orange-200 rounded-xl shadow shadow-blue-200/50 flex flex-col justify-between px-3 py-4 cursor-pointer'>
 
                                             <div className='flex flex-row'>
