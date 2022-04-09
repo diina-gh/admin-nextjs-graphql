@@ -151,7 +151,7 @@ export default function Home({userId}) {
 
                                             <div className='flex flex-row'>
                                                 <div className='w-7 h-7 rounded-xl bg-black flex flex-row justify-center self-center mr-2'>
-                                                    <div className='self-center'><GroupBoldIcon customClass="w-4 h-4 text-gray-100"/></div>
+                                                    <div className='self-center'><GroupBoldIcon customClass="w-3 h-3 text-gray-100"/></div>
                                                 </div>
                                                 <div className='text-[1.1rem] font-semibold text-gray-900 self-center leading-5'>Clients</div>
                                             </div>
@@ -170,7 +170,7 @@ export default function Home({userId}) {
 
                                             <div className='flex flex-row'>
                                                 <div className='w-7 h-7 rounded-xl bg-black flex flex-row justify-center self-center mr-2'>
-                                                    <div className='self-center'><LaptopBoldIcon customClass="w-4 h-4 text-gray-100"/></div>
+                                                    <div className='self-center'><LaptopBoldIcon customClass="w-3 h-3 text-gray-100"/></div>
                                                 </div>
                                                 <div className='text-[1.1rem] font-semibold text-gray-900 self-center leading-5'>Produits</div>
                                             </div>
@@ -189,7 +189,7 @@ export default function Home({userId}) {
 
                                             <div className='flex flex-row'>
                                                 <div className='w-7 h-7 rounded-xl bg-black flex flex-row justify-center self-center mr-2'>
-                                                    <div className='self-center'><CartBoldIcon customClass="w-4 h-4 text-gray-100"/></div>
+                                                    <div className='self-center'><CartBoldIcon customClass="w-3 h-3 text-gray-100"/></div>
                                                 </div>
                                                 <div className='text-[1.1rem] font-semibold text-gray-900 self-center leading-5'>Commandes sur place</div>
                                             </div>
@@ -208,7 +208,7 @@ export default function Home({userId}) {
 
                                             <div className='flex flex-row'>
                                                 <div className='w-7 h-7 rounded-xl bg-black flex flex-row justify-center self-center mr-2'>
-                                                    <div className='self-center'><CartBoldIcon customClass="w-4 h-4 text-gray-100"/></div>
+                                                    <div className='self-center'><CartBoldIcon customClass="w-3 h-3 text-gray-100"/></div>
                                                 </div>
                                                 <div className='text-[1.1rem] font-semibold text-gray-900 self-center leading-5'>Commandes en ligne</div>
                                             </div>
@@ -227,7 +227,7 @@ export default function Home({userId}) {
 
                                             <div className='flex flex-row'>
                                                 <div className='w-7 h-7 rounded-xl bg-black flex flex-row justify-center self-center mr-2'>
-                                                    <div className='self-center'><CarnetBoldIcon customClass="w-4 h-4 text-gray-100"/></div>
+                                                    <div className='self-center'><CarnetBoldIcon customClass="w-3 h-3 text-gray-100"/></div>
                                                 </div>
                                                 <div className='text-[1.1rem] font-semibold text-gray-900 self-center leading-5'>Newsletters</div>
                                             </div>
