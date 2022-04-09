@@ -104,7 +104,7 @@ class Login extends Component {
 
       <div className="absolute bottom-3 left-0 px-8 sm:px-20 w-full text-center text-[0.775rem] text-gray-900 font-medium py-2"> © Copyright 2022 <span className="text-gray-800">Untitled</span> | Created by <a className="cursor-pointer text-gray-800 hover:text-iired no-underline hover:underline transition duration-700 ease-in-out" href="https://www.linkedin.com/in/seydina-gueye-596b051b0/" target="_blank" rel="noreferrer">Seydina GUEYE</a></div>
 
-        <div className="rounded-md shadow-2xl bg-gray-400 bg-opacity-50 px-8 sm:px-16 py-8 sm:py-10 relative">
+        <div className="rounded-xl shadow-2xl bg-gray-400 bg-opacity-50 px-8 sm:px-16 py-8 sm:py-10 relative">
 
           <BlockUI blocking={this.state.block} />
 
