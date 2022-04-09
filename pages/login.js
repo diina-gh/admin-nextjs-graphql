@@ -96,15 +96,15 @@ class Login extends Component {
   render() {
 
     return (
-      <div className="full-height bg-p4 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative">
+      <div style={{backgroundImage: `url("https://firebasestorage.googleapis.com/v0/b/trade-d57de.appspot.com/o/images%2Fbackgrounds%2Fbackground2.webp?alt=media&token=b96a2088-ca77-4920-be88-1fb3a5254532")`, backgroundRepeat: 'no-repeat', backgroundSize:'cover', backgroundPosition: 'top left'}} className="full-height flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative">
 
         <HeadInfo title= 'Login' description='description here'/>
         <Toaster position='top-right' />
 
 
-      <div className="absolute bottom-3 left-0 px-8 sm:px-20 w-full text-center text-[0.775rem] text-gray-900 font-medium py-2"> © Copyright 2022 <span className="text-gray-700">Untitled</span> | Created by <a className="cursor-pointer text-gray-700 hover:text-iired no-underline hover:underline transition duration-700 ease-in-out" href="https://www.linkedin.com/in/seydina-gueye-596b051b0/" target="_blank" rel="noreferrer">Seydina GUEYE</a></div>
+      <div className="absolute bottom-3 left-0 px-8 sm:px-20 w-full text-center text-[0.775rem] text-gray-900 font-medium py-2"> © Copyright 2022 <span className="text-gray-800">Untitled</span> | Created by <a className="cursor-pointer text-gray-800 hover:text-iired no-underline hover:underline transition duration-700 ease-in-out" href="https://www.linkedin.com/in/seydina-gueye-596b051b0/" target="_blank" rel="noreferrer">Seydina GUEYE</a></div>
 
-        <div className="rounded-md shadow-xl bg-gray-500 bg-opacity-60 px-8 sm:px-16 py-8 sm:py-10">
+        <div className="rounded-md shadow-2xl bg-gray-400 bg-opacity-50 px-8 sm:px-16 py-8 sm:py-10 relative">
 
           <BlockUI blocking={this.state.block} />
 
