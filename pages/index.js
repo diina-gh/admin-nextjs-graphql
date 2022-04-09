@@ -150,7 +150,7 @@ export default function Home({userId}) {
                                         <div className='h-[8.25rem]  bg-purple-200 bg-opacity-95 rounded-xl shadow shadow-purple-200/50 flex flex-col justify-between px-3 py-4 cursor-pointer'>
 
                                             <div className='flex flex-row'>
-                                                <div className='w-8 h-8 rounded-xl bg-black flex flex-row justify-center self-center mr-2'>
+                                                <div className='w-7 h-7 rounded-xl bg-black flex flex-row justify-center self-center mr-2'>
                                                     <div className='self-center'><GroupBoldIcon customClass="w-4 h-4 text-gray-100"/></div>
                                                 </div>
                                                 <div className='text-[1.1rem] font-semibold text-gray-900 self-center leading-5'>Clients</div>
@@ -169,7 +169,7 @@ export default function Home({userId}) {
                                         <div className='h-[8.25rem] bg-red-200 rounded-xl shadow shadow-red-200/50 flex flex-col justify-between px-3 py-4 cursor-pointer'>
 
                                             <div className='flex flex-row'>
-                                                <div className='w-8 h-8 rounded-xl bg-black flex flex-row justify-center self-center mr-2'>
+                                                <div className='w-7 h-7 rounded-xl bg-black flex flex-row justify-center self-center mr-2'>
                                                     <div className='self-center'><LaptopBoldIcon customClass="w-4 h-4 text-gray-100"/></div>
                                                 </div>
                                                 <div className='text-[1.1rem] font-semibold text-gray-900 self-center leading-5'>Produits</div>
@@ -188,7 +188,7 @@ export default function Home({userId}) {
                                         <div className='h-[8.25rem] bg-amber-200 rounded-xl shadow shadow-amber-200/50 flex flex-col justify-between px-3 py-4 cursor-pointer'>
 
                                             <div className='flex flex-row'>
-                                                <div className='w-8 h-8 rounded-xl bg-black flex flex-row justify-center self-center mr-2'>
+                                                <div className='w-7 h-7 rounded-xl bg-black flex flex-row justify-center self-center mr-2'>
                                                     <div className='self-center'><CartBoldIcon customClass="w-4 h-4 text-gray-100"/></div>
                                                 </div>
                                                 <div className='text-[1.1rem] font-semibold text-gray-900 self-center leading-5'>Commandes sur place</div>
@@ -207,7 +207,7 @@ export default function Home({userId}) {
                                         <div className='h-[8.25rem] bg-blue-200 rounded-xl shadow shadow-blue-200/50 flex flex-col justify-between px-3 py-4 cursor-pointer'>
 
                                             <div className='flex flex-row'>
-                                                <div className='w-8 h-8 rounded-xl bg-black flex flex-row justify-center self-center mr-2'>
+                                                <div className='w-7 h-7 rounded-xl bg-black flex flex-row justify-center self-center mr-2'>
                                                     <div className='self-center'><CartBoldIcon customClass="w-4 h-4 text-gray-100"/></div>
                                                 </div>
                                                 <div className='text-[1.1rem] font-semibold text-gray-900 self-center leading-5'>Commandes en ligne</div>
@@ -226,7 +226,7 @@ export default function Home({userId}) {
                                         <div className='h-[8.25rem] bg-orange-200 rounded-xl shadow shadow-blue-200/50 flex flex-col justify-between px-3 py-4 cursor-pointer'>
 
                                             <div className='flex flex-row'>
-                                                <div className='w-8 h-8 rounded-xl bg-black flex flex-row justify-center self-center mr-2'>
+                                                <div className='w-7 h-7 rounded-xl bg-black flex flex-row justify-center self-center mr-2'>
                                                     <div className='self-center'><CarnetBoldIcon customClass="w-4 h-4 text-gray-100"/></div>
                                                 </div>
                                                 <div className='text-[1.1rem] font-semibold text-gray-900 self-center leading-5'>Newsletters</div>
