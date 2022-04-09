@@ -349,12 +349,12 @@ export default function Home({userId}) {
 
                         <div className='px-4 flex flex-col'>
                             <div className='flex flex-row justify-between'>
-                                <div className='text-[15.5px] font-semibold'>Chiffre d&#39;affaire</div>
+                                <div className='text-[14.5px] font-semibold'>Chiffre d&#39;affaire</div>
                             </div>
 
                             <div className='flex flex-row justify-between rounded-lg bg-gray-200 bg-opacity-80 shadow-sm py-2 px-2 mt-3'>
                                 <div className='flex flex-row '>
-                                    <div className='w-6 h-6 rounded-lg bg-purple-600 bg-opacity-50 shadow shadow-purple-600 flex flex-row justify-center self-center mr-2'>
+                                    <div className='w-6 h-6 rounded-lg bg-purple-600 bg-opacity-50 shadow-sm shadow-purple-600 flex flex-row justify-center self-center mr-2'>
                                         <div className='self-center'><CurrencyDollarIcon className="w-4 h-4 text-gray-900"/></div>
                                     </div>
                                     <div className='text-[13.5px] font-semibold text-gray-900 self-center leading-5'>Sur place</div>
@@ -364,7 +364,7 @@ export default function Home({userId}) {
 
                             <div className='flex flex-row justify-between rounded-lg bg-gray-200 bg-opacity-80 shadow-sm py-2 px-2 mt-2'>
                                 <div className='flex flex-row '>
-                                    <div className='w-6 h-6 rounded-lg bg-green-600 bg-opacity-50 shadow shadow-green-600 flex flex-row justify-center self-center mr-2'>
+                                    <div className='w-6 h-6 rounded-lg bg-green-600 bg-opacity-50 shadow-sm shadow-green-600 flex flex-row justify-center self-center mr-2'>
                                         <div className='self-center'><CurrencyDollarIcon className="w-4 h-4 text-gray-900"/></div>
                                     </div>
                                     <div className='text-[13.5px] font-semibold text-gray-900 self-center leading-5'>En ligne</div>
@@ -374,15 +374,94 @@ export default function Home({userId}) {
 
                             <div className='flex flex-row justify-between rounded-lg bg-gray-200 bg-opacity-80 shadow-sm py-2 px-2 mt-2'>
                                 <div className='flex flex-row '>
-                                    <div className='w-6 h-6 rounded-lg bg-orange-600 bg-opacity-50 shadow shadow-orange-600 flex flex-row justify-center self-center mr-2'>
+                                    <div className='w-6 h-6 rounded-lg bg-orange-600 bg-opacity-50 shadow-sm shadow-orange-600 flex flex-row justify-center self-center mr-2'>
                                         <div className='self-center'><CurrencyDollarIcon className="w-4 h-4 text-gray-900"/></div>
                                     </div>
                                     <div className='text-[13.5px] font-semibold text-gray-900 self-center leading-5'>Total</div>
                                 </div>
                                 <div className='text-[13.5px] font-semibold text-gray-900 self-center leading-5'>975 683 CFA</div>
                             </div>
+                        </div>
 
-                            
+                        <div className='px-4'><div className='divider w-full h-[1px] bg-gray-400 bg-opacity-40 mt-4 mb-4'></div></div>
+
+                        <div className='flex flex-col px-4'>
+                            <div className='flex flex-row justify-between'>
+                                <div className='text-[14.5px] font-semibold'>Précieux clients</div>
+                                <div className='text-[12px] font-medium underline cursor-pointer self-center text-purple-600 hover:text-purple-400 transition duration-700'>Tout voir</div>
+                            </div>
+                            <div className='w-full flex flex-row justify-between mt-3'>
+                                <div className='w-full flex flex-row'>
+                                    <div className='w-10 h-10 rounded-full bg-gray-200 border-2 border-amber-600 relative cursor-pointer mr-2'>
+                                        <img className='w-full h-full rounded-full object-cover' src="https://firebasestorage.googleapis.com/v0/b/trade-d57de.appspot.com/o/images%2Floader%2Fpexels-ivan-samkov-8498750.jpg?alt=media&token=0dfa70a5-de0c-448e-8319-0373fd636d48" />
+                                        <div className='w-3.5 h-3.5 hover:animate-pulse rounded-full bg-amber-600 absolute -bottom-0.5 right-0 flex flex-row justify-center cursor-pointer'>
+                                            <div className='self-center text-white text-[10px] -mt-[1px] animate-none z-10'>★</div>
+                                        </div>
+                                    </div>
+                                    <div className='w-24 flex flex-col justify-between py-1'>
+                                        <div className='text-[12px] font-semibold w-full truncate hover:text-purple-600 cursor-pointer'>Oumou GUEYE</div>
+                                        <div className='text-[10px] font-medium text-green-600  w-full truncate'>10 commandes</div>
+                                    </div>
+                                </div>
+                                <div className='w-32 flex flex-col justify-between self-center py-1'>
+                                    <div className='text-[12px] font-medium text-gray-600 text-right'>Total</div>
+                                    <div className='text-[11px] font-semibold text-black-900 text-right w-full truncate'>8 456 000 CFA</div>
+                                </div>
+                            </div>
+                            <div className='w-full flex flex-row justify-between mt-3'>
+                                <div className='w-full flex flex-row'>
+                                    <div className='w-10 h-10 rounded-full bg-gray-200 mr-2'>
+                                        <img className='w-full h-full rounded-full object-cover' src="https://firebasestorage.googleapis.com/v0/b/trade-d57de.appspot.com/o/images%2Floader%2Fpexels-alexander-jay-11650772%20(1).jpg?alt=media&token=f9af52ce-6010-415d-9d2c-3ec4e2f856a1" />
+                                    </div>
+                                    <div className='w-24 flex flex-col justify-between py-1'>
+                                        <div className='text-[12px] font-semibold w-full truncate'>Moussa Sarr</div>
+                                        <div className='text-[10px] font-medium text-green-600  w-full truncate'>8 commandes</div>
+                                    </div>
+                                </div>
+                                <div className='w-32 flex flex-col justify-between self-center py-1'>
+                                    <div className='text-[12px] font-medium text-gray-600 text-right'>Total</div>
+                                    <div className='text-[11px] font-semibold text-black-900 text-right w-full truncate'>4 456 300 CFA</div>
+                                </div>
+                            </div>
+                            <div className='w-full flex flex-row justify-between mt-3'>
+                                <div className='w-full flex flex-row'>
+                                    <div className='w-10 h-10 rounded-full bg-gray-200 mr-2'>
+                                        <img className='w-full h-full rounded-full object-cover' src="https://firebasestorage.googleapis.com/v0/b/trade-d57de.appspot.com/o/images%2Floader%2Fpexels-andrea-piacquadio-3872328%20(1).jpg?alt=media&token=d2a7298b-1db6-4c60-8988-63aab0db39ff" />
+                                    </div>
+                                    <div className='w-24 flex flex-col justify-between py-1'>
+                                        <div className='text-[12px] font-semibold w-full truncate'>Fatima Diop</div>
+                                        <div className='text-[10px] font-medium text-green-600  w-full truncate'>5 commandes</div>
+                                    </div>
+                                </div>
+                                <div className='w-32 flex flex-col justify-between self-center py-1'>
+                                    <div className='text-[12px] font-medium text-gray-600 text-right'>Total</div>
+                                    <div className='text-[11px] font-semibold text-black-900 text-right w-full truncate'>1 965 500 CFA</div>
+                                </div>
+                            </div>
+                            <div className='w-full flex flex-row justify-between mt-3'>
+                                <div className='w-full flex flex-row'>
+                                    <div className='w-10 h-10 rounded-full bg-gray-200 mr-2'>
+                                        <img className='w-full h-full object-cover rounded-full ' src="https://firebasestorage.googleapis.com/v0/b/trade-d57de.appspot.com/o/images%2Floader%2Fpexels-antoni-shkraba-6827105%20(1).jpg?alt=media&token=92fbff49-aaf1-4d6f-ad35-3529a28be17b" />
+                                    </div>
+                                    <div className='w-24 flex flex-col justify-between py-1'>
+                                        <div className='text-[12px] font-semibold w-full truncate'>Antoni Sankaré</div>
+                                        <div className='text-[10px] font-medium text-green-600  w-full truncate'>3 commandes</div>
+                                    </div>
+                                </div>
+                                <div className='w-32 flex flex-col justify-between self-center py-1'>
+                                    <div className='text-[12px] font-medium text-gray-600 text-right'>Total</div>
+                                    <div className='text-[11px] font-semibold text-black-900 text-right w-full truncate'>345 000 CFA</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className='px-4'><div className='divider w-full h-[1px] bg-gray-400 bg-opacity-40 mt-4 mb-4'></div></div>
+
+                        <div className='flex flex-col px-4'>
+                            <div className='flex flex-row justify-between'>
+                                <div className='text-[14.5px] font-semibold'>Classement des produits</div>
+                                <div className='text-[12px] font-medium underline cursor-pointer self-center text-purple-600 hover:text-purple-400 transition duration-700'></div>
+                            </div>
                         </div>
 
                     </div>
