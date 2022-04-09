@@ -349,7 +349,7 @@ export default function Home({userId}) {
 
                         <div className='px-4 flex flex-col'>
                             <div className='flex flex-row justify-between'>
-                                <div className='text-[15.5px] font-semibold'>Chiffre d'affaire</div>
+                                <div className='text-[15.5px] font-semibold'>Chiffre d&#39;affaire</div>
                             </div>
 
                             <div className='flex flex-row justify-between rounded-lg bg-gray-200 bg-opacity-80 shadow-sm py-2 px-2 mt-3'>
