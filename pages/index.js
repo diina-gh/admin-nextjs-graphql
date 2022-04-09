@@ -11,7 +11,7 @@ import CarnetBoldIcon from '../components/ui/icons/carnetBoldIcon';
 import LaptopBoldIcon from '../components/ui/icons/laptopBoldIcon';
 import CartBoldIcon from '../components/ui/icons/cartBoldIcon';
 import { EyeIcon } from '@heroicons/react/solid';
-
+import { CurrencyDollarIcon } from '@heroicons/react/solid';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 // Import Swiper React components
@@ -146,14 +146,14 @@ export default function Home({userId}) {
 
                             <Swiper className='w-full h-full swiper-type3' spaceBetween={10} slidesPerView={3} loop={true} speed={5000} freeMode={true} autoplay={true}  modules={[FreeMode, Navigation]} >
                                 <SwiperSlide className="slide-type3">
-                                    <motion.div initial={{ opacity: 0.95, x: ( Math.random() * 2 * 5) }} whileInView={{ opacity: 1, x: 0, transition: { duration: 1.05 }, }}>
-                                        <div className='h-[8.25rem]  bg-purple-200 bg-opacity-95 rounded-xl shadow shadow-purple-200/50 flex flex-col justify-between px-3 py-4 cursor-pointer'>
+                                    <motion.div initial={{ opacity: 0.95, x: ( Math.random() * 2 * 1) }} whileInView={{ opacity: 1, x: 0, transition: { duration: 1.05 }, }}>
+                                        <div className='h-[8.25rem] bg-amber-200 bg-opacity-95 rounded-xl shadow shadow-purple-200/50 flex flex-col justify-between px-3 py-4 cursor-pointer'>
 
                                             <div className='flex flex-row'>
                                                 <div className='w-7 h-7 rounded-lg bg-black flex flex-row justify-center self-center mr-2'>
                                                     <div className='self-center'><GroupBoldIcon customClass="w-3 h-3 text-gray-100"/></div>
                                                 </div>
-                                                <div className='text-[1.1rem] font-semibold text-gray-900 self-center leading-5'>Clients</div>
+                                                <div className='text-[1.05rem] font-semibold text-gray-900 self-center leading-5'>Clients</div>
                                             </div>
 
                                             <div className='w-full flex flex-col'>
@@ -165,14 +165,14 @@ export default function Home({userId}) {
                                     </motion.div>
                                 </SwiperSlide>
                                 <SwiperSlide className="slide-type3">
-                                    <motion.div initial={{ opacity: 0.95, x: ( Math.random() * 3 * 5) }} whileInView={{ opacity: 1, x: 0, transition: { duration: 1.05 }, }}>
+                                    <motion.div initial={{ opacity: 0.95, x: ( Math.random() * 3 * 1) }} whileInView={{ opacity: 1, x: 0, transition: { duration: 1.05 }, }}>
                                         <div className='h-[8.25rem] bg-red-200 rounded-xl shadow shadow-red-200/50 flex flex-col justify-between px-3 py-4 cursor-pointer'>
 
                                             <div className='flex flex-row'>
                                                 <div className='w-7 h-7 rounded-lg bg-black flex flex-row justify-center self-center mr-2'>
                                                     <div className='self-center'><LaptopBoldIcon customClass="w-3 h-3 text-gray-100"/></div>
                                                 </div>
-                                                <div className='text-[1.1rem] font-semibold text-gray-900 self-center leading-5'>Produits</div>
+                                                <div className='text-[1.05rem] font-semibold text-gray-900 self-center leading-5'>Produits</div>
                                             </div>
 
                                             <div className='w-full flex flex-col'>
@@ -184,14 +184,14 @@ export default function Home({userId}) {
                                     </motion.div>
                                 </SwiperSlide>
                                 <SwiperSlide className="slide-type3">
-                                    <motion.div initial={{ opacity: 0.95, x: ( Math.random() * 4 * 5) }} whileInView={{ opacity: 1, x: 0, transition: { duration: 1.05 }, }}>
-                                        <div className='h-[8.25rem] bg-amber-200 rounded-xl shadow shadow-amber-200/50 flex flex-col justify-between px-3 py-4 cursor-pointer'>
+                                    <motion.div initial={{ opacity: 0.95, x: ( Math.random() * 3 * 1) }} whileInView={{ opacity: 1, x: 0, transition: { duration: 1.05 }, }}>
+                                        <div className='h-[8.25rem] bg-purple-200 rounded-xl shadow shadow-amber-200/50 flex flex-col justify-between px-3 py-4 cursor-pointer'>
 
                                             <div className='flex flex-row'>
                                                 <div className='w-7 h-7 rounded-lg bg-black flex flex-row justify-center self-center mr-2'>
                                                     <div className='self-center'><CartBoldIcon customClass="w-3 h-3 text-gray-100"/></div>
                                                 </div>
-                                                <div className='text-[1.1rem] font-semibold text-gray-900 self-center leading-5'>Commandes sur place</div>
+                                                <div className='text-[1.05rem] font-semibold text-gray-900 self-center leading-5'>Commandes sur place</div>
                                             </div>
 
                                             <div className='w-full flex flex-col'>
@@ -203,14 +203,14 @@ export default function Home({userId}) {
                                     </motion.div>
                                 </SwiperSlide>
                                 <SwiperSlide className="slide-type3">
-                                    <motion.div initial={{ opacity: 0.95, x: ( Math.random() * 4 * 5) }} whileInView={{ opacity: 1, x: 0, transition: { duration: 1.05 }, }}>
-                                        <div className='h-[8.25rem] bg-blue-200 rounded-xl shadow shadow-blue-200/50 flex flex-col justify-between px-3 py-4 cursor-pointer'>
+                                    <motion.div initial={{ opacity: 0.95, x: ( Math.random() * 2 * 1) }} whileInView={{ opacity: 1, x: 0, transition: { duration: 1.05 }, }}>
+                                        <div className='h-[8.25rem] bg-green-300 rounded-xl shadow shadow-blue-200/50 flex flex-col justify-between px-3 py-4 cursor-pointer'>
 
                                             <div className='flex flex-row'>
                                                 <div className='w-7 h-7 rounded-lg bg-black flex flex-row justify-center self-center mr-2'>
                                                     <div className='self-center'><CartBoldIcon customClass="w-3 h-3 text-gray-100"/></div>
                                                 </div>
-                                                <div className='text-[1.1rem] font-semibold text-gray-900 self-center leading-5'>Commandes en ligne</div>
+                                                <div className='text-[1.05rem] font-semibold text-gray-900 self-center leading-5'>Commandes en ligne</div>
                                             </div>
 
                                             <div className='w-full flex flex-col'>
@@ -222,14 +222,14 @@ export default function Home({userId}) {
                                     </motion.div>
                                 </SwiperSlide>
                                 <SwiperSlide className="slide-type3">
-                                    <motion.div initial={{ opacity: 0.95, x: ( Math.random() * 4 * 5) }} whileInView={{ opacity: 1, x: 0, transition: { duration: 1.05 }, }}>
-                                        <div className='h-[8.25rem] bg-orange-200 rounded-xl shadow shadow-blue-200/50 flex flex-col justify-between px-3 py-4 cursor-pointer'>
+                                    <motion.div initial={{ opacity: 0.95, x: ( Math.random() * 3 * 1) }} whileInView={{ opacity: 1, x: 0, transition: { duration: 1.05 }, }}>
+                                        <div className='h-[8.25rem] bg-blue-200 rounded-xl shadow shadow-blue-200/50 flex flex-col justify-between px-3 py-4 cursor-pointer'>
 
                                             <div className='flex flex-row'>
                                                 <div className='w-7 h-7 rounded-lg bg-black flex flex-row justify-center self-center mr-2'>
                                                     <div className='self-center'><CarnetBoldIcon customClass="w-3 h-3 text-gray-100"/></div>
                                                 </div>
-                                                <div className='text-[1.1rem] font-semibold text-gray-900 self-center leading-5'>Newsletters</div>
+                                                <div className='text-[1.05rem] font-semibold text-gray-900 self-center leading-5'>Newsletters</div>
                                             </div>
 
                                             <div className='w-full flex flex-col'>
@@ -256,8 +256,8 @@ export default function Home({userId}) {
                                                     <stop offset="95%" stopColor="#8e24aa" stopOpacity={0}/>
                                                 </linearGradient>
                                                 <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
-                                                    <stop offset="5%" stopColor="#43a047" stopOpacity={0.8}/>
-                                                    <stop offset="95%" stopColor="#43a047" stopOpacity={0}/>
+                                                    <stop offset="5%" stopColor="#388e3c" stopOpacity={0.8}/>
+                                                    <stop offset="95%" stopColor="#388e3c" stopOpacity={0}/>
                                                 </linearGradient>
                                             </defs>
                                             <XAxis dataKey="name" />
@@ -265,7 +265,7 @@ export default function Home({userId}) {
                                             <CartesianGrid strokeDasharray="1 1" />
                                             <Tooltip />
                                             <Area type="monotone" dataKey="uv" stroke="#8e24aa" fillOpacity={1} fill="url(#colorUv)" />
-                                            <Area type="monotone" dataKey="pv" stroke="#43a047" fillOpacity={1} fill="url(#colorPv)" />
+                                            <Area type="monotone" dataKey="pv" stroke="#388e3c" fillOpacity={1} fill="url(#colorPv)" />
                                         </AreaChart>
                                     </ResponsiveContainer>
                                     
@@ -338,14 +338,52 @@ export default function Home({userId}) {
                         
                         <motion.div initial={{ opacity: 0.5, y: ( Math.random() * 3 * 5) }} whileInView={{ opacity: 1, y: 0, transition: { duration: 1.05 }, }}>
                             <div className='w-full h-56 bg-white rounded-xl shadow mt-4 mb-4'>
+                                
                             </div>
                         </motion.div>
 
 
                     </div>
 
-                    <div className='app-rightbar bg-white rounded-xl px-2 py-2'>
-                        {/* <div className='text-sm font-medium'>userId: <span className='text-green-500'>{userId}</span></div> */}
+                    <div className='app-rightbar bg-white rounded-xl py-5'>
+
+                        <div className='px-4 flex flex-col'>
+                            <div className='flex flex-row justify-between'>
+                                <div className='text-[15.5px] font-semibold'>Chiffre d'affaire</div>
+                            </div>
+
+                            <div className='flex flex-row justify-between rounded-lg bg-gray-200 bg-opacity-80 shadow-sm py-2 px-2 mt-3'>
+                                <div className='flex flex-row '>
+                                    <div className='w-6 h-6 rounded-lg bg-purple-600 bg-opacity-50 shadow shadow-purple-600 flex flex-row justify-center self-center mr-2'>
+                                        <div className='self-center'><CurrencyDollarIcon className="w-4 h-4 text-gray-900"/></div>
+                                    </div>
+                                    <div className='text-[13.5px] font-semibold text-gray-900 self-center leading-5'>Sur place</div>
+                                </div>
+                                <div className='text-[13.5px] font-semibold text-gray-900 self-center leading-5'>975 683 CFA</div>
+                            </div>
+
+                            <div className='flex flex-row justify-between rounded-lg bg-gray-200 bg-opacity-80 shadow-sm py-2 px-2 mt-2'>
+                                <div className='flex flex-row '>
+                                    <div className='w-6 h-6 rounded-lg bg-green-600 bg-opacity-50 shadow shadow-green-600 flex flex-row justify-center self-center mr-2'>
+                                        <div className='self-center'><CurrencyDollarIcon className="w-4 h-4 text-gray-900"/></div>
+                                    </div>
+                                    <div className='text-[13.5px] font-semibold text-gray-900 self-center leading-5'>En ligne</div>
+                                </div>
+                                <div className='text-[13.5px] font-semibold text-gray-900 self-center leading-5'>975 683 CFA</div>
+                            </div>
+
+                            <div className='flex flex-row justify-between rounded-lg bg-gray-200 bg-opacity-80 shadow-sm py-2 px-2 mt-2'>
+                                <div className='flex flex-row '>
+                                    <div className='w-6 h-6 rounded-lg bg-orange-600 bg-opacity-50 shadow shadow-orange-600 flex flex-row justify-center self-center mr-2'>
+                                        <div className='self-center'><CurrencyDollarIcon className="w-4 h-4 text-gray-900"/></div>
+                                    </div>
+                                    <div className='text-[13.5px] font-semibold text-gray-900 self-center leading-5'>Total</div>
+                                </div>
+                                <div className='text-[13.5px] font-semibold text-gray-900 self-center leading-5'>975 683 CFA</div>
+                            </div>
+
+                            
+                        </div>
 
                     </div>
     
