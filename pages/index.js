@@ -51,7 +51,7 @@ export default function Home({userId}) {
 
                         <div className='h-[8.25rem] w-full'>
 
-                            <Swiper className='w-full h-full swiper-type3' spaceBetween={10} slidesPerView={3} loop={true} freeMode={true} autoplay={true}  modules={[FreeMode, Navigation]} >
+                            <Swiper className='w-full h-full swiper-type3' spaceBetween={10} slidesPerView={3} loop={true} speed={5000} freeMode={true} autoplay={true}  modules={[FreeMode, Navigation]} >
                                 <SwiperSlide className="slide-type3">
                                     <motion.div initial={{ opacity: 0.65, x: ( Math.random() * 2 * 5) }} whileInView={{ opacity: 1, x: 0, transition: { duration: 1.05 }, }}>
                                         <div className='h-[8.25rem]  bg-purple-200 bg-opacity-95 rounded-xl shadow shadow-purple-200/50 flex flex-col justify-between px-3 py-4 cursor-pointer'>
