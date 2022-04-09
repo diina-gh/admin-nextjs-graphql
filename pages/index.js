@@ -392,9 +392,9 @@ export default function Home({userId}) {
                             </div>
                             <div className='w-full flex flex-row justify-between mt-3'>
                                 <div className='w-full flex flex-row'>
-                                    <div className='w-10 h-10 rounded-full bg-gray-200 border-2 border-amber-600 relative cursor-pointer mr-2'>
-                                        <img className='w-full h-full rounded-full object-cover' src="https://firebasestorage.googleapis.com/v0/b/trade-d57de.appspot.com/o/images%2Floader%2Fpexels-ivan-samkov-8498750.jpg?alt=media&token=0dfa70a5-de0c-448e-8319-0373fd636d48" />
-                                        <div className='w-3.5 h-3.5 hover:animate-pulse rounded-full bg-amber-600 absolute -bottom-0.5 right-0 flex flex-row justify-center cursor-pointer'>
+                                    <div className='w-10 h-10 rounded-full shadow-sm bg-gray-200 border-[2px] border-yellow-800 relative cursor-pointer mr-2'>
+                                        <img className='w-full h-full rounded-full object-cover' src="https://firebasestorage.googleapis.com/v0/b/trade-d57de.appspot.com/o/images%2Floader%2Fpexels-godisable-jacob-718978%20(1).jpg?alt=media&token=f82c3070-8d29-48d5-aa46-feeb6690f921" />
+                                        <div className='w-3.5 h-3.5 hover:animate-pulse rounded-full bg-yellow-800 absolute -bottom-0.5 right-0 flex flex-row justify-center cursor-pointer'>
                                             <div className='self-center text-white text-[10px] -mt-[1px] animate-none z-10'>★</div>
                                         </div>
                                     </div>
@@ -410,7 +410,7 @@ export default function Home({userId}) {
                             </div>
                             <div className='w-full flex flex-row justify-between mt-3'>
                                 <div className='w-full flex flex-row'>
-                                    <div className='w-10 h-10 rounded-full bg-gray-200 mr-2'>
+                                    <div className='w-10 h-10 shadow-sm rounded-full bg-gray-200 mr-2'>
                                         <img className='w-full h-full rounded-full object-cover' src="https://firebasestorage.googleapis.com/v0/b/trade-d57de.appspot.com/o/images%2Floader%2Fpexels-alexander-jay-11650772%20(1).jpg?alt=media&token=f9af52ce-6010-415d-9d2c-3ec4e2f856a1" />
                                     </div>
                                     <div className='w-24 flex flex-col justify-between py-1'>
@@ -425,7 +425,7 @@ export default function Home({userId}) {
                             </div>
                             <div className='w-full flex flex-row justify-between mt-3'>
                                 <div className='w-full flex flex-row'>
-                                    <div className='w-10 h-10 rounded-full bg-gray-200 mr-2'>
+                                    <div className='w-10 h-10 shadow-sm rounded-full bg-gray-200 mr-2'>
                                         <img className='w-full h-full rounded-full object-cover' src="https://firebasestorage.googleapis.com/v0/b/trade-d57de.appspot.com/o/images%2Floader%2Fpexels-andrea-piacquadio-3872328%20(1).jpg?alt=media&token=d2a7298b-1db6-4c60-8988-63aab0db39ff" />
                                     </div>
                                     <div className='w-24 flex flex-col justify-between py-1'>
@@ -440,7 +440,7 @@ export default function Home({userId}) {
                             </div>
                             <div className='w-full flex flex-row justify-between mt-3'>
                                 <div className='w-full flex flex-row'>
-                                    <div className='w-10 h-10 rounded-full bg-gray-200 mr-2'>
+                                    <div className='w-10 h-10 shadow-sm rounded-full bg-gray-200 mr-2'>
                                         <img className='w-full h-full object-cover rounded-full ' src="https://firebasestorage.googleapis.com/v0/b/trade-d57de.appspot.com/o/images%2Floader%2Fpexels-antoni-shkraba-6827105%20(1).jpg?alt=media&token=92fbff49-aaf1-4d6f-ad35-3529a28be17b" />
                                     </div>
                                     <div className='w-24 flex flex-col justify-between py-1'>
