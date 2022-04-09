@@ -14,6 +14,7 @@ function Editor({onDescChange, desc}) {
   if (loaded) {
     return (
       <CKEditor
+        data={desc}
         editor={ClassicEditor}
         onChange={(event, editor) => {  // do something when editor's content changed
           const data = editor.getData();

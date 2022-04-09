@@ -178,7 +178,6 @@ export const saveImageMutation = gql `
                 id
                 url
                 imageref
-                isDefault
             }
             ... on InputError{
                 message

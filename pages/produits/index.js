@@ -173,7 +173,7 @@ export default function Index() {
 
                                                     <div className="w-full grid grid-cols-6 gap-4">
                                                         {items.products.products.map((item, i) => (
-                                                            <div key={i}>
+                                                            <div key={i} className="w-full">
                                                                 <motion.div initial={{ opacity: 0, y: ( Math.random() + i * 5) }} whileInView={{ opacity: 1, y: 0, transition: { duration: 1.05 }, }}>
                                                                     <div className="w-full pt-1 pb-5 rounded-xl bg-gray-200 bg-opacity-80 cursor-pointer relative parent-layer">
 
@@ -257,7 +257,7 @@ export default function Index() {
                                                                                     </div>
                                                                                 }
                                                                                 <div className={`${item.activated ? 'opacity-100' : 'opacity-50'}`}>
-                                                                                    <div className="text-sm font-medium text-gray-900">{capitalize(item.name)}</div>
+                                                                                    <div className="text-sm font-medium text-gray-900 w-40 truncate">{capitalize(item.name)}</div>
                                                                                 </div>
                                                                             </div>
                                                                         </td>

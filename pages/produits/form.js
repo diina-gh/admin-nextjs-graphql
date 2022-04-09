@@ -57,8 +57,8 @@ class Index extends Component {
 
         super(props);
 
-        this.state = { block: false, block2: false, id:null, name: '', desc: '', activated: false, unit: '', unitWeight: 0.0, unitPrice: 0.0, order : 0, gender: genders[0], modal1: false, modal2:false, checkedAll: false,
-                       category: null, categories: [], brand: null, brands:[], variant_res: null, variants: [], chosenVariants: [], options:[], chosenOptions:[], products: [], chosenProducts:[],
+        this.state = { block: false, block2: false, id:null, name: '', desc: '', activated: false, unit: '', unitweight: 0.0, unitprice: 0.0, order : 0, gender: genders[0], modal1: false, modal2:false, checkedAll: false,
+                       category: null, categories: [], brand: null, brands:[], variant_res: null, variants: [], chosenVariants: [], options:[], products: [], chosenProducts:[],
                        image1:null, chosenImage1:null, imageref1: null, imageId1: null,
                        image2:null, chosenImage2:null, imageref2: null, imageId2: null,
                        image3:null, chosenImage3:null, imageref3: null, imageId3: null,
@@ -98,8 +98,8 @@ class Index extends Component {
             if(response?.__typename == 'Product'){
 
                 this.setState(
-                    { id: response.id, name: response.name, desc: response.desc, activated: response.activated, unit: response.unit, unitWeight: response.unitWeight, unitPrice: response.unitPrice, order: response.order , 
-                      gender: response.gender, category: response.category, brand: response.brand, chosenOptions: response.options, chosenProducts: response.related == null ? response.related : [] , 
+                    { id: response.id, name: response.name, desc: response.desc, activated: response.activated, unit: response.unit, unitweight: response.unitweight, unitprice: response.unitprice, order: response.order , 
+                      gender: response.gender, category: response.category, brand: response.brand,
                     }
                 );
 
@@ -129,11 +129,10 @@ class Index extends Component {
                 }
 
                 if(response.relatives != null && response.relatives.length > 0){
-                    this.setState({chosenProducts: response.relatives})
+                    this.setState({chosenProducts: response.relatives == null ? [] : response.relatives  })
                 }
 
                 this.setState({block: false})
-
             }
 
             else if(response?.__typename == 'InputError'){
@@ -349,7 +348,7 @@ class Index extends Component {
 
     saveItem = async () => {
 
-        const { id, name, desc, activated, unit, unitWeight, unitPrice, order, gender,category, brand, chosenVariants, chosenProducts} = this.state
+        const { id, name, desc, activated, unit, unitweight, unitprice, order, gender,category, brand, chosenVariants, chosenProducts} = this.state
         
         var optionIds = []
 
@@ -360,9 +359,9 @@ class Index extends Component {
         }
 
         const variantIds = chosenVariants.map(item => parseInt(item.id));
-        const productIds = chosenProducts.map(item => parseInt(item.id));
+        const productIds = chosenProducts ? chosenProducts.map(item => parseInt(item.id)) : [];
 
-        const {response } = await saveProduct(id, name, desc, activated, unit, unitWeight, unitPrice, order, category?.id, brand?.id, variantIds, optionIds, gender, productIds)
+        const {response } = await saveProduct(id, name, desc, activated, unit, unitweight, unitprice, order, category?.id, brand?.id, variantIds, optionIds, gender, productIds)
 
         if(response?.__typename == 'Product'){
             this.handleUpload(response?.id)
@@ -380,21 +379,31 @@ class Index extends Component {
 
     handleUpload = async (itemId) => {
 
-        const { image1, chosenImage1, imageref1, imageId1, image2, chosenImage2, imageref2, imageId2,
-                image3, chosenImage3, imageref3, imageId3, image4, chosenImage4, imageref4, imageId4, 
-                image5, chosenImage5, imageref5, imageId5 } = this.state
+        var image, imageref, chosenImage;
+        const { image1, chosenImage1, imageref1, image2, chosenImage2, imageref2, image3, chosenImage3, imageref3, image4, chosenImage4, imageref4, image5, chosenImage5, imageref5 } = this.state
 
         for (let i=1; i<=5; i++){
+
+            if(i == 1){image = image1; imageref = imageref1; chosenImage= chosenImage1;} 
+            else if(i == 2){image = image2; imageref = imageref2; chosenImage= chosenImage2; }
+            else if(i == 3){image = image3; imageref = imageref3; chosenImage= chosenImage3;}
+            else if(i == 4){image = image4; imageref = imageref4; chosenImage= chosenImage4;}
+            else if(i == 5){image = image5; imageref = imageref5; chosenImage= chosenImage5;}
            
-            // if( ['imageref' + i] != null){ 
-            if( 1 == 2){ 
-                if( ['image' + i] == ['chosenImage' + i]){
-                    // toast.success("Mise à jour réussie !", {id: toastOne,});
-                    // this.setState({block: false})
-                    continue
+            if( imageref != null){ 
+                if( image == chosenImage){
+                    if(i<5){
+                        continue
+                    }
+                    else{
+                        toast.dismiss()
+                        toast.success("Mise à jour réussie !", {id: toastOne,});
+                        this.setState({block: false})
+                        setTimeout(() => {router.push('./');}, 2250);
+                    }
                 }
                 else{
-                    await firebase.storage().ref(`images/${['imageref' + i]}`).delete().then(async() => {
+                    await firebase.storage().ref(`images/${imageref}`).delete().then(async() => {
                         console.log("File deleted successfuly");
                         this.uploadImage(itemId, i);
                     }).catch((error) => {
@@ -406,14 +415,7 @@ class Index extends Component {
             else{
                 await this.uploadImage(itemId, i);
             }
-
         }
-
-        toast.dismiss()
-        this.setState({block: false})
-        toast.success("Mise à jour terminée !", {id: toastOne,});
-        // setTimeout(() => {router.push('./');}, 2250);
-
     };
 
     uploadImage = async (itemId, i) =>{
@@ -421,11 +423,7 @@ class Index extends Component {
         const {image1, image2, image3, image4, image5} = this.state
         var image
 
-        if(i == 1){image = image1} 
-        else if(i == 2){image = image2}
-        else if(i == 3){image = image3}
-        else if(i == 4){image = image4}
-        else if(i == 5){image = image5}
+        if(i == 1) {image = image1} else if(i == 2){image = image2} else if(i == 3){image = image3} else if(i == 4){image = image4} else if(i == 5){image = image5}
 
         var ref = "product_" + itemId + i 
         const uploadTask = firebase.storage().ref(`images/${ref}`).put(image);
@@ -447,34 +445,19 @@ class Index extends Component {
         const {imageId1, imageId2, imageId3, imageId4, imageId5} = this.state
         var imageId
 
-        if(i == 1){imageId = imageId1} 
-        else if(i == 2){imageId = imageId2}
-        else if(i == 3){imageId = imageId3}
-        else if(i == 4){imageId = imageId4}
-        else if(i == 5){imageId = imageId5}
+        if(i == 1){imageId = imageId1} else if(i == 2){imageId = imageId2} else if(i == 3){imageId = imageId3} else if(i == 4){imageId = imageId4} else if(i == 5){imageId = imageId5}
 
-        var {response } = await saveImage(imageId, url, ref, itemId)
+        var {response} = await saveImage(imageId, url, ref, itemId)
 
         if(response?.__typename == 'Image'){
-            toast.success("Image " + i + " ajoutée !", {id: toastOne,});
             if(i == 5){
                 toast.dismiss()
                 toast.success("Mise à jour terminée !", {id: toastOne,});
-                setTimeout(() => {router.push('./');}, 2500);
+                this.setState({block: false})
+                setTimeout(() => {router.push('./');}, 2000);
             }
         }
 
-        if(response?.__typename == 'InputError'){
-            toast.dismiss()
-            this.setState({block: false})
-            console.log("ImageInfo mutation ", response?.message)
-            // toast.error("Une erreur s'est produite lors de l'ajout de l'image " + i, {id: toastOne,});
-        }
-        else{
-            toast.dismiss()
-            this.setState({block: false})
-            // toast.error("Erreur inconnue. Veuillez vérifier votre connexion internet.", {id: toastOne,});
-        }
     };
 
     render() {
@@ -675,12 +658,12 @@ class Index extends Component {
         
                                             <div className="mb-4">
                                                 <label htmlFor="name" className="block text-sm font-medium text-gray-900">Prix par unité <span className='font-bold text-purple-600'>*</span></label>
-                                                <input type="nomber" value={this.state.unitPrice} onChange={(e) => this.setState({unitPrice:e.target.value }) }  name="unitPrice" id="unitPrice" autoComplete="unitPrice" placeholder="prix par unité" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2"/>
+                                                <input type="nomber" value={this.state.unitprice} onChange={(e) => this.setState({unitprice:e.target.value }) }  name="unitprice" id="unitprice" autoComplete="unitprice" placeholder="prix par unité" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2"/>
                                             </div>
         
                                             <div className="mb-4">
                                                 <label htmlFor="name" className="block text-sm font-medium text-gray-900">Poids par unité</label>
-                                                <input type="number" value={this.state.unitWeight} onChange={(e) => this.setState({unitWeight:e.target.value }) }  name="unitWeight" id="unitWeight" autoComplete="weight" placeholder="poids par unité" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2"/>
+                                                <input type="number" value={this.state.unitweight} onChange={(e) => this.setState({unitweight:e.target.value }) }  name="unitweight" id="unitweight" autoComplete="weight" placeholder="poids par unité" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2"/>
                                             </div>
         
                                             <div className="mb-4">
@@ -988,54 +971,49 @@ class Index extends Component {
         
                                                 <div className='w-full h-[14.5rem] overflow-y-auto px-5'>
         
-                                                    {chosenProducts?.length == 0 ?
+                                                    {chosenProducts == null || chosenProducts?.length == 0  &&
         
                                                         <div className='w-full h-full flex flex-row justify-center '>
                                                             <div className='h-24 self-center'>
                                                                 <img src="../empty_svg.svg" className='h-full opacity-90' />
                                                             </div>
                                                         </div>
+                                                    }
 
-                                                        :
+                                                    {chosenProducts?.length > 0  &&
 
                                                         <div className='w-full h-full flex flex-col'>
 
                                                             {chosenProducts?.map((item, i) => (
                                                                 <AnimatePresence  key={i}>
-                                                                        <motion.div initial={{ opacity: 0, y: ( Math.random() * 15) }} whileInView={{ opacity: 1, y: 0, transition: { duration: 0.85 }, }}>
-                                                                            <div className='w-full flex flex-row justify-between bg-white bg-opacity-95 py-2 px-2 rounded-lg shadow-sm mb-2.5'>
+                                                                    <motion.div initial={{ opacity: 0, y: ( Math.random() * 15) }} whileInView={{ opacity: 1, y: 0, transition: { duration: 0.85 }, }}>
+                                                                        <div className='w-full flex flex-row justify-between bg-white bg-opacity-95 py-2 px-2 rounded-lg shadow-sm mb-2.5'>
 
-                                                                                <div className='flex flex-row w-10/12'>
+                                                                            <div className='flex flex-row w-10/12'>
 
-                                                                                    <div className='item-image-1 bg-gradient-to-r from-violet-600 to-purple-600 rounded-full border-opacity-80 self-center mr-4' >
-                                                                                        <div className='image-layer-2 rounded-full'>
-                                                                                            <div className='image-layer-3'><img src={item?.images[0].url} /></div>
-                                                                                        </div>
+                                                                                <div className='item-image-1 bg-gradient-to-r from-violet-600 to-purple-600 rounded-full border-opacity-80 self-center mr-4' >
+                                                                                    <div className='image-layer-2 rounded-full'>
+                                                                                        <div className='image-layer-3'><img src={item?.images[0].url} /></div>
                                                                                     </div>
-
-                                                                                    <div className='flex flex-col justify-center w-8/12'>
-                                                                                        <div className='text-[14px] font-medium text-gray-800 w-full truncate'>{item?.name}</div>
-                                                                                        <div className='text-[12px] font-normal text-gray-600 w-full truncate mt-1'>{new Intl.NumberFormat('fr-FR', {style: 'currency', currency:'XOF'}).format(item.unitprice)}</div>
-                                                                                    </div>
-
                                                                                 </div>
 
-                                                                                <div onClick={(e) => this.handleRelatives(e, null, i)} className="w-6 h-6 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-30 self-center">
-                                                                                    <TrashBoldIcon customClass="w-[0.575rem] text-red-600 text-opacity-90 self-center"/>
+                                                                                <div className='flex flex-col justify-center w-8/12'>
+                                                                                    <div className='text-[14px] font-medium text-gray-800 w-full truncate'>{item?.name}</div>
+                                                                                    <div className='text-[12px] font-normal text-gray-600 w-full truncate mt-1'>{new Intl.NumberFormat('fr-FR', {style: 'currency', currency:'XOF'}).format(item.unitprice)}</div>
                                                                                 </div>
 
                                                                             </div>
-                                                                        </motion.div>
-                                                                    </AnimatePresence>
-                                                                
+
+                                                                            <div onClick={(e) => this.handleRelatives(e, null, i)} className="w-6 h-6 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-30 self-center">
+                                                                                <TrashBoldIcon customClass="w-[0.575rem] text-red-600 text-opacity-90 self-center"/>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </motion.div>
+                                                                </AnimatePresence>
                                                             ))}
 
-                                                          
-
-                                                            
-                                                            
                                                         </div>
-        
                                                     }
         
                                                 </div>
@@ -1046,13 +1024,9 @@ class Index extends Component {
                                                 
                                             </div>
         
-        
                                         </div>
         
                                     </div>
-        
-        
-        
         
                                 </div>
         
@@ -1072,7 +1046,6 @@ class Index extends Component {
         
                         </div>
                     </motion.div>
-                    
         
                 </div>
 
