@@ -245,7 +245,7 @@ export default function Home({userId}) {
                         </div>
 
                         <motion.div initial={{ opacity: 0.5, y: ( Math.random() * 2 * 5) }} whileInView={{ opacity: 1, y: 0, transition: { duration: 1.05 }, }}>
-                            <div className='w-full bg-white rounded-xl shadow flex flex-col py-4 mt-4'>
+                            <div className='w-full bg-white rounded-xl shadow flex flex-col py-5 mt-4'>
                                 <div className='w-full px-4 text-base font-semibold'>Evolution des commandes</div>
                                 <div className='w-full pr-4 h-52 mt-3 text-xs font-medium text-gray-800'>
                                     <ResponsiveContainer width="100%" height="100%">
@@ -274,7 +274,7 @@ export default function Home({userId}) {
                         </motion.div>
 
                         <motion.div initial={{ opacity: 0.5, y: ( Math.random() * 2 * 5) }} whileInView={{ opacity: 1, y: 0, transition: { duration: 1.05 }, }}>
-                            <div className='w-full bg-white rounded-xl shadow flex flex-col py-4 mt-4'>
+                            <div className='w-full bg-white rounded-xl shadow flex flex-col py-5 mt-4'>
                                 <div className='w-full px-4 text-base font-semibold'>Dernières commandes</div>
                                 <div className='w-full px-4 mt-3 text-xs font-medium text-gray-800'>
                                     <table className="min-w-full divide-y divide-gray-200 border-b border-gray-200">
