@@ -176,11 +176,11 @@ export default function Index() {
                                                     <div className='ml-2 h-8 px-2 self-center bg-gray-100 bg-opacity-95 shadow-inner rounded-full flex flex-row'>
 
                                                         <div className='w-4 h-4 self-center'>
-                                                            <SearchIcon className='w-full h-full text-gray-600 -mb-0.5' />
+                                                            <SearchIcon className='w-full h-full text-gray-700 -mb-0.5' />
                                                         </div>
 
                                                         <div className='w-72 h-full'>
-                                                            <input type="search" onChange={(e) =>  refetch(null, e.target.value)}  className='w-full h-full focus:ring-0 text-sm border-0 bg-gray-200 bg-opacity-0' placeholder='Rechercher un nom ou une description ...' />
+                                                            <input type="search" onChange={(e) => e.target.value == '' ? mutate({...items, filter:''}) : refetch(null, e.target.value)}   className='w-full h-full focus:ring-0 text-sm border-0 bg-gray-200 bg-opacity-0' placeholder='Rechercher un nom ou une description ...' />
                                                         </div>
 
                                                     </div>
@@ -451,11 +451,11 @@ function SubCategories () {
                     <div className='ml-2 h-8 px-2 self-center bg-gray-100 bg-opacity-95 shadow-inner rounded-full flex flex-row'>
 
                         <div className='w-4 h-4 self-center'>
-                            <SearchIcon className='w-full h-full text-gray-600 -mb-0.5' />
+                            <SearchIcon className='w-full h-full text-gray-700 -mb-0.5' />
                         </div>
 
                         <div className='w-72 h-full'>
-                            <input type="search"  className='w-full h-full focus:ring-0 text-sm border-0 bg-gray-200 bg-opacity-0' placeholder='Rechercher un nom ou une description ...' />
+                            <input type="search" onChange={(e) => e.target.value == '' ? mutate({...items, filter:''}) : refetch(null, e.target.value)}   className='w-full h-full focus:ring-0 text-sm border-0 bg-gray-200 bg-opacity-0' placeholder='Rechercher un nom ou une description ...' />
                         </div>
 
                     </div>

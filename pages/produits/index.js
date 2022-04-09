@@ -195,7 +195,7 @@ export default function Index() {
                                                                         </div>
 
                                                                         <div className='w-full mt-2 px-3'>
-                                                                            <div className='w-full text-gray-500 text-[0.7rem] font-medium'>{capitalize(item.category?.name)}</div>
+                                                                            <div className='w-full text-gray-500 text-[0.7rem] font-medium truncate'>{capitalize(item.category?.name)}</div>
                                                                             <div className='w-full flex mt-1'>
                                                                                 <div className='self-center w-full'>
                                                                                     <div className='w-full main-item text-gray-900 cursor-pointer text-[0.87rem] font-semibold truncate transition duration-700 ease-in-out'>{capitalize(item.name)}</div>
