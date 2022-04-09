@@ -106,7 +106,7 @@ class Login extends Component {
 
         <div className="rounded-xl shadow-2xl bg-gray-400 bg-opacity-50 px-8 sm:px-16 py-8 sm:py-10 relative">
 
-          <BlockUI blocking={this.state.block} />
+          <BlockUI blocking={this.state.block} loader="https://firebasestorage.googleapis.com/v0/b/trade-d57de.appspot.com/o/images%2Floader%2Fspinner.gif?alt=media&token=279bbfbb-f75a-4ea6-8e9c-1a439d1a00ec" />
 
           <div>
             {/* <img className="mx-auto h-12 w-auto" src="/favicon.ico" /> */}
