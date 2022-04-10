@@ -469,7 +469,7 @@ export default function Home({userId}) {
                                             <div className='item-image-1 bg-gradient-to-r from-violet-600 to-purple-600 hover:scale-110 rounded-full border-opacity-80 self-center mr-4' >
                                                 <div className='image-layer-2 rounded-full'>
                                                     <div className='image-layer-3'>
-                                                        {/* <img src={item?.images[0].url}  /> */}
+                                                        <img src="https://firebasestorage.googleapis.com/v0/b/trade-d57de.appspot.com/o/images%2Fproduct_152?alt=media&token=102fe3bd-c0d0-430e-b7da-d6bf523555d7"  />
                                                     </div>
                                                 </div>
                                             </div>
@@ -483,7 +483,7 @@ export default function Home({userId}) {
                                             <div className='item-image-1 bg-gradient-to-r from-violet-600 to-purple-600 hover:scale-110 rounded-full border-opacity-80 self-center mr-4' >
                                                 <div className='image-layer-2 rounded-full'>
                                                     <div className='image-layer-3'>
-                                                        {/* <img src={item?.images[0].url}  /> */}
+                                                        <img src="https://firebasestorage.googleapis.com/v0/b/trade-d57de.appspot.com/o/images%2Fproduct_175?alt=media&token=d2dbab00-d7fe-4dfa-a8a3-4c603031555f"  />
                                                     </div>
                                                 </div>
                                             </div>
@@ -497,12 +497,42 @@ export default function Home({userId}) {
                                             <div className='item-image-1 bg-gradient-to-r from-violet-600 to-purple-600 hover:scale-110 rounded-full border-opacity-80 self-center mr-4' >
                                                 <div className='image-layer-2 rounded-full'>
                                                     <div className='image-layer-3'>
-                                                        {/* <img src={item?.images[0].url}  /> */}
+                                                        <img src="https://firebasestorage.googleapis.com/v0/b/trade-d57de.appspot.com/o/images%2Fproduct_143?alt=media&token=856134bb-7679-409a-8bfe-b7eab3f2a433"  />
                                                     </div>
                                                 </div>
                                             </div>
                                             <div className='absolute -top-0 -left-0.5 w-4 h-4 bg-amber-700 hover:bg-amber-800 rounded-full flex flex-row justify-center shadow-sm'>
                                                 <div className='text-[10px] text-white'>3</div>
+                                            </div>
+                                        </div>
+                                    </SwiperSlide>
+
+                                    <SwiperSlide className="slide-type3 py-0.5">
+                                        <div className='relative h-full'>
+                                            <div className='item-image-1 bg-gradient-to-r from-violet-600 to-purple-600 hover:scale-110 rounded-full border-opacity-80 self-center mr-4' >
+                                                <div className='image-layer-2 rounded-full'>
+                                                    <div className='image-layer-3'>
+                                                        <img src="https://firebasestorage.googleapis.com/v0/b/trade-d57de.appspot.com/o/images%2Fproduct_214?alt=media&token=2f2452f8-1d6a-4d0f-9cad-2d2e25c48f52"  />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className='absolute -top-0 -left-0.5 w-4 h-4 bg-amber-700 hover:bg-amber-800 rounded-full flex flex-row justify-center shadow-sm'>
+                                                <div className='text-[10px] text-white'>4</div>
+                                            </div>
+                                        </div>
+                                    </SwiperSlide>
+
+                                    <SwiperSlide className="slide-type3 py-0.5">
+                                        <div className='relative h-full'>
+                                            <div className='item-image-1 bg-gradient-to-r from-violet-600 to-purple-600 hover:scale-110 rounded-full border-opacity-80 self-center mr-4' >
+                                                <div className='image-layer-2 rounded-full'>
+                                                    <div className='image-layer-3'>
+                                                        <img src="https://firebasestorage.googleapis.com/v0/b/trade-d57de.appspot.com/o/images%2Fproduct_165?alt=media&token=e5d682ba-57cd-43e4-9a10-3a918c912ef2"  />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className='absolute -top-0 -left-0.5 w-4 h-4 bg-amber-700 hover:bg-amber-800 rounded-full flex flex-row justify-center shadow-sm'>
+                                                <div className='text-[10px] text-white'>5</div>
                                             </div>
                                         </div>
                                     </SwiperSlide>
