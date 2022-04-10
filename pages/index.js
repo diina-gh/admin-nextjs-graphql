@@ -323,7 +323,23 @@ export default function Home({userId}) {
                                                     </td>
 
                                                     <td className="px-6 py-3 whitespace-nowrap">
-                                                        <div className="text-sm text-gray-900">{item.status}</div>
+                                                        <div className="text-sm text-gray-900">
+                                                            {item.status == 'Livrée' &&
+                                                                <span className="px-3 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                                    ● Livrée
+                                                                </span>
+                                                            }
+                                                            {item.status == 'En cours' &&
+                                                                <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange-100 text-orange-800">
+                                                                    ● En cours
+                                                                </span>
+                                                            }
+                                                            {item.status == 'Restituée' &&
+                                                                 <span className="px-1.5 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                                                    ● Restituée
+                                                                </span>
+                                                            }
+                                                        </div>                                   
                                                     </td>
 
                                                 </tr>

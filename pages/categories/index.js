@@ -338,11 +338,11 @@ export default function Index() {
                                                                                     <td className="px-6 py-3 whitespace-nowrap">
                                                                                         {item.activated == true ?
                                                                                             <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                                                                            Active
+                                                                                                ● Active
                                                                                             </span>
                                                                                         :
                                                                                             <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-200 text-gray-500">
-                                                                                            Inactive
+                                                                                                ● Inactive
                                                                                             </span>
                                                                                         }
                                                                                         
@@ -687,11 +687,11 @@ function SubCategories () {
                                                     <td className="px-6 py-3 whitespace-nowrap">
                                                         {item.activated == true ?
                                                             <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                                            Active
+                                                                ● Active
                                                             </span>
                                                         :
                                                             <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-200 text-gray-500">
-                                                            Inactive
+                                                                ● Inactive
                                                             </span>
                                                         }
                                                         
