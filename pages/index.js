@@ -280,22 +280,22 @@ export default function Home({userId}) {
                                     <table className="min-w-full divide-y divide-gray-200 border-b border-gray-200">
                                         <thead className="th-bg-1 sticky top-0 ">
                                             <tr>
-                                                <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
+                                                <th scope="col" className="px-6 py-2 text-left text-[11.5px] font-medium text-gray-800 uppercase tracking-wider">
                                                     N#
                                                 </th>
-                                                <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider" >
+                                                <th scope="col" className="px-6 py-2 text-left text-[11.5px] font-medium text-gray-800 uppercase tracking-wider" >
                                                     Date
                                                 </th>
 
-                                                <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider" >
+                                                <th scope="col" className="px-6 py-2 text-left text-[11.5px] font-medium text-gray-800 uppercase tracking-wider" >
                                                     Montant
                                                 </th>
 
-                                                <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider" >
+                                                <th scope="col" className="px-6 py-2 text-left text-[11.5px] font-medium text-gray-800 uppercase tracking-wider" >
                                                     Client
                                                 </th>
 
-                                                <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider" >
+                                                <th scope="col" className="px-6 py-2 text-left text-[11.5px] font-medium text-gray-800 uppercase tracking-wider" >
                                                     Status
                                                 </th>
 
@@ -304,38 +304,38 @@ export default function Home({userId}) {
 
                                         <tbody className="bg-white divide-y divide-gray-200">
                                             {commandes.map((item, i) => (
-                                                <tr key={item.id} className={(i%2==0) ? "" : "bg-gray-100 bg-opacity-50"}>
+                                                <tr key={item.id} className={(i%2==0) ? "cursor-pointer hover:bg-purple-50 transition duration-700 ease-in-out" : "bg-gray-100 bg-opacity-50 cursor-pointer hover:bg-purple-50 transition duration-700 ease-in-out"}>
                                                     
                                                     <td className="px-6 py-3 whitespace-nowrap">
-                                                        <div className="text-sm text-gray-900">{item.id}</div>
+                                                        <div className="text-[11.5px] text-gray-900">{item.id}</div>
                                                     </td>
 
                                                     <td className="px-6 py-3 whitespace-nowrap">
-                                                        <div className="text-sm text-gray-900">{item.date}</div>
+                                                        <div className="text-[11.5px] text-gray-900">{item.date}</div>
                                                     </td>
 
                                                     <td className="px-6 py-3 whitespace-nowrap">
-                                                        <div className="text-sm text-gray-900">{item.total}</div>
+                                                        <div className="text-[11.5px] text-gray-900">{item.total}</div>
                                                     </td>
 
                                                     <td className="px-6 py-3 whitespace-nowrap">
-                                                        <div className="text-sm text-gray-900">{item.client}</div>
+                                                        <div className="text-[11.5px] text-gray-900">{item.client}</div>
                                                     </td>
 
                                                     <td className="px-6 py-3 whitespace-nowrap">
                                                         <div className="text-sm text-gray-900">
                                                             {item.status == 'Livrée' &&
-                                                                <span className="px-3 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                                <span className="px-3 inline-flex text-[11px] leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                                                                     ● Livrée
                                                                 </span>
                                                             }
                                                             {item.status == 'En cours' &&
-                                                                <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange-100 text-orange-800">
+                                                                <span className="px-2 inline-flex text-[11px] leading-5 font-semibold rounded-full bg-orange-100 text-orange-800">
                                                                     ● En cours
                                                                 </span>
                                                             }
                                                             {item.status == 'Restituée' &&
-                                                                 <span className="px-1.5 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                                                 <span className="px-1.5 inline-flex text-[11px] leading-5 font-semibold rounded-full bg-red-100 text-red-800">
                                                                     ● Restituée
                                                                 </span>
                                                             }
@@ -347,7 +347,9 @@ export default function Home({userId}) {
                                         </tbody>
                                     </table>
                                 </div>
-                                <div className='w-full px-4 mt-4 text-right text-sm font-semibold underline text-purple-600 hover:text-purple-800 cursor-pointer transition duration-700 ease-in-out'>Liste des commandes</div>
+                                <Link  href='/commandes'>
+                                    <div className='w-full px-4 mt-4 text-right text-sm font-semibold underline text-purple-600 hover:text-purple-800 cursor-pointer transition duration-700 ease-in-out'>Liste des commandes</div>
+                                </Link>
                             </div>
                         </motion.div>
 
@@ -476,7 +478,7 @@ export default function Home({userId}) {
                         <div className='flex flex-col px-4'>
                             <div className='flex flex-row justify-between'>
                                 <div className='text-[14px] font-semibold'>Top des produits</div>
-                                <div className='text-[12px] font-medium underline cursor-pointer self-center text-purple-600 hover:text-purple-400 transition duration-700'></div>
+                                <div className='text-[12px] font-medium underline cursor-pointer self-center text-purple-600 hover:text-purple-400 transition duration-700'>Tout voir</div>
                             </div>
                             <div className='mt-2'>
                                 <Swiper className='w-full h-full swiper-type3' spaceBetween={18} slidesPerView={4} loop={true} speed={1000} freeMode={true} autoplay={true}  modules={[FreeMode, Navigation]} >
