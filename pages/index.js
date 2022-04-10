@@ -459,14 +459,14 @@ export default function Home({userId}) {
 
                         <div className='flex flex-col px-4'>
                             <div className='flex flex-row justify-between'>
-                                <div className='text-[14px] font-semibold'>Classement des produits</div>
+                                <div className='text-[14px] font-semibold'>Top des produits</div>
                                 <div className='text-[12px] font-medium underline cursor-pointer self-center text-purple-600 hover:text-purple-400 transition duration-700'></div>
                             </div>
                             <div className='mt-2'>
-                                <Swiper className='w-full h-full swiper-type3' spaceBetween={10} slidesPerView={3} loop={true} speed={1000} freeMode={true} autoplay={true}  modules={[FreeMode, Navigation]} >
+                                <Swiper className='w-full h-full swiper-type3' spaceBetween={18} slidesPerView={4} loop={true} speed={1000} freeMode={true} autoplay={true}  modules={[FreeMode, Navigation]} >
                                     <SwiperSlide className="slide-type3 py-0.5">
                                         <div className='relative h-full'>
-                                            <div className='item-image-1 bg-gradient-to-r from-violet-600 to-purple-600 hover:scale-110 rounded-full border-opacity-80 self-center mr-4' >
+                                            <div className='item-image-1 bg-gradient-to-r from-violet-600 to-purple-600 hover:scale-110 rounded-full border-opacity-80 self-center' >
                                                 <div className='image-layer-2 rounded-full'>
                                                     <div className='image-layer-3'>
                                                         <img src="https://firebasestorage.googleapis.com/v0/b/trade-d57de.appspot.com/o/images%2Fproduct_152?alt=media&token=102fe3bd-c0d0-430e-b7da-d6bf523555d7"  />
@@ -480,7 +480,7 @@ export default function Home({userId}) {
                                     </SwiperSlide>
                                     <SwiperSlide className="slide-type3 py-0.5">
                                         <div className='relative h-full'>
-                                            <div className='item-image-1 bg-gradient-to-r from-violet-600 to-purple-600 hover:scale-110 rounded-full border-opacity-80 self-center mr-4' >
+                                            <div className='item-image-1 bg-gradient-to-r from-violet-600 to-purple-600 hover:scale-110 rounded-full border-opacity-80 self-center' >
                                                 <div className='image-layer-2 rounded-full'>
                                                     <div className='image-layer-3'>
                                                         <img src="https://firebasestorage.googleapis.com/v0/b/trade-d57de.appspot.com/o/images%2Fproduct_175?alt=media&token=d2dbab00-d7fe-4dfa-a8a3-4c603031555f"  />
@@ -494,7 +494,7 @@ export default function Home({userId}) {
                                     </SwiperSlide>
                                     <SwiperSlide className="slide-type3 py-0.5">
                                         <div className='relative h-full'>
-                                            <div className='item-image-1 bg-gradient-to-r from-violet-600 to-purple-600 hover:scale-110 rounded-full border-opacity-80 self-center mr-4' >
+                                            <div className='item-image-1 bg-gradient-to-r from-violet-600 to-purple-600 hover:scale-110 rounded-full border-opacity-80 self-center' >
                                                 <div className='image-layer-2 rounded-full'>
                                                     <div className='image-layer-3'>
                                                         <img src="https://firebasestorage.googleapis.com/v0/b/trade-d57de.appspot.com/o/images%2Fproduct_143?alt=media&token=856134bb-7679-409a-8bfe-b7eab3f2a433"  />
@@ -509,7 +509,7 @@ export default function Home({userId}) {
 
                                     <SwiperSlide className="slide-type3 py-0.5">
                                         <div className='relative h-full'>
-                                            <div className='item-image-1 bg-gradient-to-r from-violet-600 to-purple-600 hover:scale-110 rounded-full border-opacity-80 self-center mr-4' >
+                                            <div className='item-image-1 bg-gradient-to-r from-violet-600 to-purple-600 hover:scale-110 rounded-full border-opacity-80 self-center' >
                                                 <div className='image-layer-2 rounded-full'>
                                                     <div className='image-layer-3'>
                                                         <img src="https://firebasestorage.googleapis.com/v0/b/trade-d57de.appspot.com/o/images%2Fproduct_214?alt=media&token=2f2452f8-1d6a-4d0f-9cad-2d2e25c48f52"  />
@@ -524,7 +524,7 @@ export default function Home({userId}) {
 
                                     <SwiperSlide className="slide-type3 py-0.5">
                                         <div className='relative h-full'>
-                                            <div className='item-image-1 bg-gradient-to-r from-violet-600 to-purple-600 hover:scale-110 rounded-full border-opacity-80 self-center mr-4' >
+                                            <div className='item-image-1 bg-gradient-to-r from-violet-600 to-purple-600 hover:scale-110 rounded-full border-opacity-80 self-center' >
                                                 <div className='image-layer-2 rounded-full'>
                                                     <div className='image-layer-3'>
                                                         <img src="https://firebasestorage.googleapis.com/v0/b/trade-d57de.appspot.com/o/images%2Fproduct_165?alt=media&token=e5d682ba-57cd-43e4-9a10-3a918c912ef2"  />

@@ -47,7 +47,7 @@ export default function Index() {
     const [page, setPage] = useState(1);
     const [filter, setFilter] = useState('')
     const [direction, setDirection] = useState('asc')
-    const [orderBy, setOrderBy] = useState({"id": direction})
+    const [orderBy, setOrderBy] = useState({"order": direction})
     const [block, setBlock] = useState(false);
     const [display, setDisplay] = useState(1);
 
@@ -433,7 +433,7 @@ function SubCategories () {
     const [page, setPage] = useState(1);
     const [filter, setFilter] = useState('')
     const [direction, setDirection] = useState('asc')
-    const [orderBy, setOrderBy] = useState({"id": direction})
+    const [orderBy, setOrderBy] = useState({"order": direction})
     const [block, setBlock] = useState(false);
 
     const [display, setDisplay] = useState(1);
