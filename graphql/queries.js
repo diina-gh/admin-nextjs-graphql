@@ -58,6 +58,7 @@ export const categoriesQuery = gql`
                 id
                 name
                 desc
+                order
                 createdat
                 activated
                 image {
