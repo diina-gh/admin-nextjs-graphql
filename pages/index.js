@@ -2,7 +2,7 @@ import { useState, PureComponent } from 'react'
 import Link from 'next/link'
 import Header from '../components/common/header'
 import Sidebar from '../components/common/sidebar'
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import HeadInfo from '../components/common/headinfo'
 import Cookies from 'js-cookie'
 import { useDebouncedCallback } from 'use-debounce';
@@ -349,7 +349,7 @@ export default function Home({userId}) {
 
                         <div className='px-4 flex flex-col'>
                             <div className='flex flex-row justify-between'>
-                                <div className='text-[14.5px] font-semibold'>Chiffre d&#39;affaire</div>
+                                <div className='text-[14px] font-semibold'>Chiffre d&#39;affaire</div>
                             </div>
 
                             <div className='flex flex-row justify-between rounded-lg bg-gray-200 bg-opacity-80 shadow-sm py-2 px-2 mt-3'>
@@ -383,11 +383,11 @@ export default function Home({userId}) {
                             </div>
                         </div>
 
-                        <div className='px-4'><div className='divider w-full h-[1px] bg-gray-400 bg-opacity-40 mt-4 mb-4'></div></div>
+                        <div className='px-4'><div className='divider w-full h-[1px] bg-gray-400 bg-opacity-40 mt-3 mb-3'></div></div>
 
                         <div className='flex flex-col px-4'>
                             <div className='flex flex-row justify-between'>
-                                <div className='text-[14.5px] font-semibold'>Précieux clients</div>
+                                <div className='text-[14px] font-semibold'>Précieux clients</div>
                                 <div className='text-[12px] font-medium underline cursor-pointer self-center text-purple-600 hover:text-purple-400 transition duration-700'>Tout voir</div>
                             </div>
                             <div className='w-full flex flex-row justify-between mt-3'>
@@ -455,12 +455,59 @@ export default function Home({userId}) {
                             </div>
                         </div>
 
-                        <div className='px-4'><div className='divider w-full h-[1px] bg-gray-400 bg-opacity-40 mt-4 mb-4'></div></div>
+                        <div className='px-4'><div className='divider w-full h-[1px] bg-gray-400 bg-opacity-40 mt-3 mb-3'></div></div>
 
                         <div className='flex flex-col px-4'>
                             <div className='flex flex-row justify-between'>
-                                <div className='text-[14.5px] font-semibold'>Classement des produits</div>
+                                <div className='text-[14px] font-semibold'>Classement des produits</div>
                                 <div className='text-[12px] font-medium underline cursor-pointer self-center text-purple-600 hover:text-purple-400 transition duration-700'></div>
+                            </div>
+                            <div className='mt-2'>
+                                <Swiper className='w-full h-full swiper-type3' spaceBetween={10} slidesPerView={3} loop={true} speed={1000} freeMode={true} autoplay={true}  modules={[FreeMode, Navigation]} >
+                                    <SwiperSlide className="slide-type3 py-0.5">
+                                        <div className='relative h-full'>
+                                            <div className='item-image-1 bg-gradient-to-r from-violet-600 to-purple-600 hover:scale-110 rounded-full border-opacity-80 self-center mr-4' >
+                                                <div className='image-layer-2 rounded-full'>
+                                                    <div className='image-layer-3'>
+                                                        {/* <img src={item?.images[0].url}  /> */}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className='absolute -top-0 -left-0.5 w-4 h-4 bg-amber-700 hover:bg-amber-800 rounded-full flex flex-row justify-center shadow-sm'>
+                                                <div className='text-[10px] text-white'>1</div>
+                                            </div>
+                                        </div>
+                                    </SwiperSlide>
+                                    <SwiperSlide className="slide-type3 py-0.5">
+                                        <div className='relative h-full'>
+                                            <div className='item-image-1 bg-gradient-to-r from-violet-600 to-purple-600 hover:scale-110 rounded-full border-opacity-80 self-center mr-4' >
+                                                <div className='image-layer-2 rounded-full'>
+                                                    <div className='image-layer-3'>
+                                                        {/* <img src={item?.images[0].url}  /> */}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className='absolute -top-0 -left-0.5 w-4 h-4 bg-amber-700 hover:bg-amber-800 rounded-full flex flex-row justify-center shadow-sm'>
+                                                <div className='text-[10px] text-white'>2</div>
+                                            </div>
+                                        </div>
+                                    </SwiperSlide>
+                                    <SwiperSlide className="slide-type3 py-0.5">
+                                        <div className='relative h-full'>
+                                            <div className='item-image-1 bg-gradient-to-r from-violet-600 to-purple-600 hover:scale-110 rounded-full border-opacity-80 self-center mr-4' >
+                                                <div className='image-layer-2 rounded-full'>
+                                                    <div className='image-layer-3'>
+                                                        {/* <img src={item?.images[0].url}  /> */}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className='absolute -top-0 -left-0.5 w-4 h-4 bg-amber-700 hover:bg-amber-800 rounded-full flex flex-row justify-center shadow-sm'>
+                                                <div className='text-[10px] text-white'>3</div>
+                                            </div>
+                                        </div>
+                                    </SwiperSlide>
+                                    
+                                </Swiper>
                             </div>
                         </div>
 
