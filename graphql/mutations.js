@@ -1,6 +1,8 @@
 import { gql } from "graphql-request";
+import * as Types from './types'
 
 export const saveCountryMutation = gql `
+    ${Types.InputError}
     mutation($id: Int, $iso3: String, $isoNum:String, $name:String){
         saveCountry(id: $id, iso3: $iso3, isoNum: $isoNum, name: $name ){
             __typename
@@ -10,15 +12,13 @@ export const saveCountryMutation = gql `
                 iso3
                 isoNum
             }
-            ... on InputError{
-                message
-                input
-            }    
+            ...InputError    
         }
     }
 `
 
 export const deleteCountryMutation = gql `
+    ${Types.InputError}
     mutation($id: Int){
         deleteCountry(id: $id ){
             __typename
@@ -28,15 +28,13 @@ export const deleteCountryMutation = gql `
                 iso3
                 isoNum
             }
-            ... on InputError{
-                message
-                input
-            }    
+            ...InputError    
         }
     }
 `
 
 export const saveRegionMutation = gql `
+    ${Types.InputError}
     mutation($id: Int, $name: String, $code: String, $countryId: Int){
         saveRegion(id: $id, name: $name, code: $code, countryId: $countryId){
             __typename
@@ -50,15 +48,13 @@ export const saveRegionMutation = gql `
                     name
                 }
             }
-            ... on InputError{
-                message
-                input
-            }
+            ...InputError
         }
     }
 `
 
 export const deleteRegionMutation = gql `
+    ${Types.InputError}
     mutation($id: Int){
         deleteRegion(id: $id){
             __typename
@@ -72,15 +68,13 @@ export const deleteRegionMutation = gql `
                     name
                 }
             }
-            ... on InputError{
-                message
-                input
-            }
+            ...InputError
         }
     }
 `
 
 export const saveDistrictMutation = gql `
+    ${Types.InputError}
     mutation($id: Int, $name: String, $shipping: Float, $regionId: Int){
         saveDistrict(id: $id, name: $name, shipping: $shipping, regionId: $regionId){
             __typename
@@ -94,15 +88,13 @@ export const saveDistrictMutation = gql `
                     name
                 }
             }
-            ... on InputError{
-                message
-                input
-            }
+            ...InputError
         }
     }
 `
 
 export const deleteDistrictMutation = gql `
+    ${Types.InputError}
     mutation($id: Int){
         deleteDistrict(id: $id){
             __typename
@@ -116,15 +108,13 @@ export const deleteDistrictMutation = gql `
                     name
                 }
             }
-            ... on InputError{
-                message
-                input
-            }
+            ...InputError
         }
     }
 `
 
 export const saveBrandMutation = gql`
+    ${Types.InputError}
     mutation($id: Int, $name: String, $desc: String, $order: Int){
         saveBrand(id: $id, name: $name, desc: $desc, order: $order){
             __typename
@@ -139,15 +129,13 @@ export const saveBrandMutation = gql`
                     imageref
                 }
             }
-            ... on InputError{
-                message
-                input
-            }
+            ...InputError
         }
     }
 `
 
 export const deleteBrandMutation = gql`
+    ${Types.InputError}
     mutation($id: Int){
         deleteBrand(id: $id){
             __typename
@@ -162,15 +150,13 @@ export const deleteBrandMutation = gql`
                     imageref
                 }
             }
-            ... on InputError{
-                message
-                input
-            }
+            ...InputError
         }
     }
 `
 
 export const saveImageMutation = gql `
+    ${Types.InputError}
     mutation($id: Int, $url: String, $imageref:String, $isDefault: Boolean, $productId: Int, $optionId: Int, $brandId: Int, $categoryId: Int, $userId: Int ){
         saveImage(id: $id, url: $url, imageref: $imageref, isDefault: $isDefault, productId: $productId, optionId: $optionId, brandId: $brandId, categoryId: $categoryId, userId: $userId){
             __typename
@@ -179,15 +165,13 @@ export const saveImageMutation = gql `
                 url
                 imageref
             }
-            ... on InputError{
-                message
-                input
-            }
+            ...InputError
         } 
     }
 `
 
 export const deleteImageMutation = gql `
+    ${Types.InputError}
     mutation($id: Int ){
         deleteImage(id: $id){
             __typename
@@ -197,15 +181,13 @@ export const deleteImageMutation = gql `
                 imageref
                 isDefault
             }
-            ... on InputError{
-                message
-                input
-            }
+            ...InputError
         } 
     }
 `
 
 export const saveVariantMutation = gql `
+    ${Types.InputError}
     mutation($id: Int, $name: String, $desc: String, $options: [OptionInput]){
         saveVariant(id: $id, name: $name, desc: $desc, options: $options){
             __typename
@@ -219,15 +201,13 @@ export const saveVariantMutation = gql `
                     colorCode
                 }
             }
-            ... on InputError{
-                message
-                input
-            }
+            ...InputError
         }
     }
 `
 
 export const deleteVariantMutation = gql `
+    ${Types.InputError}
     mutation($id: Int){
         deleteVariant(id: $id){
             __typename
@@ -241,15 +221,13 @@ export const deleteVariantMutation = gql `
                 colorCode
             }
             }
-            ... on InputError{
-            message
-            input
-            }
+            ...InputError
         }
     }
 `
 
 export const saveCategoryMutation = gql `
+    ${Types.InputError}
     mutation($id: Int, $name: String, $desc: String, $order: Int, $activated: Boolean, $parentId: Int){
         saveCategory(id: $id, name: $name, desc: $desc, order: $order, activated: $activated, parentId: $parentId){
             __typename
@@ -266,15 +244,13 @@ export const saveCategoryMutation = gql `
                     name
                 }
             }
-            ... on InputError{
-                message
-                input
-            }
+            ...InputError
         }
     }
 `
 
 export const deleteCategoryMutation = gql `
+    ${Types.InputError}
     mutation($id: Int){
         deleteCategory(id: $id){
             __typename
@@ -291,15 +267,13 @@ export const deleteCategoryMutation = gql `
                     name
                 }
             }
-            ... on InputError{
-                message
-                input
-            }
+            ...InputError
         }
     }
 `
 
 export const saveShippingMethodMutation = gql `
+    ${Types.InputError}
     mutation($id: Int, $name: String, $code: String, $desc: String){
         saveShippingMethod(id: $id, name: $name, code: $code, desc: $desc){
             __typename
@@ -309,15 +283,13 @@ export const saveShippingMethodMutation = gql `
                 code
                 desc
             }
-            ... on InputError{
-                message
-                input
-            }
+            ...InputError
         }
     }
 `
 
 export const deleteShippingMethodMutation = gql `
+    ${Types.InputError}
     mutation($id: Int){
         deleteShippingMethod(id: $id){
             __typename
@@ -327,15 +299,13 @@ export const deleteShippingMethodMutation = gql `
                 code
                 desc
             }
-            ... on InputError{
-                message
-                input
-            }
+            ...InputError
         }
     }
 `
 
 export const savePaymentMethodMutation = gql `
+    ${Types.InputError}
     mutation($id: Int, $name: String, $code: String, $desc: String){
         savePaymentMethod(id: $id, name: $name, code: $code, desc: $desc){
             __typename
@@ -345,15 +315,13 @@ export const savePaymentMethodMutation = gql `
                 code
                 desc
             }
-            ... on InputError{
-                message
-                input
-            }
+            ...InputError
         }
     }
 `
 
 export const deletePaymentMethodMutation = gql `
+    ${Types.InputError}
     mutation($id: Int){
         deletePaymentMethod(id: $id){
             __typename
@@ -363,15 +331,13 @@ export const deletePaymentMethodMutation = gql `
                 code
                 desc
             }
-            ... on InputError{
-                message
-                input
-            }
+            ...InputError
         }
     }
 `
 
 export const saveDeliveryManMutation = gql `
+    ${Types.InputError}
     mutation($id: Int, $firstname: String, $lastname: String, $email: String, $phonenumber: String, $civility: Civility){
         saveDeliveryMan(id: $id, firstname: $firstname, lastname: $lastname, email: $email, phonenumber: $phonenumber, civility: $civility){
             __typename
@@ -384,15 +350,13 @@ export const saveDeliveryManMutation = gql `
                 phonenumber
 
             }
-            ... on InputError{
-                message
-                input
-            }
+            ...InputError
         }
     }
 `
 
 export const deleteDeliveryManMutation = gql `
+    ${Types.InputError}
     mutation($id: Int){
         deleteDeliveryMan(id: $id){
             __typename
@@ -405,15 +369,13 @@ export const deleteDeliveryManMutation = gql `
                 phonenumber
 
             }
-            ... on InputError{
-                message
-                input
-            }
+            ...InputError
         }
     }
 `
 
 export const saveProductMutation = gql `
+    ${Types.InputError}
     mutation($id: Int, $name: String, $desc: String, $activated: Boolean, $unit: String, $unitweight: Float, $unitprice: Float, $order: Int, $categoryId: Int, $brandId: Int, $variants: [Int], $options: [Int], $gender: Gender, $relatives: [Int]){
         saveProduct(id: $id, name: $name, desc: $desc, activated: $activated, unit: $unit, unitweight: $unitweight, unitprice: $unitprice, order: $order, categoryId: $categoryId, brandId: $brandId, variants: $variants, options: $options, gender: $gender, relatives: $relatives){
             __typename
@@ -451,15 +413,13 @@ export const saveProductMutation = gql `
                     imageref
                 }
             }
-            ... on InputError{
-                message
-                input
-            }
+            ...InputError
     }
   }
 `
 
 export const deleteProductMutation = gql `
+    ${Types.InputError}
     mutation($id: Int){
         deleteProduct(id: $id){
             __typename
@@ -497,15 +457,13 @@ export const deleteProductMutation = gql `
                     imageref
                 }
             }
-            ... on InputError{
-                message
-                input
-            }
+            ...InputError
     }
   }
 `
 
 export const savePermissionMutation = gql`
+    ${Types.InputError}
     mutation($id: Int, $name: String, $desc: String){
         savePermission(id: $id, name: $name, desc: $desc){
             __typename
@@ -514,15 +472,13 @@ export const savePermissionMutation = gql`
                 name
                 desc
             }
-            ...on InputError{
-                message
-                input
-            }
+            ...InputError
         }
     }
 `
 
 export const deletePermissionMutation = gql`
+    ${Types.InputError}
     mutation($id: Int){
         deletePermission(id: $id){
             __typename
@@ -531,15 +487,13 @@ export const deletePermissionMutation = gql`
                 name
                 desc
             }
-            ...on InputError{
-                message
-                input
-            }
+            ...InputError
         }
     }
 `
 
 export const saveRoleMutation = gql `
+    ${Types.InputError}
     mutation($id: Int, $name: String, $desc: String, $permissions: [Int]){
         saveRole(id: $id, name: $name, desc: $desc, permissions: $permissions){
             __typename
@@ -548,15 +502,13 @@ export const saveRoleMutation = gql `
                 name
                 desc
             }
-            ...on InputError{
-                message
-                input
-            }
+            ...InputError
         }
     }
 `
 
 export const deleteRoleMutation = gql `
+    ${Types.InputError}
     mutation($id: Int){
         deleteRole(id: $id){
             __typename
@@ -566,15 +518,13 @@ export const deleteRoleMutation = gql `
                 desc
                 
             }
-            ...on InputError{
-                message
-                input
-            }
+            ...InputError
         }
     }
 `
 
 export const saveUserMutation = gql `
+    ${Types.InputError}
     mutation($id: Int, $firstname: String, $lastname: String, $email: String, $phonenumber: String, $roles: [Int], $password: String, $repassword: String, $civility: Civility){
         saveUser(id: $id, firstname: $firstname, lastname: $lastname, email: $email, phonenumber: $phonenumber, roles: $roles, password: $password, repassword: $repassword, civility: $civility){
             __typename
@@ -595,30 +545,26 @@ export const saveUserMutation = gql `
                 }
             }
             }
-            ... on InputError{
-                message
-                input
-            }
+            ...InputError
         }
     }
 `
 
 export const deleteUserMutation = gql `
+    ${Types.InputError}
     mutation($id:Int){
         deleteUser(id: $id){
             __typename
             ...on User{
                 id
             }
-            ... on InputError{
-                message
-                input
-            }
+            ...InputError
         }
     }
 `
 
 export const saveClientMutation = gql `
+    ${Types.InputError}
     mutation($id: Int, $firstname: String, $lastname: String, $email: String, $phonenumber: String, $addresses: [AddressInput], $civility: Civility){
         saveClient(id: $id, firstname: $firstname, lastname: $lastname, email: $email, phonenumber: $phonenumber, addresses: $addresses, civility: $civility){
             __typename
@@ -636,16 +582,14 @@ export const saveClientMutation = gql `
                     }
                 }
             }
-            ...on InputError{
-                message
-                input
-            }
+            ...InputError
         }
     }
 `
 
 
 export const deleteClientMutation = gql `
+    ${Types.InputError}
     mutation($id: Int){
         saveClient(id: $id){
             __typename
@@ -663,15 +607,13 @@ export const deleteClientMutation = gql `
                     }
                 }
             }
-            ...on InputError{
-                message
-                input
-            }
+            ...InputError
         }
     }
 `
 
 export const loginMutation = gql `
+    ${Types.InputError}
     mutation($email: String, $password: String){
         login(email: $email, password: $password){
             __typename
@@ -698,10 +640,7 @@ export const loginMutation = gql `
                 }
             }
             }
-            ...on InputError{
-                message
-                input
-            }
+            ...InputError
         }
     }
 `

@@ -1,4 +1,5 @@
 import { gql } from 'graphql-request'
+import * as Types from './types'
 
 export const newslettersQuery = gql`
     query($page: Int, $take: Int, $filter: String, $orderBy: NewsletterOrderByInput){
@@ -135,6 +136,7 @@ export const subCategoriesQuery = gql`
 `
 
 export const categoryQuery = gql `
+    ${Types.InputError}
     query($id: Int){
         category(id: $id) {
             __typename
@@ -157,15 +159,13 @@ export const categoryQuery = gql `
                 }
                 
             }
-            ... on InputError{
-                message
-                input
-            }
+            ...InputError
         }
     }
 `
 
 export const variantQuery = gql`
+    ${Types.InputError}
     query($id: Int){
         variant(id: $id) {
             __typename
@@ -179,10 +179,7 @@ export const variantQuery = gql`
                     colorCode
                 }
             }
-            ... on InputError{
-                message
-                input
-            }
+            ...InputError
         }
     }
 `
@@ -257,6 +254,7 @@ export const countriesQuery = gql`
 `
 
 export const countryQuery = gql`
+    ${Types.InputError}
     query($id: Int){
         country(id: $id) {
             __typename
@@ -268,10 +266,7 @@ export const countryQuery = gql`
                 createdat
                 updatedat
             }
-            ... on InputError{
-                message
-                input
-            } 
+            ...InputError 
         }
     }
 `
@@ -296,6 +291,7 @@ export const regionsQuery = gql `
 `
 
 export const regionQuery = gql `
+    ${Types.InputError}
     query($id: Int){
         region(id: $id) {
             __typename
@@ -311,10 +307,7 @@ export const regionQuery = gql `
                 createdat
                 updatedat
             }
-            ... on InputError{
-                message
-                input
-            }
+            ...InputError
         }
     }
 `
@@ -341,6 +334,7 @@ export const districtsQuery = gql`
 `
 
 export const districtQuery = gql`
+    ${Types.InputError}
     query($id: Int){
         district(id: $id) {
             __typename
@@ -356,10 +350,7 @@ export const districtQuery = gql`
                 createdat
                 updatedat
             }
-            ... on InputError{
-                message
-                input
-            }
+            ...InputError
         }
     }
 `
@@ -379,6 +370,7 @@ export const shippingMethodsQuery = gql`
 `
 
 export const shippingMethodQuery = gql`
+    ${Types.InputError}
     query($id: Int){
         shippingMethod(id: $id) {
             __typename
@@ -388,10 +380,7 @@ export const shippingMethodQuery = gql`
                 code
                 desc
             }
-            ... on InputError{
-                message
-                input
-            }
+            ...InputError
         }
     }
 `
@@ -411,6 +400,7 @@ export const paymentMethodsQuery = gql`
 `
 
 export const paymentMethodQuery = gql`
+    ${Types.InputError}
     query($id: Int){
         paymentMethod(id: $id) {
             __typename
@@ -420,10 +410,7 @@ export const paymentMethodQuery = gql`
                 code
                 desc
             }
-            ... on InputError{
-                message
-                input
-            }
+            ...InputError
         }
     }
 `
@@ -445,6 +432,7 @@ export const deliveryMansQuery = gql`
 `
 
 export const deliveryManQuery = gql`
+    ${Types.InputError}
     query($id: Int){
         deliveryMan(id: $id) {
             __typename
@@ -457,10 +445,7 @@ export const deliveryManQuery = gql`
                 phonenumber
 
             }
-            ... on InputError{
-                message
-                input
-            }
+            ...InputError
         }
     }
 `
@@ -485,6 +470,7 @@ export const brandsQuery = gql`
 `
 
 export const brandQuery = gql`
+    ${Types.InputError}
     query($id: Int){
         brand(id: $id) {
             __typename
@@ -501,10 +487,7 @@ export const brandQuery = gql`
                 createdat
                 updatedat
             }
-            ... on InputError{
-                message
-                input
-            }
+            ...InputError
         }
     }
 `
@@ -549,6 +532,7 @@ export const productsQuery = gql `
 `
 
 export const productQuery = gql `
+    ${Types.InputError}
     query($id: Int){
         product(id: $id){
             __typename
@@ -624,10 +608,7 @@ export const productQuery = gql `
                     }
                 }
             }
-            ... on InputError{
-                message
-                input
-            }
+            ...InputError
         }
             
     }
@@ -678,6 +659,7 @@ export const permissionsQuery = gql `
 `
 
 export const permissionQuery = gql `
+    ${Types.InputError}
     query($id: Int){
         permission(id: $id) {
             __typename
@@ -686,10 +668,7 @@ export const permissionQuery = gql `
                 name
                 desc
             }
-            ...on InputError{
-                message
-                input
-            }
+            ...InputError
         }
     }
 `
@@ -715,6 +694,7 @@ export const rolesQuery = gql`
 `
 
 export const roleQuery = gql`
+    ${Types.InputError}
     query($id: Int){
         role(id: $id) {
             __typename
@@ -731,10 +711,7 @@ export const roleQuery = gql`
                     }
                 }
             }
-            ...on InputError{
-                message
-                input
-            }
+            ...InputError
         }
     }
 `
@@ -795,6 +772,7 @@ export const clientsQuery = gql `
 `
 
 export const userQuery = gql `
+    ${Types.InputError}
     query($id: Int){
         user(id: $id){
             __typename
@@ -820,10 +798,7 @@ export const userQuery = gql `
                     }
                 }
             }
-            ...on InputError{
-                message
-                input
-            }
+            ...InputError
         }
     }
 `
