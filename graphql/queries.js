@@ -90,102 +90,78 @@ export const subCategoriesQuery = gql`
 `
 
 export const categoryQuery = gql `
+
+    ${Types.categoryFields}
     ${Types.InputError}
-    query($id: Int){
+
+    query($id: Int,
+          $categoryName: Boolean = false, $categoryDesc: Boolean = false, $categoryOrder: Boolean = false, $imageUrl: Boolean = false, 
+          $categoryCreatedat: Boolean = false, $categoryActivated: Boolean = false, $categoryParentId: Boolean = false, $imageImageref: Boolean = false, 
+          $categoryImage: Boolean = false, $categoryParent: Boolean = false, $parentName: Boolean = false, $parentDesc: Boolean = false,
+          $categoryChilds: Boolean = false, $childName: Boolean = false, $childDesc: Boolean = false, $childImage: Boolean = false  
+    ){
         category(id: $id) {
             __typename
-            ... on Category{
-                id
-                name
-                desc
-                long_desc
-                parentId
-                order
-                activated
-                image {
-                    id
-                    url
-                    imageref
-                }
-                parent {
-                    id
-                    name
-                }
-                
-            }
+            ...categoryFields
             ...InputError
         }
     }
 `
 
 export const variantQuery = gql`
+    ${Types.variantFields}
     ${Types.InputError}
-    query($id: Int){
+    query($id: Int,
+          $variantName: Boolean = false, $variantDesc: Boolean = false, $variantCreatedat: Boolean = false, $variantOptions: Boolean = false,
+          $optionValue: Boolean = false, $optionColorCode: Boolean = false, $optionVariant: Boolean = false, $optionVariantId: Boolean = false, $optionVariantName: Boolean = false
+    ){
         variant(id: $id) {
             __typename
-            ... on Variant{
-                id
-                name
-                desc
-                options {
-                    id
-                    value
-                    colorCode
-                }
-            }
+            ...variantFields
             ...InputError
         }
     }
 `
 
 export const variantsQuery = gql`
-    query($filter: String, $page: Int, $take: Int, $orderBy: VariantOrderByInput){
+    ${Types.variantFields}
+    query($filter: String, $page: Int, $take: Int, $orderBy: VariantOrderByInput
+        $variantName: Boolean = false, $variantDesc: Boolean = false, $variantCreatedat: Boolean = false, $variantOptions: Boolean = false,
+        $optionValue: Boolean = false, $optionColorCode: Boolean = false, $optionVariant: Boolean = false, $optionVariantId: Boolean = false, $optionVariantName: Boolean = false
+    ){
         variants(filter: $filter, page: $page, take: $take, orderBy: $orderBy) {
             count
             countOpt
             variants {
-                id
-                name
-                desc
-                createdat
-                options {
-                    id
-                    value
-                    colorCode
-                }
+                ...variantFields
             }
         }
     }
 `
 
 export const optionQuery = gql `
-    query($id: Int){
+    ${Types.optionFields}
+    ${Types.InputError}    
+    query($id: Int,
+          $optionValue: Boolean = false, $optionColorCode: Boolean = false, $optionVariantId: Boolean = false, $optionVariant: Boolean = false, $optionVariantName: Boolean = false
+    ){
         option(id: $id) {
-            id
-            value
-            colorCode
-            variantId
-            variant {
-                id
-                name
-            }
+            __typename
+            ...optionFields
+            ...InputError
         }
     }
 `
 
 export const optionsQuery = gql `
-    query($filter: String, $page: Int, $take: Int, $orderBy: OptionOrderByInput){
+    ${Types.optionFields}
+    query($filter: String, $page: Int, $take: Int, $orderBy: OptionOrderByInput,
+          $optionValue: Boolean = false, $optionColorCode: Boolean = false, $optionVariant: Boolean = false, $optionVariantId: Boolean = false, $optionVariantName: Boolean = false
+    ){
         options(filter: $filter, page: $page, take: $take, orderBy: $orderBy) {
             count
             options {
-                id
-                value
-                colorCode
-                variantId
-                variant {
-                    id
-                    name
-                }
+                ...optionFields
             }
         }
     }

@@ -31,8 +31,8 @@ export async function allCategories(){
     return {response: data.categories}
 }
 
-export async function getCategory (id) {
-    var variables = {"id": filterInt(id)}
+export async function getCategory (id, fields) {
+    var variables = {...fields, "id": filterInt(id)}
     const data = await graphQLClient.request(categoryQuery, variables)
     console.info("The response : ", data )
     return {response: data.category}

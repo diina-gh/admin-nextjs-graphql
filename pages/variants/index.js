@@ -38,7 +38,8 @@ export default function Index() {
     const [direction, setDirection] = useState('asc')
     const [orderBy, setOrderBy] = useState({"id": direction})
   
-    const { items, isLoading, isError, mutate } = getVariants(page,take,filter, orderBy )
+    const fields = {"variantName": true, "variantDesc": true, "variantCreatedat": true,}
+    const { items, isLoading, isError, mutate } = getVariants(page,take,filter, orderBy, fields )
 
     if(mutate) console.log("The mutate ", mutate)
   
@@ -295,7 +296,9 @@ function Options () {
     const [direction, setDirection] = useState('asc')
     const [orderBy, setOrderBy] = useState({"id": direction})
   
-    var { items, isLoading, isError, mutate } = getOptions(page,take,filter, orderBy )
+    const fields = {"optionValue": true, "optionColorCode": true, "optionVariant": true, "optionVariantName": true}
+
+    var { items, isLoading, isError, mutate } = getOptions(page,take,filter, orderBy, fields)
   
     const refetch = useDebouncedCallback(
         (newPage, newFilter = null, newOrder = null ) => {

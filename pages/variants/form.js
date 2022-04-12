@@ -38,7 +38,8 @@ class Index extends Component {
         var itemId = router.query.id
         if(itemId !=null){
             this.setState({block: true})
-            var {response} = await getVariant(itemId)
+            const fields = {"variantName": true, "variantDesc": true, "variantCreatedat": true, "variantOptions": true, "optionValue": true, "optionColorCode": true}
+            var {response} = await getVariant(itemId, fields)
             if(response?.__typename == 'Variant'){
                 this.setState({ id: response.id, name: response.name, desc: response.desc, options: response.options, block:false })
             }

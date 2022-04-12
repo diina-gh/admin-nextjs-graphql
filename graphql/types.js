@@ -15,6 +15,14 @@ export const imageFields = gql `
     }
 `
 
+export const newsletterFields = gql `           
+    fragment newsletterFields on Newsletter {
+        id
+        email @include(if: $newsletterEmail)
+        createdat @include(if: $newsletterCreatedat)
+    }
+`
+
 export const parentFields = gql `           
     fragment parentFields on Category {
         id
@@ -32,14 +40,6 @@ export const childFields = gql `
             id
             url
         }
-    }
-`
-
-export const newsletterFields = gql `           
-    fragment newsletterFields on Newsletter {
-        id
-        email @include(if: $newsletterEmail)
-        createdat @include(if: $newsletterCreatedat)
     }
 `
 
@@ -65,6 +65,34 @@ export const categoryFields = gql `
         }
         image @include(if: $categoryImage){
             ...imageFields
+        }
+    }
+`
+
+export const optionFields = gql `           
+    fragment optionFields on Option {
+        id
+        value @include(if: $optionValue)
+        colorCode @include(if: $optionColorCode)
+        variantId @include(if: $optionVariantId)
+        variant @include(if: $optionVariant) {
+            id
+            name @include(if: $optionVariantName)
+        }
+    }
+`
+
+export const variantFields = gql `  
+
+    ${optionFields}
+
+    fragment variantFields on Variant {
+        id
+        name @include(if: $variantName)
+        desc @include(if: $variantDesc)
+        createdat @include(if: $variantCreatedat)
+        options @include(if: $variantOptions){
+            ...optionFields  
         }
     }
 `
