@@ -92,7 +92,7 @@ export const subCategoriesQuery = gql`
 export const categoryQuery = gql `
 
     ${Types.categoryFields}
-    ${Types.InputError}
+    ${Types.inputError}
 
     query($id: Int,
           $categoryName: Boolean = false, $categoryDesc: Boolean = false, $categoryOrder: Boolean = false, $imageUrl: Boolean = false, 
@@ -103,14 +103,14 @@ export const categoryQuery = gql `
         category(id: $id) {
             __typename
             ...categoryFields
-            ...InputError
+            ...inputError
         }
     }
 `
 
 export const variantQuery = gql`
     ${Types.variantFields}
-    ${Types.InputError}
+    ${Types.inputError}
     query($id: Int,
           $variantName: Boolean = false, $variantDesc: Boolean = false, $variantCreatedat: Boolean = false, $variantOptions: Boolean = false,
           $optionValue: Boolean = false, $optionColorCode: Boolean = false, $optionVariant: Boolean = false, $optionVariantId: Boolean = false, $optionVariantName: Boolean = false
@@ -118,7 +118,7 @@ export const variantQuery = gql`
         variant(id: $id) {
             __typename
             ...variantFields
-            ...InputError
+            ...inputError
         }
     }
 `
@@ -141,14 +141,14 @@ export const variantsQuery = gql`
 
 export const optionQuery = gql `
     ${Types.optionFields}
-    ${Types.InputError}    
+    ${Types.inputError}    
     query($id: Int,
           $optionValue: Boolean = false, $optionColorCode: Boolean = false, $optionVariantId: Boolean = false, $optionVariant: Boolean = false, $optionVariantName: Boolean = false
     ){
         option(id: $id) {
             __typename
             ...optionFields
-            ...InputError
+            ...inputError
         }
     }
 `
@@ -184,7 +184,7 @@ export const countriesQuery = gql`
 `
 
 export const countryQuery = gql`
-    ${Types.InputError}
+    ${Types.inputError}
     query($id: Int){
         country(id: $id) {
             __typename
@@ -196,7 +196,7 @@ export const countryQuery = gql`
                 createdat
                 updatedat
             }
-            ...InputError 
+            ...inputError 
         }
     }
 `
@@ -221,7 +221,7 @@ export const regionsQuery = gql `
 `
 
 export const regionQuery = gql `
-    ${Types.InputError}
+    ${Types.inputError}
     query($id: Int){
         region(id: $id) {
             __typename
@@ -237,7 +237,7 @@ export const regionQuery = gql `
                 createdat
                 updatedat
             }
-            ...InputError
+            ...inputError
         }
     }
 `
@@ -264,7 +264,7 @@ export const districtsQuery = gql`
 `
 
 export const districtQuery = gql`
-    ${Types.InputError}
+    ${Types.inputError}
     query($id: Int){
         district(id: $id) {
             __typename
@@ -280,7 +280,7 @@ export const districtQuery = gql`
                 createdat
                 updatedat
             }
-            ...InputError
+            ...inputError
         }
     }
 `
@@ -300,7 +300,7 @@ export const shippingMethodsQuery = gql`
 `
 
 export const shippingMethodQuery = gql`
-    ${Types.InputError}
+    ${Types.inputError}
     query($id: Int){
         shippingMethod(id: $id) {
             __typename
@@ -310,7 +310,7 @@ export const shippingMethodQuery = gql`
                 code
                 desc
             }
-            ...InputError
+            ...inputError
         }
     }
 `
@@ -330,7 +330,7 @@ export const paymentMethodsQuery = gql`
 `
 
 export const paymentMethodQuery = gql`
-    ${Types.InputError}
+    ${Types.inputError}
     query($id: Int){
         paymentMethod(id: $id) {
             __typename
@@ -340,7 +340,7 @@ export const paymentMethodQuery = gql`
                 code
                 desc
             }
-            ...InputError
+            ...inputError
         }
     }
 `
@@ -362,7 +362,7 @@ export const deliveryMansQuery = gql`
 `
 
 export const deliveryManQuery = gql`
-    ${Types.InputError}
+    ${Types.inputError}
     query($id: Int){
         deliveryMan(id: $id) {
             __typename
@@ -375,7 +375,7 @@ export const deliveryManQuery = gql`
                 phonenumber
 
             }
-            ...InputError
+            ...inputError
         }
     }
 `
@@ -400,7 +400,7 @@ export const brandsQuery = gql`
 `
 
 export const brandQuery = gql`
-    ${Types.InputError}
+    ${Types.inputError}
     query($id: Int){
         brand(id: $id) {
             __typename
@@ -417,7 +417,7 @@ export const brandQuery = gql`
                 createdat
                 updatedat
             }
-            ...InputError
+            ...inputError
         }
     }
 `
@@ -462,7 +462,7 @@ export const productsQuery = gql `
 `
 
 export const productQuery = gql `
-    ${Types.InputError}
+    ${Types.inputError}
     query($id: Int){
         product(id: $id){
             __typename
@@ -538,7 +538,7 @@ export const productQuery = gql `
                     }
                 }
             }
-            ...InputError
+            ...inputError
         }
             
     }
@@ -589,7 +589,7 @@ export const permissionsQuery = gql `
 `
 
 export const permissionQuery = gql `
-    ${Types.InputError}
+    ${Types.inputError}
     query($id: Int){
         permission(id: $id) {
             __typename
@@ -598,7 +598,7 @@ export const permissionQuery = gql `
                 name
                 desc
             }
-            ...InputError
+            ...inputError
         }
     }
 `
@@ -624,7 +624,7 @@ export const rolesQuery = gql`
 `
 
 export const roleQuery = gql`
-    ${Types.InputError}
+    ${Types.inputError}
     query($id: Int){
         role(id: $id) {
             __typename
@@ -641,7 +641,7 @@ export const roleQuery = gql`
                     }
                 }
             }
-            ...InputError
+            ...inputError
         }
     }
 `
@@ -702,7 +702,7 @@ export const clientsQuery = gql `
 `
 
 export const userQuery = gql `
-    ${Types.InputError}
+    ${Types.inputError}
     query($id: Int){
         user(id: $id){
             __typename
@@ -728,7 +728,7 @@ export const userQuery = gql `
                     }
                 }
             }
-            ...InputError
+            ...inputError
         }
     }
 `

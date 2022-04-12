@@ -1,6 +1,6 @@
 import { gql } from 'graphql-request'
 
-export const InputError = gql `
+export const inputError = gql `
     fragment InputError on InputError {
         message
         input
@@ -37,18 +37,13 @@ export const childFields = gql `
         name @include(if: $childName)
         desc  @include(if: $childDesc)
         image @include(if: $childImage){
-            id
-            url
+            ...imageFields
         }
     }
 `
 
 export const categoryFields = gql `
-
-    ${parentFields}
-    ${imageFields}
-    ${childFields}
-
+    ${parentFields} ${imageFields} ${childFields}
     fragment categoryFields on Category {
         id
         name @include(if: $categoryName)
@@ -69,6 +64,19 @@ export const categoryFields = gql `
     }
 `
 
+export const variantFields = gql `  
+    ${optionFields}
+    fragment variantFields on Variant {
+        id
+        name @include(if: $variantName)
+        desc @include(if: $variantDesc)
+        createdat @include(if: $variantCreatedat)
+        options @include(if: $variantOptions){
+            ...optionFields  
+        }
+    }
+`
+
 export const optionFields = gql `           
     fragment optionFields on Option {
         id
@@ -82,17 +90,176 @@ export const optionFields = gql `
     }
 `
 
-export const variantFields = gql `  
-
-    ${optionFields}
-
-    fragment variantFields on Variant {
+export const countryFields = gql`
+    fragment countryFields on Country {
         id
-        name @include(if: $variantName)
-        desc @include(if: $variantDesc)
-        createdat @include(if: $variantCreatedat)
-        options @include(if: $variantOptions){
-            ...optionFields  
+        name @include(if: $countryName)
+        iso3 @include(if: $countryIso3)
+        isoNum @include(if: $countryIsoNum)
+        createdat @include(if: $countryCreatedAt)
+        updatedat @include(if: $countryUpdatedAt)
+    }
+`
+
+export const regionFields = gql`
+    ${countryFields}
+    fragment regionFields on Region {
+        id
+        name @include(if: $regionName)
+        code @include(if: $regionCode)
+        createdat @include(if: $regionCreatedAt)
+        updatedat @include(if: $regionUpdatedAt)
+        country @include(if: $regionCountry) {
+            ...countryFields
+        }
+    }
+`
+
+export const districtFields = gql`
+    ${districtFields}
+    fragment districtFields on District {
+        id
+        name @include(if: $districtName)
+        shipping @include(if: $districtShipping)
+        createdat @include(if: $regionCreatedAt)
+        updatedat @include(if: $regionUpdatedAt)
+        region @include(if: $districtRegion) {
+            ...regionFields
+        }
+    }
+`
+export const shippingMethodFields = gql`
+    fragment shippingMethodFields on ShippingMethod {
+        id
+        code @include(if: $shippingMethodCode)
+        name @include(if: $shippingMethodName)
+        desc @include(if: $shippingMethodDesc)
+    }
+`
+
+export const paymentMethodFields = gql`
+    fragment paymentMethodFields on PaymentMethod {
+        id
+        code @include(if: $paymentMethodCode)
+        name @include(if: $paymentMethodName)
+        desc @include(if: $paymentMethodDesc)
+    }
+`
+
+export const deliveryManFields = gql`
+    fragment deliveryManFields on DeliveryMan {
+        id
+        civility @include(if: $deliveryManCivility)
+        firstname @include(if: $deliveryManFirstname)
+        lastname @include(if: $deliveryManLastname)
+        email @include(if: $deliveryManEmail)
+        phonenumber @include(if: $deliveryManPhonenumber)
+    }
+`
+
+export const brandFields = gql`
+    ${imageFields} 
+    fragment brandFields on Brand {
+        id
+        name @include(if: $brandName)
+        desc @include(if: $brandDesc)
+        order @include(if: $brandOrder)
+        image @include(if: $brandImage){
+            ...imageFields
+        }
+    }
+`
+
+export const discountFields = gql`
+    fragment discountFields on Discount {
+        id
+        percent @include(if: $discountPercent)
+    }
+`
+
+export const inventoryFields = gql`
+    fragment inventoryFields on Inventory {
+        id
+        quantity @include(if: $inventoryQuantity)
+        details @include(if: $inventoryDetails)
+    }
+`
+
+export const relativeFields = gql `  
+    fragment relativeFields on Product {
+        id
+        name @include(if: $relativeName)
+        desc  @include(if: $relativeDesc)
+        unitprice  @include(if: $relativeUnitPrice)
+        image @include(if: $relativeImage){
+            ...imageFields
+        }
+        brand @include(if: $relativeBrand){
+            id
+            name
+            image{
+                url
+            }
+        }
+        category @include(if: $relativeCategory){
+            id
+            name
+            image{
+                url
+            }
+        }
+    }
+`
+
+export const productFields = gql`
+    ${variantFields} ${optionFields} ${imageFields} ${relativeFields} ${discountFields} ${inventoryFields}
+    fragment productFields on Product {
+        id
+        name @include(if: $productName)
+        desc @include(if: $productDesc)
+        order @include(if: $productOrder)
+        unit @include(if: $productUnit)
+        unitprice @include(if: $productUnitprice)
+        unitweight @include(if: $productUnitweight)
+        status @include(if: $productStatus)
+        activated @include(if: $productActivated)
+        taxable @include(if: $productTaxable)
+        ranking @include(if: $productRanking)
+        likes @include(if: $productLikes)
+        views @include(if: $productViews)
+        createdat @include(if: $productCreatedat)
+        updatedat @include(if: $productUpdatedat)
+        gender @include(if: $productGender)
+        brand @include(if: $productBrand){
+            id
+            name
+            image{url}
+        }
+        category @include(if: $productCategory){
+            id
+            name
+            image{url}
+        }
+        variant @include(if: $productVariant){
+            ...variantFields
+        }
+        option @include(if: $productOption){
+            ...optionFields
+        }
+        discount @include(if: $productDiscount){
+            ...discountFields
+        }
+        inventory @include(if: $productInventory){
+            ...inventoryFields
+        }
+        relatives @include(if: $productRelatives){
+            ...relativeFields
+        }
+        related @include(if: $productRelated){
+            ...relativeFields
+        }
+        image @include(if: $productImage){
+            ...imageFields
         }
     }
 `
