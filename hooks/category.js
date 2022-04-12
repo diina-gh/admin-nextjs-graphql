@@ -1,30 +1,32 @@
 import useSWR from 'swr'
 import {GraphQLClient, request} from 'graphql-request'
-import { categoriesQuery, categoriesQuery2, categoryQuery, subCategoriesQuery } from '../graphql/queries'
+import { categoriesQuery, categoryQuery, subCategoriesQuery } from '../graphql/queries'
 import {saveCategoryMutation, deleteCategoryMutation} from "../graphql/mutations"
-import { filterInt } from '../libs/util'
+import { filterInt, bool } from '../libs/util'
 import Cookies from 'js-cookie'
 
 const token = Cookies.get('userToken')
 const endpoint = "https://trade-two.vercel.app/graphql"
 const graphQLClient = new GraphQLClient(endpoint, {headers: {authorization: token,},})
 
-export function getCategories (page, take, filter, orderBy) {
-    var variables = {"page": page, "take": take,"filter": filter, "orderBy": orderBy}
+export function getCategories (page, take, filter, orderBy, fields) {
+    var variables = {...fields,"page": page, "take": take,"filter": filter, "orderBy": orderBy, "categoryName": true}
     var fetcher = query => request(endpoint, query, variables)
     const { data, error, mutate } = useSWR(categoriesQuery,fetcher);
     return {items: data, isLoading: !error && !data, isError: error, mutate}
 }
 
-export function getSubCategories (page, take, filter, orderBy) {
-    var variables = {"page": page, "take": take,"filter": filter, "orderBy": orderBy}
+export function getSubCategories (page, take, filter, orderBy, fields ) {
+
+    var variables = {...fields, "page": page, "take": take,"filter": filter, "orderBy": orderBy,}
     var fetcher = query => request(endpoint, query, variables)
+
     const { data, error, mutate } = useSWR(subCategoriesQuery,fetcher);
     return {items: data, isLoading: !error && !data, isError: error, mutate}
 }
 
 export async function allCategories(){
-    const data = await graphQLClient.request(categoriesQuery2)
+    const data = await graphQLClient.request(categoriesQuery)
     console.info("The response : ", data )
     return {response: data.categories}
 }

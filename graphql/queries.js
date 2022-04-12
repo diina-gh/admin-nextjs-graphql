@@ -20,7 +20,6 @@ export const newsletterQuery = gql`
             id
             email
             createdat
-            count
         }
     }
 `
@@ -50,86 +49,41 @@ export const districtsOnUsersQuery = gql `
         }
     }
 `
-export const categoriesQuery = gql`
-    query($page: Int, $take: Int, $filter: String, $orderBy: CategoryOrderByInput){
-        categories(page: $page, take: $take, filter: $filter, orderBy: $orderBy) {
-            count
-            countSub
-            categories {
-                id
-                name
-                desc
-                order
-                createdat
-                activated
-                image {
-                    id
-                    url
-                    imageref
-                }
-            }
-            
-        }
-    }
-`
 
-export const categoriesQuery2 = gql`
-    query($page: Int, $take: Int, $filter: String, $orderBy: CategoryOrderByInput){
-        categories(page: $page, take: $take, filter: $filter, orderBy: $orderBy) {
+export const categoriesQuery = gql`
+    ${Types.categoryFields}
+    query($page: Int, $take: Int, $filter: String, $orderBy: CategoryOrderByInput,
+          $categoryName: Boolean = false, $categoryDesc: Boolean = false, $categoryOrder: Boolean = false, $imageUrl: Boolean = false, 
+          $categoryCreatedat: Boolean = false, $categoryActivated: Boolean = false, $categoryParentId: Boolean = false, $imageImageref: Boolean = false, 
+          $categoryImage: Boolean = false, $categoryParent: Boolean = false, $parentName: Boolean = false, $parentDesc: Boolean = false,
+          $categoryChilds: Boolean = false, $childName: Boolean = false, $childDesc: Boolean = false, $childImage: Boolean = false   
+        ){
+
+        categories(page: $page, take: $take, filter: $filter, orderBy: $orderBy ){
             count
             countSub
             categories {
-                id
-                name
-                desc
-                createdat
-                activated
-                parent {
-                    id
-                    name
-                }
-                childs {
-                    id
-                    name
-                    desc
-                    image {
-                        id 
-                        url
-                        imageref
-                    }
-                }
-                image {
-                    id
-                    url
-                    imageref
-                }
+                ...categoryFields
             }
         }
+
     }
 `
 
 export const subCategoriesQuery = gql`
-    query($page: Int, $take: Int, $filter: String, $orderBy: CategoryOrderByInput){
-        subCategories(page: $page, take: $take, filter: $filter, orderBy: $orderBy) {
+    ${Types.categoryFields}
+    query($page: Int, $take: Int, $filter: String, $orderBy: CategoryOrderByInput,
+          $categoryName: Boolean = false, $categoryDesc: Boolean = false, $categoryOrder: Boolean = false, $imageUrl: Boolean = false, 
+          $categoryCreatedat: Boolean = false, $categoryActivated: Boolean = false, $categoryParentId: Boolean = false, $imageImageref: Boolean = false, 
+          $categoryImage: Boolean = false, $categoryParent: Boolean = false, $parentName: Boolean = false, $parentDesc: Boolean = false,
+          $categoryChilds: Boolean = false, $childName: Boolean = false, $childDesc: Boolean = false, $childImage: Boolean = false   
+        ){
+
+        subCategories(page: $page, take: $take, filter: $filter, orderBy: $orderBy ){
             count
             countSub
             categories {
-                id
-                name
-                desc
-                createdat
-                parentId
-                order
-                activated
-                parent {
-                    id
-                    name
-                }
-                image {
-                    id
-                    url
-                    imageref
-                }
+                ...categoryFields
             }
         }
     }

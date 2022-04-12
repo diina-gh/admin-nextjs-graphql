@@ -32,8 +32,6 @@ import CrossIcon from '../../components/ui/icons/crossIcon';
 import PencilIcon from '../../components/ui/icons/pencilIcon';
 import { truncate } from '../../libs/util';
 
-const a_text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
-
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -56,8 +54,8 @@ export default function Index() {
         setDisplay(option)
     }
 
-  
-    const { items, isLoading, isError, mutate } = getCategories(page,take,filter,orderBy )
+    const fields = {"categoryName": true, "categoryDesc": true, "categoryOrder": true, "categoryActivated": true, "categoryImage":true, "imageUrl": true}
+    const { items, isLoading, isError, mutate } = getCategories(page,take,filter,orderBy,fields)
 
     if(mutate) console.log("The mutate ", mutate)
   
@@ -443,7 +441,8 @@ function SubCategories () {
         setDisplay(option)
     }
   
-    var { items, isLoading, isError, mutate } = getSubCategories(page,take,filter, orderBy )
+    const fields = {"categoryName": true, "categoryDesc": true, "categoryOrder": true, "categoryActivated": true, "categoryImage":true, "imageUrl": true, "categoryParent": true, "parentName": true}
+    var { items, isLoading, isError, mutate } = getSubCategories(page,take,filter,orderBy,fields)
   
     const refetch = useDebouncedCallback(
         (newPage, newFilter = null, newOrder = null ) => {
@@ -645,6 +644,9 @@ function SubCategories () {
                                                     Ordre
                                                 </th>
                                                 <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider" >
+                                                    Parent
+                                                </th>
+                                                <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider" >
                                                     Status
                                                 </th>
 
@@ -654,7 +656,7 @@ function SubCategories () {
                                             </tr>
                                         </thead>
                                         <tbody className="bg-white divide-y divide-gray-200">
-                                            {items.categories.categories.map((item, i) => (
+                                            {items.subCategories.categories.map((item, i) => (
                                                 <tr key={item.id} className={(i%2==0) ? "" : "bg-gray-100 bg-opacity-50"}>
 
                                                     <td className="px-6 py-3 whitespace-nowrap">
@@ -683,6 +685,9 @@ function SubCategories () {
                                                             </span>
                                                         }
                                                         
+                                                    </td>
+                                                    <td className="px-6 py-3 whitespace-nowrap">
+                                                        <div className={`${item.activated ? 'opacity-100' : 'opacity-50'} text-sm text-gray-900 w-32 truncate`} >{item.parent?.name}</div>
                                                     </td>
                                                     <td className="px-6 py-3 whitespace-nowrap">
                                                         {item.activated == true ?
