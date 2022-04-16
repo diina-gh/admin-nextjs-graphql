@@ -287,7 +287,7 @@ class Filter extends Component {
                                   </div>
                                   <div className='mt-3 mb-3 flex flex-row justify-start'>
                                     <Swiper className="mb-1" spaceBetween={4} slidesPerView={9} freeMode={true} watchSlidesProgress={true} modules={[FreeMode, Navigation]} >
-                                      {item0.options.map((item, i) => (
+                                      {item0?.options?.map((item, i) => (
                                         <SwiperSlide key={i} className="slider-type2 mb-2">
                                             {!item.colorCode 
                                                 ?<div onClick={(e) => this.filterOptions(e, i0, i) } className={classNames(item.checked ? 'border-2 border-purple-600 bg-purple-600 text-white shadow shadow-purple-300' : 'bg-gray-50/50 border border-gray-600 text-gray-800', 'flex flex-row justify-center w-7 h-7 mr-3 rounded-md cursor-pointer self-center transition duration-500 ease-in-out ')}>

@@ -1,6 +1,6 @@
 import { gql } from 'graphql-request'
 
-export const inputError = gql `
+export const InputError = gql `
     fragment InputError on InputError {
         message
         input
@@ -64,19 +64,6 @@ export const categoryFields = gql `
     }
 `
 
-export const variantFields = gql `  
-    ${optionFields}
-    fragment variantFields on Variant {
-        id
-        name @include(if: $variantName)
-        desc @include(if: $variantDesc)
-        createdat @include(if: $variantCreatedat)
-        options @include(if: $variantOptions){
-            ...optionFields  
-        }
-    }
-`
-
 export const optionFields = gql `           
     fragment optionFields on Option {
         id
@@ -86,6 +73,19 @@ export const optionFields = gql `
         variant @include(if: $optionVariant) {
             id
             name @include(if: $optionVariantName)
+        }
+    }
+`
+
+export const variantFields = gql `  
+    ${optionFields}
+    fragment variantFields on Variant {
+        id
+        name @include(if: $variantName)
+        desc @include(if: $variantDesc)
+        createdat @include(if: $variantCreatedat)
+        options @include(if: $variantOptions){
+            ...optionFields  
         }
     }
 `
@@ -110,13 +110,14 @@ export const regionFields = gql`
         createdat @include(if: $regionCreatedAt)
         updatedat @include(if: $regionUpdatedAt)
         country @include(if: $regionCountry) {
-            ...countryFields
+            id
+            name @include(if: $regionCountryName)
         }
     }
 `
 
 export const districtFields = gql`
-    ${districtFields}
+    ${regionFields}
     fragment districtFields on District {
         id
         name @include(if: $districtName)
@@ -124,7 +125,8 @@ export const districtFields = gql`
         createdat @include(if: $regionCreatedAt)
         updatedat @include(if: $regionUpdatedAt)
         region @include(if: $districtRegion) {
-            ...regionFields
+            id
+            name @include(if: $districtRegionName)
         }
     }
 `
@@ -134,6 +136,8 @@ export const shippingMethodFields = gql`
         code @include(if: $shippingMethodCode)
         name @include(if: $shippingMethodName)
         desc @include(if: $shippingMethodDesc)
+        createdat @include(if: $shippingMethodCreatedAt)
+        updatedat @include(if: $shippingMethodUpdatedAt)
     }
 `
 
@@ -143,6 +147,8 @@ export const paymentMethodFields = gql`
         code @include(if: $paymentMethodCode)
         name @include(if: $paymentMethodName)
         desc @include(if: $paymentMethodDesc)
+        createdat @include(if: $paymentMethodCreatedAt)
+        updatedat @include(if: $paymentMethodUpdatedAt)
     }
 `
 
@@ -154,6 +160,8 @@ export const deliveryManFields = gql`
         lastname @include(if: $deliveryManLastname)
         email @include(if: $deliveryManEmail)
         phonenumber @include(if: $deliveryManPhonenumber)
+        createdat @include(if: $deliveryManCreatedAt)
+        updatedat @include(if: $deliveryManUpdatedAt)
     }
 `
 
@@ -260,6 +268,42 @@ export const productFields = gql`
         }
         image @include(if: $productImage){
             ...imageFields
+        }
+    }
+`
+
+export const permissionFields = gql`
+    fragment permissionFields on Permission {
+        id
+        name @include(if: $permissionName)
+        desc @include(if: $permissionDesc)
+    }
+`
+
+export const roleFields = gql`
+    ${permissionFields}
+    fragment roleFields on Role {
+        id
+        name @include(if: $roleName)
+        desc @include(if: $roleDesc)
+        permission @include(if: $rolePermission){
+            ...permissionFields
+        }
+    }
+`
+
+export const userFields = gql`
+    ${roleFields}
+    fragment userFields on User {
+        id
+        activated @include(if: $userActivated)
+        civility @include(if: $userCivility)
+        firstname @include(if: $userFirstname)
+        lastname @include(if: $userLastname)
+        email @include(if: $userEmail)
+        phonenumber @include(if: $userPhonenumber)
+        roles @include(if: $userRoles){
+            ...permissionFields
         }
     }
 `

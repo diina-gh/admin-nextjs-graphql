@@ -32,7 +32,8 @@ export default function Index() {
     const [orderBy, setOrderBy] = useState({"id": direction})
     const [block, setBlock] = useState(false);
 
-    var { items, isLoading, isError, mutate } = getPaymentMethods(page,take,filter, orderBy )
+    const fields = {"paymentMethodCode": true, "paymentMethodName": true, "paymentMethodDesc": true}
+    var { items, isLoading, isError, mutate } = getPaymentMethods(page,take,filter, orderBy, fields )
 
     const refetch = useDebouncedCallback(
         (newPage, newFilter = null, newOrder = null ) => {

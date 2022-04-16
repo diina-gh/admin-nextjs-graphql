@@ -92,7 +92,7 @@ export const subCategoriesQuery = gql`
 export const categoryQuery = gql `
 
     ${Types.categoryFields}
-    ${Types.inputError}
+    ${Types.InputError}
 
     query($id: Int,
           $categoryName: Boolean = false, $categoryDesc: Boolean = false, $categoryOrder: Boolean = false, $imageUrl: Boolean = false, 
@@ -103,14 +103,14 @@ export const categoryQuery = gql `
         category(id: $id) {
             __typename
             ...categoryFields
-            ...inputError
+            ...InputError
         }
     }
 `
 
 export const variantQuery = gql`
     ${Types.variantFields}
-    ${Types.inputError}
+    ${Types.InputError}
     query($id: Int,
           $variantName: Boolean = false, $variantDesc: Boolean = false, $variantCreatedat: Boolean = false, $variantOptions: Boolean = false,
           $optionValue: Boolean = false, $optionColorCode: Boolean = false, $optionVariant: Boolean = false, $optionVariantId: Boolean = false, $optionVariantName: Boolean = false
@@ -118,7 +118,7 @@ export const variantQuery = gql`
         variant(id: $id) {
             __typename
             ...variantFields
-            ...inputError
+            ...InputError
         }
     }
 `
@@ -141,14 +141,14 @@ export const variantsQuery = gql`
 
 export const optionQuery = gql `
     ${Types.optionFields}
-    ${Types.inputError}    
+    ${Types.InputError}    
     query($id: Int,
           $optionValue: Boolean = false, $optionColorCode: Boolean = false, $optionVariantId: Boolean = false, $optionVariant: Boolean = false, $optionVariantName: Boolean = false
     ){
         option(id: $id) {
             __typename
             ...optionFields
-            ...inputError
+            ...InputError
         }
     }
 `
@@ -168,214 +168,171 @@ export const optionsQuery = gql `
 `
 
 export const countriesQuery = gql`
-    query($page: Int, $take: Int, $filter: String, $orderBy: CountryOrderByInput){
+    ${Types.countryFields}
+    query($page: Int, $take: Int, $filter: String, $orderBy: CountryOrderByInput,
+        $countryName: Boolean = false, $countryIso3: Boolean = false, $countryIsoNum: Boolean = false, $countryCreatedAt: Boolean = false, $countryUpdatedAt: Boolean = false,
+    ){
         countries(page: $page, take: $take, filter: $filter, orderBy: $orderBy) {
             count
             countries{
-                id
-                name
-                iso3
-                isoNum
-                createdat
-                updatedat
+                ...countryFields
             }
         }
     }
 `
 
 export const countryQuery = gql`
-    ${Types.inputError}
-    query($id: Int){
+    ${Types.InputError}
+    ${Types.countryFields}
+    query($id: Int,
+          $countryName: Boolean = false, $countryIso3: Boolean = false, $countryIsoNum: Boolean = false, $countryCreatedAt: Boolean = false, $countryUpdatedAt: Boolean = false,
+    ){
         country(id: $id) {
             __typename
-            ... on Country{
-                id
-                name
-                iso3
-                isoNum
-                createdat
-                updatedat
-            }
-            ...inputError 
+            ... countryFields
+            ...InputError 
         }
     }
 `
 
 export const regionsQuery = gql `
-    query($page: Int, $take: Int, $filter: String, $orderBy: RegionOrderByInput){
-        regions(page: $page, take: $take, filter: $filter, orderBy: $orderBy) {
-            count
-            regions {
-                id
-                name
-                code
-                country {
-                    id
-                    name
+    ${Types.regionFields}
+    query($page: Int, $take: Int, $filter: String, $orderBy: RegionOrderByInput,
+          $regionName: Boolean = false, $regionCode: Boolean = false, $regionCreatedAt: Boolean = false, $regionUpdatedAt: Boolean = false, $regionCountry: Boolean = false, $regionCountryName: Boolean = false
+        ){
+            regions(page: $page, take: $take, filter: $filter, orderBy: $orderBy,) {
+                count
+                regions {
+                    ...regionFields
                 }
-                createdat
-                updatedat
             }
         }
-    }
 `
 
 export const regionQuery = gql `
-    ${Types.inputError}
-    query($id: Int){
-        region(id: $id) {
-            __typename
-            ... on Region{
-                id
-                name
-                code
-                countryId
-                country{
-                    id
-                    name
-                }
-                createdat
-                updatedat
+    ${Types.InputError}
+    ${Types.regionFields}
+    query($id: Int,
+          $regionName: Boolean = false, $regionCode: Boolean = false, $regionCreatedAt: Boolean = false, $regionUpdatedAt: Boolean = false, $regionCountry: Boolean = false, $regionCountryName: Boolean = false 
+        ){
+            region(id: $id) {
+                __typename
+                ...regionFields
+                ...InputError
             }
-            ...inputError
         }
-    }
 `
 
 export const districtsQuery = gql`
-    query($page: Int, $take: Int, $filter: String, $orderBy: DistrictOrderByInput){
+    ${Types.districtFields}
+    query($page: Int, $take: Int, $filter: String, $orderBy: DistrictOrderByInput,
+          $districtName: Boolean = false, $districtShipping: Boolean = false, $districtCreatedAt: Boolean = false, $distrcitUpdatedAt: Boolean = false, $districtRegion: Boolean = false, $districtRegionName: Boolean = false
+    ){
         districts(page: $page, take: $take, filter: $filter, orderBy: $orderBy) {
             count
             countRegions
             countCountries
             districts {
-                id
-                name
-                region{
-                    id
-                    name
-                }
-                shipping
-                createdat
-                updatedat
+                ...districtFields
             }
         }
     }
 `
 
 export const districtQuery = gql`
-    ${Types.inputError}
-    query($id: Int){
+    ${Types.InputError}
+    ${Types.districtFields}
+    query($id: Int,
+          $districtName: Boolean = false, $districtShipping: Boolean = false, $districtCreatedAt: Boolean = false, $distrcitUpdatedAt: Boolean = false, $districtRegion: Boolean = false, $districtRegionName: Boolean = false
+    ){
         district(id: $id) {
             __typename
-            ... on District{
-                id
-                name
-                shipping
-                regionId
-                region {
-                    id
-                    name
-                }
-                createdat
-                updatedat
-            }
-            ...inputError
+            ...districtFields
+            ...InputError
         }
     }
 `
 
 export const shippingMethodsQuery = gql`
-    query($page: Int, $take: Int, $filter: String, $orderBy: ShippingMethodOrderByInput){
+    ${Types.shippingMethodFields}
+    query($page: Int, $take: Int, $filter: String, $orderBy: ShippingMethodOrderByInput,
+          $shippingMethodCode: Boolean = false, $shippingMethodName: Boolean = false, $shippingMethodDesc: Boolean = false, $shippingMethodUpdatedAt: Boolean = false, $shippingMethodCreatedAt: Boolean = false
+    ){
         shippingMethods(page: $page, take: $take, filter: $filter, orderBy: $orderBy) {
             count
             shippingMethods {
-                id
-                code
-                desc
-                name
+                ...shippingMethodFields
             }
         }
     }
 `
 
 export const shippingMethodQuery = gql`
-    ${Types.inputError}
-    query($id: Int){
+    ${Types.InputError}
+    ${Types.shippingMethodFields}
+    query($id: Int,
+          $shippingMethodCode: Boolean = false, $shippingMethodName: Boolean = false, $shippingMethodDesc: Boolean = false, $shippingMethodUpdatedAt: Boolean = false, $shippingMethodCreatedAt: Boolean = false
+    ){
         shippingMethod(id: $id) {
             __typename
-            ... on ShippingMethod{
-                id
-                name
-                code
-                desc
-            }
-            ...inputError
+            ...shippingMethodFields
+            ...InputError
         }
     }
 `
 
 export const paymentMethodsQuery = gql`
-    query($page: Int, $take: Int, $filter: String, $orderBy: PaymentMethodOrderByInput){
+    ${Types.paymentMethodFields}
+    query($page: Int, $take: Int, $filter: String, $orderBy: PaymentMethodOrderByInput,
+          $paymentMethodCode: Boolean = false, $paymentMethodName: Boolean = false, $paymentMethodDesc: Boolean = false, $paymentMethodUpdatedAt: Boolean = false, $paymentMethodCreatedAt: Boolean = false
+    ){
         paymentMethods(page: $page, take: $take, filter: $filter, orderBy: $orderBy) {
             count
             paymentMethods {
-                id
-                code
-                desc
-                name
+                ...paymentMethodFields
             }
         }
     }
 `
 
 export const paymentMethodQuery = gql`
-    ${Types.inputError}
-    query($id: Int){
+    ${Types.InputError}
+    ${Types.paymentMethodFields}
+    query($id: Int,
+          $paymentMethodCode: Boolean = false, $paymentMethodName: Boolean = false, $paymentMethodDesc: Boolean = false, $paymentMethodUpdatedAt: Boolean = false, $paymentMethodCreatedAt: Boolean = false
+    ){
         paymentMethod(id: $id) {
             __typename
-            ... on PaymentMethod{
-                id
-                name
-                code
-                desc
-            }
-            ...inputError
+            ...paymentMethodFields
+            ...InputError
         }
     }
 `
 
 export const deliveryMansQuery = gql`
-    query($page: Int, $take: Int, $filter: String, $orderBy: DeliveryManOrderByInput){
+    ${Types.deliveryManFields}
+    query($page: Int, $take: Int, $filter: String, $orderBy: DeliveryManOrderByInput,
+          $deliveryManFirstname: Boolean = false, $deliveryManLastname: Boolean = false, $deliveryManEmail: Boolean = false, $deliveryManPhonenumber: Boolean = false, $deliveryManCreatedAt: Boolean = false, $deliveryManUpdatedAt: Boolean = false
+    ){
         deliveryMans(page: $page, take: $take, filter: $filter, orderBy: $orderBy) {
             count
             deliveryMans {
-                id
-                civility
-                firstname
-                lastname
-                email
-                phonenumber
+                ...deliveryManFields
             }
         }
     }
 `
 
 export const deliveryManQuery = gql`
-    ${Types.inputError}
-    query($id: Int){
+    ${Types.InputError}
+    ${Types.deliveryManFields}
+    query($id: Int,
+          $deliveryManFirstname: Boolean = false, $deliveryManLastname: Boolean = false, $deliveryManEmail: Boolean = false, $deliveryManPhonenumber: Boolean = false, $deliveryManCreatedAt: Boolean = false, $deliveryManUpdatedAt: Boolean = false
+    ){
         deliveryMan(id: $id) {
             __typename
-            ... on DeliveryMan{
-                id
-                civility
-                firstname
-                lastname
-                email
-                phonenumber
-
-            }
-            ...inputError
+            ...deliveryManFields
+            ...InputError
         }
     }
 `
@@ -400,7 +357,7 @@ export const brandsQuery = gql`
 `
 
 export const brandQuery = gql`
-    ${Types.inputError}
+    ${Types.InputError}
     query($id: Int){
         brand(id: $id) {
             __typename
@@ -417,7 +374,7 @@ export const brandQuery = gql`
                 createdat
                 updatedat
             }
-            ...inputError
+            ...InputError
         }
     }
 `
@@ -462,7 +419,7 @@ export const productsQuery = gql `
 `
 
 export const productQuery = gql `
-    ${Types.inputError}
+    ${Types.InputError}
     query($id: Int){
         product(id: $id){
             __typename
@@ -538,7 +495,7 @@ export const productQuery = gql `
                     }
                 }
             }
-            ...inputError
+            ...InputError
         }
             
     }
@@ -589,7 +546,7 @@ export const permissionsQuery = gql `
 `
 
 export const permissionQuery = gql `
-    ${Types.inputError}
+    ${Types.InputError}
     query($id: Int){
         permission(id: $id) {
             __typename
@@ -598,7 +555,7 @@ export const permissionQuery = gql `
                 name
                 desc
             }
-            ...inputError
+            ...InputError
         }
     }
 `
@@ -624,7 +581,7 @@ export const rolesQuery = gql`
 `
 
 export const roleQuery = gql`
-    ${Types.inputError}
+    ${Types.InputError}
     query($id: Int){
         role(id: $id) {
             __typename
@@ -641,7 +598,7 @@ export const roleQuery = gql`
                     }
                 }
             }
-            ...inputError
+            ...InputError
         }
     }
 `
@@ -702,7 +659,7 @@ export const clientsQuery = gql `
 `
 
 export const userQuery = gql `
-    ${Types.inputError}
+    ${Types.InputError}
     query($id: Int){
         user(id: $id){
             __typename
@@ -728,7 +685,7 @@ export const userQuery = gql `
                     }
                 }
             }
-            ...inputError
+            ...InputError
         }
     }
 `

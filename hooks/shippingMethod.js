@@ -9,8 +9,8 @@ const token = Cookies.get('userToken')
 const endpoint = "https://trade-two.vercel.app/graphql"
 const graphQLClient = new GraphQLClient(endpoint, {headers: {authorization: token,},})
 
-export function getShippingMethods (page = null, take = null, filter= null, orderBy =null) {
-    var variables = {"page": page, "take": take,"filter": filter, "orderBy": orderBy}
+export function getShippingMethods (page = null, take = null, filter= null, orderBy =null, fields) {
+    var variables = {...fields, "page": page, "take": take,"filter": filter, "orderBy": orderBy}
     var fetcher = query => request(endpoint, query, variables)
     const { data, error, mutate } = useSWR(shippingMethodsQuery,fetcher);
     return {items: data, isLoading: !error && !data, isError: error, mutate}
@@ -22,8 +22,8 @@ export async function allShippingMethods(){
     return {response: data.shippingMethods}
 }
 
-export async function getShippingMethod (id) {
-    var variables = {"id": filterInt(id)}
+export async function getShippingMethod (id, fields) {
+    var variables = {...fields, "id": filterInt(id)}
     const data = await graphQLClient.request(shippingMethodQuery, variables)
     console.info("The response : ", data )
     return {response: data.shippingMethod}
