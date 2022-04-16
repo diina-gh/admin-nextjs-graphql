@@ -737,7 +737,7 @@ class Index extends Component {
                                                                     <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-[0.525rem] text-left cursor-default focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 sm:text-sm">
                                                                         <span className="flex items-center">
                                                                             {category &&
-                                                                                <div className='w-[1.65rem] h-[1.65rem] border-[2px] border-purple-600 rounded-full p-[1px] mr-2'>
+                                                                                <div className='w-[1.55rem] h-[1.55rem] border-[2px] border-purple-600 rounded-full mr-2'>
                                                                                     <img className='w-full h-full rounded-full object-cover' src={category?.image.url} />
                                                                                 </div>
                                                                             }
@@ -756,7 +756,7 @@ class Index extends Component {
                                                                                 {({ category, active }) => (
                                                                                 <>
                                                                                     <div className="flex items-center">
-                                                                                        <div className={classNames(active ? 'border-gray-200 border-opacity-80' : 'border-purple-600', 'w-[1.65rem] h-[1.65rem] border-[2px] rounded-full p-[1px] mr-2')} >
+                                                                                        <div className={classNames(active ? 'border-gray-200 border-opacity-80' : 'border-purple-600', 'w-[1.55rem] h-[1.55rem] border-[2px] rounded-full mr-2')} >
                                                                                             <img className='w-full h-full rounded-full object-cover' src={item?.image.url} />
                                                                                         </div>
                                                                                         <span className={classNames(category ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}>
