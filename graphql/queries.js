@@ -55,7 +55,7 @@ export const categoriesQuery = gql`
     query($page: Int, $take: Int, $filter: String, $orderBy: CategoryOrderByInput,
           $categoryName: Boolean = false, $categoryDesc: Boolean = false, $categoryOrder: Boolean = false, $imageUrl: Boolean = false, 
           $categoryCreatedat: Boolean = false, $categoryActivated: Boolean = false, $categoryParentId: Boolean = false, $imageImageref: Boolean = false, 
-          $categoryImage: Boolean = false, $categoryParent: Boolean = false, $parentName: Boolean = false, $parentDesc: Boolean = false,
+          $categoryImage: Boolean = false, $categoryParent: Boolean = false, $parentName: Boolean = false, $parentDesc: Boolean = false, $parentImage: Boolean = false
           $categoryChilds: Boolean = false, $childName: Boolean = false, $childDesc: Boolean = false, $childImage: Boolean = false   
         ){
 
@@ -75,7 +75,7 @@ export const subCategoriesQuery = gql`
     query($page: Int, $take: Int, $filter: String, $orderBy: CategoryOrderByInput,
           $categoryName: Boolean = false, $categoryDesc: Boolean = false, $categoryOrder: Boolean = false, $imageUrl: Boolean = false, 
           $categoryCreatedat: Boolean = false, $categoryActivated: Boolean = false, $categoryParentId: Boolean = false, $imageImageref: Boolean = false, 
-          $categoryImage: Boolean = false, $categoryParent: Boolean = false, $parentName: Boolean = false, $parentDesc: Boolean = false,
+          $categoryImage: Boolean = false, $categoryParent: Boolean = false, $parentName: Boolean = false, $parentDesc: Boolean = false, $parentImage: Boolean = false
           $categoryChilds: Boolean = false, $childName: Boolean = false, $childDesc: Boolean = false, $childImage: Boolean = false   
         ){
 
@@ -97,7 +97,7 @@ export const categoryQuery = gql `
     query($id: Int,
           $categoryName: Boolean = false, $categoryDesc: Boolean = false, $categoryOrder: Boolean = false, $imageUrl: Boolean = false, 
           $categoryCreatedat: Boolean = false, $categoryActivated: Boolean = false, $categoryParentId: Boolean = false, $imageImageref: Boolean = false, 
-          $categoryImage: Boolean = false, $categoryParent: Boolean = false, $parentName: Boolean = false, $parentDesc: Boolean = false,
+          $categoryImage: Boolean = false, $categoryParent: Boolean = false, $parentName: Boolean = false, $parentDesc: Boolean = false, $parentImage: Boolean = false
           $categoryChilds: Boolean = false, $childName: Boolean = false, $childDesc: Boolean = false, $childImage: Boolean = false  
     ){
         category(id: $id) {

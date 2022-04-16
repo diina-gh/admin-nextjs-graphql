@@ -50,7 +50,7 @@ class Index extends Component {
         if(itemType != null) this,this.setState({itemType: itemType})
         if(itemId !=null){
             this.setState({block: true})
-            let fields = {"categoryName": true, "categoryDesc": true, "categoryOrder": true, "categoryActivated": true, "categoryImage":true, "imageUrl": true, "categoryParent": true, "parentName": true}
+            let fields = {"categoryName": true, "categoryDesc": true, "categoryOrder": true, "categoryActivated": true, "categoryImage":true, "imageUrl": true, "categoryParent": true, "parentName": true, "parentImage": true}
             var {response} = await getCategory(itemId, fields)
             if(response?.__typename == 'Category'){
                 this.setState({ id: response.id, name: response.name, desc: response.desc, order: response.order, activated: response.activated, parent: response.parent, image:response.image?.url, chosenImage:response.image?.url, imageref:response.image?.imageref, imageId: response.image?.id, block:false })
@@ -78,7 +78,8 @@ class Index extends Component {
     }
 
     getParents = async() => {
-        var {response} = await allCategories()
+        const parentFields = {"categoryName": true, "categoryImage":true, "imageUrl": true}
+        var {response} = await allCategories(parentFields)
         if(response){
             this.setState({parents: response.categories})
         }
@@ -284,6 +285,11 @@ class Index extends Component {
                                                             <div className="mt-1 relative">
                                                                 <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 sm:text-sm">
                                                                     <span className="flex items-center">
+                                                                            {parent &&
+                                                                                <div className='w-[1.55rem] h-[1.55rem] border-[2px] border-purple-600 rounded-full mr-2'>
+                                                                                    <img className='w-full h-full rounded-full object-cover' src={parent?.image?.url} />
+                                                                                </div>
+                                                                            }
                                                                         <span className="ml-3 block truncate capitalize">{parent ? parent.name : 'Choisir un parent'}</span>
                                                                     </span>
                                                                     <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
@@ -300,6 +306,9 @@ class Index extends Component {
                                                                                 {({ parent, active }) => (
                                                                                 <>
                                                                                     <div className="flex items-center">
+                                                                                        <div className={classNames(active ? 'border-gray-200 border-opacity-80' : 'border-purple-600', 'w-[1.55rem] h-[1.55rem] border-[2px] rounded-full mr-2')} >
+                                                                                            <img className='w-full h-full rounded-full object-cover' src={item?.image?.url} />
+                                                                                        </div>
                                                                                         <span className={classNames(parent ? 'font-semibold' : 'font-normal', 'ml-3 block truncate capitalize')}>
                                                                                             {item.name}
                                                                                         </span>

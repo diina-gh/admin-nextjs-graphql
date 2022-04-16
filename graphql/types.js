@@ -28,6 +28,9 @@ export const parentFields = gql `
         id
         name @include(if: $parentName)
         desc  @include(if: $parentDesc)
+        image @include(if: $parentImage){
+            ...imageFields
+        }
     }
 `
 
