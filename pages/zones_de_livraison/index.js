@@ -41,7 +41,8 @@ export default function Index() {
     const [orderBy, setOrderBy] = useState({"id": direction})
     const [block, setBlock] = useState(false);
   
-    const { items, isLoading, isError, mutate } = getDistricts(page,take,filter, orderBy )
+    const fields = {"districtName": true, "districtShipping": true, "districtRegion": true, "districtRegionName": true}
+    const { items, isLoading, isError, mutate } = getDistricts(page,take,filter, orderBy, fields)
 
     if(mutate) console.log("The mutate ", mutate)
   
@@ -313,8 +314,8 @@ function Regions () {
     const [orderBy, setOrderBy] = useState({"id": direction})
     const [block, setBlock] = useState(false);
 
-  
-    var { items, isLoading, isError, mutate } = getRegions(page,take,filter, orderBy )
+    const fields = {"regionName": true, "regionCode": true, "regionCountry": true, "regionCountryName": true}
+    var { items, isLoading, isError, mutate } = getRegions(page,take,filter, orderBy, fields )
   
     const refetch = useDebouncedCallback(
         (newPage, newFilter = null, newOrder = null ) => {
@@ -343,7 +344,7 @@ function Regions () {
         setBlock(true)
 
         if(!navigator.onLine){
-            toast.error('Aucun accès à Internet 😪');
+            toast.error('Aucun accès à Internet');
             setBlock(false)
             return null
         }
@@ -525,7 +526,8 @@ function Countries () {
     const [orderBy, setOrderBy] = useState({"id": direction})
     const [block, setBlock] = useState(false);
 
-    var { items, isLoading, isError, mutate } = getCountries(page,take,filter, orderBy )
+    const fields = {"countryName": true, "countryIso3": true, "countryIsoNum": true}
+    var { items, isLoading, isError, mutate } = getCountries(page,take,filter, orderBy, fields )
 
     const refetch = useDebouncedCallback(
         (newPage, newFilter = null, newOrder = null ) => {

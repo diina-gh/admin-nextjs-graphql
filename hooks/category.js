@@ -25,8 +25,8 @@ export function getSubCategories (page, take, filter, orderBy, fields ) {
     return {items: data, isLoading: !error && !data, isError: error, mutate}
 }
 
-export async function allCategories(){
-    const data = await graphQLClient.request(categoriesQuery)
+export async function allCategories(fields){
+    const data = await graphQLClient.request(categoriesQuery, fields)
     console.info("The response : ", data )
     return {response: data.categories}
 }

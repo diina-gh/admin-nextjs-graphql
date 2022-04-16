@@ -16,8 +16,8 @@ export function getVariants (page = null, take = null, filter= null, orderBy =nu
     return {items: data, isLoading: !error && !data, isError: error, mutate}
 }
 
-export async function allVariants(){
-    const data = await graphQLClient.request(variantsQuery)
+export async function allVariants(fields){
+    const data = await graphQLClient.request(variantsQuery, fields)
     console.info("The response : ", data )
     return {response: data.variants}
 }

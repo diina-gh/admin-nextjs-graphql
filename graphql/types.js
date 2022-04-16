@@ -102,7 +102,6 @@ export const countryFields = gql`
 `
 
 export const regionFields = gql`
-    ${countryFields}
     fragment regionFields on Region {
         id
         name @include(if: $regionName)
@@ -117,13 +116,12 @@ export const regionFields = gql`
 `
 
 export const districtFields = gql`
-    ${regionFields}
     fragment districtFields on District {
         id
         name @include(if: $districtName)
         shipping @include(if: $districtShipping)
-        createdat @include(if: $regionCreatedAt)
-        updatedat @include(if: $regionUpdatedAt)
+        createdat @include(if: $districtCreatedAt)
+        updatedat @include(if: $districtUpdatedAt)
         region @include(if: $districtRegion) {
             id
             name @include(if: $districtRegionName)

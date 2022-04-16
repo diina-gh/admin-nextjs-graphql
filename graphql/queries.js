@@ -226,7 +226,7 @@ export const regionQuery = gql `
 export const districtsQuery = gql`
     ${Types.districtFields}
     query($page: Int, $take: Int, $filter: String, $orderBy: DistrictOrderByInput,
-          $districtName: Boolean = false, $districtShipping: Boolean = false, $districtCreatedAt: Boolean = false, $distrcitUpdatedAt: Boolean = false, $districtRegion: Boolean = false, $districtRegionName: Boolean = false
+          $districtName: Boolean = false, $districtShipping: Boolean = false, $districtCreatedAt: Boolean = false, $districtUpdatedAt: Boolean = false, $districtRegion: Boolean = false, $districtRegionName: Boolean = false
     ){
         districts(page: $page, take: $take, filter: $filter, orderBy: $orderBy) {
             count
@@ -243,7 +243,7 @@ export const districtQuery = gql`
     ${Types.InputError}
     ${Types.districtFields}
     query($id: Int,
-          $districtName: Boolean = false, $districtShipping: Boolean = false, $districtCreatedAt: Boolean = false, $distrcitUpdatedAt: Boolean = false, $districtRegion: Boolean = false, $districtRegionName: Boolean = false
+        $districtName: Boolean = false, $districtShipping: Boolean = false, $districtCreatedAt: Boolean = false, $districtUpdatedAt: Boolean = false, $districtRegion: Boolean = false, $districtRegionName: Boolean = false
     ){
         district(id: $id) {
             __typename
@@ -312,7 +312,7 @@ export const paymentMethodQuery = gql`
 export const deliveryMansQuery = gql`
     ${Types.deliveryManFields}
     query($page: Int, $take: Int, $filter: String, $orderBy: DeliveryManOrderByInput,
-          $deliveryManFirstname: Boolean = false, $deliveryManLastname: Boolean = false, $deliveryManEmail: Boolean = false, $deliveryManPhonenumber: Boolean = false, $deliveryManCreatedAt: Boolean = false, $deliveryManUpdatedAt: Boolean = false
+          $deliveryManFirstname: Boolean = false, $deliveryManCivility: Boolean = false, $deliveryManLastname: Boolean = false, $deliveryManEmail: Boolean = false, $deliveryManPhonenumber: Boolean = false, $deliveryManCreatedAt: Boolean = false, $deliveryManUpdatedAt: Boolean = false
     ){
         deliveryMans(page: $page, take: $take, filter: $filter, orderBy: $orderBy) {
             count
@@ -327,7 +327,7 @@ export const deliveryManQuery = gql`
     ${Types.InputError}
     ${Types.deliveryManFields}
     query($id: Int,
-          $deliveryManFirstname: Boolean = false, $deliveryManLastname: Boolean = false, $deliveryManEmail: Boolean = false, $deliveryManPhonenumber: Boolean = false, $deliveryManCreatedAt: Boolean = false, $deliveryManUpdatedAt: Boolean = false
+        $deliveryManFirstname: Boolean = false, $deliveryManCivility: Boolean = false, $deliveryManLastname: Boolean = false, $deliveryManEmail: Boolean = false, $deliveryManPhonenumber: Boolean = false, $deliveryManCreatedAt: Boolean = false, $deliveryManUpdatedAt: Boolean = false
     ){
         deliveryMan(id: $id) {
             __typename

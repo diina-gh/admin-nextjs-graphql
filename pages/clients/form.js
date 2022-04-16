@@ -47,7 +47,7 @@ class Index extends Component {
             this.setState({block: true})
             var {response } = await getUser(itemId)
             if(response?.__typename == 'User'){
-                this.setState({ id: response.id, civility: response.civility, firstname: response.firstname, lastname: response.lastname, email: response.email, phonenumber:response.phonenumber , addresses: response.districts})
+                this.setState({ id: response.id, civility: response.civility, firstname: response.firstname, lastname: response.lastname, email: response.email, phonenumber:response.phonenumber , addresses: response.districts,})
             }
             else if(response?.__typename == 'InputError'){
                 toast.error(response.message);
@@ -62,9 +62,10 @@ class Index extends Component {
     }
 
     getDistricts = async() =>{
-        var {response} = await allDistricts()
+        const districtFields = {"districtName": true}
+        var {response} = await allDistricts(districtFields)
         if(response){
-            this.setState({districts: response.districts})
+            this.setState({districts: response.districts, block: false})
         }
     }
 
@@ -282,7 +283,7 @@ class Index extends Component {
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody className="bg-white divide-y divide-gray-200">
-                                                                        {addresses.map((item, i) => (
+                                                                        {addresses?.map((item, i) => (
                                                                             <tr key={item.id} className={(i%2==0) ? "" : "bg-gray-100 bg-opacity-50"}>
                                                                                 <td className="px-6 py-3 whitespace-nowrap">
                                                                                     <div className="text-sm text-gray-900">{i+1}</div>

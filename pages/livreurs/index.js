@@ -33,7 +33,8 @@ export default function Index() {
     const [orderBy, setOrderBy] = useState({"id": direction})
     const [block, setBlock] = useState(false);
 
-    var { items, isLoading, isError, mutate } = getDeliveryMans(page,take,filter, orderBy )
+    const fields = {"deliveryManCivility": true,"deliveryManFirstname": true, "deliveryManLastname": true, "deliveryManEmail": true, "deliveryManPhonenumber": true}
+    var { items, isLoading, isError, mutate } = getDeliveryMans(page,take,filter, orderBy, fields )
 
     const refetch = useDebouncedCallback(
         (newPage, newFilter = null, newOrder = null ) => {

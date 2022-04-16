@@ -37,7 +37,8 @@ class Index extends Component {
         var itemId = router.query.id
         if(itemId !=null){
             this.setState({block: true})
-            var {response} = await getDeliveryMan(itemId)
+            const fields = {"deliveryManCivility": true,"deliveryManFirstname": true, "deliveryManLastname": true, "deliveryManEmail": true, "deliveryManPhonenumber": true}
+            var {response} = await getDeliveryMan(itemId, fields)
             if(response?.__typename == 'DeliveryMan'){
                 this.setState({ id: response.id, civility: response.civility, firstname: response.firstname, lastname: response.lastname, email: response.email, phonenumber: response.phonenumber, block:false })
             }

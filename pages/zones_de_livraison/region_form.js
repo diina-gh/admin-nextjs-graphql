@@ -38,7 +38,8 @@ class Index extends Component {
         var itemId = router.query.id
         if(itemId !=null){
             this.setState({block: true})
-            var {response} = await getRegion(itemId)
+            const fields = {"regionName": true, "regionCode": true, "regionCountry": true, "regionCountryName": true}
+            var {response} = await getRegion(itemId, fields)
             if(response?.__typename == 'Region'){
                 this.setState({ id: response.id, name: response.name, code: response.code, country: response.country, block:false })
             }
@@ -55,7 +56,8 @@ class Index extends Component {
     }
 
     getParents = async() => {
-        var {response} = await allCountries()
+        const countryFields = {"countryName": true}
+        var {response} = await allCountries(countryFields)
         if(response){
             this.setState({countries: response.countries})
         }

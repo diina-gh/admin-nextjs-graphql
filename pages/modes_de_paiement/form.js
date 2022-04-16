@@ -33,7 +33,8 @@ class Index extends Component {
         var itemId = router.query.id
         if(itemId !=null){
             this.setState({block: true})
-            var {response} = await getPaymentMethod(itemId)
+            const fields = {"paymentMethodCode": true, "paymentMethodName": true, "paymentMethodDesc": true}
+            var {response} = await getPaymentMethod(itemId, fields)
             if(response?.__typename == 'PaymentMethod'){
                 this.setState({ id: response.id, name: response.name, code: response.code, desc: response.desc, block:false })
             }

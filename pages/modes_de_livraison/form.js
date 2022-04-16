@@ -33,7 +33,8 @@ class Index extends Component {
         var itemId = router.query.id
         if(itemId !=null){
             this.setState({block: true})
-            var {response} = await getShippingMethod(itemId)
+            const fields = {"shippingMethodCode": true, "shippingMethodName": true, "shippingMethodDesc": true}
+            var {response} = await getShippingMethod(itemId, fields)
             if(response?.__typename == 'ShippingMethod'){
                 this.setState({ id: response.id, name: response.name, code: response.code, desc: response.desc, block:false })
             }

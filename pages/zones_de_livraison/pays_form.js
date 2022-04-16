@@ -37,7 +37,8 @@ class Index extends Component {
         var itemId = router.query.id
         if(itemId !=null){
             this.setState({block: true})
-            var {response} = await getCountry(itemId)
+            const fields = {"countryName": true, "countryIso3": true, "countryIsoNum": true}
+            var {response} = await getCountry(itemId, fields)
             if(response?.__typename == 'Country'){
                 this.setState({ id: response.id, name: response.name, iso3: response.iso3, isoNum: response.isoNum, block:false })
             }

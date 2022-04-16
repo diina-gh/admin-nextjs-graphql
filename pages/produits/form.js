@@ -154,7 +154,8 @@ class Index extends Component {
     }
 
     getCategories = async() => {
-        var {response} = await allCategories()
+        const categoryFields = {"categoryName": true, "categoryImage": true, "imageUrl": true}
+        var {response} = await allCategories(categoryFields)
         if(response){
             this.setState({categories: response.categories})
         }
@@ -735,6 +736,12 @@ class Index extends Component {
                                                                 <div className="mt-1 relative">
                                                                     <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-[0.525rem] text-left cursor-default focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 sm:text-sm">
                                                                         <span className="flex items-center">
+                                                                            {category &&
+                                                                                <div className='w-[1.65rem] h-[1.65rem] border-[2px] border-purple-600 rounded-full p-[1px] mr-2'>
+                                                                                    <img className='w-full h-full rounded-full object-cover' src={category?.image.url} />
+                                                                                </div>
+                                                                            }
+                                                                            
                                                                             <span className="ml-3 block truncate">{category ? capitalize(category.name) : 'Choisir une catégorie'}</span>
                                                                         </span>
                                                                         <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
@@ -749,6 +756,9 @@ class Index extends Component {
                                                                                 {({ category, active }) => (
                                                                                 <>
                                                                                     <div className="flex items-center">
+                                                                                        <div className={classNames(active ? 'border-gray-200 border-opacity-80' : 'border-purple-600', 'w-[1.65rem] h-[1.65rem] border-[2px] rounded-full p-[1px] mr-2')} >
+                                                                                            <img className='w-full h-full rounded-full object-cover' src={item?.image.url} />
+                                                                                        </div>
                                                                                         <span className={classNames(category ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}>
                                                                                             {capitalize(item.name)}
                                                                                         </span>
@@ -780,6 +790,11 @@ class Index extends Component {
                                                                 <div className="mt-1 relative">
                                                                     <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-[0.525rem] text-left cursor-default focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 sm:text-sm">
                                                                         <span className="flex items-center">
+                                                                            {brand &&
+                                                                                <div className="mini-brand mr-2">
+                                                                                    <img src={brand?.image.url} />
+                                                                                </div>
+                                                                            }
                                                                             <span className="ml-3 block truncate">{brand ? capitalize(brand.name) : 'Choisir une marque'}</span>
                                                                         </span>
                                                                         <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
@@ -794,6 +809,9 @@ class Index extends Component {
                                                                                 {({ brand, active }) => (
                                                                                 <>
                                                                                     <div className="flex items-center">
+                                                                                        <div className="mini-brand mr-2" >
+                                                                                            <img src={item?.image.url} />
+                                                                                        </div>
                                                                                         <span className={classNames(brand ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}>
                                                                                             {capitalize(item.name)}
                                                                                         </span>

@@ -16,8 +16,8 @@ export function getOptions (page = null, take = null, filter= null, orderBy =nul
     return {items: data, isLoading: !error && !data, isError: error, mutate}
 }
 
-export async function allOptions(){
-    const data = await graphQLClient.request(optionsQuery)
+export async function allOptions(fields){
+    const data = await graphQLClient.request(optionsQuery, fields)
     console.info("The response : ", data )
     return {response: data.options}
 }
