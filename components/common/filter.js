@@ -96,19 +96,22 @@ class Filter extends Component {
   }
   
   getCategories = async() => {
-      var {response} = await allCategories()
+      const categoryFields = {"categoryName": true,}
+      var {response} = await allCategories(categoryFields)
       if(response){
         response.categories?.all == false
       } this.setState({categories: response.categories})
   }
 
   getBrands = async() => {
-      var {response} = await allBrands()
+      const brandFields = {"brandName": true,}
+      var {response} = await allBrands(brandFields)
       if(response) this.setState({brands: response.brands})
   }
 
   getVariants = async() => {
-      var {response} = await allVariants()
+      const variantFields = {"variantName": true, "variantOptions": true, "optionValue": true, "optionColorCode": true}
+      var {response} = await allVariants(variantFields)
       if(response) this.setState({variants: response.variants})
   }
 
