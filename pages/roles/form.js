@@ -346,7 +346,7 @@ class Index extends Component {
                                                             <div className="w-full mt-1">
 
                                                                 <div className='w-full h-[2.5rem]'>
-                                                                    <input type="search" className='w-full h-full px-4 focus:ring-0 text-sm border-0 bg-gray-200 bg-opacity-60 rounded-full shadow-inner border border-gray-200' placeholder='Rechercher une permission ...' />
+                                                                    <input type="text" className='w-full h-full px-4 focus:ring-0 text-sm border-0 bg-gray-200 bg-opacity-60 rounded-full shadow-inner border border-gray-200' placeholder='Rechercher une permission ...' />
                                                                 </div>
 
                                                                 <div className='mt-5'>

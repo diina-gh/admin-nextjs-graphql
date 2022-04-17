@@ -60,7 +60,7 @@ const [currentPage, setCurrentPage] = useState(1);
                                     </div>
 
                                     <div className='w-72 h-full'>
-                                        <input type="search"  className='w-full h-full focus:ring-0 text-sm border-0 bg-gray-200 bg-opacity-0' placeholder='Rechercher un nom ou une description ...' />
+                                        <input type="text"  className='w-full h-full focus:ring-0 text-sm border-0 bg-gray-200 bg-opacity-0' placeholder='Rechercher un nom ou une description ...' />
                                     </div>
 
                                 </div>
