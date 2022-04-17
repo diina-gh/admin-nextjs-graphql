@@ -371,125 +371,44 @@ export const brandQuery = gql`
 `
 
 export const productsQuery = gql `
-    query($page: Int, $take: Int, $filter: String, $orderBy: ProductOrderByInput){
-        products(page: $page, take: $take, filter: $filter, orderBy: $orderBy) {
-            count
-            products {
-                id
-                name
-                desc
-                activated
-                unit
-                unitweight
-                unitprice
-                order
-                category {
-                    id
-                    name
-                }
-                images {
-                    id
-                    url
-                }
-                brand {
-                    id
-                    name
-                }
-                
-                discount {
-                    id
-                    percent
-                }
-                inventory {
-                    id
-                    quantity
+    ${Types.productFields}
+    query($page: Int, $take: Int, $filter: String, $orderBy: ProductOrderByInput,
+          $productName: Boolean = false, $productDesc: Boolean = false, $productOrder: Boolean = false, $productUnit: Boolean = false, $productUnitprice: Boolean = false, 
+          $productUnitweight: Boolean = false, $productStatus: Boolean = false, $productActivated: Boolean = false, $productTaxable: Boolean = false, $productRanking: Boolean = false,
+          $productLikes: Boolean = false, $productViews: Boolean = false, $productCreatedAt: Boolean = false, $productUpdatedAt: Boolean = false, $productGender: Boolean = false, $productBrand: Boolean = false,
+          $productBrandName: Boolean = false, $productBrandImage: Boolean = false, $productCategory: Boolean = false, $productCategoryName: Boolean = false, $productCategoryImage: Boolean = false, 
+          $productVariants: Boolean = false, $productVariantName: Boolean = false, $productVariantOptions: Boolean = false, $productVariantOptionValue: Boolean = false, $productVariantOptionColorCode: Boolean = false, $productOptions: Boolean = false, $productOptionValue: Boolean = false, $productOptionColorCode: Boolean = false,
+          $productDiscount: Boolean = false, $productDiscountPercent: Boolean = false, $productInventory: Boolean = false, $productInventoryQuantity: Boolean = false, $productInventoryDetails: Boolean = false, $productRelatives: Boolean = false, $productRelated: Boolean = false, $productImage: Boolean = false, $imageUrl: Boolean = false, $imageImageref: Boolean = false
+          $relativeName: Boolean = false, $relativeDesc: Boolean = false, $relativeUnitPrice: Boolean = false, $relativeImage: Boolean = false, $relativeBrand: Boolean = false, $relativeBrandName: Boolean = false, $relativeCategory: Boolean = false, $relativeCategoryName: Boolean = false,
+         ){
+
+            products(page: $page, take: $take, filter: $filter, orderBy: $orderBy) {
+                count
+                products {
+                    ...productFields
                 }
             }
         }
-    }
 `
 
 export const productQuery = gql `
     ${Types.InputError}
-    query($id: Int){
-        product(id: $id){
-            __typename
-            ... on Product{
-                id
-                name
-                desc
-                activated
-                unit
-                unitprice
-                unitweight
-                order
-                gender
-                categoryId
-                category{
-                    id
-                    name
-                }
-                brandId
-                brand{
-                    id
-                    name
-                }
-                variants {
-                    variant {
-                        id
-                        name
-                        desc
-                        options {
-                            id
-                            value
-                            colorCode
-                        }
-                    }
-                }
-                options {
-                    optionId
-                    option {
-                        id
-                        value
-                        colorCode
-                    }
-                }
-                discount {
-                    id
-                    percent
-                }
-                inventory {
-                    id
-                    quantity
-                }
-                images {
-                    id
-                    url
-                    imageref
-                }
-                relatives {
-                    id
-                    name
-                    desc
-                    unitprice
-                    category {
-                        id
-                        name
-                    }
-                    brand {
-                        id
-                        name
-                    }
-                    images {
-                        id
-                        url
-                    }
-                }
-            }
-            ...InputError
+    ${Types.productFields}
+    query($id: Int,
+          $productName: Boolean = false, $productDesc: Boolean = false, $productOrder: Boolean = false, $productUnit: Boolean = false, $productUnitprice: Boolean = false, 
+          $productUnitweight: Boolean = false, $productStatus: Boolean = false, $productActivated: Boolean = false, $productTaxable: Boolean = false, $productRanking: Boolean = false,
+          $productLikes: Boolean = false, $productViews: Boolean = false, $productCreatedAt: Boolean = false, $productUpdatedAt: Boolean = false, $productGender: Boolean = false, $productBrand: Boolean = false,
+          $productBrandName: Boolean = false, $productBrandImage: Boolean = false, $productCategory: Boolean = false, $productCategoryName: Boolean = false, $productCategoryImage: Boolean = false, 
+          $productVariants: Boolean = false, $productVariantName: Boolean = false, $productVariantOptions: Boolean = false, $productVariantOptionValue: Boolean = false, $productVariantOptionColorCode: Boolean = false, $productOptions: Boolean = false, $productOptionValue: Boolean = false, $productOptionColorCode: Boolean = false,
+          $productDiscount: Boolean = false, $productDiscountPercent: Boolean = false, $productInventory: Boolean = false, $productInventoryQuantity: Boolean = false, $productInventoryDetails: Boolean = false, $productRelatives: Boolean = false, $productRelated: Boolean = false, $productImage: Boolean = false, $imageUrl: Boolean = false, $imageImageref: Boolean = false
+          $relativeName: Boolean = false, $relativeDesc: Boolean = false, $relativeUnitPrice: Boolean = false, $relativeImage: Boolean = false, $relativeBrand: Boolean = false, $relativeBrandName: Boolean = false, $relativeCategory: Boolean = false, $relativeCategoryName: Boolean = false
+        ){
+            product(id: $id){
+                __typename
+                ...productFields
+                ...InputError
+            }   
         }
-            
-    }
 `
 
 export const inventoriesQuery = gql `

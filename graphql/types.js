@@ -202,28 +202,22 @@ export const relativeFields = gql `
         name @include(if: $relativeName)
         desc  @include(if: $relativeDesc)
         unitprice  @include(if: $relativeUnitPrice)
-        image @include(if: $relativeImage){
+        images @include(if: $relativeImage){
             ...imageFields
         }
         brand @include(if: $relativeBrand){
             id
-            name
-            image{
-                url
-            }
+            name  @include(if: $relativeBrandName)
         }
         category @include(if: $relativeCategory){
             id
-            name
-            image{
-                url
-            }
+            name @include(if: $relativeCategoryName)
         }
     }
 `
 
 export const productFields = gql`
-    ${variantFields} ${optionFields} ${imageFields} ${relativeFields} ${discountFields} ${inventoryFields}
+    ${imageFields} ${relativeFields}
     fragment productFields on Product {
         id
         name @include(if: $productName)
@@ -238,30 +232,40 @@ export const productFields = gql`
         ranking @include(if: $productRanking)
         likes @include(if: $productLikes)
         views @include(if: $productViews)
-        createdat @include(if: $productCreatedat)
-        updatedat @include(if: $productUpdatedat)
+        createdat @include(if: $productCreatedAt)
+        updatedat @include(if: $productUpdatedAt)
         gender @include(if: $productGender)
         brand @include(if: $productBrand){
             id
-            name
-            image{url}
+            name @include(if: $productBrandName)
+            image @include(if: $productBrandImage){url}
         }
         category @include(if: $productCategory){
             id
-            name
-            image{url}
+            name @include(if: $productCategoryName)
+            image @include(if: $productCategoryImage){url}
         }
-        variant @include(if: $productVariant){
-            ...variantFields
+        variants @include(if: $productVariants){
+            variant{
+                name @include(if: $productVariantName)
+                options @include(if: $productVariantOptions){
+                    value @include(if: $productVariantOptionValue)
+                    colorCode @include(if: $productVariantOptionColorCode)
+                }
+            }
         }
-        option @include(if: $productOption){
-            ...optionFields
+        options @include(if: $productOptions){
+            option{
+                value @include(if: $productOptionValue)
+                colorCode @include(if: $productOptionColorCode)
+            }
         }
         discount @include(if: $productDiscount){
-            ...discountFields
+            percent @include(if: $productDiscountPercent)
         }
         inventory @include(if: $productInventory){
-            ...inventoryFields
+            quantity @include(if: $productInventoryQuantity)
+            details @include(if: $productInventoryDetails)
         }
         relatives @include(if: $productRelatives){
             ...relativeFields
@@ -269,7 +273,7 @@ export const productFields = gql`
         related @include(if: $productRelated){
             ...relativeFields
         }
-        image @include(if: $productImage){
+        images @include(if: $productImage){
             ...imageFields
         }
     }

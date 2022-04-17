@@ -93,7 +93,13 @@ class Index extends Component {
 
         if(itemId !=null){
             this.setState({block: true})
-            var {response} = await getProduct(itemId)
+
+            const fields = {
+                "productName": true, "productDesc": true, "productUnit": true, "productUnitprice": true, "productUnitweight": true, "productActivated": true, "productBrand": true, "productBrandName": true, "productCategory": true, "productCategoryName": true, "productImage": true, "imageUrl": true, "imageImageref": true, "productInventory": true, "productInventoryQuantity": true,
+                "productVariant": true, "productVariantName": true, "productOption": true, "productOptionName": true, "productRelatives": true, "productRelated": true, "relativeName": true, "relativeUnitPrice": true, "relativeImage": true, "relativeCategory": true, "relativeCategoryName": true, "productCategoryImage": true, "productBrandImage": true
+            }
+
+            var {response} = await getProduct(itemId, fields)
 
             if(response?.__typename == 'Product'){
 
@@ -162,14 +168,16 @@ class Index extends Component {
     }
 
     getBrands = async() => {
-        var {response} = await allBrands()
+        const brandFields = {"brandName": true, "brandImage": true, "imageUrl": true}
+        var {response} = await allBrands(brandFields)
         if(response){
             this.setState({brands: response.brands})
         }
     }
 
     getVariants = async() => {
-        var {response} = await allVariants()
+        const variantFields = {"variantName": true, "variantDesc": true, "variantOptions": true, "optionValue": true, "optionColorCode": true}
+        var {response} = await allVariants(variantFields)
         if(response){
             this.setState({variants: response.variants})
         }
@@ -177,7 +185,8 @@ class Index extends Component {
 
     getProducts = async() => {
         const{page, take, filter, orderBy} = this.state
-        var {response} = await allProducts(page, take, filter, orderBy)
+        const relativeFields = {"productName": true, "productDesc": true, "productUnit": true, "productUnitprice": true, "productUnitweight": true, "productActivated": true, "productBrand": true, "productBrandName": true, "productCategory": true, "productCategoryName": true, "productImage": true, "imageUrl": true, "imageImageref": true, "productInventory": true, "productInventoryQuantity": true}
+        var {response} = await allProducts(page, take, filter, orderBy,relativeFields )
         if(response){
             const {chosenProducts} = this.state
             if(chosenProducts != null && chosenProducts.length >0){
