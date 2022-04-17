@@ -2,24 +2,29 @@ import { gql } from 'graphql-request'
 import * as Types from './types'
 
 export const newslettersQuery = gql`
-    query($page: Int, $take: Int, $filter: String, $orderBy: NewsletterOrderByInput){
+    ${Types.newsletterFields}
+    query($page: Int, $take: Int, $filter: String, $orderBy: NewsletterOrderByInput,
+        $newsletterEmail: Boolean = false, $newsletterCreatedAt: Boolean = false
+    ){
         newsletters(page: $page, take: $take, filter: $filter, orderBy: $orderBy) {
             count
             newsletters {
-                id
-                email
-                createdat
+                ...newsletterFields
             }
         }
     }
 `
 
 export const newsletterQuery = gql`
-    query($newsletterId: Int){
-        newsletter(id: $newsletterId) {
-            id
-            email
-            createdat
+    ${Types.newsletterFields}
+    ${Types.InputError}
+    query($id: Int,
+          $newsletterEmail: Boolean = false, $newsletterCreatedAt: Boolean = false
+    ){
+        newsletter(id: $id) {
+            __typename
+            ...newsletterFields
+            ...InputError
         }
     }
 `
@@ -338,19 +343,14 @@ export const deliveryManQuery = gql`
 `
 
 export const brandsQuery = gql`
-    query($page: Int, $take: Int, $filter: String, $orderBy: BrandOrderByInput){
+    ${Types.brandFields}
+    query($page: Int, $take: Int, $filter: String, $orderBy: BrandOrderByInput,
+        $brandName: Boolean = false, $brandDesc: Boolean = false, $brandOrder: Boolean = false, $brandImage: Boolean = false, $imageUrl: Boolean = false, $imageImageref: Boolean = false, $brandCreatedAt: Boolean = false, $brandUpdatedAt: Boolean = false
+    ){
         brands(page: $page, take: $take, filter: $filter, orderBy: $orderBy) {
             count
             brands {
-                id
-                name
-                desc
-                order
-                image {
-                    id
-                    url
-                    imageref
-                }
+                ...brandFields
             }
         }
     }
@@ -358,22 +358,13 @@ export const brandsQuery = gql`
 
 export const brandQuery = gql`
     ${Types.InputError}
-    query($id: Int){
+    ${Types.brandFields}
+    query($id: Int,
+          $brandName: Boolean = false, $brandDesc: Boolean = false, $brandOrder: Boolean = false, $brandImage: Boolean = false, $imageUrl: Boolean = false, $imageImageref: Boolean = false, $brandCreatedAt: Boolean = false, $brandUpdatedAt: Boolean = false
+    ){
         brand(id: $id) {
             __typename
-            ... on Brand{
-                id
-                name
-                desc
-                order
-                image {
-                    id
-                    url
-                    imageref
-                }
-                createdat
-                updatedat
-            }
+            ...brandFields
             ...InputError
         }
     }

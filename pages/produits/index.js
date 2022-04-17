@@ -63,21 +63,6 @@ export default function Index() {
         }, 680
     );
 
-    // const refetch = (newPage, newFilter = null, newOrder = null ) =>{
-    //     if(newPage){
-    //             setPage(newPage)
-    //             mutate({...items, page:newPage})
-    //     } 
-    //     if(newFilter){
-    //         setFilter(newFilter)
-    //         mutate({...items, filter:newFilter})
-    //     }
-    //     if(newOrder){
-    //         setOrderBy(newOrder)
-    //         mutate({...items, orderBy:newOrder})
-    //     }
-    // }
-
     if (isError) console.log("The error here ", isError)
     if (isLoading) console.log("loading...")
     if(items) console.log("Informations => ", items)

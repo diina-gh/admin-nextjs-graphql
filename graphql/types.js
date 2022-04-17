@@ -19,7 +19,7 @@ export const newsletterFields = gql `
     fragment newsletterFields on Newsletter {
         id
         email @include(if: $newsletterEmail)
-        createdat @include(if: $newsletterCreatedat)
+        createdat @include(if: $newsletterCreatedAt)
     }
 `
 
@@ -173,6 +173,8 @@ export const brandFields = gql`
         name @include(if: $brandName)
         desc @include(if: $brandDesc)
         order @include(if: $brandOrder)
+        createdat @include(if: $brandCreatedAt)
+        updatedat @include(if: $brandUpdatedAt)
         image @include(if: $brandImage){
             ...imageFields
         }

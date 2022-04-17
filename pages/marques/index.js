@@ -36,8 +36,8 @@ export default function Index() {
     const [orderBy, setOrderBy] = useState({"id": direction})
     const [block, setBlock] = useState(false);
 
-
-    var { items, isLoading, isError, mutate } = getBrands(page,take,filter, orderBy )
+    const fields = {"brandName": true, "brandDesc": true, "brandOrder": true, "brandImage": true, "imageUrl": true, "imageImageref": true}
+    var { items, isLoading, isError, mutate } = getBrands(page,take,filter, orderBy, fields)
 
     const refetch = useDebouncedCallback(
         (newPage, newFilter = null, newOrder = null ) => {
@@ -210,10 +210,8 @@ export default function Index() {
                                                             
                                                             <td className="px-6 py-3 whitespace-nowrap">
                                                                 <div className="flex items-center">
-                                                                    <div className='hover:scale-110 flex-shrink-0 item-image-0 bg-opacity-0 border-opacity-80' >
-                                                                        <div className='image-layer-2 bg-white bg-opacity-0'>
-                                                                            <img className='opacity-100 rounded-full object-cover' src={item?.image?.url} alt="" />
-                                                                        </div>
+                                                                    <div className='brand-image mr-3'>
+                                                                        <img src={item?.image?.url} />
                                                                     </div>
                                                                     <div className="ml-4">
                                                                         <div className="text-sm font-medium text-gray-900">{item.name}</div>

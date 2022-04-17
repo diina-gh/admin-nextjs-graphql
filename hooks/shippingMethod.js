@@ -16,8 +16,8 @@ export function getShippingMethods (page = null, take = null, filter= null, orde
     return {items: data, isLoading: !error && !data, isError: error, mutate}
 }
 
-export async function allShippingMethods(){
-    const data = await graphQLClient.request(shippingMethodsQuery)
+export async function allShippingMethods(fields){
+    const data = await graphQLClient.request(shippingMethodsQuery, fields)
     console.info("The response : ", data )
     return {response: data.shippingMethods}
 }

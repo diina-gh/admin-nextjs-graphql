@@ -54,7 +54,7 @@ export default function Index() {
         setDisplay(option)
     }
 
-    const fields = {"categoryName": true, "categoryDesc": true, "categoryOrder": true, "categoryActivated": true, "categoryImage":true, "imageUrl": true}
+    const fields = {"categoryName": true, "categoryDesc": true, "categoryOrder": true, "categoryActivated": true, "categoryImage":true, "imageUrl": true, "imageImageref": true, "categoryParent": true, "parentName": true}
     const { items, isLoading, isError, mutate } = getCategories(page,take,filter,orderBy,fields)
 
     if(mutate) console.log("The mutate ", mutate)
@@ -441,7 +441,7 @@ function SubCategories () {
         setDisplay(option)
     }
   
-    const fields = {"categoryName": true, "categoryDesc": true, "categoryOrder": true, "categoryActivated": true, "categoryImage":true, "imageUrl": true, "categoryParent": true, "parentName": true}
+    const fields = {"categoryName": true, "categoryDesc": true, "categoryOrder": true, "categoryActivated": true, "categoryImage":true, "imageUrl": true, "imageImageref": true, "categoryParent": true, "parentName": true}
     var { items, isLoading, isError, mutate } = getSubCategories(page,take,filter,orderBy,fields)
   
     const refetch = useDebouncedCallback(

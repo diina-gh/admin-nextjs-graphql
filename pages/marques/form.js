@@ -41,7 +41,8 @@ class Index extends Component {
         var itemId = router.query.id
         if(itemId !=null){
             this.setState({block: true})
-            var {response } = await getBrand(itemId)
+            const fields = {"brandName": true, "brandDesc": true, "brandOrder": true, "brandImage": true, "imageUrl": true, "imageImageref": true}
+            var {response } = await getBrand(itemId, fields)
             if(response?.__typename == 'Brand'){
                 this.setState({ id: response.id, name: response.name, desc: response.desc, order: response.order, image:response.image?.url, chosenImage:response.image?.url, imageref:response.image?.imageref, imageId: response.image?.id, block: false })
             }

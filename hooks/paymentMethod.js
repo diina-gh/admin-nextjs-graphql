@@ -16,8 +16,8 @@ export function getPaymentMethods (page = null, take = null, filter= null, order
     return {items: data, isLoading: !error && !data, isError: error, mutate}
 }
 
-export async function allPaymentMethods(){
-    const data = await graphQLClient.request(paymentMethodsQuery)
+export async function allPaymentMethods(fields){
+    const data = await graphQLClient.request(paymentMethodsQuery, fields)
     console.info("The response : ", data )
     return {response: data.paymentMethods}
 }

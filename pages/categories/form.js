@@ -50,7 +50,7 @@ class Index extends Component {
         if(itemType != null) this,this.setState({itemType: itemType})
         if(itemId !=null){
             this.setState({block: true})
-            let fields = {"categoryName": true, "categoryDesc": true, "categoryOrder": true, "categoryActivated": true, "categoryImage":true, "imageUrl": true, "categoryParent": true, "parentName": true, "parentImage": true}
+            let fields = {"categoryName": true, "categoryDesc": true, "categoryOrder": true, "categoryActivated": true, "categoryImage":true, "imageUrl": true, "imageImageref": true, "categoryParent": true, "parentName": true, "parentImage": true}
             var {response} = await getCategory(itemId, fields)
             if(response?.__typename == 'Category'){
                 this.setState({ id: response.id, name: response.name, desc: response.desc, order: response.order, activated: response.activated, parent: response.parent, image:response.image?.url, chosenImage:response.image?.url, imageref:response.image?.imageref, imageId: response.image?.id, block:false })

@@ -8,7 +8,7 @@ import HeadInfo from '../../components/common/headinfo'
 import Sort from '../../components/common/sort';
 import Filter from '../../components/common/filter';
 import SearchIcon from '../../components/ui/icons/searchIcon';
-import AddBoldIcon from '../../components/ui/icons/addBoldIcon';
+import TrashBoldIcon from '../../components/ui/icons/trashBoldIcon'
 import DocBoldIcon from '../../components/ui/icons/docBoldIcon';
 import { Pagination } from "react-pagination-bar"
 import 'react-pagination-bar/dist/index.css'
@@ -16,19 +16,22 @@ import ChevronLeftIcon from '../../components/ui/icons/chevronLeftIcon';
 import ChevronRightIcon from '../../components/ui/icons/chevronRightIcon';
 import DoubleChevronLeftIcon from '../../components/ui/icons/doubleChevronLeftIcon';
 import DoubleChevronRightIcon from '../../components/ui/icons/doubleChevronRightIcon';
-import { getNewsletters } from '../../hooks/newsletter';
+import { getNewsletters, deleteNewsletter } from '../../hooks/newsletter';
 import { useDebouncedCallback } from 'use-debounce';
 
 
 export default function Index() {
 
-    const take = 6;
+    const take = 10;
     const [page, setPage] = useState(1);
     const [filter, setFilter] = useState('')
     const [direction, setDirection] = useState('asc')
     const [orderBy, setOrderBy] = useState({"id": direction})
+    const [block, setBlock] = useState(false);
 
-    var { items, isLoading, isError, mutate } = getNewsletters(page,take,filter, orderBy )
+
+    const fields = {"newsletterEmail": true, "newsletterCreatedAt": true}
+    var { items, isLoading, isError, mutate } = getNewsletters(page,take,filter, orderBy, fields )
 
     const refetch = useDebouncedCallback(
         (newPage, newFilter = null, newOrder = null ) => {
@@ -50,6 +53,34 @@ export default function Index() {
     if (isError) console.log("The error here ", isError)
     if (isLoading) console.log("loading...")
     if(items) console.log("Informations => ", items)
+
+    async function deleteItem (e, id){
+            
+        e.preventDefault()
+        setBlock(true)
+
+        if(!navigator.onLine){
+            toast.error('Aucun accès à Internet !');
+            setBlock(false)
+            return null
+        }
+
+        var {response } = await deleteNewsletter(id)
+        
+        if(response?.__typename == 'Newsletter'){
+            console.log("Item deleted ", response)
+            refetch(page);
+            toast.success('Suppression réussie !');
+        } 
+        else if(response?.__typename == 'InputError'){
+            toast.error(response?.message );
+        }
+        else{
+            toast.error("Erreur inconnue. Veuillez contacter l'administrateur ");
+        }
+
+        setBlock(false)
+    }
 
     return (
         <div className="app-container h-screen">
@@ -123,14 +154,14 @@ export default function Index() {
                                                 <thead className="th-bg-1 sticky top-0 ">
                                                     <tr>
                                                         <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
+                                                            N#
+                                                        </th>
+                                                        <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
                                                             Date
                                                         </th>
                                                         <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider" >
                                                             Email
                                                         </th>
-                                                        {/* <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider" >
-                                                            Status
-                                                        </th> */}
     
                                                         <th scope="col" className="relative px-6 py-3">
                                                             <span className="sr-only">Edit</span>
@@ -141,7 +172,9 @@ export default function Index() {
                                                 <tbody className="bg-white divide-y divide-gray-200">
                                                     {items.newsletters.newsletters.map((item, i) => (
                                                         <tr key={item.id} className={(i%2==0) ? "" : "bg-gray-100 bg-opacity-50"}>
-                                                            
+                                                            <td className="px-6 py-3 whitespace-nowrap">
+                                                                <div className="text-sm text-gray-900">{page == 1 ? i+1 : (i+1) + (page*10)}</div>
+                                                            </td>
                                                             <td className="px-6 py-3 whitespace-nowrap">
                                                                 <div className="text-sm text-gray-900">{item.createdat}</div>
                                                             </td>
@@ -150,10 +183,12 @@ export default function Index() {
                                                                 <div className="text-sm text-gray-900">{item.email}</div>
                                                             </td>
                                             
-                                                            <td className="px-6 py-3 whitespace-nowrap text-right text-sm font-medium">
-                                                                <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                                                    Edit
-                                                                </a>
+                                                            <td className="px-2 whitespace-nowrap">
+                                                                <div className="flex flex-row justify-end">
+                                                                    <button onClick={(e) => deleteItem(e, item.id)} className="w-7 h-7 rounded-full border border-iiblack gt-shadow5 flex flex-row justify-center cursor-pointer btn-effect1 bg-gray-100 hover:bg-gray-200 active:bg-gray-30">
+                                                                        <TrashBoldIcon customClass="w-3 text-red-600 text-opacity-90 self-center"/>
+                                                                    </button>
+                                                                </div>
                                                             </td>
 
                                                         </tr>
@@ -194,55 +229,5 @@ export default function Index() {
     )
 }
 
-
-const people = [
-    {
-      name: 'Jane Cooper',
-      title: 'Regional Paradigm Technician',
-      department: 'Optimization',
-      role: 'Admin',
-      email: 'jane.cooper@example.com',
-      image:
-        'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-    },
-    {
-        name: 'Jane Cooper',
-        title: 'Regional Paradigm Technician',
-        department: 'Optimization',
-        role: 'Admin',
-        email: 'jane.cooper@example.com',
-        image:
-          'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-    },
-    {
-        name: 'Jane Cooper',
-        title: 'Regional Paradigm Technician',
-        department: 'Optimization',
-        role: 'Admin',
-        email: 'jane.cooper@example.com',
-        image:
-          'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-    },
-
-    {
-        name: 'Jane Cooper',
-        title: 'Regional Paradigm Technician',
-        department: 'Optimization',
-        role: 'Admin',
-        email: 'jane.cooper@example.com',
-        image:
-          'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-    },
-
-    {
-        name: 'Jane Cooper',
-        title: 'Regional Paradigm Technician',
-        department: 'Optimization',
-        role: 'Admin',
-        email: 'jane.cooper@example.com',
-        image:
-          'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-    },
-  ]
 
 
