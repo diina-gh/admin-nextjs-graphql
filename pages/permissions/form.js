@@ -37,7 +37,8 @@ class Index extends Component {
         var itemId = router.query.id
         if(itemId !=null){
             this.setState({block: true})
-            var {response} = await getPermission(itemId)
+            const fields = {"permissionName": true, "permissionDesc": true}
+            var {response} = await getPermission(itemId, fields)
             if(response?.__typename == 'Permission'){
                 this.setState({ id: response.id, name: response.name, desc: response.desc, block:false })
             }

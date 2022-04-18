@@ -39,11 +39,12 @@ class Index extends Component {
         var itemId = router.query.id
         if(itemId !=null){
             this.setState({block: true})
-            var {response } = await getRole(itemId)
+            const fields = {"roleName": true, "roleDesc": true, "rolePermissions": true,"permissionName": true, "permissionDesc": true}
+            var {response } = await getRole(itemId, fields)
             if(response?.__typename == 'Role'){
                 this.setState({ id: response.id, name: response.name, desc: response.desc })
                 var new_permissions = []
-                for(let i=0; i< response.permissions.length; i++){
+                for(let i=0; i< response?.permissions?.length; i++){
                     new_permissions.push(response.permissions[i].permission)
                 }
                 this.setState({chosenPermissions: new_permissions, block: false})
@@ -61,7 +62,8 @@ class Index extends Component {
     }
 
     getPermissions = async() =>{
-        var {response} = await allPermissions()
+        const permissionFields = {"permissionName": true, "permissionDesc": true}
+        var {response} = await allPermissions(permissionFields)
         if(response){
             this.setState({permissions: response.permissions})
         }

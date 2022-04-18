@@ -9,21 +9,21 @@ const token = Cookies.get('userToken')
 const endpoint = "https://trade-two.vercel.app/graphql"
 const graphQLClient = new GraphQLClient(endpoint, {headers: {authorization: token,},})
 
-export function getPermissions (page = null, take = null, filter= null, orderBy =null) {
-    var variables = {"page": page, "take": take,"filter": filter, "orderBy": orderBy}
+export function getPermissions (page, take, filter, orderBy, fields) {
+    var variables = {...fields, "page": page, "take": take,"filter": filter, "orderBy": orderBy}
     var fetcher = query => request(endpoint, query, variables)
     const { data, error, mutate } = useSWR(permissionsQuery,fetcher);
     return {items: data, isLoading: !error && !data, isError: error, mutate}
 }
 
-export async function allPermissions(){
-    const data = await graphQLClient.request(permissionsQuery)
+export async function allPermissions(fields){
+    const data = await graphQLClient.request(permissionsQuery, fields)
     console.info("The response : ", data )
     return {response: data.permissions}
 }
 
-export async function getPermission (id) {
-    var variables = {"id": filterInt(id)}
+export async function getPermission (id, fields) {
+    var variables = {...fields, "id": filterInt(id)}
     const data = await graphQLClient.request(permissionQuery, variables)
     console.info("The response : ", data )
     return {response: data.permission}

@@ -37,8 +37,8 @@ export default function Index() {
     const [orderBy, setOrderBy] = useState({"id": direction})
     const [display, setDisplay] = useState(1);
 
-
-    var { items, isLoading, isError, mutate } = getProducts(page,take,filter, orderBy )
+    const fields = {"productName": true, "productDesc": true, "productUnit": true, "productUnitprice": true, "productUnitweight": true, "productActivated": true, "productBrand": true, "productBrandName": true, "productCategory": true, "productCategoryName": true, "productImage": true, "imageUrl": true, "imageImageref": true, "productInventory": true, "productInventoryQuantity": true}
+    var { items, isLoading, isError, mutate } = getProducts(page,take,filter, orderBy, fields)
 
     const changeDisplay = (e, option) => {
         e.preventDefault()

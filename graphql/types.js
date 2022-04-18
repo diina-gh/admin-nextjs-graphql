@@ -293,8 +293,10 @@ export const roleFields = gql`
         id
         name @include(if: $roleName)
         desc @include(if: $roleDesc)
-        permission @include(if: $rolePermission){
-            ...permissionFields
+        permissions @include(if: $rolePermissions){
+            permission{
+                ...permissionFields
+            }
         }
     }
 `

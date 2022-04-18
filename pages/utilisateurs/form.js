@@ -70,7 +70,8 @@ class Index extends Component {
     }
 
     getRoles = async() =>{
-        var {response} = await allRoles()
+        const roleFields = {"roleName": true, "roleDesc": true,"permissionName": true, "permissionDesc": true}
+        var {response} = await allRoles(roleFields)
         if(response){
             this.setState({roles: response.roles})
         }

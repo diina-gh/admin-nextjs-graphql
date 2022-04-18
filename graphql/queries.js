@@ -443,71 +443,56 @@ export const inventoryQuery = gql `
 `
 
 export const permissionsQuery = gql `
-    query($filter: String, $page: Int, $take: Int, $orderBy: PermissionOrderByInput){
+    ${Types.permissionFields}
+    query($filter: String, $page: Int, $take: Int, $orderBy: PermissionOrderByInput,
+          $permissionName: Boolean = false, $permissionDesc: Boolean = false
+          ){
         permissions(filter: $filter, page: $page, take: $take, orderBy: $orderBy) {
             count
             permissions {
-                id
-                name
-                desc
+                ...permissionFields
             }
         }
     }
 `
 
 export const permissionQuery = gql `
+    ${Types.permissionFields}
     ${Types.InputError}
-    query($id: Int){
+    query($id: Int,
+          $permissionName: Boolean = false, $permissionDesc: Boolean = false
+    ){
         permission(id: $id) {
             __typename
-            ...on Permission{
-                id
-                name
-                desc
-            }
+            ...permissionFields
             ...InputError
         }
     }
 `
 
 export const rolesQuery = gql`
-    query($filter: String, $page: Int, $take: Int, $orderBy: RoleOrderByInput){
+    ${Types.roleFields}
+    query($filter: String, $page: Int, $take: Int, $orderBy: RoleOrderByInput,
+          $roleName: Boolean = false, $roleDesc: Boolean = false, $rolePermissions: Boolean = false, $permissionName: Boolean = false, $permissionDesc: Boolean = false
+    ){
         roles(filter: $filter, page: $page, take: $take, orderBy: $orderBy) {
             count
             roles {
-                id
-                name
-                desc
-                permissions {
-                    permissionId
-                    permission{
-                        id
-                        name
-                    }
-                }
+                ...roleFields
             }
         }
     }
 `
 
 export const roleQuery = gql`
+    ${Types.roleFields}
     ${Types.InputError}
-    query($id: Int){
+    query($id: Int,
+          $roleName: Boolean = false, $roleDesc: Boolean = false, $rolePermissions: Boolean = false, $permissionName: Boolean = false, $permissionDesc: Boolean = false
+    ){
         role(id: $id) {
             __typename
-            ...on Role{
-                id
-                name
-                desc
-                permissions {
-                    permissionId
-                    permission {
-                        id
-                        name
-                        desc
-                    }
-                }
-            }
+            ...roleFields
             ...InputError
         }
     }
