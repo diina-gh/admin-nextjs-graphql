@@ -57,7 +57,7 @@ class Index extends Component {
         this.state = { block: false, block2: false, id:null, firstname: 'Seydina', lastname: 'GUEYE', email:'dina3903@gmail.com', phonenumber: '+221781234997', addresses: [], filteredClients: people, selectedClient:null, query: '', discount: 0, shippingMethods: [], shippingMethod: null, paymentMethods: [], paymentMethod: null, clients: [], products: [], chosenProducts: [], opened: false, page: 1, take: 5, filter:'', orderBy: {"id": 'asc'}  };
         this.checkInput = this.checkInput.bind(this)
         this.saveItem = this.saveItem.bind(this)
-        this.filterItems = this.filterItems.bind(this)
+        this.filterClients = this.filterClients.bind(this)
         this.getShippingMethods = this.getShippingMethods.bind(this)
         this.getPaymentMethods = this.getPaymentMethods.bind(this)
         this.getClients = this.getClients.bind(this)
@@ -196,7 +196,7 @@ class Index extends Component {
         this.setState({chosenProducts: new_chosen_products});
     }
 
-    filterItems = (e) =>{
+    filterClients = (e) =>{
         e.preventDefault()
         this.setState({query: e.target.value})
         const {query} = this.state
@@ -412,7 +412,7 @@ class Index extends Component {
                                                 <Combobox value={selectedClient} onChange={(e) => this.setState({selectedClient: e})}>
                                                     <div className="relative mt-1">
                                                         <div className="relative w-full text-left bg-white rounded-md shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-purple-300 focus-visible:ring-offset-2 sm:text-sm overflow-hidden">
-                                                            <Combobox.Input displayValue={(person) => person != null ? person.name : ''} onChange={(e) => this.filterItems(e)} className="w-full rounded-md border border-gray-400 focus:border-2 focus:border-purple-500 py-[0.535rem] px-3 text-sm leading-5 text-gray-900" placeholder="Rechercher un prénom, nom ou adresse email"/>
+                                                            <Combobox.Input displayValue={(person) => person != null ? person.name : ''} onChange={(e) => this.filterClients(e)} className="w-full rounded-md border border-gray-400 focus:border-2 focus:border-purple-500 py-[0.535rem] px-3 text-sm leading-5 text-gray-900" placeholder="Rechercher un prénom, nom ou adresse email"/>
                                                             <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
                                                                 <SelectorIcon className="w-5 h-5 text-gray-400" aria-hidden="true" />
                                                             </Combobox.Button>

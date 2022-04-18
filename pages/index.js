@@ -354,9 +354,83 @@ export default function Home({userId}) {
                         </motion.div>
 
                         
-                        <motion.div initial={{ opacity: 0.5, y: ( Math.random() * 3 * 5) }} whileInView={{ opacity: 1, y: 0, transition: { duration: 1.05 }, }}>
-                            <div className='w-full h-56 bg-white rounded-xl shadow mt-4 mb-4'>
-                                
+                        <motion.div initial={{ opacity: 0.5, y: ( Math.random() * 2 * 5) }} whileInView={{ opacity: 1, y: 0, transition: { duration: 1.05 }, }}>
+                            <div className='w-full bg-white rounded-xl shadow flex flex-col py-5 mt-4'>
+                                <div className='w-full px-4 text-base font-semibold'>Livraisons</div>
+                                <div className='w-full px-4 mt-3 text-xs font-medium text-gray-800'>
+                                    <table className="min-w-full divide-y divide-gray-200 border-b border-gray-200">
+                                        <thead className="th-bg-1 sticky top-0 ">
+                                            <tr>
+                                                <th scope="col" className="px-6 py-2 text-left text-[11.5px] font-medium text-gray-800 uppercase tracking-wider">
+                                                    N#
+                                                </th>
+                                                <th scope="col" className="px-6 py-2 text-left text-[11.5px] font-medium text-gray-800 uppercase tracking-wider" >
+                                                    Date
+                                                </th>
+
+                                                <th scope="col" className="px-6 py-2 text-left text-[11.5px] font-medium text-gray-800 uppercase tracking-wider" >
+                                                    Montant
+                                                </th>
+
+                                                <th scope="col" className="px-6 py-2 text-left text-[11.5px] font-medium text-gray-800 uppercase tracking-wider" >
+                                                    Client
+                                                </th>
+
+                                                <th scope="col" className="px-6 py-2 text-left text-[11.5px] font-medium text-gray-800 uppercase tracking-wider" >
+                                                    Status
+                                                </th>
+
+                                            </tr>
+                                        </thead>
+
+                                        <tbody className="bg-white divide-y divide-gray-200">
+                                            {commandes.map((item, i) => (
+                                                <tr key={item.id} className={(i%2==0) ? "cursor-pointer hover:bg-purple-50 transition duration-700 ease-in-out" : "bg-gray-100 bg-opacity-50 cursor-pointer hover:bg-purple-50 transition duration-700 ease-in-out"}>
+                                                    
+                                                    <td className="px-6 py-3 whitespace-nowrap">
+                                                        <div className="text-[11.5px] text-gray-900">{item.id}</div>
+                                                    </td>
+
+                                                    <td className="px-6 py-3 whitespace-nowrap">
+                                                        <div className="text-[11.5px] text-gray-900">{item.date}</div>
+                                                    </td>
+
+                                                    <td className="px-6 py-3 whitespace-nowrap">
+                                                        <div className="text-[11.5px] text-gray-900">{item.total}</div>
+                                                    </td>
+
+                                                    <td className="px-6 py-3 whitespace-nowrap">
+                                                        <div className="text-[11.5px] text-gray-900">{item.client}</div>
+                                                    </td>
+
+                                                    <td className="px-6 py-3 whitespace-nowrap">
+                                                        <div className="text-sm text-gray-900">
+                                                            {item.status == 'Livrée' &&
+                                                                <span className="px-3 inline-flex text-[11px] leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                                    ● Livrée
+                                                                </span>
+                                                            }
+                                                            {item.status == 'En cours' &&
+                                                                <span className="px-2 inline-flex text-[11px] leading-5 font-semibold rounded-full bg-orange-100 text-orange-800">
+                                                                    ● En cours
+                                                                </span>
+                                                            }
+                                                            {item.status == 'Restituée' &&
+                                                                 <span className="px-1.5 inline-flex text-[11px] leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                                                    ● Restituée
+                                                                </span>
+                                                            }
+                                                        </div>                                   
+                                                    </td>
+
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <Link  href='/commandes'>
+                                    <div className='w-full px-4 mt-4 text-right text-sm font-semibold underline text-purple-600 hover:text-purple-800 cursor-pointer transition duration-700 ease-in-out'>Liste des livraisons</div>
+                                </Link>
                             </div>
                         </motion.div>
 
