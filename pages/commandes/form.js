@@ -29,6 +29,7 @@ import DoubleChevronRightIcon from '../../components/ui/icons/doubleChevronRight
 import TrashBoldIcon from '../../components/ui/icons/trashBoldIcon'
 import { useDebouncedCallback } from 'use-debounce';
 import { debounce } from 'lodash';
+import { allClients } from '../../hooks/client';
 
 
 const people = [
@@ -53,12 +54,13 @@ class Index extends Component {
 
     constructor(props){
         super(props);
-        this.state = { block: false, block2: false, id:null, firstname: 'Seydina', lastname: 'GUEYE', email:'dina3903@gmail.com', phonenumber: '+221781234997', addresses: [], filteredClients: people, selectedClient:null, query: '', discount: 0, shippingMethods: [], shippingMethod: null, paymentMethods: [], paymentMethod: null, products: [], chosenProducts: [], opened: false, page: 1, take: 5, filter:'', orderBy: {"id": 'asc'}  };
+        this.state = { block: false, block2: false, id:null, firstname: 'Seydina', lastname: 'GUEYE', email:'dina3903@gmail.com', phonenumber: '+221781234997', addresses: [], filteredClients: people, selectedClient:null, query: '', discount: 0, shippingMethods: [], shippingMethod: null, paymentMethods: [], paymentMethod: null, clients: [], products: [], chosenProducts: [], opened: false, page: 1, take: 5, filter:'', orderBy: {"id": 'asc'}  };
         this.checkInput = this.checkInput.bind(this)
         this.saveItem = this.saveItem.bind(this)
         this.filterItems = this.filterItems.bind(this)
         this.getShippingMethods = this.getShippingMethods.bind(this)
         this.getPaymentMethods = this.getPaymentMethods.bind(this)
+        this.getClients = this.getClients.bind(this)
         this.getProducts = this.getProducts.bind(this)
         this.refetch = this.refetch.bind(this)
         this.openModal = this.openModal.bind(this)
@@ -89,11 +91,13 @@ class Index extends Component {
         this.getShippingMethods()
         this.getPaymentMethods()
         this.getProducts()
+        this.getClients()
     }
 
     getShippingMethods = async() =>{
         this.setState({block: true})
-        var {response} = await allShippingMethods()
+        const shippingMethodFields = {"shippingMethodName": true}
+        var {response} = await allShippingMethods(shippingMethodFields)
         if(response){
             this.setState({shippingMethods: response.shippingMethods})
         }
@@ -101,15 +105,26 @@ class Index extends Component {
 
     getPaymentMethods = async() =>{
         this.setState({block: true})
-        var {response} = await allPaymentMethods()
+        const paymentMethodFields = {"paymentMethodName": true}
+        var {response} = await allPaymentMethods(paymentMethodFields)
         if(response){
             this.setState({paymentMethods: response.paymentMethods})
         }
     }
 
+    getClients = async() =>{
+        this.setState({block: true})
+        let orderClient = {"firstname": 'asc'}
+        const clientFields = {"userFirstname": true, "userLastname": true, "userImage": true, "imageUrl": true, }
+        var {response} = await allClients(0, 12, '', orderClient, clientFields)
+        if(response) this.setState({clients: response.clients})
+        
+    }
+
     getProducts = async() => {
         const{page, take, filter, orderBy} = this.state
-        var {response} = await allProducts(page, take, filter, orderBy)
+        const productFields = {"productName": true, "productDesc": true, "productUnit": true, "productUnitprice": true, "productUnitweight": true, "productActivated": true, "productBrand": true, "productBrandName": true, "productCategory": true, "productCategoryName": true, "productImage": true, "imageUrl": true, "imageImageref": true, "productInventory": true, "productInventoryQuantity": true}
+        var {response} = await allProducts(page, take, filter, orderBy, productFields)
         if(response){
             const {chosenProducts} = this.state
             if(chosenProducts != null && chosenProducts.length >0){
