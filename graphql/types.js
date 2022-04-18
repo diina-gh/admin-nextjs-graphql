@@ -302,7 +302,7 @@ export const roleFields = gql`
 `
 
 export const userFields = gql`
-    ${roleFields}
+    ${imageFields}
     fragment userFields on User {
         id
         activated @include(if: $userActivated)
@@ -311,8 +311,24 @@ export const userFields = gql`
         lastname @include(if: $userLastname)
         email @include(if: $userEmail)
         phonenumber @include(if: $userPhonenumber)
+        image @include(if: $userImage){
+            ...imageFields
+        }
         roles @include(if: $userRoles){
-            ...permissionFields
+            role{
+                id
+                name @include(if: $userRoleName)
+                desc @include(if: $userRoleDesc)
+            }
+        }
+        districts @include(if: $userDistricts) {
+            districtId
+            line1  @include(if: $userDistrictLine1)
+            line2  @include(if: $userDistrictLine2)
+            district @include(if: $userDistrictName) {
+                id
+                name
+            }
         }
     }
 `

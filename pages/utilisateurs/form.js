@@ -48,7 +48,8 @@ class Index extends Component {
         var itemId = router.query.id
         if(itemId !=null){
             this.setState({block: true})
-            var {response } = await getUser(itemId)
+            const fields = {"userActivated": true, "userCivility": true, "userFirstname": true, "userLastname": true, "userPhonenumber": true, "userEmail": true, "userImage": true, "imageImageref": true, "imageUrl": true, "userRoles": true, "userRoleName": true}
+            var {response } = await getUser(itemId, fields)
             if(response?.__typename == 'User'){
                 this.setState({ id: response.id, civility: response.civility, firstname: response.firstname, lastname: response.lastname, email: response.email, phonenumber:response.phonenumber, image:response.image?.url, chosenImage:response.image?.url, imageref:response.image?.imageref, imageId: response.image?.id })
                 var new_roles = []

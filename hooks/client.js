@@ -9,19 +9,18 @@ const token = Cookies.get('userToken')
 const endpoint = "https://trade-two.vercel.app/graphql"
 const graphQLClient = new GraphQLClient(endpoint, {headers: {authorization: token,},})
 
-export function getClients (page = null, take = null, filter= null, orderBy =null) {
-    var variables = {"page": page, "take": take,"filter": filter, "orderBy": orderBy}
+export function getClients (page, take, filter, orderBy, fields) {
+    var variables = {...fields, "page": page, "take": take,"filter": filter, "orderBy": orderBy}
     var fetcher = query => request(endpoint, query, variables)
     const { data, error, mutate } = useSWR(clientsQuery,fetcher);
     return {items: data, isLoading: !error && !data, isError: error, mutate}
 }
 
-export async function allClients(){
-    const data = await graphQLClient.request(clientsQuery)
+export async function allClients(fields){
+    const data = await graphQLClient.request(clientsQuery, fields)
     console.info("The response : ", data )
     return {response: data.clients}
 }
-
 
 export async function saveClient (id, civility, firstname, lastname, email, phonenumber, addresses) {
     var variables = {"id": filterInt(id), "firstname": firstname, "civility": civility, "lastname": lastname, "phonenumber": phonenumber, "email":email, "addresses": addresses}

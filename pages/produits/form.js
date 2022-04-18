@@ -95,7 +95,7 @@ class Index extends Component {
             this.setState({block: true})
 
             const fields = {
-                "productName": true, "productDesc": true, "productUnit": true, "productUnitprice": true, "productUnitweight": true, "productActivated": true, "productBrand": true, "productBrandName": true, "productCategory": true, "productCategoryName": true, "productImage": true, "imageUrl": true, "imageImageref": true, "productInventory": true, "productInventoryQuantity": true,
+                "productName": true, "productDesc": true, "productGender": true, "productUnit": true, "productUnitprice": true, "productUnitweight": true, "productActivated": true, "productBrand": true, "productBrandName": true, "productCategory": true, "productCategoryName": true, "productImage": true, "imageUrl": true, "imageImageref": true, "productInventory": true, "productInventoryQuantity": true,
                 "productVariant": true, "productVariantName": true, "productOption": true, "productOptionName": true, "productRelatives": true, "productRelated": true, "relativeName": true, "relativeUnitPrice": true, "relativeImage": true, "relativeCategory": true, "relativeCategoryName": true, "productCategoryImage": true, "productBrandImage": true
             }
 

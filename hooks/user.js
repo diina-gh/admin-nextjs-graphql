@@ -10,21 +10,21 @@ const endpoint = "https://trade-two.vercel.app/graphql"
 const graphQLClient0 = new GraphQLClient(endpoint)
 const graphQLClient = new GraphQLClient(endpoint, {headers: {authorization: token,},})
 
-export function getUsers (page = null, take = null, filter= null, orderBy =null) {
-    var variables = {"page": page, "take": take,"filter": filter, "orderBy": orderBy}
+export function getUsers (page, take, filter, orderBy, fields) {
+    var variables = {...fields, "page": page, "take": take,"filter": filter, "orderBy": orderBy}
     var fetcher = query => request(endpoint, query, variables)
     const { data, error, mutate } = useSWR(usersQuery,fetcher);
     return {items: data, isLoading: !error && !data, isError: error, mutate}
 }
 
-export async function allUsers(){
-    const data = await graphQLClient.request(usersQuery)
+export async function allUsers(fields){
+    const data = await graphQLClient.request(usersQuery, fields)
     console.info("The response : ", data )
     return {response: data.users}
 }
 
-export async function getUser (id) {
-    var variables = {"id": filterInt(id)}
+export async function getUser (id, fields) {
+    var variables = {...fields, "id": filterInt(id)}
     const data = await graphQLClient.request(userQuery, variables)
     console.info("The response : ", data )
     return {response: data.user}

@@ -39,8 +39,8 @@ export default function Index() {
     const [orderBy, setOrderBy] = useState({"id": direction})
     const [block, setBlock] = useState(false);
 
-
-    var { items, isLoading, isError, mutate } = getClients(page,take,filter, orderBy )
+    const fields = {"userActivated": true, "userFirstname": true, "userLastname": true, "userPhonenumber": true, "userEmail": true, "userImage": true, "imageUrl": true}
+    var { items, isLoading, isError, mutate } = getClients(page,take,filter, orderBy, fields )
 
     const refetch = useDebouncedCallback(
         (newPage, newFilter = null, newOrder = null ) => {

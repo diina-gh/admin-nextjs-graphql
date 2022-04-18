@@ -499,87 +499,45 @@ export const roleQuery = gql`
 `
 
 export const usersQuery = gql `
-    query($filter: String, $page: Int, $take: Int, $orderBy: UserOrderByInput){
+    ${Types.userFields}
+    query($filter: String, $page: Int, $take: Int, $orderBy: UserOrderByInput,
+          $userActivated: Boolean = false, $userCivility: Boolean = false, $userFirstname: Boolean = false, $userLastname: Boolean = false, $userEmail: Boolean = false, $userPhonenumber: Boolean = false, 
+          $userRoles: Boolean = false, $userRoleName: Boolean = false , $userRoleDesc: Boolean = false, $userDistricts: Boolean = false, $userDistrictLine1: Boolean = false, $userDistrictLine2: Boolean = false, $userDistrictName: Boolean = false, $userImage: Boolean = false, $imageUrl: Boolean = false, $imageImageref: Boolean = false,  
+    ){
         users(filter: $filter, page: $page, take: $take, orderBy: $orderBy) {
             count
             users {
-                id
-                firstname
-                lastname
-                activated
-                email
-                phonenumber
-                image {
-                    id
-                    url
-                    imageref
-                }
-                roles {
-                    roleId
-                    role{
-                        id
-                        name
-                        desc
-                    }
-                }
+                ...userFields
             }
         }
     }
 `
 
 export const clientsQuery = gql `
-    query($filter: String, $page: Int, $take: Int, $orderBy: UserOrderByInput){
+    ${Types.userFields}
+    query($filter: String, $page: Int, $take: Int, $orderBy: UserOrderByInput,
+        $userActivated: Boolean = false, $userCivility: Boolean = false, $userFirstname: Boolean = false, $userLastname: Boolean = false, $userEmail: Boolean = false, $userPhonenumber: Boolean = false, 
+        $userRoles: Boolean = false, $userRoleName: Boolean = false, $userRoleDesc: Boolean = false, $userDistricts: Boolean = false, $userDistrictLine1: Boolean = false, $userDistrictLine2: Boolean = false, $userDistrictName: Boolean = false, $userImage: Boolean = false, $imageUrl: Boolean = false, $imageImageref: Boolean = false,  
+    ){
         clients(filter: $filter, page: $page, take: $take, orderBy: $orderBy) {
             count
             users {
-                id
-                civility
-                activated
-                firstname
-                lastname
-                email
-                phonenumber
-                districts {
-                    districtId
-                    line1
-                    line2
-                    district {
-                        id
-                        name
-                    }
-                }
+                ...userFields
             }
         }
     }
 `
 
 export const userQuery = gql `
+    ${Types.userFields}
     ${Types.InputError}
-    query($id: Int){
+    query($id: Int,
+          $userActivated: Boolean = false, $userCivility: Boolean = false, $userFirstname: Boolean = false, $userLastname: Boolean = false, $userEmail: Boolean = false, $userPhonenumber: Boolean = false, 
+          $userRoles: Boolean = false, $userRoleName: Boolean = false, $userRoleDesc: Boolean = false, $userDistricts: Boolean = false, $userDistrictLine1: Boolean = false, $userDistrictLine2: Boolean = false, $userDistrictName: Boolean = false, $userImage: Boolean = false, $imageUrl: Boolean = false, $imageImageref: Boolean = false,  
+    ){
         user(id: $id){
             __typename
-            ...on User{
-                id
-                civility
-                firstname
-                lastname
-                activated
-                email
-                phonenumber
-                image {
-                    id
-                    url
-                    imageref
-                }
-                roles {
-                    roleId
-                    role{
-                        id
-                        name
-                        desc
-                    }
-                }
-            }
+            ...userFields
             ...InputError
         }
     }
