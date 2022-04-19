@@ -230,12 +230,12 @@ export default function Index() {
 
                                                                         <div className='w-full flex flex-col px-4'>
                                                                             <div className='text-sm font-medium flex flex-row justify-between mb-0.5'>
-                                                                                <div className='text-gray-800'>Sous total</div>
+                                                                                <div className='text-gray-900'>Sous total</div>
                                                                                 <div className='text-gray-900  text-xs self-center'>7500 CFA</div>
                                                                             </div>
 
                                                                             <div className='text-sm font-medium flex flex-row justify-between mb-0.5'>
-                                                                                <div className='text-gray-800'>Livraison</div>
+                                                                                <div className='text-gray-900'>Livraison</div>
                                                                                 <div className='text-gray-900  text-xs self-center'>500 CFA</div>
                                                                             </div>
 
@@ -245,7 +245,7 @@ export default function Index() {
                                                                             </div> */}
 
                                                                             <div className='text-sm font-medium flex flex-row justify-between mb-0.5'>
-                                                                                <div className='text-gray-800'>Total</div>
+                                                                                <div className='text-gray-900'>Total</div>
                                                                                 <div className='text-gray-900  text-xs self-center'>85 000 CFA</div>
                                                                             </div>
                                                                         </div>
