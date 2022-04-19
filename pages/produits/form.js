@@ -157,6 +157,7 @@ class Index extends Component {
         this.getBrands()
         this.getVariants()
         this.getProducts()
+        
     }
 
     getCategories = async() => {
