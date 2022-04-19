@@ -17,7 +17,7 @@ export function getClients (page, take, filter, orderBy, fields) {
 }
 
 export async function allClients(page, take, filter, orderBy, fields){
-    var variables = {...fields, "page": page, "take": take,"filter": filter, "orderBy": orderBy}
+    var variables = {...fields, "page": page, "take": take, "filter": filter, "orderBy": orderBy}
     const data = await graphQLClient.request(clientsQuery, variables)
     console.info("The response : ", data )
     return {response: data.clients}

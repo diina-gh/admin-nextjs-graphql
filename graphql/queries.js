@@ -516,8 +516,8 @@ export const usersQuery = gql `
 export const clientsQuery = gql `
     ${Types.userFields}
     query($filter: String, $page: Int, $take: Int, $orderBy: UserOrderByInput,
-        $userActivated: Boolean = false, $userCivility: Boolean = false, $userFirstname: Boolean = false, $userLastname: Boolean = false, $userEmail: Boolean = false, $userPhonenumber: Boolean = false, 
-        $userRoles: Boolean = false, $userRoleName: Boolean = false, $userRoleDesc: Boolean = false, $userDistricts: Boolean = false, $userDistrictLine1: Boolean = false, $userDistrictLine2: Boolean = false, $userDistrictName: Boolean = false, $userImage: Boolean = false, $imageUrl: Boolean = false, $imageImageref: Boolean = false,  
+          $userActivated: Boolean = false, $userCivility: Boolean = false, $userFirstname: Boolean = false, $userLastname: Boolean = false, $userEmail: Boolean = false, $userPhonenumber: Boolean = false, 
+          $userRoles: Boolean = false, $userRoleName: Boolean = false, $userRoleDesc: Boolean = false, $userDistricts: Boolean = false, $userDistrictLine1: Boolean = false, $userDistrictLine2: Boolean = false, $userDistrictName: Boolean = false, $userImage: Boolean = false, $imageUrl: Boolean = false, $imageImageref: Boolean = false,  
     ){
         clients(filter: $filter, page: $page, take: $take, orderBy: $orderBy) {
             count

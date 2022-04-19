@@ -419,9 +419,9 @@ class Index extends Component {
                                                         </div>
                                                         <Transition as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0" afterLeave={() => this.setState({query: ''})}>
                                                             <Combobox.Options className="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-64 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                                                                {filteredClients.length === 0 && query !== '' ? (
+                                                                {filteredClients.length === 0 ? (
                                                                     <div className="cursor-default select-none relative py-2 px-3 text-gray-700">
-                                                                        Nothing found.
+                                                                        Aucun client ne correspond à votre recherche.
                                                                     </div>
                                                                 ) : (
                                                                     filteredClients.map((person) => (
