@@ -178,7 +178,7 @@ export default function Index() {
                                                                                 <div className='w-full truncate text-[16px] font-semibold text-gray-900'>Oumou GUEYE</div>
                                                                                 <div className='w-full truncate text-[12.5px] font-normal mt-0.5 text-gray-700'>23 Fevrier 2021, 08:28 PM</div>
                                                                             </div>
-                                                                            <div className='w-11 h-11 rounded-full bg-gray-400 self-center'>
+                                                                            <div className='w-11 h-11 rounded-full bg-gray-400 shadow-sm self-center'>
                                                                                 <img className='w-full h-full rounded-full' src='../images/avatar2.jpg' />
                                                                             </div>
                                                                         </div>
