@@ -124,7 +124,7 @@ class Index extends Component {
 
     getProducts = async() => {
         const{page, take, filter, orderBy} = this.state
-        const productFields = {"productName": true, "productDesc": true, "productUnit": true, "productUnitprice": true, "productUnitweight": true, "productActivated": true, "productBrand": true, "productBrandName": true, "productCategory": true, "productCategoryName": true, "productImage": true, "imageUrl": true, "imageImageref": true, "productInventory": true, "productInventoryQuantity": true}
+        const productFields = {"productName": true, "productUnit": true, "productUnitprice": true, "productActivated": true, "productBrand": true, "productBrandName": true, "productCategory": true, "productCategoryName": true, "productImage": true, "imageUrl": true, "productVariants": true, "productVariantName": true, "productOptions": true, "productOptionValue": true, "productOptionColorCode": true}
         var {response} = await allProducts(page, take, filter, orderBy, productFields)
         if(response){
             const {chosenProducts} = this.state
@@ -237,21 +237,21 @@ class Index extends Component {
 
     saveItem = async () => {
 
-        const {id, name, desc, order, activated, parent} = this.state
+        // const {id, name, desc, order, activated, parent} = this.state
 
-        var {response } = await saveCategory(id, name, desc, order, activated, parent?.id)
+        // var {response } = await saveCategory(id, name, desc, order, activated, parent?.id)
 
-        if(response?.__typename == 'Category'){
-            this.handleUpload(response?.id)
-        }
-        else if(response?.__typename == 'InputError'){
-            toast.dismiss()
-            toast.error(response?.message, {id: toastOne,});
-            this.setState({block: false})
-        }
-        else{
-            toast.error("Erreur inconnue. Veuillez vérifier votre connexion internet.", {id: toastOne,});
-        }
+        // if(response?.__typename == 'Category'){
+        //     this.handleUpload(response?.id)
+        // }
+        // else if(response?.__typename == 'InputError'){
+        //     toast.dismiss()
+        //     toast.error(response?.message, {id: toastOne,});
+        //     this.setState({block: false})
+        // }
+        // else{
+        //     toast.error("Erreur inconnue. Veuillez vérifier votre connexion internet.", {id: toastOne,});
+        // }
 
     };
 
