@@ -380,6 +380,7 @@ export const productsQuery = gql `
           $productVariants: Boolean = false, $productVariantName: Boolean = false, $productVariantOptions: Boolean = false, $productVariantOptionValue: Boolean = false, $productVariantOptionColorCode: Boolean = false, $productOptions: Boolean = false, $productOptionValue: Boolean = false, $productOptionColorCode: Boolean = false,
           $productDiscount: Boolean = false, $productDiscountPercent: Boolean = false, $productInventory: Boolean = false, $productInventoryQuantity: Boolean = false, $productInventoryDetails: Boolean = false, $productRelatives: Boolean = false, $productRelated: Boolean = false, $productImage: Boolean = false, $imageUrl: Boolean = false, $imageImageref: Boolean = false
           $relativeName: Boolean = false, $relativeDesc: Boolean = false, $relativeUnitPrice: Boolean = false, $relativeImage: Boolean = false, $relativeBrand: Boolean = false, $relativeBrandName: Boolean = false, $relativeCategory: Boolean = false, $relativeCategoryName: Boolean = false,
+          $productOptionVariantId: Boolean = false, $productOptionVariant: Boolean = false, $productOptionVariantName: Boolean = false,
          ){
 
             products(page: $page, take: $take, filter: $filter, orderBy: $orderBy) {
@@ -401,7 +402,8 @@ export const productQuery = gql `
           $productBrandName: Boolean = false, $productBrandImage: Boolean = false, $productCategory: Boolean = false, $productCategoryName: Boolean = false, $productCategoryImage: Boolean = false, 
           $productVariants: Boolean = false, $productVariantName: Boolean = false, $productVariantOptions: Boolean = false, $productVariantOptionValue: Boolean = false, $productVariantOptionColorCode: Boolean = false, $productOptions: Boolean = false, $productOptionValue: Boolean = false, $productOptionColorCode: Boolean = false,
           $productDiscount: Boolean = false, $productDiscountPercent: Boolean = false, $productInventory: Boolean = false, $productInventoryQuantity: Boolean = false, $productInventoryDetails: Boolean = false, $productRelatives: Boolean = false, $productRelated: Boolean = false, $productImage: Boolean = false, $imageUrl: Boolean = false, $imageImageref: Boolean = false
-          $relativeName: Boolean = false, $relativeDesc: Boolean = false, $relativeUnitPrice: Boolean = false, $relativeImage: Boolean = false, $relativeBrand: Boolean = false, $relativeBrandName: Boolean = false, $relativeCategory: Boolean = false, $relativeCategoryName: Boolean = false
+          $relativeName: Boolean = false, $relativeDesc: Boolean = false, $relativeUnitPrice: Boolean = false, $relativeImage: Boolean = false, $relativeBrand: Boolean = false, $relativeBrandName: Boolean = false, $relativeCategory: Boolean = false, $relativeCategoryName: Boolean = false,
+          $productOptionVariantId: Boolean = false, $productOptionVariant: Boolean = false, $productOptionVariantName: Boolean = false,
         ){
             product(id: $id){
                 __typename

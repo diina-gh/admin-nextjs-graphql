@@ -32,15 +32,6 @@ import { debounce } from 'lodash';
 import { allClients } from '../../hooks/client';
 
 
-const people = [
-  { id: 1, name: 'Wade Cooper' },
-  { id: 2, name: 'Arlene Mccoy' },
-  { id: 3, name: 'Devon Webb' },
-  { id: 4, name: 'Tom Cook' },
-  { id: 5, name: 'Tanya Fox' },
-  { id: 6, name: 'Hellen Schmidt' },
-]
-
 export async function getServerSideProps(context) {
     return {
       props: {},
@@ -124,7 +115,7 @@ class Index extends Component {
 
     getProducts = async() => {
         const{page, take, filter, orderBy} = this.state
-        const productFields = {"productName": true, "productUnit": true, "productUnitprice": true, "productActivated": true, "productBrand": true, "productBrandName": true, "productCategory": true, "productCategoryName": true, "productImage": true, "imageUrl": true, "productVariants": true, "productVariantName": true, "productOptions": true, "productOptionValue": true, "productOptionColorCode": true}
+        const productFields = {"productName": true, "productUnit": true, "productUnitprice": true, "productActivated": true, "productBrand": true, "productBrandName": true, "productCategory": true, "productCategoryName": true, "productImage": true, "imageUrl": true, "productVariants": true, "productVariantName": true, "productOptions": true, "productOptionValue": true, "productOptionColorCode": true, "productOptionVariantId": true, "productOptionVariant": true, "productOptionVariantName": true}
         var {response} = await allProducts(page, take, filter, orderBy, productFields)
         if(response){
             const {chosenProducts} = this.state

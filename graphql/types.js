@@ -258,6 +258,11 @@ export const productFields = gql`
             option{
                 value @include(if: $productOptionValue)
                 colorCode @include(if: $productOptionColorCode)
+                variantId @include(if: $productOptionVariantId)
+                variant @include(if: $productOptionVariant) {
+                    id
+                    name @include(if: $productOptionVariantName)
+                }
             }
         }
         discount @include(if: $productDiscount){

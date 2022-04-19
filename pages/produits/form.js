@@ -96,7 +96,8 @@ class Index extends Component {
 
             const fields = {
                 "productName": true, "productDesc": true, "productGender": true, "productUnit": true, "productUnitprice": true, "productUnitweight": true, "productActivated": true, "productBrand": true, "productBrandName": true, "productCategory": true, "productCategoryName": true, "productImage": true, "imageUrl": true, "imageImageref": true, "productInventory": true, "productInventoryQuantity": true,
-                "productVariants": true, "productVariantName": true,"productVariantOptions": true, "productVariantOptionValue": true, "productVariantOptionColorCode": true, "productOptions": true, "productOptionColorCode": true,"productOptionValue": true, "productRelatives": true, "productRelated": true, "relativeName": true, "relativeUnitPrice": true, "relativeImage": true, "relativeCategory": true, "relativeCategoryName": true, "productCategoryImage": true, "productBrandImage": true
+                "productVariants": true, "productVariantName": true,"productVariantOptions": true, "productVariantOptionValue": true, "productVariantOptionColorCode": true, "productOptions": true, "productOptionColorCode": true,"productOptionValue": true, "productRelatives": true, "productRelated": true, "relativeName": true, "relativeUnitPrice": true, "relativeImage": true, "relativeCategory": true, "relativeCategoryName": true, "productCategoryImage": true, "productBrandImage": true,
+                "productOptionVariantId": true, "productOptionVariant": true, "productOptionVariantName": true,
             }
 
             var {response} = await getProduct(itemId, fields)
@@ -126,7 +127,7 @@ class Index extends Component {
 
                     for(let j=0; j < response.variants?.length; j++){
                         for(let i=0; i<response.options?.length; i++){
-                            response.variants[j].variant.options.find(item => item.id == response.options[i]?.option?.id).selected = true
+                            response.variants[j].variant.options.find(item => item.value == response.options[i]?.option?.value).selected = true
                         }
                     }
 

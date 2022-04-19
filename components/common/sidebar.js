@@ -36,31 +36,6 @@ export function Navigation(){
                     </li>
                 </Link>
 
-                <Disclosure as="li" className="mt-2">
-                    {({ open }) => (
-                        <>
-                        <Disclosure.Button className={`${open ? 'text-purple-800 border-purple-500 bg-gradient-to-r from-purple-50 to-fuchsia-50 bg-opacity-5' : 'border-white text-gray-900'} w-full flex justify-between py-2 px-4 text-base font-medium border-l-2 hover:text-purple-800 hover:border-purple-500 hover:bg-gradient-to-r hover:from-purple-50 hover:to-fuchsia-50 hover:bg-opacity-5`} >
-                            <a  className="flex items-center ">
-                                <InterfaceBoldIcon customClass="w-4 h-4" />
-                                <span className="ml-3">Interfaces</span>
-                            </a>
-                            <ChevronDownIcon className={`${open ? 'transform rotate-180' : ''} w-5 h-5 self-center`}/>
-                        </Disclosure.Button>
-                        <Disclosure.Panel className="my-2 text-sm font-medium ">
-                            <Link  href='/' >
-                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '> Exemple 1</div>
-                            </Link>
-                            <Link  href='/' >
-                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '> Exemple 2</div>
-                            </Link>
-                            <Link  href='/' >
-                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '> Exemple 3</div>
-                            </Link>
-                        </Disclosure.Panel>
-                        </>
-                    )}
-                </Disclosure>
-
                 <div className="text-xs font-medium text-gray-400 capitalise pl-4 pt-2 ">BOUTIQUE</div>
 
                 <Link  href='/commandes' >
@@ -194,6 +169,31 @@ export function Navigation(){
                 </Link>
 
                 <div className="text-xs font-medium text-gray-400 capitalise pl-4 pt-2">ADMINISTRATION</div>
+
+                <Disclosure as="li" className="mt-2">
+                    {({ open }) => (
+                        <>
+                        <Disclosure.Button className={`${open ? 'text-purple-800 border-purple-500 bg-gradient-to-r from-purple-50 to-fuchsia-50 bg-opacity-5' : 'border-white text-gray-900'} w-full flex justify-between py-2 px-4 text-base font-medium border-l-2 hover:text-purple-800 hover:border-purple-500 hover:bg-gradient-to-r hover:from-purple-50 hover:to-fuchsia-50 hover:bg-opacity-5`} >
+                            <a  className="flex items-center ">
+                                <InterfaceBoldIcon customClass="w-4 h-4" />
+                                <span className="ml-3">Interfaces</span>
+                            </a>
+                            <ChevronDownIcon className={`${open ? 'transform rotate-180' : ''} w-5 h-5 self-center`}/>
+                        </Disclosure.Button>
+                        <Disclosure.Panel className="my-2 text-sm font-medium ">
+                            <Link  href='/' >
+                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '> Exemple 1</div>
+                            </Link>
+                            <Link  href='/' >
+                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '> Exemple 2</div>
+                            </Link>
+                            <Link  href='/' >
+                                <div className='pl-11 pr-2 text-gray-900 hover:text-purple-800 cursor-pointer py-2 duration-700 ease-in-out '> Exemple 3</div>
+                            </Link>
+                        </Disclosure.Panel>
+                        </>
+                    )}
+                </Disclosure>
 
                 <Disclosure as="li" className="mt-2">
                     {({ open }) => (
