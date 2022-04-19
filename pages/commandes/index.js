@@ -25,12 +25,13 @@ import AppBoldIcon from '../../components/ui/icons/appBoldIcon';
 import CrossIcon from '../../components/ui/icons/crossIcon';
 import { getProducts } from '../../hooks/product';
 import { capitalize } from '../../libs/util';
+import { allCategories, getCategories } from '../../hooks/category';
 import { useDebouncedCallback } from 'use-debounce';
 
 
 export default function Index() {
 
-    const [take, setTake] = useState(12);
+    const [take, setTake] = useState(9);
     const [page, setPage] = useState(1);
     const [filter, setFilter] = useState('')
     const [direction, setDirection] = useState('asc')
@@ -38,12 +39,12 @@ export default function Index() {
     const [display, setDisplay] = useState(1);
 
     const fields = {"productName": true, "productDesc": true, "productUnit": true, "productUnitprice": true, "productUnitweight": true, "productActivated": true, "productBrand": true, "productBrandName": true, "productCategory": true, "productCategoryName": true, "productImage": true, "imageUrl": true, "imageImageref": true, "productInventory": true, "productInventoryQuantity": true}
-    var { items, isLoading, isError, mutate } = getProducts(page,take,filter, orderBy, fields)
+    var { items, isLoading, isError, mutate } = getProducts(page,take,filter, orderBy, fields )
 
     const changeDisplay = (e, option) => {
         e.preventDefault()
         setDisplay(option)
-        setTake(option == 0 ? 8 : 12)
+        // refetch(1)
     }
 
     const refetch = useDebouncedCallback(
@@ -66,6 +67,7 @@ export default function Index() {
     if (isError) console.log("The error here ", isError)
     if (isLoading) console.log("loading...")
     if(items) console.log("Informations => ", items)
+
 
     return (
         <div className="app-container h-screen">
@@ -94,24 +96,24 @@ export default function Index() {
                                 <div className='flex flex-row'>
                                     
                                     <Sort />
-                                    <Filter />
+                                    <Filter gender={true} brand={true} category={true} price={true} option={true} />
 
-                                    <div onClick={(e) => changeDisplay(e,0)} className={` ${display == 0 ? 'text-purple-600' : 'text-gray-800'} hover:text-purple-600 duration-700 ease-in-out self-center cursor-pointer mr-4`}>
+                                    <div onClick={(e) => changeDisplay(e,0)} className={` ${display == 0 ? 'text-purple-600' : 'text-gray-700'} hover:text-purple-600 duration-700 ease-in-out self-center cursor-pointer mr-4`}>
                                         <ListBoldIcon customClass="w-4 h-7" />
                                     </div>
 
-                                    <div onClick={(e) => changeDisplay(e,1)} className={` ${display == 1 ? 'text-purple-600' : 'text-gray-800'} hover:text-purple-600 duration-700 ease-in-out self-center cursor-pointer mr-4`}>
+                                    <div onClick={(e) => changeDisplay(e,1)} className={` ${display == 1 ? 'text-purple-600' : 'text-gray-700'} hover:text-purple-600 duration-700 ease-in-out self-center cursor-pointer mr-4`}>
                                         <AppBoldIcon customClass="w-4 h-4" />
                                     </div>
 
                                     <div className='h-8 px-2 self-center bg-gray-100 bg-opacity-95 shadow-inner rounded-full flex flex-row'>
 
                                         <div className='w-4 h-4 -mb-0.5 self-center'>
-                                            <SearchIcon customClass='w-full h-full text-gray-600' />
+                                            <SearchIcon customClass='w-full h-full text-gray-700' />
                                         </div>
 
                                         <div className='w-72 h-full'>
-                                            <input type="text" onChange={(e) => e.target.value == '' ? mutate({...items, orderBy:''}) : refetch(null, e.target.value)}  className='w-full h-full focus:ring-0 text-sm border-0 bg-gray-200 bg-opacity-0' placeholder='Rechercher un nom ou une description ...' />
+                                            <input type="text" onChange={(e) => e.target.value == '' ? mutate({...items, filter:''}) : refetch(null, e.target.value)}  className='w-full h-full focus:ring-0 text-sm border-0 bg-gray-200 bg-opacity-0' placeholder='Rechercher un nom ou une description ...' />
                                         </div>
 
                                     </div>
@@ -143,7 +145,7 @@ export default function Index() {
                             <div className="w-full flex flex-col overflow-x-auto mt-5">
                                 <div className="w-full overflow-x-auto">
                                     <div className="align-middle inline-block min-w-full">
-                                        <div className="overflow-hidden app-table sm:rounded-lg px-4 px-4">
+                                        <div className="overflow-hidden app-table sm:rounded-lg pl-4 pr-3">
 
                                         {(isLoading || items?.page != null || items?.filter != null || items?.orderBy != null ) &&
                                             <div className='app-table w-full flex flex-row justify-center'>
@@ -155,11 +157,11 @@ export default function Index() {
                                             <>
                                                 { display == 1 &&
 
-                                                    <div className="w-full grid grid-cols-6 gap-4">
+                                                    <div className="w-full grid grid-cols-3 gap-5">
                                                         {items.products.products.map((item, i) => (
-                                                            <div key={i}>
-                                                                <motion.div initial={{ opacity: 0, y: ( Math.random() + i) }} whileInView={{ opacity: 1, y: 0, transition: { duration: 1.05 }, }}>
-                                                                    <div className="w-full pt-1 pb-5 rounded-xl bg-gray-200 bg-opacity-80 cursor-pointer relative parent-layer">
+                                                            <div key={i} className="w-full">
+                                                                <motion.div initial={{ opacity: 0, y: ( Math.random() + i * 5) }} whileInView={{ opacity: 1, y: 0, transition: { duration: 1.05 }, }}>
+                                                                    <div className="w-full py-4 rounded-xl bg-gray-200 bg-opacity-80 cursor-pointer relative parent-layer">
 
                                                                         <div onClick={(e) => deleteItem(e, item.id)}  className='hided-item absolute top-[0.55rem] right-[0.4rem] w-[1.25rem] h-[1.25rem] bg-red-400 hover:bg-red-500 rounded-full flex flex-row justify-center z-10 shadow-sm transition duration-700 ease-in-out'>
                                                                             <CrossIcon customClass="w-2 h-2 text-white self-center" />
@@ -171,20 +173,80 @@ export default function Index() {
                                                                             </div>
                                                                         </Link>
                                                                         
-
-                                                                        <div className='w-full image-layer-00 flex flex-row justify-center'>
-                                                                            <div className='image-layer-01 self-center'>
-                                                                                <img src={item.images[0]?.url} />
+                                                                        <div className='w-full flex flex-row justify-between px-4'>
+                                                                            <div className='w-8/12 pr-1 flex flex-col self-center'>
+                                                                                <div className='w-full truncate text-[16.5px] font-semibold text-gray-900'>Commandes #362</div>
+                                                                                <div className='w-full truncate text-[12.5px] font-normal mt-0.5 text-gray-700'>23 Fevrier 2021, 08:28 PM</div>
+                                                                            </div>
+                                                                            <div className='w-11 h-11 rounded-full bg-gray-400 self-center'>
+                                                                                <img className='w-full h-full rounded-full' src='../images/avatar2.jpg' />
                                                                             </div>
                                                                         </div>
 
-                                                                        <div className='w-full mt-2 px-3'>
-                                                                            <div className='w-full text-gray-500 text-[0.7rem] font-medium'>{capitalize(item.category?.name)}</div>
-                                                                            <div className='w-full flex mt-1'>
-                                                                                <div className='self-center w-full'>
-                                                                                    <div className='w-full main-item text-gray-900 cursor-pointer text-[0.87rem] font-semibold truncate transition duration-700 ease-in-out'>{capitalize(item.name)}</div>
-                                                                                    <div className='w-full text-gray-800 text-[0.71rem] font-medium mt-1'> {new Intl.NumberFormat('fr-FR', {style: 'currency', currency:'XOF'}).format(item.unitprice)}</div>
+                                                                        <div className='w-full h-56 flex flex-col px-4 overflow-y-scroll mt-2'>
+
+                                                                            <div className='divider w-full h-[1px] bg-gray-400 bg-opacity-30 mt-3 mb-3'></div>
+
+                                                                            <div className='w-full flex flex-row justify-between h-max'>
+
+                                                                                <div className='w-16 h-16 rounded-full border-2 border-purple-600 bg-gray-300 mr-0.5'>
                                                                                 </div>
+
+                                                                                <div className='w-9/12 self-center'>
+                                                                                    <div className='w-full truncate text-[14.5px] font-semibold text-gray-900'>Apple MacBook Pro</div>
+                                                                                    <div className='w-full truncate text-[12.5px] font-normal text-gray-700'>Ordinateur - Apple</div>
+                                                                                    <div className='w-full flex flex-row mt-0.5'>
+                                                                                        <div className='text-[11.5px] font-semibold mr-2'>290.000 CFA</div>
+                                                                                        <div className='text-[11.5px] font-semibold mr-2'>Couleur: <span className='font-normal'>noir</span></div>
+                                                                                        <div className='text-[11.5px] font-semibold'>Qte: <span className='font-normal'>2</span></div>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                            </div>
+
+                                                                            <div className='divider w-full h-[1px] bg-gray-400 bg-opacity-30 mt-3 mb-3'></div>
+
+                                                                            <div className='w-full flex flex-row justify-between h-max'>
+
+                                                                                <div className='w-16 h-16 rounded-full border-2 border-purple-600 bg-gray-300 mr-0.5'>
+                                                                                </div>
+
+                                                                                <div className='w-9/12 self-center'>
+                                                                                    <div className='w-full truncate text-[14.5px] font-semibold text-gray-900'>Apple MacBook Pro</div>
+                                                                                    <div className='w-full truncate text-[12.5px] font-normal text-gray-700'>Ordinateur - Apple</div>
+                                                                                    <div className='w-full flex flex-row mt-0.5'>
+                                                                                        <div className='text-[11.5px] font-semibold mr-2'>290.000 CFA</div>
+                                                                                        <div className='text-[11.5px] font-semibold mr-2'>Couleur: <span className='font-normal'>noir</span></div>
+                                                                                        <div className='text-[11.5px] font-semibold'>Qte: <span className='font-normal'>2</span></div>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                            </div>
+
+                                                                            <div className='divider w-full h-[1px] bg-gray-400 bg-opacity-30 mt-3 mb-3'></div>
+
+
+                                                                        </div>
+
+                                                                        <div className='w-full flex flex-col px-4'>
+                                                                            <div className='text-sm font-medium flex flex-row justify-between mb-0.5'>
+                                                                                <div className='text-gray-800'>Sous total</div>
+                                                                                <div className='text-gray-900  text-xs self-center'>7500 CFA</div>
+                                                                            </div>
+
+                                                                            <div className='text-sm font-medium flex flex-row justify-between mb-0.5'>
+                                                                                <div className='text-gray-800'>Livraison</div>
+                                                                                <div className='text-gray-900  text-xs self-center'>500 CFA</div>
+                                                                            </div>
+
+                                                                            {/* <div className='text-sm font-medium flex flex-row justify-between mb-0.5'>
+                                                                                <div className='text-gray-800'>Remise</div>
+                                                                                <div className='text-gray-900  text-xs self-center'>- 250 CFA</div>
+                                                                            </div> */}
+
+                                                                            <div className='text-sm font-medium flex flex-row justify-between mb-0.5'>
+                                                                                <div className='text-gray-800'>Total</div>
+                                                                                <div className='text-gray-900  text-xs self-center'>85 000 CFA</div>
                                                                             </div>
                                                                         </div>
 
@@ -241,7 +303,7 @@ export default function Index() {
                                                                                     </div>
                                                                                 }
                                                                                 <div className={`${item.activated ? 'opacity-100' : 'opacity-50'}`}>
-                                                                                    <div className="text-sm font-medium text-gray-900">{capitalize(item.name)}</div>
+                                                                                    <div className="text-sm font-medium text-gray-900 w-40 truncate">{capitalize(item.name)}</div>
                                                                                 </div>
                                                                             </div>
                                                                         </td>

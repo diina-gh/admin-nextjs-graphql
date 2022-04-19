@@ -120,7 +120,6 @@ class Index extends Component {
                             }
                         );
                     }
-
                 }
 
                 if(response.variants != null && response.variants.length > 0){
@@ -157,7 +156,7 @@ class Index extends Component {
         this.getBrands()
         this.getVariants()
         this.getProducts()
-        
+
     }
 
     getCategories = async() => {
