@@ -175,7 +175,7 @@ export default function Index() {
                                                                         
                                                                         <div className='w-full flex flex-row justify-between px-4'>
                                                                             <div className='w-8/12 pr-1 flex flex-col self-center'>
-                                                                                <div className='w-full truncate text-[16.5px] font-semibold text-gray-900'>Commandes #362</div>
+                                                                                <div className='w-full truncate text-[16.5px] font-semibold text-gray-900'>Oumou GUEYE</div>
                                                                                 <div className='w-full truncate text-[12.5px] font-normal mt-0.5 text-gray-700'>23 Fevrier 2021, 08:28 PM</div>
                                                                             </div>
                                                                             <div className='w-11 h-11 rounded-full bg-gray-400 self-center'>
