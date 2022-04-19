@@ -54,10 +54,10 @@ class Index extends Component {
 
     constructor(props){
         super(props);
-        this.state = { block: false, block2: false, id:null, firstname: 'Seydina', lastname: 'GUEYE', email:'dina3903@gmail.com', phonenumber: '+221781234997', addresses: [], filteredClients: [], selectedClient:null, query: '', discount: 0, shippingMethods: [], shippingMethod: null, paymentMethods: [], paymentMethod: null, clients: [], products: [], chosenProducts: [], opened: false, page: 1, take: 5, filter:'', orderBy: {"id": 'asc'}  };
+        this.state = { block: false, block2: false, id:null, firstname: '', lastname: '', email:'', phonenumber: '', addresses: [], selectedAddress: null, filteredClients: [], selectedClient:null, query: '', discount: 0, shippingMethods: [], shippingMethod: null, paymentMethods: [], paymentMethod: null, clients: [], products: [], chosenProducts: [], opened: false, page: 1, take: 5, filter:'', orderBy: {"id": 'asc'}  };
         this.checkInput = this.checkInput.bind(this)
         this.saveItem = this.saveItem.bind(this)
-        // this.filterClients = this.filterClients.bind(this)
+        this.choseClient = this.choseClient.bind(this)
         this.getShippingMethods = this.getShippingMethods.bind(this)
         this.getPaymentMethods = this.getPaymentMethods.bind(this)
         this.getClients = this.getClients.bind(this)
@@ -114,8 +114,9 @@ class Index extends Component {
 
     getClients = debounce(
         async (filter ) => {
+            if(filter == '') this.setState({selectedClient: null})
             let orderClient = {"firstname": 'asc'}
-            const clientFields = {"userFirstname": true, "userLastname": true, "userEmail": true, "userPhonenumber": true, "userImage": true, "imageUrl": true, }
+            const clientFields = {"userFirstname": true, "userLastname": true, "userEmail": true, "userPhonenumber": true, "userImage": true, "imageUrl": true, "userDistricts": true, "userDistrictLine1": true, "userDistrictLine2": true }
             var {response} = await allClients(0, 12, filter, orderClient, clientFields)
             if(response) this.setState({filteredClients: response.users})
        },695
@@ -196,12 +197,9 @@ class Index extends Component {
         this.setState({chosenProducts: new_chosen_products});
     }
 
-    filterClients = (e) =>{
-        e.preventDefault()
-        this.setState({query: e.target.value})
-        const {query} = this.state
-        this.setState({filteredClients: query === '' ? people : people.filter((person) => person.name.toLowerCase().replace(/\s+/g, '').includes(query.toLowerCase().replace(/\s+/g, ''))) })
-        if(query == '') this.setState({selectedClient: null})
+    choseClient = (e) =>{
+        this.setState({selectedClient:e, firstname: e.firstname, lastname: e.lastname, email: e.email, phonenumber: e.phonenumber, addresses: e.districts})
+        console.log("dis ", e.districts)
     }
 
     closeModal = (e) => {
@@ -261,7 +259,7 @@ class Index extends Component {
 
     render() {
 
-        const {filteredClients, selectedClient, query,  shippingMethods, shippingMethod, paymentMethods, paymentMethod, products, chosenProducts} = this.state
+        const {filteredClients, selectedClient, addresses, selectedAddress,  shippingMethods, shippingMethod, paymentMethods, paymentMethod, products, chosenProducts} = this.state
 
         let class_type_1 = "mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2"
         let class_type_2 = "mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-0 focus:border focus:border-gray-400 shadow-inner bg-gray-50 bg-opacity-95 rounded-md px-2"
@@ -409,7 +407,7 @@ class Index extends Component {
 
                                             <div className="col-span-3 mb-2">
                                                 <label htmlFor="client" className="block text-sm font-medium text-gray-900">Choisir un client</label>
-                                                <Combobox value={selectedClient} onChange={(e) => this.setState({selectedClient: e})}>
+                                                <Combobox value={selectedClient} onChange={(e) => this.choseClient(e)}>
                                                     <div className="relative mt-1">
                                                         <div className="relative w-full text-left bg-white rounded-md shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-purple-300 focus-visible:ring-offset-2 sm:text-sm overflow-hidden">
                                                             <Combobox.Input displayValue={(person) => person != null ? person.firstname + ' ' + person.lastname : ''} onChange={(e) => this.getClients(e.target.value)} className="w-full rounded-md border border-gray-400 focus:border-2 focus:border-purple-500 py-[0.535rem] px-3 text-sm leading-5 text-gray-900" placeholder="Rechercher un prénom, nom ou adresse email"/>
@@ -417,7 +415,7 @@ class Index extends Component {
                                                                 <SelectorIcon className="w-5 h-5 text-gray-400" aria-hidden="true" />
                                                             </Combobox.Button>
                                                         </div>
-                                                        <Transition as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0" afterLeave={() => this.setState({query: ''})}>
+                                                        <Transition as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0" >
                                                             <Combobox.Options className="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-64 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                                                                 {filteredClients.length === 0 ? (
                                                                     <div className="cursor-default select-none relative py-2 px-3 text-gray-700">
@@ -482,10 +480,59 @@ class Index extends Component {
                                                 <input type="text" readOnly={selectedClient != null} value={this.state.phonenumber} onChange={(e) => this.setState({phonenumber:e.target.value }) }  name="phonenumber" id="phonenumber" autoComplete="phonenumber" placeholder="" className={selectedClient != null ? class_type_2 : class_type_1}/>
                                             </div>
 
-                                            <div className="mb-3">
-                                                <label htmlFor="order" className="block text-sm font-medium text-gray-900">Adresse</label>
-                                                <input type="text"  name="phonenumber" id="phonenumber" autoComplete="phonenumber" placeholder="" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2"/>
-                                            </div>
+                                            {!selectedClient &&
+                                                <div className="mb-3">
+                                                    <label htmlFor="order" className="block text-sm font-medium text-gray-900">Adresse</label>
+                                                    <input type="text"  name="phonenumber" id="phonenumber" autoComplete="phonenumber" placeholder="" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2"/>
+                                                </div>
+                                            }
+
+                                            {selectedClient &&
+                                                <div className='mb-3'>
+                                                    <Listbox value={selectedAddress} onChange={(e) => this.setState({selectedAddress: e})}>
+                                                        {({ open }) => (
+                                                            <>
+                                                            <Listbox.Label className="block text-sm font-medium text-gray-900">Adresse <span className='font-bold text-purple-600'>*</span></Listbox.Label>
+                                                            <div className="mt-1 relative">
+                                                                <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-[0.525rem] text-left cursor-default focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 sm:text-sm">
+                                                                    <span className="flex items-center">
+                                                                        <span className="ml-3 block truncate">{selectedAddress ? capitalize(selectedAddress?.line1 +' '+selectedAddress?.line2) : 'Adresse du client'}</span>
+                                                                    </span>
+                                                                    <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                                                                        <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                                                                    </span>
+                                                                </Listbox.Button>
+
+                                                                <Transition show={open} as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
+                                                                    <Listbox.Options className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
+                                                                        {addresses.map((item) => (
+                                                                        <Listbox.Option key={item.districtId} className={({ active }) => classNames(active ? 'text-white bg-purple-600' : 'text-gray-900','cursor-pointer select-none relative py-2 pl-3 pr-9')} value={item}>
+                                                                            {({ address, active }) => (
+                                                                            <>
+                                                                                <div className="flex items-center">
+                                                                                    <span className={classNames(address ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}>
+                                                                                        {capitalize(address?.line1)}
+                                                                                    </span>
+                                                                                </div>
+
+                                                                                {address || active &&
+                                                                                    <span className={classNames(active ? 'text-white' : 'text-indigo-600','absolute inset-y-0 right-0 flex items-center pr-4')}>
+                                                                                        <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                                                                    </span>
+                                                                                }
+                                                                            </>
+                                                                            )}
+                                                                        </Listbox.Option>
+                                                                        ))}
+                                                                    </Listbox.Options>
+                                                                </Transition>
+                                                            </div>
+                                                            </>
+                                                        )}
+                                                    </Listbox>
+                                                </div>
+                                            }
+                                            
 
                                         </div>
 
