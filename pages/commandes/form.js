@@ -54,10 +54,10 @@ class Index extends Component {
 
     constructor(props){
         super(props);
-        this.state = { block: false, block2: false, id:null, firstname: 'Seydina', lastname: 'GUEYE', email:'dina3903@gmail.com', phonenumber: '+221781234997', addresses: [], filteredClients: people, selectedClient:null, query: '', discount: 0, shippingMethods: [], shippingMethod: null, paymentMethods: [], paymentMethod: null, clients: [], products: [], chosenProducts: [], opened: false, page: 1, take: 5, filter:'', orderBy: {"id": 'asc'}  };
+        this.state = { block: false, block2: false, id:null, firstname: 'Seydina', lastname: 'GUEYE', email:'dina3903@gmail.com', phonenumber: '+221781234997', addresses: [], filteredClients: [], selectedClient:null, query: '', discount: 0, shippingMethods: [], shippingMethod: null, paymentMethods: [], paymentMethod: null, clients: [], products: [], chosenProducts: [], opened: false, page: 1, take: 5, filter:'', orderBy: {"id": 'asc'}  };
         this.checkInput = this.checkInput.bind(this)
         this.saveItem = this.saveItem.bind(this)
-        this.filterClients = this.filterClients.bind(this)
+        // this.filterClients = this.filterClients.bind(this)
         this.getShippingMethods = this.getShippingMethods.bind(this)
         this.getPaymentMethods = this.getPaymentMethods.bind(this)
         this.getClients = this.getClients.bind(this)
@@ -91,7 +91,7 @@ class Index extends Component {
         this.getShippingMethods()
         this.getPaymentMethods()
         this.getProducts()
-        this.getClients()
+        this.getClients('')
     }
 
     getShippingMethods = async() =>{
@@ -112,14 +112,14 @@ class Index extends Component {
         }
     }
 
-    getClients = async() =>{
-        this.setState({block: true})
-        let orderClient = {"firstname": 'asc'}
-        const clientFields = {"userFirstname": true, "userLastname": true, "userImage": true, "imageUrl": true, }
-        var {response} = await allClients(0, 12, '', orderClient, clientFields)
-        if(response) this.setState({clients: response.clients})
-        
-    }
+    getClients = debounce(
+        async (filter ) => {
+            let orderClient = {"firstname": 'asc'}
+            const clientFields = {"userFirstname": true, "userLastname": true, "userEmail": true, "userPhonenumber": true, "userImage": true, "imageUrl": true, }
+            var {response} = await allClients(0, 12, filter, orderClient, clientFields)
+            if(response) this.setState({filteredClients: response.users})
+       },695
+   );
 
     getProducts = async() => {
         const{page, take, filter, orderBy} = this.state
@@ -412,7 +412,7 @@ class Index extends Component {
                                                 <Combobox value={selectedClient} onChange={(e) => this.setState({selectedClient: e})}>
                                                     <div className="relative mt-1">
                                                         <div className="relative w-full text-left bg-white rounded-md shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-purple-300 focus-visible:ring-offset-2 sm:text-sm overflow-hidden">
-                                                            <Combobox.Input displayValue={(person) => person != null ? person.name : ''} onChange={(e) => this.filterClients(e)} className="w-full rounded-md border border-gray-400 focus:border-2 focus:border-purple-500 py-[0.535rem] px-3 text-sm leading-5 text-gray-900" placeholder="Rechercher un prénom, nom ou adresse email"/>
+                                                            <Combobox.Input displayValue={(person) => person != null ? person.firstname + ' ' + person.lastname : ''} onChange={(e) => this.getClients(e.target.value)} className="w-full rounded-md border border-gray-400 focus:border-2 focus:border-purple-500 py-[0.535rem] px-3 text-sm leading-5 text-gray-900" placeholder="Rechercher un prénom, nom ou adresse email"/>
                                                             <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
                                                                 <SelectorIcon className="w-5 h-5 text-gray-400" aria-hidden="true" />
                                                             </Combobox.Button>
@@ -436,7 +436,7 @@ class Index extends Component {
 
                                                                                         <div className='self-center'>
                                                                                             <span className={`block truncate ${ selectedClient ? 'font-medium' : 'font-normal'}`}>
-                                                                                                {person.name}
+                                                                                                {person.firstname + ' ' + person.lastname }
                                                                                             </span>
                                                                                         </div>
 
