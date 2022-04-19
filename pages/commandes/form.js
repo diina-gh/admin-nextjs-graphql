@@ -311,7 +311,7 @@ class Index extends Component {
                                                         <Listbox.Label className="block text-sm font-medium text-gray-900">Mode de livraison <span className='font-bold text-purple-600'>*</span></Listbox.Label>
                                                         <div className="mt-1 relative">
                                                             <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-[0.525rem] text-left cursor-default focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 sm:text-sm">
-                                                                <span className="flex items-center">
+                                                                <span className="flex items-center w-10/12 truncate">
                                                                     <span className="ml-3 block truncate">{shippingMethod ? capitalize(shippingMethod.name) : 'Mode de livraison'}</span>
                                                                 </span>
                                                                 <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
@@ -325,7 +325,7 @@ class Index extends Component {
                                                                     <Listbox.Option key={item.id} className={({ active }) => classNames(active ? 'text-white bg-purple-600' : 'text-gray-900','cursor-pointer select-none relative py-2 pl-3 pr-9')} value={item}>
                                                                         {({ shippingMethod, active }) => (
                                                                         <>
-                                                                            <div className="flex items-center">
+                                                                            <div className="flex items-center w-10/12 truncate">
                                                                                 <span className={classNames(shippingMethod ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}>
                                                                                     {capitalize(item.name)}
                                                                                 </span>
@@ -356,7 +356,7 @@ class Index extends Component {
                                                         <Listbox.Label className="block text-sm font-medium text-gray-900">Mode de paiement <span className='font-bold text-purple-600'>*</span></Listbox.Label>
                                                         <div className="mt-1 relative">
                                                             <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-[0.525rem] text-left cursor-default focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500 sm:text-sm">
-                                                                <span className="flex items-center">
+                                                                <span className="flex items-center w-10/12 truncate">
                                                                     <span className="ml-3 block truncate">{paymentMethod ? capitalize(paymentMethod.name) : 'Mode de paiement'}</span>
                                                                 </span>
                                                                 <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
@@ -370,7 +370,7 @@ class Index extends Component {
                                                                     <Listbox.Option key={item.id} className={({ active }) => classNames(active ? 'text-white bg-purple-600' : 'text-gray-900','cursor-pointer select-none relative py-2 pl-3 pr-9')} value={item}>
                                                                         {({ paymentMethod, active }) => (
                                                                         <>
-                                                                            <div className="flex items-center">
+                                                                            <div className="flex items-center w-10/12 truncate">
                                                                                 <span className={classNames(paymentMethod ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}>
                                                                                     {capitalize(item.name)}
                                                                                 </span>
@@ -430,6 +430,7 @@ class Index extends Component {
                                                                                     <div className='flex flex-row self-center'>
 
                                                                                         <div className='w-8 h-8 rounded-full bg-gray-500 self-center mr-3'>
+                                                                                            <img className='w-full h-full rounded-full' src={person?.image?.url == null ? '../images/avatar2.jpg': item?.image?.url} />
                                                                                         </div>
 
                                                                                         <div className='self-center'>
@@ -507,15 +508,15 @@ class Index extends Component {
                                                                     <Listbox.Options className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
                                                                         {addresses.map((item) => (
                                                                         <Listbox.Option key={item.districtId} className={({ active }) => classNames(active ? 'text-white bg-purple-600' : 'text-gray-900','cursor-pointer select-none relative py-2 pl-3 pr-9')} value={item}>
-                                                                            {({ address, active }) => (
+                                                                            {({ selectedAddress, active }) => (
                                                                             <>
-                                                                                <div className="flex items-center">
-                                                                                    <span className={classNames(address ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}>
-                                                                                        {capitalize(address?.line1)}
+                                                                                <div className="flex items-center w-10/12 truncate">
+                                                                                    <span className={classNames(selectedAddress ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}>
+                                                                                        {capitalize(item?.line1 +' '+item?.line2)}
                                                                                     </span>
                                                                                 </div>
 
-                                                                                {address || active &&
+                                                                                {selectedAddress || active &&
                                                                                     <span className={classNames(active ? 'text-white' : 'text-indigo-600','absolute inset-y-0 right-0 flex items-center pr-4')}>
                                                                                         <CheckIcon className="h-5 w-5" aria-hidden="true" />
                                                                                     </span>
