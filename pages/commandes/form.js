@@ -791,7 +791,7 @@ class Index extends Component {
                                                             <div className='w-full px-3'>
 
                                                                 <div className='w-full h-10 mb-2'>
-                                                                    <input type="text" onChange={(e) => this.refetch(null, e.target.value)} className='w-full h-full px-4 focus:ring-0 text-sm border-0 bg-gray-200 bg-opacity-80 rounded-full' placeholder='Rechercher un nom, une description ou une catégorie ...' />
+                                                                    <input type="text" onChange={(e) =>  this.refetch(null, e.target.value) } className='w-full h-full px-4 focus:ring-0 text-sm border-0 bg-gray-200 bg-opacity-80 rounded-full' placeholder='Rechercher un nom, une description ou une catégorie ...' />
                                                                 </div>
 
                                                             </div>
