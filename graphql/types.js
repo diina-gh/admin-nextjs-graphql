@@ -247,6 +247,7 @@ export const productFields = gql`
         }
         variants @include(if: $productVariants){
             variant{
+                id
                 name @include(if: $productVariantName)
                 options @include(if: $productVariantOptions){
                     value @include(if: $productVariantOptionValue)
@@ -256,6 +257,7 @@ export const productFields = gql`
         }
         options @include(if: $productOptions){
             option{
+                id
                 value @include(if: $productOptionValue)
                 colorCode @include(if: $productOptionColorCode)
                 variantId @include(if: $productOptionVariantId)

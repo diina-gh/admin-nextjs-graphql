@@ -2,11 +2,11 @@
     cursor: pointer;
     transition: 0.5s ease;
     &:hover{
-        opacity: 95%;
+        opacity: 92.5%;
     }
     &:active{
-      transform: scale(0.965);
-      opacity: 99.55%;
+      transform: scale(0.95);
+      opacity: 99%;
 
     }
 }

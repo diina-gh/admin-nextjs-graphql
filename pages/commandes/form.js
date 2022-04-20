@@ -45,7 +45,7 @@ class Index extends Component {
 
     constructor(props){
         super(props);
-        this.state = { block: false, block2: false, id:null, firstname: '', lastname: '', email:'', phonenumber: '', addresses: [], selectedAddress: null, filteredClients: [], selectedClient:null, query: '', discount: 0, shippingMethods: [], shippingMethod: null, paymentMethods: [], paymentMethod: null, clients: [], products: [], chosenProducts: [], opened: false, page: 1, take: 5, filter:'', orderBy: {"id": 'asc'}  };
+        this.state = { block: false, block2: false, id:null, firstname: '', lastname: '', email:'', phonenumber: '', addresses: [], selectedAddress: null, filteredClients: [], selectedClient:null, query: '', discount: 0, shippingMethods: [], shippingMethod: null, paymentMethods: [], paymentMethod: null, clients: [], products: [], chosenProducts: [], chosenProduct: null, chosenRow: null, optionList: [], opened: false, opened2: false, page: 1, take: 5, filter:'', orderBy: {"id": 'asc'}  };
         this.checkInput = this.checkInput.bind(this)
         this.saveItem = this.saveItem.bind(this)
         this.choseClient = this.choseClient.bind(this)
@@ -58,6 +58,7 @@ class Index extends Component {
         this.closeModal = this.closeModal.bind(this)
         this.handleBasket = this.handleBasket.bind(this)
         this.handleQuanity = this.handleQuanity.bind(this)
+        this.handleOption = this.handleOption.bind(this);
     }
 
     async componentDidMount(){
@@ -168,14 +169,15 @@ class Index extends Component {
                 product.quantity = 1
 
                 if(product.variants?.length > 0){
-                    var rows = []
+                    var rows = {}
                     var chosenOptions = []
                     for(let i = 0; i< product.variants.length; i++){
                         let data = {"variantId": product.variants[i].variant.id , "variantName": product.variants[i].variant.name, "optionId": null, "value": null, "colorCode": null}
                         chosenOptions.push(data)
                     }
-                    rows.push(chosenOptions)
-                    product.rows = rows
+                    rows.chosenOptions = chosenOptions
+                    product.rows = []
+                    product.rows.push(rows)
                 }
 
                 new_chosen_products.push(product)
@@ -200,18 +202,43 @@ class Index extends Component {
             new_chosen_products[index].quantity += 1
             
             if(new_chosen_products[index].variants?.length > 0){
-                var rows = []
+                var rows = {}
                 var chosenOptions = []
                 for(let i = 0; i< new_chosen_products[index].variants.length; i++){
                     let data = {"variantId": new_chosen_products[index].variants[i].variant.id , "variantName": new_chosen_products[index].variants[i].variant.name, "optionId": null, "value": null, "colorCode": null}
                     chosenOptions.push(data)
                 }
-                new_chosen_products[index].rows.push(chosenOptions)
+                rows.chosenOptions = chosenOptions
+                new_chosen_products[index].rows.push(rows)
             }
 
         } 
         if(action == 'minus' && new_chosen_products[index].quantity >= 2 ) new_chosen_products[index].quantity -= 1 
         this.setState({chosenProducts: new_chosen_products});
+    }
+
+    handleOption = (e, index, row, variantId = null, optionId = null, value = null, colorCode=null) =>{
+        e.preventDefault();
+        const {chosenProducts, chosenProduct} = this.state
+        var products = chosenProducts
+        var product = chosenProduct
+
+        if(variantId == null){
+            let p = chosenProducts[index]
+            this.setState({chosenProduct: p, chosenRow: row, opened2: true})
+            console.log("The chosen product => ", p, row)
+        }
+        else{
+            console.log("variantId optionId value and colorCode => ", variantId, optionId, value, colorCode)
+            product.rows[this.state.chosenRow].chosenOptions.find(item => item.variantId == variantId).optionId = optionId
+            product.rows[this.state.chosenRow].chosenOptions.find(item => item.variantId == variantId).value = value
+            product.rows[this.state.chosenRow].chosenOptions.find(item => item.variantId == variantId).colorCode = colorCode
+            
+            products.find(item => item.id == product.id).rows = product.rows
+
+            this.setState({chosenProducts: products, opened2: false})
+            toast.success("Option ajoutée !")
+        }
     }
 
     choseClient = (e) =>{
@@ -276,7 +303,7 @@ class Index extends Component {
 
     render() {
 
-        const {filteredClients, selectedClient, addresses, selectedAddress,  shippingMethods, shippingMethod, paymentMethods, paymentMethod, products, chosenProducts} = this.state
+        const {filteredClients, selectedClient, addresses, selectedAddress,  shippingMethods, shippingMethod, paymentMethods, paymentMethod, products, chosenProducts, chosenProduct} = this.state
 
         let class_type_1 = "mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2"
         let class_type_2 = "mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-0 focus:border focus:border-gray-400 shadow-inner bg-gray-50 bg-opacity-95 rounded-md px-2"
@@ -623,7 +650,7 @@ class Index extends Component {
 
                                                                         </div>
 
-                                                                        <div className='mt-4 mb-4 flex flex-row justify-between px-1'>
+                                                                        <div className='mt-4 mb-5 flex flex-row justify-between px-1'>
 
                                                                             <div className='text-[0.8rem] font-semibold self-center text-left w-32 truncate'>{new Intl.NumberFormat('fr-FR', {style: 'currency', currency:'XOF'}).format(item.unitprice)}</div>
 
@@ -644,40 +671,23 @@ class Index extends Component {
                                                                         {item.rows?.map((item2, i2) => (
                                                                             <div key={i2} className='flex flex-row flex-wrap mb-3'>
 
-                                                                                <div className='flex flex-row justify-center w-5 h-5 rounded-full bg-gradient-to-r from-gray-400 mr-4'>
-                                                                                    <div className='text-[10px] font-medium text-gray-900 self-center'>{i2+1}</div>
+                                                                                <div className='flex flex-row justify-center w-5 h-5 rounded-full bg-gradient-to-r from-gray-300 to-gray-100 self-center mr-4'>
+                                                                                    <div className='text-[9.5px] font-medium text-gray-900 self-center'>{i2+1}</div>
                                                                                 </div>
 
-                                                                                <div className='flex flex-row self-center mr-4'>
-                                                                                    
-
-                                                                                    <div className='text-[12.5px] font-semibold text-gray-900 self-center mr-2'>Couleur : </div>
-
-                                                                                    <div className='w-6 h-6 rounded-full bg-purple-600 shadow-lg flex flex-row justify-center btn-effect1 cursor-pointer self-center'>
-                                                                                        <div className='text-[0.95rem] font-semibold text-gray-50 self-center -mt-0.5'>+</div>
+                                                                                {item2.chosenOptions?.map((item3, i3) => (
+                                                                                    <div key={i3} className='flex flex-row self-center mr-4'>
+                                                                                        <div className='text-[12.5px] font-semibold text-gray-900 self-center mr-2.5'>{capitalize(item3.variantName)} : </div>
+                                                                                        {item3.value == null &&
+                                                                                            <div onClick={(e) => this.handleOption(e, i, i2)}  className='w-5 h-5 rounded-full bg-purple-600 shadow-lg flex flex-row justify-center btn-effect1 cursor-pointer self-center'>
+                                                                                                <div className='text-[10px] font-semibold text-gray-50 self-center -mt-0.5'>+</div>
+                                                                                            </div>
+                                                                                        }
+                                                                                         {item3.value != null &&
+                                                                                            <div onClick={(e) => this.handleOption(e, i, i2)} className='text-[12px] font-semibold text-gray-600 hover:text-purple-600 btn-effect1 underline'>{capitalize(item3.value)}</div>
+                                                                                         }
                                                                                     </div>
-
-                                                                                </div>
-
-                                                                                <div className='flex flex-row self-center mr-4'>
-
-                                                                                    <div className='text-[12.5px] font-semibold text-gray-900 self-center mr-2'>Mémoire : </div>
-
-                                                                                    <div className='w-6 h-6 rounded-full bg-purple-600 shadow-lg flex flex-row justify-center btn-effect1 cursor-pointer self-center'>
-                                                                                        <div className='text-[0.95rem] font-semibold text-gray-50 self-center -mt-0.5'>+</div>
-                                                                                    </div>
-
-                                                                                </div>
-
-                                                                                <div className='flex flex-row self-center mr-4'>
-
-                                                                                <div className='text-[12.5px] font-semibold text-gray-900 self-center mr-2'>Mémoire : </div>
-
-                                                                                <div className='w-6 h-6 rounded-full bg-purple-600 shadow-lg flex flex-row justify-center btn-effect1 cursor-pointer self-center'>
-                                                                                    <div className='text-[0.95rem] font-semibold text-gray-50 self-center -mt-0.5'>+</div>
-                                                                                </div>
-
-                                                                                </div>
+                                                                                ))}
 
                                                                             </div> 
                                                                         ))}
@@ -791,7 +801,7 @@ class Index extends Component {
                                                             <div className='w-full px-3'>
 
                                                                 <div className='w-full h-10 mb-2'>
-                                                                    <input type="text" onChange={(e) =>  this.refetch(null, e.target.value) } className='w-full h-full px-4 focus:ring-0 text-sm border-0 bg-gray-200 bg-opacity-80 rounded-full' placeholder='Rechercher un nom, une description ou une catégorie ...' />
+                                                                    <input type="text" onChange={(e) => this.refetch(null, e.target.value) } className='w-full h-full px-4 focus:ring-0 text-sm border-0 bg-gray-200 bg-opacity-80 rounded-full' placeholder='Rechercher un nom, une description ou une catégorie ...' />
                                                                 </div>
 
                                                             </div>
@@ -910,6 +920,64 @@ class Index extends Component {
                                                             <button type="reset" className='text-[0.8rem] font-medium text-gray-100 hover:text-white self-center tracking-wide'>Annuler</button>
                                                         </div> */}
                             
+                                                        <div className='ml-1.5 bg-gray-900 bg-opacity-90 shadow-lg h-9 px-5 rounded-md flex flex-col justify-center btn-effect1 self-center'>
+                                                            <button type="submit" className='text-[0.8rem] font-medium text-gray-100 hover:text-white self-center tracking-wide'>Terminer</button>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </Transition.Child>
+                        </div>
+                    </Dialog>
+                </Transition>
+
+                <Transition appear show={this.state.opened2} as={Fragment}>
+                    <Dialog as="div" className="fixed inset-0 z-50 overflow-y-auto" onClose={(e) => this.setState({opened2: false})}>
+                        <div className="">
+                            <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="ease-in duration-200" leaveFrom="opacity-100" leaveTo="opacity-0">
+                                <Dialog.Overlay className="fixed inset-0" />
+                            </Transition.Child>
+
+                            {/* <span className="inline-block h-screen align-middle" aria-hidden="true">&#8203;</span> */}
+                            <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0 scale-95" enterTo="opacity-100 scale-100" leave="ease-in duration-200" leaveFrom="opacity-100 scale-100" leaveTo="opacity-0 scale-95">
+                                <div className="modal-width overflow-y-auto flex flex-row justify-center">
+                                    <div className='modal-content bg-white transition-all transform rounded-lg gt-shadow6 self-center my-8 mx-2'>
+                                        <div className="w-full flex flex-row justify-center mt-2">
+                                            <div className="w-full">
+                                                <form role="form" method="post" onSubmit={(e) => this.setState({opened2: false})}>
+
+                                                <div className="" >
+
+                                                    <div className="px-3 py-3 bg-white space-y-6 sm:p-6 z-10">
+
+                                                        <div className="w-full text-left text-base font-semibold text-purple-600">Choisir une option :</div>
+
+                                                        <div className="w-full flex flex-row mt-4">
+                                                            {chosenProduct && chosenProduct.options.map((item, i) => (
+                                                                <div key={i} className="">
+                                                                    {!item?.option?.colorCode 
+                                                                        ?<div onClick={(e) => this.handleOption(e, null, null, item?.option?.variantId, item?.option?.id, item?.option?.value, item?.option?.colorCode )} className={classNames(item?.option?.selected ? 'border-2 border-purple-600 bg-purple-600 text-white shadow shadow-purple-300' : 'bg-gray-50/50 border border-gray-600 text-gray-800', 'flex flex-row justify-center w-8 h-8 mr-3 rounded-md cursor-pointer self-center transition duration-500 ease-in-out ')}>
+                                                                            <div className="self-center text-[10.5px] font-semibold">{item?.option?.value}</div>
+                                                                        </div>
+                                                                        :<div onClick={(e) => this.handleOption(e, null, null, item?.option?.variantId, item?.option?.id, item?.option?.value, item?.option?.colorCode )} className={classNames(item?.option.selected ? 'border-2 border-purple-600' : 'border-2 border-gray-200 border-opacity-60', 'w-8 h-8 mr-3 rounded-full cursor-pointer self-center py-[2px] px-[2px] transition duration-500 ease-in-out')}  >
+                                                                            <div className='w-full h-full rounded-full' style={{backgroundColor: item?.option?.colorCode, }}></div>
+                                                                        </div>
+                                                                    }
+                                                                </div>
+                                                            ))}
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div className="px-3 py-2.5 bg-gray-50 sm:px-6 flex flex-row justify-end rounded-b-lg border-t border-gray-200 ">
+
                                                         <div className='ml-1.5 bg-gray-900 bg-opacity-90 shadow-lg h-9 px-5 rounded-md flex flex-col justify-center btn-effect1 self-center'>
                                                             <button type="submit" className='text-[0.8rem] font-medium text-gray-100 hover:text-white self-center tracking-wide'>Terminer</button>
                                                         </div>
