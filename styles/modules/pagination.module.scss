@@ -16,14 +16,17 @@
     // box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
     transition: 0.575s ease-in-out;
     &:hover{
-        background-color: #9b27b02f;
+        background-color: #9b27b041;
     }
 }
 
 .pg-active-btn{
-    background-color: #9b27b0e0;
+    // background-color: #9b27b0e0;
+    background: linear-gradient(90deg, #7b1fa2, #ab47bc);
+
     color: white;
     &:hover{
-        background-color: #9b27b0e0;
+        // background-color: #9b27b0e0;
+        background: linear-gradient(90deg, #7b1fa2, #ab47bc);
     }
 }

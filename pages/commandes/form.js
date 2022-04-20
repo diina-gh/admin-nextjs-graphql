@@ -166,6 +166,18 @@ class Index extends Component {
 
             if(founded == false){
                 product.quantity = 1
+
+                if(product.variants?.length > 0){
+                    var rows = []
+                    var chosenOptions = []
+                    for(let i = 0; i< product.variants.length; i++){
+                        let data = {"variantId": product.variants[i].variant.id , "variantName": product.variants[i].variant.name, "optionId": null, "value": null, "colorCode": null}
+                        chosenOptions.push(data)
+                    }
+                    rows.push(chosenOptions)
+                    product.rows = rows
+                }
+
                 new_chosen_products.push(product)
                 new_products.products.find(item => item.id == product.id).selected = true
             }
@@ -183,7 +195,21 @@ class Index extends Component {
         e.preventDefault()
         const {chosenProducts} = this.state
         var new_chosen_products = chosenProducts
-        if(action == 'plus') new_chosen_products[index].quantity += 1
+        if(action == 'plus'){  
+            
+            new_chosen_products[index].quantity += 1
+            
+            if(new_chosen_products[index].variants?.length > 0){
+                var rows = []
+                var chosenOptions = []
+                for(let i = 0; i< new_chosen_products[index].variants.length; i++){
+                    let data = {"variantId": new_chosen_products[index].variants[i].variant.id , "variantName": new_chosen_products[index].variants[i].variant.name, "optionId": null, "value": null, "colorCode": null}
+                    chosenOptions.push(data)
+                }
+                new_chosen_products[index].rows.push(chosenOptions)
+            }
+
+        } 
         if(action == 'minus' && new_chosen_products[index].quantity >= 2 ) new_chosen_products[index].quantity -= 1 
         this.setState({chosenProducts: new_chosen_products});
     }
@@ -525,7 +551,6 @@ class Index extends Component {
                                                 </div>
                                             }
                                             
-
                                         </div>
 
                                         <div className='divider w-full h-[1px] bg-gray-400 bg-opacity-30 mt-8 mb-4'></div>
@@ -553,7 +578,7 @@ class Index extends Component {
 
                                                 <div className='mb-3 px-4 flex flex-row'>
                                                     <div className='text-base font-medium text-purple-600 mr-1 self-center'>Panier</div>
-                                                    {chosenProducts?.length > 0 && <div className='px-2 py-[0.45px] text-[10.325px] font-medium bg-purple-500 bg-opacity-80 text-white rounded-xl self-center'>{chosenProducts?.length}</div>}
+                                                    {chosenProducts?.length > 0 && <div className='px-2 py-[0.45px] text-[10.325px] font-medium bg-gradient-to-r from-purple-700 to-purple-300 text-white rounded-xl self-center'>{chosenProducts?.length}</div>}
                                                 </div>
 
                                                 <div className='w-full h-[18rem] overflow-y-auto px-5'>
@@ -598,7 +623,7 @@ class Index extends Component {
 
                                                                         </div>
 
-                                                                        <div className='mt-4 flex flex-row justify-between px-1'>
+                                                                        <div className='mt-4 mb-4 flex flex-row justify-between px-1'>
 
                                                                             <div className='text-[0.8rem] font-semibold self-center text-left w-32 truncate'>{new Intl.NumberFormat('fr-FR', {style: 'currency', currency:'XOF'}).format(item.unitprice)}</div>
 
@@ -616,16 +641,17 @@ class Index extends Component {
 
                                                                         </div>
 
+                                                                        {item.rows?.map((item2, i2) => (
+                                                                            <div key={i2} className='flex flex-row flex-wrap mb-3'>
 
-                                                                            <div key={i} className='mt-4 flex flex-row'>
-
-                                                                                <div className='flex flex-row justify-center w-5 h-5 mr-4'>
-                                                                                    <div className='text-[0.75rem] font-medium text-gray-900 self-center'>1</div>
+                                                                                <div className='flex flex-row justify-center w-5 h-5 rounded-full bg-gradient-to-r from-gray-400 mr-4'>
+                                                                                    <div className='text-[10px] font-medium text-gray-900 self-center'>{i2+1}</div>
                                                                                 </div>
 
-                                                                                <div className='flex flex-row self-center mr-6'>
+                                                                                <div className='flex flex-row self-center mr-4'>
+                                                                                    
 
-                                                                                    <div className='text-sm font-semibold text-gray-900 self-center mr-2'>Couleur : </div>
+                                                                                    <div className='text-[12.5px] font-semibold text-gray-900 self-center mr-2'>Couleur : </div>
 
                                                                                     <div className='w-6 h-6 rounded-full bg-purple-600 shadow-lg flex flex-row justify-center btn-effect1 cursor-pointer self-center'>
                                                                                         <div className='text-[0.95rem] font-semibold text-gray-50 self-center -mt-0.5'>+</div>
@@ -633,47 +659,31 @@ class Index extends Component {
 
                                                                                 </div>
 
-                                                                                <div className='flex flex-row self-center'>
+                                                                                <div className='flex flex-row self-center mr-4'>
 
-                                                                                    <div className='text-sm font-semibold text-gray-900 self-center mr-2'>Mémoire : </div>
+                                                                                    <div className='text-[12.5px] font-semibold text-gray-900 self-center mr-2'>Mémoire : </div>
 
                                                                                     <div className='w-6 h-6 rounded-full bg-purple-600 shadow-lg flex flex-row justify-center btn-effect1 cursor-pointer self-center'>
                                                                                         <div className='text-[0.95rem] font-semibold text-gray-50 self-center -mt-0.5'>+</div>
                                                                                     </div>
+
+                                                                                </div>
+
+                                                                                <div className='flex flex-row self-center mr-4'>
+
+                                                                                <div className='text-[12.5px] font-semibold text-gray-900 self-center mr-2'>Mémoire : </div>
+
+                                                                                <div className='w-6 h-6 rounded-full bg-purple-600 shadow-lg flex flex-row justify-center btn-effect1 cursor-pointer self-center'>
+                                                                                    <div className='text-[0.95rem] font-semibold text-gray-50 self-center -mt-0.5'>+</div>
+                                                                                </div>
 
                                                                                 </div>
 
                                                                             </div> 
+                                                                        ))}
 
 
-
-                                                                        <div className='mt-4 flex flex-row'>
-
-                                                                                <div className='flex flex-row justify-center w-5 h-5 mr-4'>
-                                                                                    <div className='text-[0.75rem] font-medium text-gray-900 self-center'>2</div>
-                                                                                </div>
-
-                                                                                <div className='flex flex-row self-center mr-6'>
-
-                                                                                    <div className='text-sm font-semibold text-gray-900 self-center mr-2'>Couleur : </div>
-
-                                                                                    <div className='w-6 h-6 rounded-full bg-purple-600 shadow-lg flex flex-row justify-center btn-effect1 cursor-pointer self-center'>
-                                                                                        <div className='text-[0.95rem] font-semibold text-gray-50 self-center -mt-0.5'>+</div>
-                                                                                    </div>
-
-                                                                                </div>
-
-                                                                                <div className='flex flex-row self-center'>
-
-                                                                                    <div className='text-sm font-semibold text-gray-900 self-center mr-2'>Mémoire : </div>
-
-                                                                                    <div className='w-6 h-6 rounded-full bg-purple-600 shadow-lg flex flex-row justify-center btn-effect1 cursor-pointer self-center'>
-                                                                                        <div className='text-[0.95rem] font-semibold text-gray-50 self-center -mt-0.5'>+</div>
-                                                                                    </div>
-
-                                                                                </div>
-
-                                                                        </div>
+                                                                
 
                                                                     </div>
                                                                 </motion.div>
@@ -822,11 +832,11 @@ class Index extends Component {
                                                                                             </div>
     
                                                                                             <div className='w-full mt-2 px-3'>
-                                                                                                <div className='w-full text-gray-500 text-[0.65rem] font-medium'>{item.category?.name}</div>
+                                                                                                <div className='w-full text-gray-500 text-[0.65rem] font-medium truncate'>{capitalize(item.category?.name)}</div>
                                                                                                 <div className='w-full flex mt-1'>
                                                                                                     <div className='self-center w-full'>
                                                                                                         <div className='w-full text-gray-900 text-sm font-semibold truncate'>{item.name}</div>
-                                                                                                        <div className='w-full text-gray-800 text-xs font-medium mt-1'>{item.unitprice}</div>
+                                                                                                        <div className='w-full text-gray-800 text-xs font-medium truncate mt-1'>{new Intl.NumberFormat('fr-FR', {style: 'currency', currency:'XOF'}).format(item.unitprice)}</div>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>

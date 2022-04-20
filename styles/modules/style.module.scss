@@ -79,7 +79,8 @@
   transition: 0.5s ease-in-out;
   .tab-badge{
     transition: 0.5s ease-in-out;
-    background-color: #8e24aa !important;
+    // background-color: #8e24aa !important;
+    background: linear-gradient(90deg, #7b1fa2, #ba68c8) !important;
     color: white !important;
   }
 }
