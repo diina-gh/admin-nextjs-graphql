@@ -107,7 +107,7 @@ export default function Index() {
                             <div className='w-full flex flex-row px-4'>
 
                                 <div className='text-lg font-bold text-purple-600 mr-2 self-center'>Permissions</div>
-                                <div className='px-2 py-1 rounded-xl bg-gradient-to-r from-purple-700 to-purple-300 text-white text-xs font-medium self-center'>{items?.permissions?.count ? items?.permissions?.count: 0 }</div>
+                                <div className='px-2 py-1 rounded-xl bg-gradient-to-r from-purple-700 to-purple-300 text-white text-[11.5px] font-medium self-center'>{items?.permissions?.count ? items?.permissions?.count: 0 }</div>
 
                             </div>
 
