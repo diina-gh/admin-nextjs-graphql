@@ -30,6 +30,8 @@ import TrashBoldIcon from '../../components/ui/icons/trashBoldIcon'
 import { useDebouncedCallback } from 'use-debounce';
 import { debounce } from 'lodash';
 import { allClients } from '../../hooks/client';
+import CaretUpIcon from '../../components/ui/icons/caretUpIcon';
+import CaretDownIcon from '../../components/ui/icons/caretDownIcon';
 
 
 export async function getServerSideProps(context) {
@@ -705,7 +707,11 @@ class Index extends Component {
                                                                                                 <input type="number" className='w-full h-full border border-gray-400' />
                                                                                             </div> */}
                                                                                             <div className='flex flex-row self-center'>
-                                                                                                <div className='text-[12.5px] font-semibold text-gray-900 self-center mr-2.5'>Quantité : 1 </div>
+                                                                                                <div className='text-[12.5px] font-semibold text-gray-900 self-center mr-1'>Quantité :  1 </div>
+                                                                                                <div className='flex flex-col justify-center self-center'>
+                                                                                                    <div className='w-4 h-4 text-black -mb-[0.22rem] btn-effect1 cursor-pointer '><CaretUpIcon  customClass="w-full h-full" /></div>
+                                                                                                    <div className='w-4 h-4 text-black -mt-[0.22rem] btn-effect1 cursor-pointer '><CaretDownIcon  customClass="w-full h-full" /></div>
+                                                                                                </div>
                                                                                             </div>
                                                                                         </div>
 
