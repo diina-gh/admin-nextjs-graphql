@@ -60,6 +60,7 @@ class Index extends Component {
         this.closeModal = this.closeModal.bind(this)
         this.handleBasket = this.handleBasket.bind(this)
         this.handleQuanity = this.handleQuanity.bind(this)
+        this.subQuantity = this.subQuantity.bind(this)
         this.handleOption = this.handleOption.bind(this);
     }
 
@@ -178,6 +179,7 @@ class Index extends Component {
                         chosenOptions.push(data)
                     }
                     rows.chosenOptions = chosenOptions
+                    rows.quantity = 1
                     product.rows = []
                     product.rows.push(rows)
                 }
@@ -199,33 +201,56 @@ class Index extends Component {
 
         e.preventDefault()
         const {chosenProducts} = this.state
-        var new_chosen_products = chosenProducts
+        var products = chosenProducts
 
         if(action == 'plus'){  
-            
-            new_chosen_products[index].quantity += 1
-            
-            if(new_chosen_products[index].variants?.length > 0){
+                        
+            if(products[index].variants?.length > 0){
+                products[index].quantity += 1
                 var rows = {}
                 var chosenOptions = []
-                for(let i = 0; i< new_chosen_products[index].variants.length; i++){
-                    let data = {"variantId": new_chosen_products[index].variants[i].variant.id , "variantName": new_chosen_products[index].variants[i].variant.name, "optionId": null, "value": null, "colorCode": null}
+                for(let i = 0; i< products[index].variants.length; i++){
+                    let data = {"variantId": products[index].variants[i].variant.id , "variantName": products[index].variants[i].variant.name, "optionId": null, "value": null, "colorCode": null}
                     chosenOptions.push(data)
                 }
                 rows.chosenOptions = chosenOptions
-                new_chosen_products[index].rows.push(rows)
+                rows.quantity = 1
+                products[index].rows.push(rows)
+            }
+            else{
+                products[index].quantity += 1
             }
 
         } 
 
-        if(action == 'minus' && new_chosen_products[index].quantity >= 2 ) new_chosen_products[index].quantity -= 1 
+        if(action == 'minus' && products[index].quantity >= 2 && products[index].options.length == 0 ) products[index].quantity -= 1 
 
-        if(action == 'minus_option' && new_chosen_products[index].rows.length >= 2){
-            new_chosen_products[index].quantity -= 1
-            new_chosen_products[index].rows.splice(index2, 1)
+        if(action == 'minus_option' && products[index].rows.length >= 2){
+            products[index].quantity -= 1
+            products[index].rows.splice(index2, 1)
         } 
 
-        this.setState({chosenProducts: new_chosen_products});
+        this.setState({chosenProducts: products});
+
+    }
+
+    subQuantity = (e,index, index2, action) =>{
+
+        e.preventDefault()
+        const {chosenProducts} = this.state
+        var products = chosenProducts
+
+        if(action == 'plus'){
+            products[index].rows[index2].quantity += 1
+            products[index].quantity += 1
+        }
+
+        else if(action == 'minus' && products[index].rows[index2].quantity >= 2 ){
+            products[index].rows[index2].quantity -= 1
+            products[index].quantity -= 1
+        }
+
+        this.setState({chosenProducts: products});
 
     }
 
@@ -691,28 +716,28 @@ class Index extends Component {
 
                                                                                         <div className='w-8/12 flex flex-row flex-wrap self-center'>
                                                                                             {item2.chosenOptions?.map((item3, i3) => (
-                                                                                                <div key={i3} className='flex flex-row self-center mr-4'>
+                                                                                                <div key={i3} className='flex flex-row self-center mr-3'>
                                                                                                     <div className='text-[12.5px] font-semibold text-gray-900 self-center mr-2.5'>{capitalize(item3.variantName)} : </div>
                                                                                                     {item3.value == null &&
-                                                                                                        <div onClick={(e) => this.handleOption(e, i, i2)}  className='w-5 h-5 rounded-full bg-purple-600 shadow-lg flex flex-row justify-center btn-effect1 cursor-pointer self-center'>
+                                                                                                        <div onClick={(e) => this.handleOption(e, i, i2)}  className='w-5 h-5 rounded-full bg-purple-600 shadow-lg flex flex-row justify-center btn-effect1 cursor-pointer self-center mr-3'>
                                                                                                             <div className='text-[10px] font-semibold text-gray-50 self-center -mt-0.5'>+</div>
                                                                                                         </div>
                                                                                                     }
                                                                                                     {item3.value != null &&
-                                                                                                        <div onClick={(e) => this.handleOption(e, i, i2)} className='text-[12px] font-semibold text-gray-600 hover:text-purple-600 btn-effect1 underline'>{capitalize(item3.value)}</div>
+                                                                                                        <div onClick={(e) => this.handleOption(e, i, i2)} className='text-[12px] font-semibold text-gray-600 hover:text-purple-600 btn-effect1 w-8 truncate underline'>{capitalize(item3.value)}</div>
                                                                                                     }
                                                                                                 </div>
                                                                                             ))}
-                                                                                            {/* <div className='w-8 h-3'>
-                                                                                                <input type="number" className='w-full h-full border border-gray-400' />
-                                                                                            </div> */}
+
                                                                                             <div className='flex flex-row self-center'>
-                                                                                                <div className='text-[12.5px] font-semibold text-gray-900 self-center mr-1'>Quantité :  1 </div>
+                                                                                                <div className='text-[12.5px] font-semibold text-gray-900 self-center mr-0.5'>Quantité : </div>
+                                                                                                <div className='w-4 text-right text-[12.5px] font-semibold text-gray-900 self-center mr-1'>{item2.quantity}</div>
                                                                                                 <div className='flex flex-col justify-center self-center'>
-                                                                                                    <div className='w-4 h-4 text-black -mb-[0.22rem] btn-effect1 cursor-pointer '><CaretUpIcon  customClass="w-full h-full" /></div>
-                                                                                                    <div className='w-4 h-4 text-black -mt-[0.22rem] btn-effect1 cursor-pointer '><CaretDownIcon  customClass="w-full h-full" /></div>
+                                                                                                    <div onClick={(e) => this.subQuantity(e, i, i2, 'plus')} className='w-4 h-4 text-black -mb-[0.22rem] btn-effect1 cursor-pointer '><CaretUpIcon  customClass="w-full h-full" /></div>
+                                                                                                    <div onClick={(e) => this.subQuantity(e, i, i2, 'minus')} className='w-4 h-4 text-black -mt-[0.22rem] btn-effect1 cursor-pointer '><CaretDownIcon  customClass="w-full h-full" /></div>
                                                                                                 </div>
                                                                                             </div>
+   
                                                                                         </div>
 
                                                                                         <div className='ml-1 w-5'>
