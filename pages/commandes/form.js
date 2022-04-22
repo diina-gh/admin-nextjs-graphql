@@ -193,10 +193,12 @@ class Index extends Component {
         this.setState({chosenProducts: new_chosen_products, products: new_products});
     }
 
-    handleQuanity = (e,index, action) =>{
+    handleQuanity = (e,index, action, index2 = null) =>{
+
         e.preventDefault()
         const {chosenProducts} = this.state
         var new_chosen_products = chosenProducts
+
         if(action == 'plus'){  
             
             new_chosen_products[index].quantity += 1
@@ -213,8 +215,16 @@ class Index extends Component {
             }
 
         } 
+
         if(action == 'minus' && new_chosen_products[index].quantity >= 2 ) new_chosen_products[index].quantity -= 1 
+
+        if(action == 'minus_option' && new_chosen_products[index].rows.length >= 2){
+            new_chosen_products[index].quantity -= 1
+            new_chosen_products[index].rows.splice(index2, 1)
+        } 
+
         this.setState({chosenProducts: new_chosen_products});
+
     }
 
     handleOption = (e, index, row, variantId = null, optionId = null, value = null, colorCode=null) =>{
@@ -623,7 +633,7 @@ class Index extends Component {
                                                             <AnimatePresence  key={i}>
                                                                 <motion.div initial={{ opacity: 0, y: ( Math.random() * 15) }} whileInView={{ opacity: 1, y: 0, transition: { duration: 0.85 }, }}>
                                                                    
-                                                                    <div className='w-full bg-white bg-opacity-90 rounded-xl px-4 py-3 mb-4 shadow-sm'>
+                                                                    <div className='w-full bg-white bg-opacity-90 rounded-xl overflow-x-hidden px-4 py-3 mb-4 shadow-sm'>
 
                                                                         <div className='flex flex-row justify-between'>
 
@@ -669,27 +679,48 @@ class Index extends Component {
                                                                         </div>
 
                                                                         {item.rows?.map((item2, i2) => (
-                                                                            <div key={i2} className='flex flex-row flex-wrap mb-3'>
+                                                                            <AnimatePresence key={i}>
+                                                                                <motion.div initial={{ opacity: 0, x: 300 + Math.random() * i * 15 }} whileInView={{ opacity: 1, x: 0, transition: { type: 'spring', stiffness: 195, damping: 20 }, }} exit={{ opacity: 0}}>
+                                                                                    <div key={i2} className='w-full flex flex-row justify-between mb-3'>
 
-                                                                                <div className='flex flex-row justify-center w-5 h-5 rounded-full bg-gradient-to-r from-gray-300 to-gray-100 self-center mr-4'>
-                                                                                    <div className='text-[9.5px] font-medium text-gray-900 self-center'>{i2+1}</div>
-                                                                                </div>
+                                                                                        <div className='flex flex-row justify-center w-5 h-5 rounded-full bg-gradient-to-r from-gray-300 to-gray-100 self-center mr-1'>
+                                                                                            <div className='text-[9.5px] font-medium text-gray-900 self-center'>{i2+1}</div>
+                                                                                        </div>
 
-                                                                                {item2.chosenOptions?.map((item3, i3) => (
-                                                                                    <div key={i3} className='flex flex-row self-center mr-4'>
-                                                                                        <div className='text-[12.5px] font-semibold text-gray-900 self-center mr-2.5'>{capitalize(item3.variantName)} : </div>
-                                                                                        {item3.value == null &&
-                                                                                            <div onClick={(e) => this.handleOption(e, i, i2)}  className='w-5 h-5 rounded-full bg-purple-600 shadow-lg flex flex-row justify-center btn-effect1 cursor-pointer self-center'>
-                                                                                                <div className='text-[10px] font-semibold text-gray-50 self-center -mt-0.5'>+</div>
+                                                                                        <div className='w-8/12 flex flex-row flex-wrap self-center'>
+                                                                                            {item2.chosenOptions?.map((item3, i3) => (
+                                                                                                <div key={i3} className='flex flex-row self-center mr-4'>
+                                                                                                    <div className='text-[12.5px] font-semibold text-gray-900 self-center mr-2.5'>{capitalize(item3.variantName)} : </div>
+                                                                                                    {item3.value == null &&
+                                                                                                        <div onClick={(e) => this.handleOption(e, i, i2)}  className='w-5 h-5 rounded-full bg-purple-600 shadow-lg flex flex-row justify-center btn-effect1 cursor-pointer self-center'>
+                                                                                                            <div className='text-[10px] font-semibold text-gray-50 self-center -mt-0.5'>+</div>
+                                                                                                        </div>
+                                                                                                    }
+                                                                                                    {item3.value != null &&
+                                                                                                        <div onClick={(e) => this.handleOption(e, i, i2)} className='text-[12px] font-semibold text-gray-600 hover:text-purple-600 btn-effect1 underline'>{capitalize(item3.value)}</div>
+                                                                                                    }
+                                                                                                </div>
+                                                                                            ))}
+                                                                                            {/* <div className='w-8 h-3'>
+                                                                                                <input type="number" className='w-full h-full border border-gray-400' />
+                                                                                            </div> */}
+                                                                                            <div className='flex flex-row self-center'>
+                                                                                                <div className='text-[12.5px] font-semibold text-gray-900 self-center mr-2.5'>Quantité : 1 </div>
                                                                                             </div>
-                                                                                        }
-                                                                                         {item3.value != null &&
-                                                                                            <div onClick={(e) => this.handleOption(e, i, i2)} className='text-[12px] font-semibold text-gray-600 hover:text-purple-600 btn-effect1 underline'>{capitalize(item3.value)}</div>
-                                                                                         }
-                                                                                    </div>
-                                                                                ))}
+                                                                                        </div>
 
-                                                                            </div> 
+                                                                                        <div className='ml-1 w-5'>
+                                                                                            {i2 > 0 &&
+                                                                                                <div onClick={(e) => this.handleQuanity(e, i, 'minus_option', i2 )} className='flex flex-row justify-center w-5 h-5 rounded-full bg-gradient-to-r from-red-500 to-red-400 cursor-pointer hover:from-red-700 hover:to-red-600 self-center'>
+                                                                                                    <CrossIcon customClass="w-2 h-2 text-white font-medium self-center" />
+                                                                                                </div>
+                                                                                            }
+                                                                                        </div>
+
+                                                                                    </div> 
+                                                                                </motion.div>
+                                                                            </AnimatePresence>
+                                                                            
                                                                         ))}
 
 
