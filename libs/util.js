@@ -25,9 +25,8 @@ export function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export function bool(value) {
-  if(value == null || value == false ) return false
-  if(value == true) return true
+export function xof(value) {
+  return new Intl.NumberFormat('fr-FR', {style: 'currency', currency:'XOF'}).format(value)
 }
 
 export function jsonResponse(status= number, data= any, init = ResponseInit) {

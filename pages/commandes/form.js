@@ -14,7 +14,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { Listbox, Combobox, Dialog, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 import CrossIcon from '../../components/ui/icons/crossIcon';
-import { classNames } from '../../libs/util';
+import { classNames, xof } from '../../libs/util';
 import { Switch } from '@headlessui/react'
 import { capitalize } from '../../libs/util';
 import TrashIcon from '../../components/ui/icons/trashIcon';
@@ -47,7 +47,7 @@ class Index extends Component {
 
     constructor(props){
         super(props);
-        this.state = { block: false, block2: false, id:null, firstname: '', lastname: '', email:'', phonenumber: '', addresses: [], selectedAddress: null, filteredClients: [], selectedClient:null, query: '', discount: 0, shippingMethods: [], shippingMethod: null, paymentMethods: [], paymentMethod: null, clients: [], products: [], chosenProducts: [], chosenProduct: null, chosenRow: null, optionList: [], opened: false, opened2: false, page: 1, take: 5, filter:'', orderBy: {"id": 'asc'}  };
+        this.state = { block: false, block2: false, id:null, firstname: '', lastname: '', email:'', phonenumber: '', addresses: [], selectedAddress: null, filteredClients: [], selectedClient:null, query: '', discount: 0, shipping: 0, subTotal: 0, total: 0, shippingMethods: [], shippingMethod: null, paymentMethods: [], paymentMethod: null, clients: [], products: [], chosenProducts: [], chosenProduct: null, chosenRow: null, optionList: [], opened: false, opened2: false, page: 1, take: 5, filter:'', orderBy: {"id": 'asc'}  };
         this.checkInput = this.checkInput.bind(this)
         this.saveItem = this.saveItem.bind(this)
         this.choseClient = this.choseClient.bind(this)
@@ -62,6 +62,7 @@ class Index extends Component {
         this.handleQuanity = this.handleQuanity.bind(this)
         this.subQuantity = this.subQuantity.bind(this)
         this.handleOption = this.handleOption.bind(this);
+        this.recap = this.recap.bind(this)
     }
 
     async componentDidMount(){
@@ -195,6 +196,7 @@ class Index extends Component {
         }
 
         this.setState({chosenProducts: new_chosen_products, products: new_products});
+        this.recap()
     }
 
     handleQuanity = (e,index, action, index2 = null) =>{
@@ -231,7 +233,7 @@ class Index extends Component {
         } 
 
         this.setState({chosenProducts: products});
-
+        this.recap()
     }
 
     subQuantity = (e,index, index2, action) =>{
@@ -251,7 +253,7 @@ class Index extends Component {
         }
 
         this.setState({chosenProducts: products});
-
+        this.recap()
     }
 
     handleOption = (e, index, row, variantId = null, optionId = null, value = null, colorCode=null) =>{
@@ -276,6 +278,12 @@ class Index extends Component {
             this.setState({chosenProducts: products, opened2: false})
             toast.success("Option ajoutée !")
         }
+    }
+
+    recap = () => {
+        const {chosenProducts, discount, shipping} = this.state
+        var subTotal = chosenProducts.reduce((acc, crt) => acc + (crt.quantity * crt.unitprice), 0);
+        this.setState({subTotal: subTotal, total: (subTotal - discount + shipping)})
     }
 
     choseClient = (e) =>{
@@ -340,7 +348,7 @@ class Index extends Component {
 
     render() {
 
-        const {filteredClients, selectedClient, addresses, selectedAddress,  shippingMethods, shippingMethod, paymentMethods, paymentMethod, products, chosenProducts, chosenProduct} = this.state
+        const {filteredClients, selectedClient, addresses, selectedAddress,  shippingMethods, shippingMethod, paymentMethods, paymentMethod, products, chosenProducts, chosenProduct, discount, shipping, subTotal, total} = this.state
 
         let class_type_1 = "mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2"
         let class_type_2 = "mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-0 focus:border focus:border-gray-400 shadow-inner bg-gray-50 bg-opacity-95 rounded-md px-2"
@@ -476,7 +484,7 @@ class Index extends Component {
 
                                             <div className="">
                                                 <label htmlFor="discount" className="block text-sm font-medium text-gray-900">Remise (en %) </label>
-                                                <input type="number" value={this.state.discount} onChange={(e) => this.setState({discount:e.target.value }) }  name="discount" id="discount" autoComplete="discount" placeholder="Remise" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2"/>
+                                                <input type="number" value={this.state.discount} onChange={(e) => this.setState({discount:e.target.value, total: (this.state.total - e.target.value)  }) }  name="discount" id="discount" autoComplete="discount" placeholder="Remise" className="mt-1 h-10 w-full shadow-sm text-sm border border-gray-400 focus:border-0 focus:ring-2 focus:ring-purple-500 shadow-inner bg-white bg-opacity-90 rounded-md px-2"/>
                                             </div>
 
                                         </div>
@@ -622,7 +630,7 @@ class Index extends Component {
                                             <div className='text-base font-semibold text-purple-600 mr-1 self-center'>Panier et Récapitulatif</div>
                                         </div>
 
-                                        <div className='w-full grid grid-cols-10 grid-flow-row gap-4'>
+                                        <div className='w-full grid grid-cols-10 grid-flow-row gap-4 mb-2'>
 
                                             <div className='col-span-3 pl-2'>
                                                 <div className='flex flex-row'>
@@ -645,7 +653,7 @@ class Index extends Component {
                                                     {chosenProducts?.length > 0 && <div className='px-2 py-[0.45px] text-[10.325px] font-medium bg-gradient-to-r from-purple-700 to-purple-300 text-white rounded-xl self-center'>{chosenProducts?.length}</div>}
                                                 </div>
 
-                                                <div className='w-full h-[18rem] overflow-y-auto px-5'>
+                                                <div className='w-full h-[19rem] overflow-y-auto px-5'>
                                                     {chosenProducts?.length == 0 ?
 
                                                         <div className='w-full h-full flex flex-row justify-center '>
@@ -689,7 +697,7 @@ class Index extends Component {
 
                                                                         <div className='mt-4 mb-5 flex flex-row justify-between px-1'>
 
-                                                                            <div className='text-[0.8rem] font-semibold self-center text-left w-32 truncate'>{new Intl.NumberFormat('fr-FR', {style: 'currency', currency:'XOF'}).format(item.unitprice)}</div>
+                                                                            <div className='text-[0.8rem] font-semibold self-center text-left w-32 truncate'>{xof(item.unitprice)}</div>
 
                                                                             <div className="h-5 flex flex-row self-center">
                                                                                 <div onClick={(e) => this.handleQuanity(e, i, 'minus')} className="h-full w-5 flex flex-row justify-center bg-gray-900 border border-gray-800 rounded-md gt-shadow1 btn-effect1 cursor-pointer mr-1">
@@ -701,7 +709,7 @@ class Index extends Component {
                                                                                 </div>
                                                                             </div>
 
-                                                                            <div className='text-[0.8rem] font-semibold self-center text-right w-32 truncate'>{new Intl.NumberFormat('fr-FR', {style: 'currency', currency:'XOF'}).format(item.unitprice * item.quantity)}</div>
+                                                                            <div className='text-[0.8rem] font-semibold self-center text-right w-32 truncate'>{xof(item.unitprice * item.quantity)}</div>
 
                                                                         </div>
 
@@ -778,22 +786,22 @@ class Index extends Component {
 
                                                     <div className='text-base font-medium text-purple-600 ml-0.5 mb-4'>Récapitulatif</div>
 
-                                                    <div className='text-sm font-medium flex flex-row justify-between mb-3 bg-white bg-opacity-90 px-2 py-2'>
+                                                    <div className='text-sm font-medium flex flex-row justify-between mb-2 bg-white bg-opacity-90 px-2 py-2'>
                                                         <div className='text-gray-800'>Sous total</div>
-                                                        <div className='text-gray-900  text-xs self-center'>7500 CFA</div>
+                                                        <div className='text-gray-900  text-xs self-center'>{xof(subTotal)}</div>
                                                     </div>
 
-                                                    <div className='text-sm font-medium flex flex-row justify-between mb-3 bg-white bg-opacity-90 px-2 py-2'>
+                                                    <div className='text-sm font-medium flex flex-row justify-between mb-2 bg-gray-50 bg-opacity-100 px-2 py-2'>
                                                         <div className='text-gray-800'>Livraison</div>
-                                                        <div className='text-gray-900  text-xs self-center'>500 CFA</div>
+                                                        <div className='text-gray-900  text-xs self-center'>{xof(shipping)}</div>
                                                     </div>
 
-                                                    <div className='text-sm font-medium flex flex-row justify-between mb-3 bg-white bg-opacity-90 px-2 py-2'>
+                                                    <div className='text-sm font-medium flex flex-row justify-between mb-2 bg-white bg-opacity-90 px-2 py-2'>
                                                         <div className='text-gray-800'>Remise</div>
-                                                        <div className='text-gray-900  text-xs self-center'>- 250 CFA</div>
+                                                        <div className='text-gray-900  text-xs self-center'>{xof(discount)}</div>
                                                     </div>
 
-                                                    <div className='text-sm font-medium flex flex-row justify-between mb-3 bg-white bg-opacity-90 px-2 py-2'>
+                                                    <div className='text-sm font-medium flex flex-row justify-between mb-2 bg-gray-50 bg-opacity-100 px-2 py-2'>
                                                         <div className='text-gray-800'>Taxe</div>
                                                         <div className='text-gray-900  text-xs self-center'>0 CFA</div>
                                                     </div>
@@ -803,7 +811,7 @@ class Index extends Component {
                                                 <div className='border-t border-gray-800 border-opacity-60 pt-4'>
                                                     <div className='w-full text-sm font-semibold flex flex-row justify-between bg-white bg-opacity-90 px-2 py-2 mb-0.5'>
                                                         <div className='text-gray-800'>Total</div>
-                                                        <div className='text-gray-900 text-xs self-center'>7750 CFA</div>
+                                                        <div className='text-gray-900 text-xs self-center'>{xof(total)}</div>
                                                     </div>
                                                 </div>
 
@@ -908,7 +916,7 @@ class Index extends Component {
                                                                                                 <div className='w-full flex mt-1'>
                                                                                                     <div className='self-center w-full'>
                                                                                                         <div className='w-full text-gray-900 text-sm font-semibold truncate'>{item.name}</div>
-                                                                                                        <div className='w-full text-gray-800 text-xs font-medium truncate mt-1'>{new Intl.NumberFormat('fr-FR', {style: 'currency', currency:'XOF'}).format(item.unitprice)}</div>
+                                                                                                        <div className='w-full text-gray-800 text-xs font-medium truncate mt-1'>{xof(item.unitprice)}</div>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
