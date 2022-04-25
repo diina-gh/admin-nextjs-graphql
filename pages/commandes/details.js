@@ -51,7 +51,7 @@ export default function Index() {
                                     </div>
                                     <div className='text-[12.5px] font-semibold text-gray-500 ml-0.5'>23 Avril 2022 à 13:45</div>
                                 </div>
-                                <div className='bg-gray-100 bg-opacity-80 rounded-xl px-2 py-1 h-max'>
+                                <div className='bg-gray-100 bg-opacity-50 rounded-xl px-2 py-1 h-max'>
                                     <DotsHorizontalIcon className='text-black w-[1.15rem]' />
                                 </div>
                             </div>
@@ -60,13 +60,104 @@ export default function Index() {
 
                                 <div className='col-span-8 flex flex-col'>
 
-                                    <div className='w-full bg-gray-200 bg-opacity-50 rounded-xl h-[28.5rem]'>
+                                    <div className='w-full bg-gray-100 bg-opacity-60 rounded-xl pt-4 pb-6'>
+
+                                        <div className='mb-3 px-4 flex flex-row'>
+                                            <div className='text-[16.5px] font-semibold text-purple-600 mr-1.5 self-center'>Panier</div>
+                                            <div className='px-2 py-[0.45px] text-[10.5px] font-medium bg-gradient-to-r from-purple-700 to-purple-300 text-white rounded-xl self-center'>3</div>
+                                        </div>
+
+                                        <div className='w-full flex flex-col px-4 pt-2 mt-2'>
+
+                                            <div className='w-full flex flex-row justify-between h-max px-1'>
+
+                                                <div className='flex flex-row'>
+
+                                                    <div className='w-16 h-16 rounded-full border-2 border-purple-600 bg-gray-300 self-center mr-5'>
+                                                    </div>
+
+                                                    <div className='self-center'>
+                                                        <div className='w-full truncate text-[14px] font-semibold text-gray-900'>Apple MacBook Pro</div>
+                                                        <div className='w-full truncate text-[12.5px] font-normal text-gray-700'>Ordinateur - Apple</div>
+                                                        <div className='w-full flex flex-row mt-0.5'>
+                                                            <div className='text-[12px] font-semibold mr-2'>Couleur: <span className='font-normal'>noir</span></div>
+                                                            <div className='text-[12px] font-semibold'>Qte: <span className='font-normal'>2</span></div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <div className='text-[12.5px] font-semibold self-center'>90.000 CFA</div>
+
+                                                <div className='text-[12.5px] font-semibold self-center'>Qte: 2</div>
+
+                                                <div className='text-[12.5px] font-semibold self-center'>180.000 CFA</div>
+
+                                            </div>
+
+                                            <div className='divider w-full h-[1px] bg-gray-400 bg-opacity-30 my-3'></div>
+
+                                            <div className='w-full flex flex-row justify-between h-max px-1'>
+
+                                                <div className='flex flex-row'>
+
+                                                    <div className='w-16 h-16 rounded-full border-2 border-purple-600 bg-gray-300 self-center mr-5'>
+                                                    </div>
+
+                                                    <div className='self-center'>
+                                                        <div className='w-full truncate text-[14px] font-semibold text-gray-900'>Apple MacBook Pro</div>
+                                                        <div className='w-full truncate text-[12.5px] font-normal text-gray-700'>Ordinateur - Apple</div>
+                                                        <div className='w-full flex flex-row mt-0.5'>
+                                                            <div className='text-[12px] font-semibold mr-2'>Couleur: <span className='font-normal'>noir</span></div>
+                                                            <div className='text-[12px] font-semibold'>Qte: <span className='font-normal'>2</span></div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <div className='text-[12.5px] font-semibold self-center'>90.000 CFA</div>
+
+                                                <div className='text-[12.5px] font-semibold self-center'>Qte: 2</div>
+
+                                                <div className='text-[12.5px] font-semibold self-center'>180.000 CFA</div>
+
+                                            </div>
+
+                                            <div className='divider w-full h-[1px] bg-gray-400 bg-opacity-30 my-3'></div>
+
+                                            <div className='w-full flex flex-row justify-between h-max px-1'>
+
+                                                <div className='flex flex-row'>
+
+                                                    <div className='w-16 h-16 rounded-full border-2 border-purple-600 bg-gray-300 self-center mr-5'>
+                                                    </div>
+
+                                                    <div className='self-center'>
+                                                        <div className='w-full truncate text-[14px] font-semibold text-gray-900'>Apple MacBook Pro</div>
+                                                        <div className='w-full truncate text-[12.5px] font-normal text-gray-700'>Ordinateur - Apple</div>
+                                                        <div className='w-full flex flex-row mt-0.5'>
+                                                            <div className='text-[12px] font-semibold mr-2'>Couleur: <span className='font-normal'>noir</span></div>
+                                                            <div className='text-[12px] font-semibold'>Qte: <span className='font-normal'>2</span></div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <div className='text-[12.5px] font-semibold self-center'>90.000 CFA</div>
+
+                                                <div className='text-[12.5px] font-semibold self-center'>Qte: 2</div>
+
+                                                <div className='text-[12.5px] font-semibold self-center'>180.000 CFA</div>
+
+                                                </div>
+
+                                        </div>
 
                                     </div>
 
                                 </div>
 
-                                <div className='col-span-3 bg-gray-200 bg-opacity-50 rounded-xl h-max py-3'>
+                                <div className='col-span-3 bg-gray-100 bg-opacity-60 rounded-xl h-max pt-4 pb-6'>
 
                                     <div className='mb-3 px-4 flex flex-row'>
                                         <div className='text-[16px] font-semibold text-purple-600 mr-1 self-center'>Client</div>
