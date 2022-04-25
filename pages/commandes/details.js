@@ -5,6 +5,9 @@ import Header from '../../components/common/header'
 import Sidebar from '../../components/common/sidebar'
 import HeadInfo from '../../components/common/headinfo'
 import { DotsHorizontalIcon } from '@heroicons/react/solid';
+import EnvelopeBoldIcon from '../../components/ui/icons/envelopeBoldIcon';
+import PhoneIcon from '../../components/ui/icons/phoneIcon';
+import EnvelopeIcon from '../../components/ui/icons/envelopeIcon';
 
 
 export default function Index() {
@@ -63,8 +66,49 @@ export default function Index() {
 
                                 </div>
 
-                                <div className='col-span-3 bg-gray-200 bg-opacity-50 rounded-xl h-[20rem]'>
-                                    
+                                <div className='col-span-3 bg-gray-200 bg-opacity-50 rounded-xl h-max py-3'>
+
+                                    <div className='mb-3 px-4 flex flex-row'>
+                                        <div className='text-[16px] font-semibold text-purple-600 mr-1 self-center'>Client</div>
+                                        {/* <div className='px-2 py-[0.45px] text-[10.325px] font-medium bg-gradient-to-r from-purple-700 to-purple-300 text-white rounded-xl self-center'></div> */}
+                                    </div>
+
+                                    <div className='flex flex-row items-center px-4'>
+                                        <div className='bg-gradient-to-r from-violet-600 to-purple-600 hover:scale-110 flex-shrink-0 item-image-0 rounded-full border-opacity-80 transition duration-700 ease-in-out cursor-pointer mr-2' >
+                                            <div className='image-layer-2 bg-white rounded-full'>
+                                                <img className="rounded-full object-cover w-full h-full" src={1 == 1 ? '../images/avatar2.jpg': ''} />
+                                            </div>
+                                        </div>
+                                        <div className='fex flex-col'>
+                                            <div className="text-sm font-medium text-gray-900 hover:text-purple-600 hover:underline cursor-pointer">Oumou GUEYE</div>
+                                            <div className='text-xs font-medium text-gray-700'>10 commandes</div>
+                                        </div>
+                                    </div>
+
+                                    <div className='px-4'><div className='divider w-full h-[1px] bg-gray-400 bg-opacity-30 mt-4 mb-4'></div></div>
+
+                                    <div className='flex flex-row px-4'>
+                                        <div className='w-4 h-4 text-gray-700 self-center mr-2'>
+                                            <EnvelopeIcon costumClass="w-full h-full" />
+                                        </div>
+                                        <div className="text-[12.75px] font-medium text-gray-900 self-center hover:text-purple-600 hover:underline cursor-pointer">oumougueye025@gmail.com</div>
+                                    </div>
+
+                                    <div className='flex flex-row mt-3 px-4'>
+                                        <div className='w-4 h-4 text-gray-700 self-center mr-2'>
+                                            <PhoneIcon costumClass="w-full h-full" />
+                                        </div>
+                                        <div className="text-[12.75px] font-medium text-gray-900 self-center">+221 78 123 49 97</div>
+                                    </div>
+
+                                    <div className='px-4'><div className='divider w-full h-[1px] bg-gray-400 bg-opacity-30 mt-4 mb-4'></div></div>
+
+                                    <div className='flex flex-col mb-5 px-4'>
+                                        <div className='text-[13.75px] font-semibold'>Adresse de livraison</div>
+                                        <div className='text-[12px] font-medium text-gray-800 mt-2'>Cité Diamalaye II Villa 221A</div>
+                                        <div className='text-[10.5px] font-medium text-gray-600 mt-1'>Dakar, Sénégal</div>
+                                    </div>
+
                                 </div>
 
                             </div>
