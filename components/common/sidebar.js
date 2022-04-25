@@ -40,7 +40,7 @@ export function Navigation(){
 
                 <Link  href='/commandes' >
                     <li>
-                        <a  className={`${(router.asPath === '/commandes') ? 'text-purple-800 border-purple-500 bg-gradient-to-r from-purple-50 to-fuchsia-50 bg-opacity-5' : 'border-white text-gray-900'} flex items-center py-2 px-4 text-base font-medium border-l-2 hover:text-purple-800 hover:border-purple-500 hover:bg-gradient-to-r hover:from-purple-50 hover:to-fuchsia-50 hover:bg-opacity-5 cursor-pointer duration-700 ease-in-out `}>
+                        <a  className={`${(router.asPath.indexOf('/commandes') != -1) ? 'text-purple-800 border-purple-500 bg-gradient-to-r from-purple-50 to-fuchsia-50 bg-opacity-5' : 'border-white text-gray-900'} flex items-center py-2 px-4 text-base font-medium border-l-2 hover:text-purple-800 hover:border-purple-500 hover:bg-gradient-to-r hover:from-purple-50 hover:to-fuchsia-50 hover:bg-opacity-5 cursor-pointer duration-700 ease-in-out `}>
                             <CartBoldIcon customClass="w-4 h-4" />
                             <span className="ml-3">Commandes</span>
                         </a>
@@ -71,7 +71,7 @@ export function Navigation(){
 
                 <Link  href='/categories' >
                     <li>
-                        <a  className={`${(router.asPath === '/categories' || router.asPath === '/categories/form') ? 'text-purple-800 border-purple-500 bg-gradient-to-r from-purple-50 to-fuchsia-50 bg-opacity-5' : 'border-white text-gray-900'} flex items-center py-2 px-4 text-base font-medium border-l-2 hover:text-purple-800 hover:border-purple-500 hover:bg-gradient-to-r hover:from-purple-50 hover:to-fuchsia-50 hover:bg-opacity-5 cursor-pointer duration-700 ease-in-out `}>
+                        <a  className={`${(router.asPath.indexOf('/categories') != -1) ? 'text-purple-800 border-purple-500 bg-gradient-to-r from-purple-50 to-fuchsia-50 bg-opacity-5' : 'border-white text-gray-900'} flex items-center py-2 px-4 text-base font-medium border-l-2 hover:text-purple-800 hover:border-purple-500 hover:bg-gradient-to-r hover:from-purple-50 hover:to-fuchsia-50 hover:bg-opacity-5 cursor-pointer duration-700 ease-in-out `}>
                             <LetterBoldIcon customClass="w-4 h-4" />
                             <span className="ml-3">Catégories</span>
                         </a>
@@ -109,7 +109,7 @@ export function Navigation(){
                 <Disclosure as="li" className="mt-2">
                     {({ open }) => (
                         <>
-                        <Disclosure.Button className={`${open || router.asPath === '/zones_de_livraison' || router.asPath === '/modes_de_livraison' || router.asPath === '/livreurs' || router.asPath === '/livreurs/form' || router.asPath === '/modes_de_livraison/form' || router.asPath === '/zones_de_livraison/form' ? 'text-purple-800 border-purple-500 bg-gradient-to-r from-purple-50 to-fuchsia-50 bg-opacity-5' : 'border-white text-gray-900'} w-full flex justify-between py-2 px-4 text-base font-medium border-l-2 hover:text-purple-800 hover:border-purple-500 hover:bg-gradient-to-r hover:from-purple-50 hover:to-fuchsia-50 hover:bg-opacity-5`} >
+                        <Disclosure.Button className={`${open || router.asPath.indexOf('/zones_de_livraison') != -1 || router.asPath.indexOf('/modes_de_livraison') != -1 || router.asPath.indexOf('/livreurs') != -1 ? 'text-purple-800 border-purple-500 bg-gradient-to-r from-purple-50 to-fuchsia-50 bg-opacity-5' : 'border-white text-gray-900'} w-full flex justify-between py-2 px-4 text-base font-medium border-l-2 hover:text-purple-800 hover:border-purple-500 hover:bg-gradient-to-r hover:from-purple-50 hover:to-fuchsia-50 hover:bg-opacity-5`} >
                             <a  className="flex items-center ">
                                 <BoxBoldIcon customClass="w-4 h-4" />
                                 <span className="ml-3">Livraisons</span>
@@ -138,7 +138,7 @@ export function Navigation(){
 
                 <Link  href='/clients' >
                     <li>
-                        <a  className={`${(router.asPath === '/clients' || router.asPath === '/clients/form') ? 'text-purple-800 border-purple-500 bg-gradient-to-r from-purple-50 to-fuchsia-50 bg-opacity-5' : 'border-white text-gray-900'} flex items-center py-2 px-4 text-base font-medium border-l-2 hover:text-purple-800 hover:border-purple-500 hover:bg-gradient-to-r hover:from-purple-50 hover:to-fuchsia-50 hover:bg-opacity-5 cursor-pointer duration-700 ease-in-out `}>
+                        <a  className={`${(router.asPath.indexOf('/clients') != -1) ? 'text-purple-800 border-purple-500 bg-gradient-to-r from-purple-50 to-fuchsia-50 bg-opacity-5' : 'border-white text-gray-900'} flex items-center py-2 px-4 text-base font-medium border-l-2 hover:text-purple-800 hover:border-purple-500 hover:bg-gradient-to-r hover:from-purple-50 hover:to-fuchsia-50 hover:bg-opacity-5 cursor-pointer duration-700 ease-in-out `}>
                             <GroupBoldIcon  customClass="w-4 h-4" />
                             <span className="ml-3">Clients</span>
                         </a>
@@ -161,7 +161,7 @@ export function Navigation(){
 
                 <Link  href='/newsletters' >  
                     <li>
-                        <a  className={`${(router.asPath === '/newsletters') ? 'text-purple-800 border-purple-500 bg-gradient-to-r from-purple-50 to-fuchsia-50 bg-opacity-5' : 'border-white text-gray-900'} flex items-center py-2 px-4 text-base font-medium border-l-2 hover:text-purple-800 hover:border-purple-500 hover:bg-gradient-to-r hover:from-purple-50 hover:to-fuchsia-50 hover:bg-opacity-5 cursor-pointer duration-700 ease-in-out `}>
+                        <a  className={`${(router.asPath.indexOf('/newsletters') != -1 ) ? 'text-purple-800 border-purple-500 bg-gradient-to-r from-purple-50 to-fuchsia-50 bg-opacity-5' : 'border-white text-gray-900'} flex items-center py-2 px-4 text-base font-medium border-l-2 hover:text-purple-800 hover:border-purple-500 hover:bg-gradient-to-r hover:from-purple-50 hover:to-fuchsia-50 hover:bg-opacity-5 cursor-pointer duration-700 ease-in-out `}>
                             <CarnetBoldIcon  customClass="w-4 h-4" />
                             <span className="ml-3">Carnet d&#039;adresse</span>
                         </a>
@@ -198,7 +198,7 @@ export function Navigation(){
                 <Disclosure as="li" className="mt-2">
                     {({ open }) => (
                         <>
-                        <Disclosure.Button className={`${open || router.asPath === '/utilisateurs' || router.asPath === '/roles' || router.asPath === '/permissions' || router.asPath === '/utilisateurs/form' || router.asPath === '/roles/form'  || router.asPath === '/permissions/form'  ? 'text-purple-800 border-purple-500 bg-gradient-to-r from-purple-50 to-fuchsia-50 bg-opacity-5' : 'border-white text-gray-900'} w-full flex justify-between py-2 px-4 text-base font-medium border-l-2 hover:text-purple-800 hover:border-purple-500 hover:bg-gradient-to-r hover:from-purple-50 hover:to-fuchsia-50 hover:bg-opacity-5`} >
+                        <Disclosure.Button className={`${open || router.asPath.indexOf('/utilisateurs') != -1 || router.asPath.indexOf('/roles') != -1 || router.asPath.indexOf('/permissions') != -1  ? 'text-purple-800 border-purple-500 bg-gradient-to-r from-purple-50 to-fuchsia-50 bg-opacity-5' : 'border-white text-gray-900'} w-full flex justify-between py-2 px-4 text-base font-medium border-l-2 hover:text-purple-800 hover:border-purple-500 hover:bg-gradient-to-r hover:from-purple-50 hover:to-fuchsia-50 hover:bg-opacity-5`} >
                             <a  className="flex items-center ">
                                 <SettingsBoldIcon customClass="w-4 h-4" />
                                 <span className="ml-3">Paramètres</span>
