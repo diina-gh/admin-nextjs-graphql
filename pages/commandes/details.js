@@ -81,7 +81,7 @@ export default function Index() {
                                         </div>
                                         <div className='fex flex-col'>
                                             <div className="text-sm font-medium text-gray-900 hover:text-purple-600 hover:underline cursor-pointer">Oumou GUEYE</div>
-                                            <div className='text-xs font-medium text-gray-700'>10 commandes</div>
+                                            <div className='text-xs font-medium text-gray-600'>10 commandes</div>
                                         </div>
                                     </div>
 
