@@ -1,7 +1,7 @@
 import useSWR from 'swr'
 import {GraphQLClient, request} from 'graphql-request'
 import { newslettersQuery, newsletterQuery } from '../graphql/queries'
-import {saveNewsletterMutation, deleteNewsletterMutation} from "../graphql/mutations"
+// import {saveNewsletterMutation, deleteNewsletterMutation} from "../graphql/mutations"
 import { filterInt } from '../libs/util'
 import Cookies from 'js-cookie'
 
