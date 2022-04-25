@@ -29,16 +29,3 @@ export async function getNewsletter (id, fields) {
     return {response: data.newsletter}
 }
 
-export async function saveNewsletter (id, name, code, desc) {
-    var variables = {"id": filterInt(id), "email": name}
-    const data = await graphQLClient.request(saveNewsletterMutation, variables)
-    console.info("The response : ", data )
-    return {response: data.saveNewsletter }
-}
-
-export async function deleteNewsletter (id) {
-    var variables = {"id": filterInt(id)}
-    const data = await graphQLClient.request(deleteNewsletterMutation, variables)
-    console.info("The response : ", data )
-    return {response: data.deleteNewsletter }
-}
