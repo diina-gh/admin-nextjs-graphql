@@ -37,6 +37,11 @@
   overflow-y: auto !important;
 }
 
+.app-details{
+  height: calc(100vh - 12rem) !important;
+  overflow-y: auto !important;
+}
+
 .app-form{
   background-color: #9237b901;
   max-height: calc(100vh - 12.85rem) !important;

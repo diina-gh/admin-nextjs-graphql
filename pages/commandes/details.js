@@ -56,11 +56,11 @@ export default function Index() {
                                 </div>
                             </div>
 
-                            <div className='w-full grid grid-cols-11 grid-flow-row gap-5 px-4 mt-4'>
+                            <div className='w-full grid grid-cols-11 grid-flow-row gap-3 px-4 mt-4'>
 
-                                <div className='col-span-8 flex flex-col'>
+                                <div className='col-span-8 pr-2 app-details overflow-y-scroll flex flex-col'>
 
-                                    <div className='w-full bg-gray-100 bg-opacity-60 rounded-xl pt-4 pb-6'>
+                                    <div className='w-full bg-gray-100 bg-opacity-80 rounded-xl pt-4 pb-6'>
 
                                         <div className='mb-3 px-4 flex flex-row'>
                                             <div className='text-[16.5px] font-semibold text-purple-600 mr-1.5 self-center'>Panier</div>
@@ -155,9 +155,38 @@ export default function Index() {
 
                                     </div>
 
+                                    <div className='w-full grid grid-cols-2 gap-5 mt-5'>
+
+                                        <div className='h-52 bg-gray-100 bg-opacity-80 rounded-xl pt-4 pb-6'>
+
+                                            <div className='mb-3 px-4 flex flex-row'>
+                                                <div className='text-[16px] font-semibold text-purple-600 mr-1 self-center'>Récapitulatif</div>
+                                            </div>
+
+                                        </div>
+
+                                        <div className='h-52 bg-gray-100 bg-opacity-80 rounded-xl pt-4 pb-6'>
+
+                                            <div className='mb-3 px-4 flex flex-row'>
+                                                <div className='text-[16px] font-semibold text-purple-600 mr-1 self-center'>Livraison</div>
+                                            </div>
+
+                                        </div>
+
+                                        <div className='col-span-2 h-72 bg-gray-100 bg-opacity-80 rounded-xl pt-4 pb-6'>
+
+                                            <div className='mb-3 px-4 flex flex-row'>
+                                                <div className='text-[16px] font-semibold text-purple-600 mr-1 self-center'>Activité</div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
                                 </div>
 
-                                <div className='col-span-3 bg-gray-100 bg-opacity-60 rounded-xl h-max pt-4 pb-6'>
+                                <div className='col-span-3 bg-gray-100 bg-opacity-80 rounded-xl h-max pt-4 pb-6'>
 
                                     <div className='mb-3 px-4 flex flex-row'>
                                         <div className='text-[16px] font-semibold text-purple-600 mr-1 self-center'>Client</div>
