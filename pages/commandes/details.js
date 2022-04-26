@@ -8,6 +8,7 @@ import { DotsHorizontalIcon } from '@heroicons/react/solid';
 import EnvelopeBoldIcon from '../../components/ui/icons/envelopeBoldIcon';
 import PhoneIcon from '../../components/ui/icons/phoneIcon';
 import EnvelopeIcon from '../../components/ui/icons/envelopeIcon';
+import { xof } from '../../libs/util';
 
 
 export default function Index() {
@@ -157,15 +158,41 @@ export default function Index() {
 
                                     <div className='w-full grid grid-cols-2 gap-5 mt-5'>
 
-                                        <div className='h-52 bg-gray-100 bg-opacity-80 rounded-xl pt-4 pb-6'>
+                                        <div className='bg-gray-100 bg-opacity-80 rounded-xl px-4 pt-4 pb-6'>
 
-                                            <div className='mb-3 px-4 flex flex-row'>
-                                                <div className='text-[16px] font-semibold text-purple-600 mr-1 self-center'>Récapitulatif</div>
+                                            <div className='flex flex-col'>
+
+                                                <div className='mb-4 flex flex-row'>
+                                                    <div className='text-[16px] font-semibold text-purple-600 mr-1 self-center'>Récapitulatif</div>
+                                                </div>
+
+                                                <div className='text-[14px] font-medium flex flex-row justify-between mb-2'>
+                                                    <div className='text-gray-800'>Sous total</div>
+                                                    <div className='text-gray-900  text-xs self-center'>{xof(10000)}</div>
+                                                </div>
+
+                                                <div className='text-[14px] font-medium flex flex-row justify-between mb-2'>
+                                                    <div className='text-gray-800'>Livraison</div>
+                                                    <div className='text-gray-900  text-xs self-center'>{xof(650)}</div>
+                                                </div>
+
+                                                <div className='text-[14px] font-medium flex flex-row justify-between mb-2'>
+                                                    <div className='text-gray-800'>Remise</div>
+                                                    <div className='text-gray-900  text-xs self-center'>{xof(25)}</div>
+                                                </div>
+
+                                            </div>
+
+                                            <div className='border-t border-gray-800 border-opacity-60 mt-4 mb-1'>
+                                                <div className='w-full text-[14px] font-semibold flex flex-row justify-between pt-2'>
+                                                    <div className='text-gray-800'>Total</div>
+                                                    <div className='text-gray-900 text-xs self-center'>{xof(10675)}</div>
+                                                </div>
                                             </div>
 
                                         </div>
 
-                                        <div className='h-52 bg-gray-100 bg-opacity-80 rounded-xl pt-4 pb-6'>
+                                        <div className='bg-gray-100 bg-opacity-80 rounded-xl pt-4 pb-6'>
 
                                             <div className='mb-3 px-4 flex flex-row'>
                                                 <div className='text-[16px] font-semibold text-purple-600 mr-1 self-center'>Livraison</div>
