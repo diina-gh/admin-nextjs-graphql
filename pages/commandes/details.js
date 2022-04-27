@@ -201,7 +201,7 @@ export default function Index() {
                                             <div className='w-full flex flex-row justify-between'>
 
                                                 <div className='w-8/12 flex flex-row'>
-                                                    <div className='w-12 h-12 rounded-md bg-gray-400 mr-2'>
+                                                    <div className='w-12 h-12 rounded-md bg-purple-100 mr-2'>
 
                                                     </div>
                                                     <div className='self-center w-8/12'>
