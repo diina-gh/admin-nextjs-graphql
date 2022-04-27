@@ -437,7 +437,7 @@ export default function Home({userId}) {
 
                     </div>
 
-                    <div className='app-rightbar bg-white overflow-y-scroll rounded-xl py-4'>
+                    <div className='app-rightbar bg-white overflow-y-hidden rounded-xl py-3'>
 
                         <div className='px-4 flex flex-col'>
                             <div className='flex flex-row justify-between'>
