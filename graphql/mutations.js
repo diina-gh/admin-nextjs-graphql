@@ -1,6 +1,21 @@
 import { gql } from "graphql-request";
 import * as Types from './types'
 
+export const deleteNewsletterMutation = gql `
+    ${Types.InputError}
+    mutation($id: Int) {
+        deleteNewsletter(id: $id) {
+            ... on Newsletter {
+                id
+                email
+                createdat
+                updatedat
+            }
+            ...InputError
+        }
+    }
+`
+
 export const saveCountryMutation = gql `
     ${Types.InputError}
     mutation($id: Int, $iso3: String, $isoNum:String, $name:String){
@@ -28,7 +43,7 @@ export const deleteCountryMutation = gql `
                 iso3
                 isoNum
             }
-            ...InputError    
+            ...InputError
         }
     }
 `
