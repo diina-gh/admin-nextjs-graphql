@@ -435,11 +435,11 @@ export default function Home({userId}) {
                         </motion.div>
 
                         <motion.div initial={{ opacity: 0.5, y: ( Math.random() * 2 * 5) }} whileInView={{ opacity: 1, y: 0, transition: { duration: 1.05 }, }}>
-                            <div className='w-full bg-white rounded-xl shadow flex flex-col py-5 mt-4 mb-2'>
+                            <div className='w-full bg-white rounded-xl shadow flex flex-col py-5 mt-4 mb-1'>
                                 <div className='w-full px-4 text-base font-semibold'>Nouveaux clients</div>
                                 <div className='w-full px-4 mt-3 text-xs font-medium text-gray-800'>
                                     <table className="min-w-full divide-y divide-gray-200 border-b border-gray-200">
-                                        <thead className="th-bg-1 sticky top-0 ">
+                                        <thead className="th-bg-1 sticky top-0">
                                             <tr>
                                                 <th scope="col" className="px-6 py-2 text-left text-[11.5px] font-medium text-gray-800 uppercase tracking-wider">
                                                     N#
@@ -517,7 +517,7 @@ export default function Home({userId}) {
 
                     </div>
 
-                    <div className='app-rightbar bg-white overflow-y-hidden rounded-xl py-3'>
+                    <div className='app-rightbar bg-white overflow-y-hidden rounded-xl py-4'>
 
                         <div className='px-4 flex flex-col'>
                             <div className='flex flex-row justify-between'>
