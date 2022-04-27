@@ -168,34 +168,59 @@ export default function Index() {
 
                                                 <div className='text-[14px] font-medium flex flex-row justify-between mb-2'>
                                                     <div className='text-gray-800'>Sous total</div>
-                                                    <div className='text-gray-900  text-xs self-center'>{xof(10000)}</div>
+                                                    <div className='text-gray-900 self-center'>{xof(10000)}</div>
                                                 </div>
 
                                                 <div className='text-[14px] font-medium flex flex-row justify-between mb-2'>
                                                     <div className='text-gray-800'>Livraison</div>
-                                                    <div className='text-gray-900  text-xs self-center'>{xof(650)}</div>
+                                                    <div className='text-gray-900 self-center'>{xof(650)}</div>
                                                 </div>
 
                                                 <div className='text-[14px] font-medium flex flex-row justify-between mb-2'>
                                                     <div className='text-gray-800'>Remise</div>
-                                                    <div className='text-gray-900  text-xs self-center'>{xof(25)}</div>
+                                                    <div className='text-gray-900 self-center'>{xof(25)}</div>
                                                 </div>
 
                                             </div>
 
-                                            <div className='border-t border-gray-800 border-opacity-60 mt-4 mb-1'>
+                                            <div className='border-t border-gray-400 border-opacity-80 mt-4 mb-1'>
                                                 <div className='w-full text-[14px] font-semibold flex flex-row justify-between pt-2'>
                                                     <div className='text-gray-800'>Total</div>
-                                                    <div className='text-gray-900 text-xs self-center'>{xof(10675)}</div>
+                                                    <div className='text-gray-900 self-center'>{xof(10675)}</div>
                                                 </div>
                                             </div>
 
                                         </div>
 
-                                        <div className='bg-gray-100 bg-opacity-80 rounded-xl pt-4 pb-6'>
+                                        <div className='bg-gray-100 bg-opacity-80 rounded-xl px-4 pt-4 pb-6'>
 
-                                            <div className='mb-3 px-4 flex flex-row'>
+                                            <div className='mb-5 flex flex-row'>
                                                 <div className='text-[16px] font-semibold text-purple-600 mr-1 self-center'>Livraison</div>
+                                            </div>
+
+                                            <div className='w-full flex flex-row justify-between'>
+
+                                                <div className='w-8/12 flex flex-row'>
+                                                    <div className='w-12 h-12 rounded-md bg-gray-400 mr-2'>
+
+                                                    </div>
+                                                    <div className='self-center w-8/12'>
+                                                        <div className='w-full text-gray-900 text-[14px] font-semibold truncate'>ABC Livraison</div>
+                                                        <div className='w-full text-gray-600 text-[12px] font-medium truncate'>Put some details here</div>
+                                                    </div>
+                                                </div>
+
+                                                <div className='w-4/12 text-right text-gray-900 text-[12.5px] font-semibold truncate self-center'>{xof(650)}</div>
+
+                                            </div>
+
+                                            <div className='w-full flex flex-row text-gray-900 text-[12.5px] font-medium justify-between mt-4'>
+                                                <div className='self-center'>Date de livraison</div>
+                                                <div className='self-center'>27/04/2022 11:35 am</div>
+                                            </div>
+
+                                            <div className='w-full h-10 flex flex-row justify-center bg-gray-300 hover:bg-gray-400 active:scale-95 text-gray-900 transition duration-700 ease-in-out bg-opacity-95 hover:bg-opacity-60 cursor-pointer rounded-xl shadow mt-5'>
+                                                <div className='self-center text-[14px] font-semibold'>En savoir +</div>
                                             </div>
 
                                         </div>
