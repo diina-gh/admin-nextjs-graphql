@@ -216,11 +216,11 @@ export default function Index() {
 
                                                             <td className="px-6 py-3 whitespace-nowrap">
                                                                 <div className="flex items-center">
-                                                                <div className={`${item.activated ? 'bg-gradient-to-r from-violet-600 to-purple-600 hover:scale-110' : 'bg-gray-400'} flex-shrink-0 item-image-0 rounded-full border-opacity-80 transition duration-700 ease-in-out cursor-pointer`} >
-                                                                    <div className='image-layer-2 bg-white rounded-full'>
-                                                                        <img className={`${item.activated ? 'opacity-100' : 'opacity-50'} rounded-full object-cover w-full h-full`} src={item?.image?.url == null ? '../images/avatar2.jpg': item?.image?.url} alt="" />
+                                                                    <div className={`${item.activated ? 'bg-gradient-to-r from-violet-600 to-purple-600 hover:scale-110' : 'bg-gray-400'} flex-shrink-0 item-image-0 rounded-full border-opacity-80 transition duration-700 ease-in-out cursor-pointer`} >
+                                                                        <div className='image-layer-2 bg-white rounded-full'>
+                                                                            <img className={`${item.activated ? 'opacity-100' : 'opacity-50'} rounded-full object-cover w-full h-full`} src={item?.image?.url == null ? '../images/avatar2.jpg': item?.image?.url} alt="" />
+                                                                        </div>
                                                                     </div>
-                                                                </div>
                                                                     <div className={`${item.activated ? 'opacity-100' : 'opacity-50'} ml-4`}>
                                                                         <div className="text-sm font-medium text-gray-900">{capitalize(item.firstname) + ' ' + item.lastname}</div>
                                                                     </div>
