@@ -8,18 +8,18 @@
     
   /* Track */
   ::-webkit-scrollbar-track {
-    background: #f1f1f109; 
+    background: rgba(128, 128, 128, 0.01); 
   }
    
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    background: rgba(136, 136, 136, 0.685);
+    background: rgba(136, 136, 136, 0.35);
     border-radius: 10px;
   }
   
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(85, 85, 85, 0.76); 
+    background: rgba(85, 85, 85, 0.4); 
   }
 
   .no-select {
