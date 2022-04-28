@@ -72,7 +72,7 @@ export default function Index() {
                 <motion.div initial={{ opacity: 0.45, x: -150 }}  whileInView={{ opacity: 1, x: 0, transition: { duration: 0.60 }, }}>
                     <div className='app-body rounded-xl'>
 
-                        <div className='w-full h-full bg-white rounded-xl overflow-y-scroll pt-4 pb-3'>
+                        <div className='w-full h-full bg-white rounded-xl overflow-y-hidden overflow-x-hidden pt-4 pb-3'>
 
                             <div className='w-full flex flex-row justify-between mt-2 px-6'>
                                 <div className='flex flex-col'>
@@ -90,20 +90,32 @@ export default function Index() {
 
                             <div className='w-full app-details overflow-y-scroll mt-4'>
 
-                                <div className='grid grid-cols-4 grid-flow-row gap-4 px-6'>
+                                <div className='w-full overflow-hidden grid grid-cols-4 grid-flow-row gap-4 px-6'>
 
-                                    <div className='h-72 bg-gray-200 bg-opacity-50 shadow-sm rounded-xl'></div>
+                                    <motion.div initial={{ opacity: 0.35, x:-100 }} whileInView={{ opacity: 1, x: 0, transition: { duration: 1.05 }, }}>
+                                        <div className='h-72 bg-gray-200 bg-opacity-50 shadow-sm rounded-xl'></div>
+                                    </motion.div>
 
-                                    <div className='h-72 bg-gray-200 bg-opacity-50 shadow-sm rounded-xl'></div>
+                                    <motion.div initial={{ opacity: 0.35, y:-125 }} whileInView={{ opacity: 1, y: 0, transition: { duration: 1.05 }, }}>
+                                        <div className='h-72 bg-gray-200 bg-opacity-50 shadow-sm rounded-xl'></div>
+                                    </motion.div>
 
                                     <div className='flex flex-col'>
-                                        <div className='w-full h-[8.485rem] bg-gray-200 bg-opacity-50 shadow-sm rounded-xl mb-4'></div>
-                                        <div className='w-full h-[8.485rem] bg-gray-200 bg-opacity-50 shadow-sm rounded-xl'></div>
+                                        <motion.div initial={{ opacity: 0.35, y: -50 }} whileInView={{ opacity: 1, y: 0, transition: { duration: 1.05 }, }}>
+                                            <div className='w-full h-[8.485rem] bg-gray-200 bg-opacity-50 shadow-sm rounded-xl mb-4'></div>
+                                        </motion.div>
+                                        <motion.div initial={{ opacity: 0.35, y: 75 }} whileInView={{ opacity: 1, y: 0, transition: { duration: 1.05 }, }}>
+                                            <div className='w-full h-[8.485rem] bg-gray-200 bg-opacity-50 shadow-sm rounded-xl'></div>
+                                        </motion.div>
                                     </div>
 
                                     <div className='flex flex-col'>
-                                        <div className='w-full h-[8.485rem] bg-gray-200 bg-opacity-50 shadow-sm rounded-xl mb-4'></div>
-                                        <div className='w-full h-[8.485rem] bg-gray-200 bg-opacity-50 shadow-sm rounded-xl'></div>
+                                        <motion.div initial={{ opacity: 0.35, x:40 }} whileInView={{ opacity: 1, x: 0, transition: { duration: 1.05 }, }}>
+                                            <div className='w-full h-[8.485rem] bg-gray-200 bg-opacity-50 shadow-sm rounded-xl mb-4'></div>
+                                        </motion.div>
+                                        <motion.div initial={{ opacity: 0.35, x:100 }} whileInView={{ opacity: 1, x: 0, transition: { duration: 1.05 }, }}>
+                                            <div className='w-full h-[8.485rem] bg-gray-200 bg-opacity-50 shadow-sm rounded-xl'></div>
+                                        </motion.div>
                                     </div>
 
                                 </div>
