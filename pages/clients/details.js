@@ -130,7 +130,34 @@ export default function Index() {
                                     </motion.div>
 
                                     <motion.div initial={{ opacity: 0.35, y:-125 }} whileInView={{ opacity: 1, y: 0, transition: { duration: 1.05 }, }}>
-                                        <div className='h-72 bg-gray-200 bg-opacity-50 shadow-sm rounded-xl'></div>
+                                        <div className='h-72 bg-gray-200 bg-opacity-50 shadow-sm rounded-xl pt-5 px-3'>
+
+                                            <div className='w-full ptext-[16.5px] font-semibold text-purple-600'>Autres informations</div>
+                                            <div className='divider w-full h-[1px] bg-gray-400 bg-opacity-30 mt-2 mb-5'></div>
+
+                                            <div className='w-full flex flex-row justify-center bg-white bg-opacity-90 rounded-md shadow-sm py-3 px-3 mb-3'>
+                                                <div className='w-4 h-4 text-gray-800 self-center -mb-1 mr-1'>
+                                                    <PhoneIcon costumClass="w-full h-full" />
+                                                </div>
+                                                <div className="text-[12.75px] font-semibold text-gray-800 self-center">+221 78 123 49 97</div>
+                                            </div>
+
+                                            <div className='w-full flex flex-row justify-center bg-white bg-opacity-90 rounded-md shadow-sm py-3 px-3 mb-3'>
+                                                <div className='w-4 h-4 text-gray-800 self-center -mb-1 mr-1'>
+                                                    <PhoneIcon costumClass="w-full h-full" />
+                                                </div>
+                                                <div className="text-[12.75px] font-semibold text-gray-800 self-center">+221 78 123 49 97</div>
+                                            </div>
+
+                                            <div className='w-full flex flex-row justify-center bg-white bg-opacity-90 rounded-md shadow-sm py-3 px-3'>
+                                                <div className='w-4 h-4 text-gray-800 self-center -mb-1 mr-1'>
+                                                    <PhoneIcon costumClass="w-full h-full" />
+                                                </div>
+                                                <div className="text-[12.75px] font-semibold text-gray-800 self-center">+221 78 123 49 97</div>
+                                            </div>
+
+
+                                        </div>
                                     </motion.div>
 
                                     <div className='flex flex-col'>
