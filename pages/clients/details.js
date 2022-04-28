@@ -16,6 +16,8 @@ import ChevronLeftIcon from '../../components/ui/icons/chevronLeftIcon';
 import ChevronRightIcon from '../../components/ui/icons/chevronRightIcon';
 import DoubleChevronLeftIcon from '../../components/ui/icons/doubleChevronLeftIcon';
 import DoubleChevronRightIcon from '../../components/ui/icons/doubleChevronRightIcon';
+import GroupBoldIcon from '../../components/ui/icons/groupBoldIcon';
+
 
 
 
@@ -171,19 +173,83 @@ export default function Index() {
 
                                     <div className='flex flex-col'>
                                         <motion.div initial={{ opacity: 0.35, y: -50 }} whileInView={{ opacity: 1, y: 0, transition: { duration: 1.05 }, }}>
-                                            <div className='w-full h-[8.485rem] bg-gray-200 bg-opacity-50 shadow-sm rounded-xl mb-4'></div>
+                                            <div className='w-full h-[8.485rem] bg-gray-200 bg-opacity-50 shadow-sm rounded-xl mb-4'>
+                                                <div className='h-full rounded-xl flex flex-col justify-between px-3 py-4 cursor-pointer'>
+
+                                                    <div className='flex flex-row'>
+                                                        <div className='w-7 h-7 rounded-lg bg-purple-600 flex flex-row justify-center self-center mr-2'>
+                                                            <div className='self-center'><GroupBoldIcon customClass="w-3 h-3 text-gray-100"/></div>
+                                                        </div>
+                                                        <div className='text-[1.05rem] font-semibold text-gray-900 self-center leading-5'>Commandes</div>
+                                                    </div>
+
+                                                    <div className='w-full flex flex-col'>
+                                                        <div className='w-full text-right text-sm font-medium text-gray-900'> <span className='font-bold'>45 394</span> Utilisateurs</div>
+                                                        <div className='w-full text-right text-[11px] font-medium text-gray-900 tracking-wide'> <span className='font-bold text-green-600'>▲ 3%</span> cette semaine</div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
                                         </motion.div>
                                         <motion.div initial={{ opacity: 0.35, y: 75 }} whileInView={{ opacity: 1, y: 0, transition: { duration: 1.05 }, }}>
-                                            <div className='w-full h-[8.485rem] bg-gray-200 bg-opacity-50 shadow-sm rounded-xl'></div>
+                                            <div className='w-full h-[8.485rem] bg-gray-200 bg-opacity-50 shadow-sm rounded-xl'>
+                                                <div className='h-full rounded-xl flex flex-col justify-between px-3 py-4 cursor-pointer'>
+
+                                                    <div className='flex flex-row'>
+                                                        <div className='w-7 h-7 rounded-lg  bg-amber-600 flex flex-row justify-center self-center mr-2'>
+                                                            <div className='self-center'><GroupBoldIcon customClass="w-3 h-3 text-gray-100"/></div>
+                                                        </div>
+                                                        <div className='text-[1.05rem] font-semibold text-gray-900 self-center leading-5'>Total revenu</div>
+                                                    </div>
+
+                                                    <div className='w-full flex flex-col'>
+                                                        <div className='w-full text-right text-sm font-medium text-gray-900'> <span className='font-bold'>45 394</span> Utilisateurs</div>
+                                                        <div className='w-full text-right text-[11px] font-medium text-gray-900 tracking-wide'> <span className='font-bold text-green-600'>▲ 3%</span> cette semaine</div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
                                         </motion.div>
                                     </div>
 
                                     <div className='flex flex-col'>
                                         <motion.div initial={{ opacity: 0.35, x:40 }} whileInView={{ opacity: 1, x: 0, transition: { duration: 1.05 }, }}>
-                                            <div className='w-full h-[8.485rem] bg-gray-200 bg-opacity-50 shadow-sm rounded-xl mb-4'></div>
+                                            <div className='w-full h-[8.485rem] bg-gray-200 bg-opacity-50 shadow-sm rounded-xl mb-4'>
+                                                <div className='h-full rounded-xl flex flex-col justify-between px-3 py-4 cursor-pointer'>
+
+                                                    <div className='flex flex-row'>
+                                                        <div className='w-7 h-7 rounded-lg bg-red-600 flex flex-row justify-center self-center mr-2'>
+                                                            <div className='self-center'><GroupBoldIcon customClass="w-3 h-3 text-gray-100"/></div>
+                                                        </div>
+                                                        <div className='text-[1.05rem] font-semibold text-gray-900 self-center leading-5'>Vues</div>
+                                                    </div>
+
+                                                    <div className='w-full flex flex-col'>
+                                                        <div className='w-full text-right text-sm font-medium text-gray-900'> <span className='font-bold'>45 394</span> Utilisateurs</div>
+                                                        <div className='w-full text-right text-[11px] font-medium text-gray-900 tracking-wide'> <span className='font-bold text-green-600'>▲ 3%</span> cette semaine</div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
                                         </motion.div>
                                         <motion.div initial={{ opacity: 0.35, x:100 }} whileInView={{ opacity: 1, x: 0, transition: { duration: 1.05 }, }}>
-                                            <div className='w-full h-[8.485rem] bg-gray-200 bg-opacity-50 shadow-sm rounded-xl'></div>
+                                            <div className='w-full h-[8.485rem] bg-gray-200 bg-opacity-50 shadow-sm rounded-xl'>
+                                                <div className='h-full rounded-xl flex flex-col justify-between px-3 py-4 cursor-pointer'>
+
+                                                    <div className='flex flex-row'>
+                                                        <div className='w-7 h-7 rounded-lg bg-green-600 flex flex-row justify-center self-center mr-2'>
+                                                            <div className='self-center'><GroupBoldIcon customClass="w-3 h-3 text-gray-100"/></div>
+                                                        </div>
+                                                        <div className='text-[1.05rem] font-semibold text-gray-900 self-center leading-5'>Likes</div>
+                                                    </div>
+
+                                                    <div className='w-full flex flex-col'>
+                                                        <div className='w-full text-right text-sm font-medium text-gray-900'> <span className='font-bold'>45 394</span> Utilisateurs</div>
+                                                        <div className='w-full text-right text-[11px] font-medium text-gray-900 tracking-wide'> <span className='font-bold text-green-600'>▲ 3%</span> cette semaine</div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
                                         </motion.div>
                                     </div>
 
