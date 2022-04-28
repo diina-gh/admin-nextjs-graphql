@@ -17,6 +17,7 @@ import DoubleChevronLeftIcon from '../../components/ui/icons/doubleChevronLeftIc
 import DoubleChevronRightIcon from '../../components/ui/icons/doubleChevronRightIcon';
 
 
+
 const commandes = [
     {
       "id": "C03289",
@@ -93,7 +94,39 @@ export default function Index() {
                                 <div className='w-full overflow-hidden grid grid-cols-4 grid-flow-row gap-4 px-6'>
 
                                     <motion.div initial={{ opacity: 0.35, x:-100 }} whileInView={{ opacity: 1, x: 0, transition: { duration: 1.05 }, }}>
-                                        <div className='h-72 bg-gray-200 bg-opacity-50 shadow-sm rounded-xl'></div>
+                                        <div className='h-72 bg-gray-200 bg-opacity-50 shadow-sm rounded-xl pt-8 px-3'>
+
+                                            <div className='w-full flex flex-row justify-center'>
+                                                <div className='w-[4rem] h-[4rem] bg-gradient-to-r from-violet-600 to-purple-600 hover:scale-105 flex-shrink-0 item-image-2 rounded-full border-opacity-80 transition duration-700 ease-in-out cursor-pointer mr-2' >
+                                                    <div className='image-layer-2 bg-white rounded-full'>
+                                                        <img className="rounded-full object-cover w-full h-full" src={1 == 1 ? '../images/avatar2.jpg': ''} />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className='w-full px-3 text-center mt-4 text-[16px] font-semibold text-purple-600'>Oumou GUEYE</div>
+
+                                            <div className='flex flex-row justify-center mt-1 px-3'>
+                                                <div className="text-[12.75px] font-semibold text-gray-800 self-center">oumougueye025@gmail.com</div>
+                                            </div>
+
+                                            <div className='w-full flex flex-row justify-center mt-1 px-3'>
+                                                <div className='w-4 h-4 text-gray-800 self-center -mb-1 mr-1'>
+                                                    <PhoneIcon costumClass="w-full h-full" />
+                                                </div>
+                                                <div className="text-[12.75px] font-semibold text-gray-800 self-center">+221 78 123 49 97</div>
+                                            </div>
+
+                                            <div className='w-full px-3'>
+                                                <div className='divider w-full h-[1px] bg-gray-400 bg-opacity-30 my-4'></div>
+                                            </div>
+
+                                            <div className='w-full flex flex-row justify-center px-3'>
+                                                <div className='w-full bg-red-600 text-white py-2 rounded-md text-center text-[12.5px] font-semibold btn-effect1'>Désactiver</div>
+                                            </div>
+
+
+                                        </div>
                                     </motion.div>
 
                                     <motion.div initial={{ opacity: 0.35, y:-125 }} whileInView={{ opacity: 1, y: 0, transition: { duration: 1.05 }, }}>
