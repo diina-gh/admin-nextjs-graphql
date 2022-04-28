@@ -8,6 +8,7 @@ import { DotsHorizontalIcon } from '@heroicons/react/solid';
 import EnvelopeBoldIcon from '../../components/ui/icons/envelopeBoldIcon';
 import PhoneIcon from '../../components/ui/icons/phoneIcon';
 import EnvelopeIcon from '../../components/ui/icons/envelopeIcon';
+import MarkerIcon from '../../components/ui/icons/markerIcon';
 import { xof } from '../../libs/util';
 import { Pagination } from "react-pagination-bar"
 import 'react-pagination-bar/dist/index.css'
@@ -133,29 +134,37 @@ export default function Index() {
                                         <div className='h-72 bg-gray-200 bg-opacity-50 shadow-sm rounded-xl pt-5 px-3'>
 
                                             <div className='w-full ptext-[16.5px] font-semibold text-purple-600'>Autres informations</div>
-                                            <div className='divider w-full h-[1px] bg-gray-400 bg-opacity-30 mt-2 mb-5'></div>
+                                            <div className='divider w-full h-[1px] bg-gray-400 bg-opacity-30 mt-2 mb-4'></div>
 
-                                            <div className='w-full flex flex-row justify-center bg-white bg-opacity-90 rounded-md shadow-sm py-3 px-3 mb-3'>
-                                                <div className='w-4 h-4 text-gray-800 self-center -mb-1 mr-1'>
-                                                    <PhoneIcon costumClass="w-full h-full" />
+                                            <div className='w-full flex flex-row bg-white bg-opacity-90 rounded-md shadow-sm py-3 px-3 mb-3'>
+                                                <div className='w-9 h-9 rounded-full flex flex-row justify-center bg-orange-600 self-center -mb-1 mr-2'>
+                                                    <div className='w-4 h-4 text-white self-center'><PhoneIcon costumClass="w-full h-full" /></div>
                                                 </div>
-                                                <div className="text-[12.75px] font-semibold text-gray-800 self-center">+221 78 123 49 97</div>
+                                                <div className='w-9/12 flex flex-col self-center'>
+                                                    <div className="w-full truncate text-[12.5px] font-semibold text-gray-900">Téléphone</div>
+                                                    <div className="w-full truncate text-[11px] font-medium text-gray-600">+221 78 123 49 97</div>
+                                                </div>
                                             </div>
 
-                                            <div className='w-full flex flex-row justify-center bg-white bg-opacity-90 rounded-md shadow-sm py-3 px-3 mb-3'>
-                                                <div className='w-4 h-4 text-gray-800 self-center -mb-1 mr-1'>
-                                                    <PhoneIcon costumClass="w-full h-full" />
+                                            <div className='w-full flex flex-row bg-white bg-opacity-90 rounded-md shadow-sm py-3 px-3 mb-3'>
+                                                <div className='w-9 h-9 rounded-full flex flex-row justify-center bg-pink-600 self-center -mb-1 mr-2'>
+                                                    <div className='w-4 h-4 text-white self-center'><MarkerIcon costumClass="w-full h-full" /></div>
                                                 </div>
-                                                <div className="text-[12.75px] font-semibold text-gray-800 self-center">+221 78 123 49 97</div>
+                                                <div className='w-9/12 flex flex-col self-center'>
+                                                    <div className="w-full truncate text-[12.5px] font-semibold text-gray-900">Adresse</div>
+                                                    <div className="w-full truncate text-[11px] font-medium text-gray-600">Cité Diamalaye II, Villa 60E</div>
+                                                </div>
                                             </div>
 
-                                            <div className='w-full flex flex-row justify-center bg-white bg-opacity-90 rounded-md shadow-sm py-3 px-3'>
-                                                <div className='w-4 h-4 text-gray-800 self-center -mb-1 mr-1'>
-                                                    <PhoneIcon costumClass="w-full h-full" />
+                                            <div className='w-full flex flex-row bg-white bg-opacity-90 rounded-md shadow-sm py-3 px-3 mb-3'>
+                                                <div className='w-9 h-9 rounded-full flex flex-row justify-center bg-cyan-600 self-center -mb-1 mr-2'>
+                                                    <div className='w-4 h-4 text-white self-center'><MarkerIcon costumClass="w-full h-full" /></div>
                                                 </div>
-                                                <div className="text-[12.75px] font-semibold text-gray-800 self-center">+221 78 123 49 97</div>
+                                                <div className='w-9/12 flex flex-col self-center'>
+                                                    <div className="w-full truncate text-[12.5px] font-semibold text-gray-900">Ville</div>
+                                                    <div className="w-full truncate text-[11px] font-medium text-gray-600">Dakar, Sénégal</div>
+                                                </div>
                                             </div>
-
 
                                         </div>
                                     </motion.div>
