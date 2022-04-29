@@ -114,7 +114,7 @@ export default function Index() {
                                             </div>
 
                                             <div className='w-full flex flex-row justify-center mt-1 px-3'>
-                                                <div className='w-4 h-4 text-gray-800 self-center -mb-1 mr-1'>
+                                                <div className='w-3 h-3 text-gray-800 self-center -mb-1 mr-1'>
                                                     <PhoneIcon costumClass="w-full h-full" />
                                                 </div>
                                                 <div className="text-[12.75px] font-semibold text-gray-800 self-center">+221 78 123 49 97</div>
@@ -139,8 +139,8 @@ export default function Index() {
                                             <div className='divider w-full h-[1px] bg-gray-400 bg-opacity-30 mt-2 mb-4'></div>
 
                                             <div className='w-full flex flex-row bg-white bg-opacity-90 rounded-md shadow-sm py-3 px-3 mb-3'>
-                                                <div className='w-9 h-9 rounded-full flex flex-row justify-center bg-orange-600 self-center -mb-1 mr-2'>
-                                                    <div className='w-4 h-4 text-white self-center'><PhoneIcon costumClass="w-full h-full" /></div>
+                                                <div className='w-8 h-8 rounded-full flex flex-row justify-center bg-orange-600 self-center -mb-1 mr-2'>
+                                                    <div className='w-3 h-3 text-white self-center'><PhoneIcon costumClass="w-full h-full" /></div>
                                                 </div>
                                                 <div className='w-9/12 flex flex-col self-center'>
                                                     <div className="w-full truncate text-[12.5px] font-semibold text-gray-900">Téléphone</div>
@@ -149,8 +149,8 @@ export default function Index() {
                                             </div>
 
                                             <div className='w-full flex flex-row bg-white bg-opacity-90 rounded-md shadow-sm py-3 px-3 mb-3'>
-                                                <div className='w-9 h-9 rounded-full flex flex-row justify-center bg-pink-600 self-center -mb-1 mr-2'>
-                                                    <div className='w-4 h-4 text-white self-center'><MarkerIcon costumClass="w-full h-full" /></div>
+                                                <div className='w-8 h-8 rounded-full flex flex-row justify-center bg-pink-600 self-center -mb-1 mr-2'>
+                                                    <div className='w-3 h-3 text-white self-center'><MarkerIcon costumClass="w-full h-full" /></div>
                                                 </div>
                                                 <div className='w-9/12 flex flex-col self-center'>
                                                     <div className="w-full truncate text-[12.5px] font-semibold text-gray-900">Adresse</div>
@@ -159,8 +159,8 @@ export default function Index() {
                                             </div>
 
                                             <div className='w-full flex flex-row bg-white bg-opacity-90 rounded-md shadow-sm py-3 px-3 mb-3'>
-                                                <div className='w-9 h-9 rounded-full flex flex-row justify-center bg-cyan-600 self-center -mb-1 mr-2'>
-                                                    <div className='w-4 h-4 text-white self-center'><MarkerIcon costumClass="w-full h-full" /></div>
+                                                <div className='w-8 h-8 rounded-full flex flex-row justify-center bg-cyan-600 self-center -mb-1 mr-2'>
+                                                    <div className='w-3 h-3 text-white self-center'><MarkerIcon costumClass="w-full h-full" /></div>
                                                 </div>
                                                 <div className='w-9/12 flex flex-col self-center'>
                                                     <div className="w-full truncate text-[12.5px] font-semibold text-gray-900">Ville</div>
@@ -177,7 +177,7 @@ export default function Index() {
                                                 <div className='h-full rounded-xl flex flex-col justify-between px-3 py-4 cursor-pointer'>
 
                                                     <div className='flex flex-row'>
-                                                        <div className='w-7 h-7 rounded-lg bg-purple-600 flex flex-row justify-center self-center mr-2'>
+                                                        <div className='w-7 h-7 rounded-full bg-purple-600 flex flex-row justify-center self-center mr-2'>
                                                             <div className='self-center'><GroupBoldIcon customClass="w-3 h-3 text-gray-100"/></div>
                                                         </div>
                                                         <div className='text-[1.05rem] font-semibold text-gray-900 self-center leading-5'>Commandes</div>
@@ -196,7 +196,7 @@ export default function Index() {
                                                 <div className='h-full rounded-xl flex flex-col justify-between px-3 py-4 cursor-pointer'>
 
                                                     <div className='flex flex-row'>
-                                                        <div className='w-7 h-7 rounded-lg  bg-amber-600 flex flex-row justify-center self-center mr-2'>
+                                                        <div className='w-7 h-7 rounded-full  bg-amber-600 flex flex-row justify-center self-center mr-2'>
                                                             <div className='self-center'><GroupBoldIcon customClass="w-3 h-3 text-gray-100"/></div>
                                                         </div>
                                                         <div className='text-[1.05rem] font-semibold text-gray-900 self-center leading-5'>Total revenu</div>
@@ -218,7 +218,7 @@ export default function Index() {
                                                 <div className='h-full rounded-xl flex flex-col justify-between px-3 py-4 cursor-pointer'>
 
                                                     <div className='flex flex-row'>
-                                                        <div className='w-7 h-7 rounded-lg bg-red-600 flex flex-row justify-center self-center mr-2'>
+                                                        <div className='w-7 h-7 rounded-full bg-red-600 flex flex-row justify-center self-center mr-2'>
                                                             <div className='self-center'><GroupBoldIcon customClass="w-3 h-3 text-gray-100"/></div>
                                                         </div>
                                                         <div className='text-[1.05rem] font-semibold text-gray-900 self-center leading-5'>Vues</div>
@@ -237,7 +237,7 @@ export default function Index() {
                                                 <div className='h-full rounded-xl flex flex-col justify-between px-3 py-4 cursor-pointer'>
 
                                                     <div className='flex flex-row'>
-                                                        <div className='w-7 h-7 rounded-lg bg-green-600 flex flex-row justify-center self-center mr-2'>
+                                                        <div className='w-7 h-7 rounded-full bg-green-600 flex flex-row justify-center self-center mr-2'>
                                                             <div className='self-center'><GroupBoldIcon customClass="w-3 h-3 text-gray-100"/></div>
                                                         </div>
                                                         <div className='text-[1.05rem] font-semibold text-gray-900 self-center leading-5'>Likes</div>
