@@ -15,6 +15,7 @@ import ChevronLeftIcon from '../../components/ui/icons/chevronLeftIcon';
 import ChevronRightIcon from '../../components/ui/icons/chevronRightIcon';
 import DoubleChevronLeftIcon from '../../components/ui/icons/doubleChevronLeftIcon';
 import DoubleChevronRightIcon from '../../components/ui/icons/doubleChevronRightIcon';
+import ArrowLeftBoldIcon from '../../components/ui/icons/arrowLeftBoldIcon';
 import { capitalize } from '../../libs/util';
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -75,8 +76,13 @@ export default function Index() {
                         <div className='w-full h-full bg-white rounded-xl overflow-y-hidden pt-4 pb-3'>
 
                             <div className='w-full flex flex-row justify-between mt-2 px-6'>
+                                <Link href="./">
+                                    <div className='text-purple-600 hover:text-opacity-80 cursor-pointer self-center ml-0.5'>
+                                            <ArrowLeftBoldIcon customClass="w-4" /> 
+                                    </div>
+                                </Link>
                                 <div className='flex flex-col'>
-                                    <div className='flex flex-row'>
+                                    <div className='flex flex-row text-center'>
                                         <div className='text-[16.5px] font-bold text-purple-600 mr-2 self-center'>Apple Iphone XS</div>
                                         <div className="text-[12px] self-center">
                                             {1 == 1 &&
@@ -91,10 +97,10 @@ export default function Index() {
                                             }
                                         </div> 
                                     </div>
-                                    <div className='text-[12.5px] font-semibold text-gray-500 ml-0.5'>Apple - Ordinateur</div>
+                                    <div className='w-full text-center text-[12px] font-semibold text-gray-500 ml-0.5'>Apple - Ordinateur</div>
                                 </div>
-                                <div className='bg-gray-100 bg-opacity-50 rounded-xl px-2 py-1 h-max cursor-pointer'>
-                                    <DotsHorizontalIcon className='text-black w-[1.15rem]' />
+                                <div className='bg-purple-50 bg-opacity-50 rounded-xl px-2 py-1 h-max cursor-pointer'>
+                                    <DotsHorizontalIcon className='text-purple-600 w-[1.15rem]' />
                                 </div>
                             </div>
 

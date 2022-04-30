@@ -9,6 +9,7 @@ import EnvelopeBoldIcon from '../../components/ui/icons/envelopeBoldIcon';
 import PhoneIcon from '../../components/ui/icons/phoneIcon';
 import EnvelopeIcon from '../../components/ui/icons/envelopeIcon';
 import { xof } from '../../libs/util';
+import ArrowLeftBoldIcon from '../../components/ui/icons/arrowLeftBoldIcon';
 
 
 export default function Index() {
@@ -29,9 +30,14 @@ export default function Index() {
                         <div className='w-full h-full bg-white rounded-xl overflow-y-scroll pt-4 pb-3'>
 
                             <div className='w-full flex flex-row justify-between mt-2 px-4'>
-                                <div className='flex flex-col'>
+                                <Link href="./">
+                                    <div className='text-purple-600 hover:text-opacity-80 cursor-pointer self-center ml-0.5'>
+                                            <ArrowLeftBoldIcon customClass="w-4" /> 
+                                    </div>
+                                </Link>
+                                <div className='flex flex-col w-max'>
                                     <div className='flex flex-row'>
-                                        <div className='text-[16.5px] font-bold text-purple-600 mr-2 self-center'>#C89084</div>
+                                        <div className='text-[16.5px] font-bold text-purple-600 mr-2 self-center'>Commande C89084</div>
                                         <div className="text-[12px] self-center">
                                             {1 == 1 &&
                                                 <span className="px-2.5 py-1 font-semibold rounded-full bg-green-100 text-green-800">
@@ -50,10 +56,10 @@ export default function Index() {
                                             }
                                         </div> 
                                     </div>
-                                    <div className='text-[12.5px] font-semibold text-gray-500 ml-0.5'>23 Avril 2022 à 13:45</div>
+                                    <div className='w-full text-center text-[12.5px] font-semibold text-gray-500 ml-0.5'>23 Avril 2022 à 13:45</div>
                                 </div>
-                                <div className='bg-gray-100 bg-opacity-50 rounded-xl px-2 py-1 h-max'>
-                                    <DotsHorizontalIcon className='text-black w-[1.15rem]' />
+                                <div className='bg-purple-50 bg-opacity-50 rounded-xl px-2 py-1 h-max'>
+                                    <DotsHorizontalIcon className='text-purple-600 w-[1.15rem]' />
                                 </div>
                             </div>
 

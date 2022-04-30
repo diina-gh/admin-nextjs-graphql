@@ -17,7 +17,7 @@ import ChevronRightIcon from '../../components/ui/icons/chevronRightIcon';
 import DoubleChevronLeftIcon from '../../components/ui/icons/doubleChevronLeftIcon';
 import DoubleChevronRightIcon from '../../components/ui/icons/doubleChevronRightIcon';
 import GroupBoldIcon from '../../components/ui/icons/groupBoldIcon';
-
+import ArrowLeftBoldIcon from '../../components/ui/icons/arrowLeftBoldIcon';
 
 
 
@@ -79,16 +79,21 @@ export default function Index() {
                         <div className='w-full h-full bg-white rounded-xl overflow-y-hidden overflow-x-hidden pt-4 pb-3'>
 
                             <div className='w-full flex flex-row justify-between mt-2 px-6'>
-                                <div className='flex flex-col'>
+                                <Link href="./">
+                                    <div className='text-purple-600 hover:text-opacity-80 cursor-pointer self-center ml-0.5'>
+                                            <ArrowLeftBoldIcon customClass="w-4" /> 
+                                    </div>
+                                </Link>
+                                <div className='flex flex-col w-max'>
                                     <div className='flex flex-row'>
                                         <div className='text-[16.5px]  font-bold text-purple-600 mr-2 self-center'>Madame Oumou GUEYE</div>
                                         <div className="text-[12px] self-center">
                                         </div> 
                                     </div>
-                                    <div className='text-[12.5px] font-semibold text-gray-500 ml-0.5'>crée le 23/04/2022 à 13:45</div>
+                                    <div className='w-full text-center text-[12.5px] font-semibold text-gray-500 ml-0.5'>crée le 23/04/2022 à 13:45</div>
                                 </div>
-                                <div className='bg-gray-100 bg-opacity-50 rounded-xl px-2 py-1 h-max'>
-                                    <DotsHorizontalIcon className='text-black w-[1.15rem]' />
+                                <div className='bg-purple-50 bg-opacity-50 rounded-xl px-2 py-1 h-max'>
+                                    <DotsHorizontalIcon className='text-purple-600 w-[1.15rem]' />
                                 </div>
                             </div>
 

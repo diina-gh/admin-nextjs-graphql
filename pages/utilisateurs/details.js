@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Header from '../../components/common/header'
 import Sidebar from '../../components/common/sidebar'
 import HeadInfo from '../../components/common/headinfo'
+import ArrowLeftBoldIcon from '../../components/ui/icons/arrowLeftBoldIcon';
 
 
 export default function Index() {
