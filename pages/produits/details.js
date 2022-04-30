@@ -108,7 +108,7 @@ export default function Index() {
 
                                 <div className='w-full px-6'>
 
-                                    <div className='w-full h-max bg-gradient-to-b from-purple-200/80 to-pink-200/80 rounded-xl'>
+                                    <div className='w-full h-max bg-gradient-to-b from-purple-300/80 to-pink-300/80 rounded-xl'>
                                         <Swiper className="swiper-type4 h-[19rem] swiper-bg1 rounded-xl" spaceBetween={18} slidesPerView={3} loop={true} speed={5000} freeMode={true} autoplay={true} pagination={true} modules={[Pagination, FreeMode]}>
                                             <SwiperSlide className='glass-bg'></SwiperSlide>
                                             <SwiperSlide className='glass-bg'></SwiperSlide>
