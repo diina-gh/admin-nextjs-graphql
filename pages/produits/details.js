@@ -108,16 +108,22 @@ export default function Index() {
 
                                 <div className='w-full px-6'>
 
-                                    <Swiper className="swiper-type4 h-[19rem]" spaceBetween={18} slidesPerView={3} loop={true} speed={5000} freeMode={true} autoplay={true} pagination={true} modules={[Pagination, FreeMode]}>
-                                        <SwiperSlide className='bg-gray-200 bg-opacity-70 shadow rounded-lg border-2 border-gray-200'></SwiperSlide>
-                                        <SwiperSlide className='bg-gray-200 bg-opacity-70 shadow rounded-lg border-2 border-gray-200'></SwiperSlide>
-                                        <SwiperSlide className='bg-gray-200 bg-opacity-70 shadow rounded-lg border-2 border-gray-200'></SwiperSlide>
-                                        <SwiperSlide className='bg-gray-200 bg-opacity-70 shadow rounded-lg border-2 border-gray-200'></SwiperSlide>
-                                    </Swiper>
-
+                                    <div className='w-full h-max bg-gradient-to-b from-purple-500/40 to-red-500/40 rounded-xl'>
+                                        <Swiper className="swiper-type4 h-[19rem] swiper-bg1 rounded-xl" spaceBetween={18} slidesPerView={3} loop={true} speed={5000} freeMode={true} autoplay={true} pagination={true} modules={[Pagination, FreeMode]}>
+                                            <SwiperSlide className='glass-bg'></SwiperSlide>
+                                            <SwiperSlide className='glass-bg'></SwiperSlide>
+                                            <SwiperSlide className='glass-bg'></SwiperSlide>
+                                            <SwiperSlide className='glass-bg'></SwiperSlide>
+                                            <SwiperSlide className='glass-bg'></SwiperSlide>
+                                            {/* <SwiperSlide className='bg-gray-200 bg-opacity-70 shadow rounded-lg border-2 border-gray-200'></SwiperSlide>
+                                            <SwiperSlide className='bg-gray-200 bg-opacity-70 shadow rounded-lg border-2 border-gray-200'></SwiperSlide>
+                                            <SwiperSlide className='bg-gray-200 bg-opacity-70 shadow rounded-lg border-2 border-gray-200'></SwiperSlide> */}
+                                        </Swiper>
+                                    </div>
+                                    
                                 </div>
 
-                                <div className='text-[15.5px] font-semibold text-purple-700 truncate mt-3 mb-3 ml-0.5 px-6'>Informations générales</div>
+                                <div className='text-[15.5px] font-semibold text-purple-700 truncate mt-6 mb-3 ml-0.5 px-6'>Informations générales</div>
 
                                 <div className='w-full grid grid-cols-12 grid-flow-row gap-5 px-6'>
                                     <div className='col-span-5 flex flex-col'>
