@@ -129,7 +129,7 @@ export default function Index() {
                                     <div className='col-span-5 flex flex-col'>
                                         <div className='text-[14px] font-semibold text-gray-900'>Description</div>
                                         <div className='text-[12.5px] font-medium text-gray-700 bg-gray-100 rounded-lg leading-relaxed tracking-wide py-4 mt-2'>
-                                            <div className='w-full h-48 overflow-y-scroll px-4'>
+                                            <div className='w-full h-[12.5rem] overflow-y-scroll px-4'>
                                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                                             </div>
                                         </div>
@@ -137,37 +137,47 @@ export default function Index() {
                                     <div className='col-span-7 grid grid-cols-3 grid-flow-row gap-5 h-max'>
                                         <div className=''>
                                             <div className='text-[14px] font-semibold text-gray-900'>Catégorie</div>
-                                            <div className='bg-gray-100 rounded-lg h-10 mt-2'>
+                                            <div className='w-full bg-gray-100 rounded-lg h-11 flex flex-row items-center px-1.5 mt-2'>
+                                                <div className='w-8 h-8 bg-gray-500 mr-1.5 rounded-full'></div>
+                                                <div className='text-[12.5px] font-medium text-gray-800 w-8/12 truncate'>Ordinateurs</div>
                                             </div>
                                         </div>
                                         <div className=''>
                                             <div className='text-[14px] font-semibold text-gray-900'>Marque</div>
-                                            <div className='bg-gray-100 rounded-lg h-10 mt-2'>
+                                            <div className='w-full bg-gray-100 rounded-lg h-11 flex flex-row items-center px-1.5 mt-2'>
+                                                <div className='w-8 h-8 bg-gray-500 mr-1.5 rounded-full'></div>
+                                                <div className='text-[12.5px] font-medium text-gray-800 w-8/12 truncate'>Apple</div>
                                             </div>
                                         </div>
                                         <div className=''>
                                             <div className='text-[14px] font-semibold text-gray-900'>Sexe</div>
-                                            <div className='bg-gray-100 rounded-lg h-10 mt-2'>
+                                            <div className='w-full bg-gray-100 rounded-lg h-11 flex flex-row items-center px-1.5 mt-2'>
+                                                <div className='w-8 h-8 bg-gray-500 mr-1.5 rounded-full'></div>
+                                                <div className='text-[12.5px] font-medium text-gray-800 w-8/12 truncate'>Unisex</div>
                                             </div>
                                         </div>
                                         <div className=''>
                                             <div className='text-[14px] font-semibold text-gray-900'>Unité</div>
-                                            <div className='bg-gray-100 rounded-lg h-10 mt-2'>
+                                            <div className='w-full bg-gray-100 rounded-lg h-11 flex flex-row items-center px-1.5 mt-2'>
+                                                <div className='text-[12.5px] font-medium text-blue-700 w-8/12 truncate'>Ordinateur</div>
                                             </div>
                                         </div>
                                         <div className=''>
                                             <div className='text-[14px] font-semibold text-gray-900'>Poids par unité</div>
-                                            <div className='bg-gray-100 rounded-lg h-10 mt-2'>
+                                            <div className='w-full bg-gray-100 rounded-lg h-11 flex flex-row items-center px-1.5 mt-2'>
+                                                <div className='text-[12.5px] font-medium text-red-700 w-8/12 truncate'>600 g</div>
                                             </div>
                                         </div>
                                         <div className=''>
                                             <div className='text-[14px] font-semibold text-gray-900'>Prix unitaire</div>
-                                            <div className='bg-gray-100 rounded-lg h-10 mt-2'>
+                                            <div className='w-full bg-gray-100 rounded-lg h-11 flex flex-row items-center px-1.5 mt-2'>
+                                                <div className='text-[12.5px] font-medium text-orange-700 w-8/12 truncate'>{xof(345000)}</div>
                                             </div>
                                         </div>
                                         <div className=''>
                                             <div className='text-[14px] font-semibold text-gray-900'>Quantité en stock</div>
-                                            <div className='bg-gray-100 rounded-lg h-10 mt-2'>
+                                            <div className='w-full bg-gray-100 rounded-lg h-11 flex flex-row items-center px-1.5 mt-2'>
+                                                <div className='text-[12.5px] font-medium text-green-700 w-8/12 truncate'>200</div>
                                             </div>
                                         </div>
                                         <div className=''>
