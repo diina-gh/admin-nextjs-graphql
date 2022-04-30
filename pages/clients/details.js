@@ -81,8 +81,8 @@ export default function Index() {
                             <div className='w-full flex flex-row justify-between mt-2 px-6'>
                                 <div className='flex flex-col'>
                                     <div className='flex flex-row'>
-                                        <div className='text-lg font-bold text-purple-600 mr-2 self-center'>Madame Oumou GUEYE</div>
-                                        <div className="text-[14px] self-center">
+                                        <div className='text-[16.5px]  font-bold text-purple-600 mr-2 self-center'>Madame Oumou GUEYE</div>
+                                        <div className="text-[12px] self-center">
                                         </div> 
                                     </div>
                                     <div className='text-[12.5px] font-semibold text-gray-500 ml-0.5'>crée le 23/04/2022 à 13:45</div>

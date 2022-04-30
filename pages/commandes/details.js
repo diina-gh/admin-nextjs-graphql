@@ -31,20 +31,20 @@ export default function Index() {
                             <div className='w-full flex flex-row justify-between mt-2 px-4'>
                                 <div className='flex flex-col'>
                                     <div className='flex flex-row'>
-                                        <div className='text-lg font-bold text-purple-600 mr-2 self-center'>#C89084</div>
-                                        <div className="text-[14px] self-center">
+                                        <div className='text-[16.5px] font-bold text-purple-600 mr-2 self-center'>#C89084</div>
+                                        <div className="text-[12px] self-center">
                                             {1 == 1 &&
-                                                <span className="px-2.5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                <span className="px-2.5 py-1 font-semibold rounded-full bg-green-100 text-green-800">
                                                     ● Livrée
                                                 </span>
                                             }
                                             {1 == 2 &&
-                                                <span className="px-2 font-semibold rounded-full bg-orange-100 text-orange-800">
+                                                <span className="px-2 py-1 font-semibold rounded-full bg-orange-100 text-orange-800">
                                                     ● En cours
                                                 </span>
                                             }
                                             {1 == 2 &&
-                                                    <span className="px-1.5 font-semibold rounded-full bg-red-100 text-red-800">
+                                                    <span className="px-1.5 py-1 font-semibold rounded-full bg-red-100 text-red-800">
                                                     ● Restituée
                                                 </span>
                                             }
