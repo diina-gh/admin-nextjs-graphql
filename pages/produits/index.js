@@ -23,6 +23,7 @@ import DoubleChevronRightIcon from '../../components/ui/icons/doubleChevronRight
 import ListBoldIcon from '../../components/ui/icons/listBoldIcon';
 import AppBoldIcon from '../../components/ui/icons/appBoldIcon';
 import CrossIcon from '../../components/ui/icons/crossIcon';
+import { EyeIcon } from '@heroicons/react/outline';
 import { getProducts } from '../../hooks/product';
 import { capitalize } from '../../libs/util';
 import { allCategories, getCategories } from '../../hooks/category';
@@ -172,11 +173,19 @@ export default function Index() {
                                                                                 <PencilIcon customClass="w-[0.7rem] h-[0.7rem] text-white self-center" />
                                                                             </div>
                                                                         </Link>
+
+                                                                        <Link  href={{pathname: 'produits/details', query: { id: item.id},}} >
+                                                                            <div className='hided-item absolute top-[3.656rem] right-[0.4rem] w-[1.25rem] h-[1.25rem] bg-gray-500 hover:bg-gray-600 rounded-full flex flex-row justify-center z-10 shadow-sm transition duration-700 ease-in-out'>
+                                                                                <EyeIcon className="w-[0.7rem] h-[0.7rem] text-white self-center" />
+                                                                            </div>
+                                                                        </Link>
                                                                         
 
                                                                         <div className='w-full image-layer-00 flex flex-row justify-center'>
-                                                                            <div className='image-layer-01 self-center'>
-                                                                                <img src={item.images[0]?.url} />
+                                                                            <div className='image-layer-01 self-center cursor-pointer'>
+                                                                                <Link  href={{pathname: 'produits/details', query: { id: item.id},}} >
+                                                                                    <img src={item.images[0]?.url} />
+                                                                                </Link>
                                                                             </div>
                                                                         </div>
 
@@ -184,7 +193,9 @@ export default function Index() {
                                                                             <div className='w-full text-gray-500 text-[0.7rem] font-medium truncate'>{capitalize(item.category?.name)}</div>
                                                                             <div className='w-full flex mt-1'>
                                                                                 <div className='self-center w-full'>
+                                                                                <Link  href={{pathname: 'produits/details', query: { id: item.id},}} >
                                                                                     <div className='w-full main-item text-gray-900 cursor-pointer text-[0.87rem] font-semibold truncate transition duration-700 ease-in-out'>{capitalize(item.name)}</div>
+                                                                                </Link>
                                                                                     <div className='w-full text-gray-800 text-[0.71rem] font-medium mt-1'> {new Intl.NumberFormat('fr-FR', {style: 'currency', currency:'XOF'}).format(item.unitprice)}</div>
                                                                                 </div>
                                                                             </div>

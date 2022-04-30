@@ -69,7 +69,7 @@ export default function Index() {
 
                 <Sidebar />
 
-                <motion.div initial={{ opacity: 0.45, x: -150 }}  whileInView={{ opacity: 1, x: 0, transition: { duration: 0.60 }, }}>
+                <motion.div initial={{ opacity: 0.45, x: 150 }}  whileInView={{ opacity: 1, x: 0, transition: { duration: 0.60 }, }}>
                     <div className='app-body rounded-xl'>
 
                         <div className='w-full h-full bg-white rounded-xl overflow-y-hidden pt-4 pb-3'>
