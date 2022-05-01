@@ -158,7 +158,7 @@ class Index extends Component {
                                         <div className='w-full h-max bg-gradient-to-b from-purple-300/80 to-pink-300/80 rounded-xl'>
                                             <Swiper className="swiper-type4 h-[19rem] swiper-bg1 rounded-xl" spaceBetween={18} slidesPerView={3} loop={true} speed={5000} freeMode={true} autoplay={true} pagination={true} modules={[Pagination, FreeMode]}>
                                                 {product?.images?.map((item, i) => (
-                                                    <SwiperSlide className='glass-bg'>
+                                                    <SwiperSlide key={i} className='glass-bg'>
                                                         <div className='w-full h-full flex flex-row justify-center'>
                                                             <div className='self-center galery-image'>
                                                                 <img src={item?.url} />
