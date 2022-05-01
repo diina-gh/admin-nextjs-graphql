@@ -137,7 +137,7 @@ class Index extends Component {
                                                 }
                                             </div> 
                                         </div>
-                                        <div className='w-full text-center text-[12px] font-semibold text-gray-500 ml-0.5'>{product?.brand?.name + ' - ' + product?.category?.name}</div>
+                                        <div className='w-full text-center text-[12px] font-semibold text-gray-500 ml-0.5'>{ capitalize(product?.brand?.name ) + ' - ' + capitalize(product?.category?.name)}</div>
                                     </div>
                                 }
                                 <div className='bg-purple-50 bg-opacity-50 rounded-xl px-2 py-1 h-max self-center cursor-pointer'>
@@ -180,21 +180,25 @@ class Index extends Component {
                                         <div className=''>
                                             <div className='text-[14px] font-semibold text-gray-900'>Catégorie</div>
                                             <div className='w-full bg-gray-100 rounded-lg h-11 flex flex-row items-center px-1.5 mt-2'>
-                                                <div className='w-8 h-8 bg-gray-500 mr-1.5 rounded-full'></div>
-                                                <div className='text-[12.5px] font-medium text-gray-800 w-8/12 truncate'>{product?.category?.name}</div>
+                                                <div className='w-7 h-7 bg-gray-300 border-2 border-purple-600 mr-1.5 rounded-full'>
+                                                    <img className='w-full h-full rounded-full object-cover' src={product?.category?.image?.url} />
+                                                </div>
+                                                <div className='text-[12.5px] font-medium text-gray-800 w-8/12 truncate'>{capitalize(product?.category?.name)}</div>
                                             </div>
                                         </div>
                                         <div className=''>
                                             <div className='text-[14px] font-semibold text-gray-900'>Marque</div>
                                             <div className='w-full bg-gray-100 rounded-lg h-11 flex flex-row items-center px-1.5 mt-2'>
-                                                <div className='w-8 h-8 bg-gray-500 mr-1.5 rounded-full'></div>
-                                                <div className='text-[12.5px] font-medium text-gray-800 w-8/12 truncate'>{product?.brand?.name}</div>
+                                                <div className='w-4 mr-1.5'>
+                                                    <img className='w-full' src={product?.brand?.image?.url} />
+                                                </div>
+                                                <div className='text-[12.5px] font-medium text-gray-800 w-8/12 truncate'>{capitalize(product?.brand?.name)}</div>
                                             </div>
                                         </div>
                                         <div className=''>
                                             <div className='text-[14px] font-semibold text-gray-900'>Sexe</div>
                                             <div className='w-full bg-gray-100 rounded-lg h-11 flex flex-row items-center px-1.5 mt-2'>
-                                                <div className='w-8 h-8 bg-gray-500 mr-1.5 rounded-full'></div>
+                                                {/* <div className='w-7 h-7 bg-gray-500 mr-1.5 rounded-full'></div> */}
                                                 <div className='text-[12.5px] font-medium text-gray-800 w-8/12 truncate'>{product?.gender}</div>
                                             </div>
                                         </div>
