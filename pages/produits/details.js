@@ -195,8 +195,8 @@ class Index extends Component {
                                             <div className=''>
                                                 <div className='text-[14px] font-semibold text-gray-900'>Marque</div>
                                                 <div className='w-full bg-gray-100 rounded-lg h-11 flex flex-row items-center px-1.5 mt-2'>
-                                                    <div className='w-4 mr-1.5'>
-                                                        <img className='w-full' src={product?.brand?.image?.url} />
+                                                    <div className='mini-brand mr-1.5'>
+                                                        <img src={product?.brand?.image?.url} />
                                                     </div>
                                                     <div className='text-[12.5px] font-medium text-gray-800 w-8/12 truncate'>{capitalize(product?.brand?.name)}</div>
                                                 </div>
