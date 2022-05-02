@@ -36,7 +36,6 @@ export async function getServerSideProps(context) {
     }
 }
 
-
 class Index extends Component {
 
     constructor(props){
@@ -65,11 +64,11 @@ class Index extends Component {
             }
             else if(response?.__typename == 'InputError'){
                 toast.error(response.message);
-                // router.push('./');
+                router.push('./')
             }
             else{
                 toast.error("Erreur inconnue. Veuillez contacter l'administrateur.");
-                // router.push('./');
+                router.push('./')
             }
         }
         this.getRelatives()
