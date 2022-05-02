@@ -193,7 +193,7 @@ export default function Index() {
                                                 <thead className="th-bg-1 sticky top-0 ">
                                                     <tr>
                                                         <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
-                                                            Cient
+                                                            Client
                                                         </th>
                                                         <th scope="col" className="px-6 py-2 text-left text-xs font-medium text-gray-800 uppercase tracking-wider" >
                                                             Adresse email
@@ -218,11 +218,15 @@ export default function Index() {
                                                                 <div className="flex items-center">
                                                                     <div className={`${item.activated ? 'bg-gradient-to-r from-violet-600 to-purple-600 hover:scale-110' : 'bg-gray-400'} flex-shrink-0 item-image-0 rounded-full border-opacity-80 transition duration-700 ease-in-out cursor-pointer`} >
                                                                         <div className='image-layer-2 bg-white rounded-full'>
-                                                                            <img className={`${item.activated ? 'opacity-100' : 'opacity-50'} rounded-full object-cover w-full h-full`} src={item?.image?.url == null ? '../images/avatar2.jpg': item?.image?.url} alt="" />
+                                                                            <Link  href={{pathname: 'clients/details', query: { id: item.id },}} >
+                                                                                <img className={`${item.activated ? 'opacity-100' : 'opacity-50'} rounded-full object-cover w-full h-full`} src={item?.image?.url == null ? '../images/avatar2.jpg': item?.image?.url} alt="" />
+                                                                            </Link>
                                                                         </div>
                                                                     </div>
                                                                     <div className={`${item.activated ? 'opacity-100' : 'opacity-50'} ml-4`}>
-                                                                        <div className="text-sm font-medium text-gray-900">{capitalize(item.firstname) + ' ' + item.lastname}</div>
+                                                                        <Link  href={{pathname: 'clients/details', query: { id: item.id },}} >
+                                                                            <div className="text-sm font-medium text-gray-900 hover:text-purple-600 cursor-pointer transition duration-700 ease-in-out">{capitalize(item.firstname) + ' ' + item.lastname}</div>
+                                                                        </Link>
                                                                     </div>
                                                                 </div>
                                                             </td>
