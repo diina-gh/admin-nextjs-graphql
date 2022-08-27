@@ -23,7 +23,7 @@ export function Navigation(){
     const router = useRouter();
 
     return(
-        <div className="overflow-y-auto w-full h-full">
+        <div className="overflow-y-auto w-full">
 
             <ul className="space-y-1">
 
