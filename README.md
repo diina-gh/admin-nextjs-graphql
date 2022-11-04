@@ -1,2 +1,2 @@
-# trade_admin
+# admin-nextjs-graphql
  
